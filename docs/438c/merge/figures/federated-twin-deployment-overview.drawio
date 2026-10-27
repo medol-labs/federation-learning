@@ -1,0 +1,1034 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" compressed="false">
+  <diagram id="federated-twin-deployment-overview" name="总体部署架构">
+    <mxGraphModel
+      page="1"
+      pageScale="1"
+      pageWidth="2400"
+      pageHeight="1870"
+      grid="1"
+      gridSize="10"
+      background="#ffffff"
+      math="0"
+      shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell
+          id="title"
+          value="联邦孪生平台总体部署架构"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=38;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="60"
+            y="25"
+            width="2250"
+            height="60"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="subtitle"
+          value="通用模型与联邦平台部署在云端 · 医院部署孪生应用及本院个性化模型 · 代理按参与情况部署"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=25;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="60"
+            y="95"
+            width="2260"
+            height="45"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="cloud"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#F6F8FB;strokeColor=#AABBCB;strokeWidth=2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="60"
+            y="180"
+            width="2260"
+            height="470"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="cloud-title"
+          value="云端部署环境"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="cloud">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="2220"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="cloud-inference"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#F3F5F9;strokeColor=#929FB9;strokeWidth=2;"
+          vertex="1"
+          parent="cloud">
+          <mxGeometry
+            x="40"
+            y="90"
+            width="1140"
+            height="320"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="cloud-inference-title"
+          value="云端模型推理服务"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#35698B;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="cloud-inference">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="1100"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="large-model"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#FFFFFF;strokeColor=#929FB9;strokeWidth=2;"
+          vertex="1"
+          parent="cloud-inference">
+          <mxGeometry
+            x="40"
+            y="80"
+            width="470"
+            height="190"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="large-model-title"
+          value="大模型服务"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#35698B;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="large-model">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="430"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="large-model-detail"
+          value="面向业务场景提供云端推理&#10;调用范围与传输信息按授权确定"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="large-model">
+          <mxGeometry
+            x="20"
+            y="65"
+            width="430"
+            height="110"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="medical-model"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#FFFFFF;strokeColor=#929FB9;strokeWidth=2;"
+          vertex="1"
+          parent="cloud-inference">
+          <mxGeometry
+            x="580"
+            y="80"
+            width="520"
+            height="190"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="medical-model-title"
+          value="通用医疗业务模型服务"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#35698B;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="medical-model">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="480"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="medical-model-detail"
+          value="云端部署适用的通用医学模型&#10;按场景提供预测、疾病风险等推理"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="medical-model">
+          <mxGeometry
+            x="20"
+            y="65"
+            width="480"
+            height="110"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="federated-platform"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#EEF7F4;strokeColor=#7AACA2;strokeWidth=2;"
+          vertex="1"
+          parent="cloud">
+          <mxGeometry
+            x="1390"
+            y="150"
+            width="740"
+            height="210"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="federated-platform-title"
+          value="联邦学习平台"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#11786C;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="federated-platform">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="700"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="federated-platform-detail"
+          value="组织、联邦与数据集元数据治理&#10;训练任务编排、模型更新聚合与验证&#10;模型工件、版本与下载管理"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="federated-platform">
+          <mxGeometry
+            x="20"
+            y="65"
+            width="700"
+            height="130"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="hospital-b"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#F8FAFC;strokeColor=#AABBCB;strokeWidth=2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="60"
+            y="920"
+            width="750"
+            height="740"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="hospital-b-title"
+          value="医院 B：孪生应用与本院个性化模型"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="hospital-b">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="710"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="hospital-a"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#F7FAF9;strokeColor=#9FBBB3;strokeWidth=2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="850"
+            y="920"
+            width="800"
+            height="740"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="hospital-a-title"
+          value="医院 A：孪生、个性化模型与联邦节点"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="hospital-a">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="760"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="hospital-c"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#F7FAF9;strokeColor=#9FBBB3;strokeWidth=2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1690"
+            y="920"
+            width="630"
+            height="740"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="hospital-c-title"
+          value="医院 C：仅部署联邦节点"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="hospital-c">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="590"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-b"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#F1F6FA;strokeColor=#7E9FB7;strokeWidth=2;"
+          vertex="1"
+          parent="hospital-b">
+          <mxGeometry
+            x="100"
+            y="100"
+            width="550"
+            height="160"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-b-title"
+          value="医院孪生应用"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#35698B;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="twin-b">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="510"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-b-detail"
+          value="医疗数字人、风险评估与管理&#10;展示患者状态并按需调用云端模型"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="twin-b">
+          <mxGeometry
+            x="20"
+            y="65"
+            width="510"
+            height="80"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-a"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#F1F6FA;strokeColor=#7E9FB7;strokeWidth=2;"
+          vertex="1"
+          parent="hospital-a">
+          <mxGeometry
+            x="40"
+            y="100"
+            width="340"
+            height="160"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-a-title"
+          value="医院孪生应用"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#35698B;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="twin-a">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="300"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-a-detail"
+          value="医疗数字人&#10;风险评估与管理"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="twin-a">
+          <mxGeometry
+            x="20"
+            y="65"
+            width="300"
+            height="80"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-a"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#EEF7F4;strokeColor=#7AACA2;strokeWidth=2;"
+          vertex="1"
+          parent="hospital-a">
+          <mxGeometry
+            x="430"
+            y="100"
+            width="330"
+            height="160"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-a-title"
+          value="运行时代理"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#11786C;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="agent-a">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="290"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-a-detail"
+          value="按任务启动本地训练引擎&#10;执行本地训练与验证"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="agent-a">
+          <mxGeometry
+            x="20"
+            y="65"
+            width="290"
+            height="80"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-c"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#EEF7F4;strokeColor=#7AACA2;strokeWidth=2;"
+          vertex="1"
+          parent="hospital-c">
+          <mxGeometry
+            x="60"
+            y="100"
+            width="510"
+            height="160"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-c-title"
+          value="运行时代理与本地训练引擎"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#11786C;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="agent-c">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="470"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-c-detail"
+          value="代理接收任务并协调本地执行&#10;提交模型更新、指标及元数据"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="agent-c">
+          <mxGeometry
+            x="20"
+            y="65"
+            width="470"
+            height="80"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-b"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#FFFFFF;strokeColor=#BBC9D0;strokeWidth=2;"
+          vertex="1"
+          parent="hospital-b">
+          <mxGeometry
+            x="100"
+            y="570"
+            width="550"
+            height="130"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-b-title"
+          value="院内系统、设备与授权信息"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="data-b">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="510"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-b-detail"
+          value="既有业务系统、检测及项目可穿戴设备&#10;按授权接入诊疗与监测信息"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="data-b">
+          <mxGeometry
+            x="20"
+            y="65"
+            width="510"
+            height="50"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-a"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#FFFFFF;strokeColor=#BBC9D0;strokeWidth=2;"
+          vertex="1"
+          parent="hospital-a">
+          <mxGeometry
+            x="40"
+            y="570"
+            width="720"
+            height="130"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-a-title"
+          value="院内系统、设备与本地数据"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="data-a">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="680"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-a-detail"
+          value="诊疗与监测信息按授权使用；训练数据本地整理、绑定与读取&#10;图示为数据来源，不表示孪生与代理共用数据库"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="data-a">
+          <mxGeometry
+            x="20"
+            y="65"
+            width="680"
+            height="50"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-c"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#FFFFFF;strokeColor=#BBC9D0;strokeWidth=2;"
+          vertex="1"
+          parent="hospital-c">
+          <mxGeometry
+            x="60"
+            y="570"
+            width="510"
+            height="130"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-c-title"
+          value="机构本地训练数据"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="data-c">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="470"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-c-detail"
+          value="原始训练数据保留在医院本地&#10;按训练用途及授权绑定、读取"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="data-c">
+          <mxGeometry
+            x="20"
+            y="65"
+            width="470"
+            height="50"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="b-cloud-inference"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=0.9090909090909091;exitY=0.0;exitPerimeter=0;entryX=0.49122807017543857;entryY=1.0;entryPerimeter=0;startArrow=block;startFill=1;"
+          edge="1"
+          parent="1"
+          source="twin-b"
+          target="cloud-inference">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="b-cloud-inference-label"
+          value="按场景调用区内模型服务&#10;推理请求 / 推理结果&#10;传输必要信息须经授权"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#35698B;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="b-cloud-inference"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="300"
+            height="110"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="-320.0"
+              y="-75.0"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="a-cloud-inference"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=0.0;exitY=0.5;exitPerimeter=0;entryX=0.8859649122807017;entryY=1.0;entryPerimeter=0;startArrow=block;startFill=1;"
+          edge="1"
+          parent="1"
+          source="twin-a"
+          target="cloud-inference">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="1100" />
+              <mxPoint x="820" y="870" />
+              <mxPoint x="1110" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="a-cloud-inference-label"
+          value="按场景调用区内模型服务&#10;推理请求 / 推理结果&#10;传输必要信息须经授权"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#35698B;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="a-cloud-inference"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="290"
+            height="110"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="-155.0"
+              y="-140.0"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="a-federated-collaboration"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#11786C;strokeWidth=3;endArrow=block;endFill=1;exitX=0.5454545454545454;exitY=0.0;exitPerimeter=0;entryX=0.10810810810810811;entryY=1.0;entryPerimeter=0;startArrow=block;startFill=1;"
+          edge="1"
+          parent="1"
+          source="agent-a"
+          target="federated-platform">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1460" y="840" />
+              <mxPoint x="1530" y="840" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="a-federated-collaboration-label"
+          value="下行：任务、初始模型与配置&#10;上行：模型更新、指标、元数据&#10;不传输原始训练数据"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#11786C;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="a-federated-collaboration"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="360"
+            height="110"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="30.0"
+              y="-105.0"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="c-federated-collaboration"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#11786C;strokeWidth=3;endArrow=block;endFill=1;exitX=0.8431372549019608;exitY=0.0;exitPerimeter=0;entryX=0.9864864864864865;entryY=1.0;entryPerimeter=0;startArrow=block;startFill=1;"
+          edge="1"
+          parent="1"
+          source="agent-c"
+          target="federated-platform">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="c-federated-collaboration-label"
+          value="训练任务与配置下发&#10;模型更新与指标回传&#10;原始训练数据不出院"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#11786C;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="c-federated-collaboration"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="220"
+            height="110"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="-240.0"
+              y="-50.0"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="deploy-trained-model"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#11786C;strokeWidth=3;endArrow=block;endFill=1;exitX=0.0;exitY=0.5238095238095238;exitPerimeter=0;entryX=1.0;entryY=0.47368421052631576;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="federated-platform"
+          target="medical-model">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="deploy-trained-model-label"
+          value="通用模型工件下载&#10;由云端推理侧部署"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#11786C;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="deploy-trained-model"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="195"
+            height="70"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="-77.0"
+              y="-95.0"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="b-authorized-data"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="data-b"
+          target="twin-b">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="130" y="1555" />
+              <mxPoint x="130" y="1100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="b-authorized-data-label"
+          value="院内授权接入"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#35698B;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="b-authorized-data"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="200"
+            height="45"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="20"
+              y="102.5"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="a-authorized-data"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.75;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="data-a"
+          target="twin-a">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="870" y="1555" />
+              <mxPoint x="870" y="1140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="a-authorized-data-label"
+          value="授权接入"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#35698B;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="a-authorized-data"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="145"
+            height="45"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="15"
+              y="82.5"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="a-local-training-read"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#11786C;strokeWidth=3;endArrow=block;endFill=1;exitX=0.7638888888888888;exitY=0.0;exitPerimeter=0;entryX=0.48484848484848486;entryY=1.0;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="data-a"
+          target="agent-a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="a-local-training-read-label"
+          value="本地读取"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#11786C;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="a-local-training-read"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="140"
+            height="42"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="15"
+              y="40"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="c-local-training-read"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#11786C;strokeWidth=3;endArrow=block;endFill=1;exitX=0.5294117647058824;exitY=0.0;exitPerimeter=0;entryX=0.5294117647058824;entryY=1.0;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="data-c"
+          target="agent-c">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="c-local-training-read-label"
+          value="本地读取"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#11786C;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="c-local-training-read"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="165"
+            height="42"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="15"
+              y="40"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="set-note"
+          value="孪生与联邦参与医院可部分重叠；医院个性化模型在本院部署，不要求该医院同时部署联邦代理。"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="60"
+            y="1690"
+            width="2260"
+            height="40"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="privacy-note"
+          value="联邦训练原始数据不出院；本地个性化推理在院内执行。云端推理所需信息另行明确授权与最小化传输要求。"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=23;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="60"
+            y="1745"
+            width="2260"
+            height="50"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="scope-note"
+          value="蓝色：推理与院内信息交互。绿色：联邦协作及模型交付。医院为组合示例，模型交付、适配与部署不表示已自动化。"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="60"
+            y="1805"
+            width="2260"
+            height="45"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-a"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#F3F5F9;strokeColor=#929FB9;strokeWidth=2;"
+          vertex="1"
+          parent="hospital-a">
+          <mxGeometry
+            x="40"
+            y="350"
+            width="340"
+            height="150"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-a-title"
+          value="本院个性化模型"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#35698B;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="personalized-model-a">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="300"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-a-detail"
+          value="针对本院数据与人群适配&#10;本地部署，供孪生业务推理"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="personalized-model-a">
+          <mxGeometry
+            x="20"
+            y="65"
+            width="300"
+            height="60"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-b"
+          value=""
+          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#F3F5F9;strokeColor=#929FB9;strokeWidth=2;"
+          vertex="1"
+          parent="hospital-b">
+          <mxGeometry
+            x="100"
+            y="350"
+            width="550"
+            height="150"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-b-title"
+          value="本院个性化模型"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#35698B;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="personalized-model-b">
+          <mxGeometry
+            x="20"
+            y="15"
+            width="510"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-b-detail"
+          value="针对本院数据与人群适配&#10;本地部署，供孪生业务推理"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="personalized-model-b">
+          <mxGeometry
+            x="20"
+            y="65"
+            width="510"
+            height="60"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="local-personalized-inference-a"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;startArrow=block;startFill=1;endArrow=block;endFill=1;exitX=0.6470588235294118;exitY=1;exitPerimeter=0;entryX=0.6470588235294118;entryY=0;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="twin-a"
+          target="personalized-model-a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="local-personalized-inference-a-label"
+          value="本地推理请求 / 结果"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#35698B;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="local-personalized-inference-a"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="225"
+            height="48"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="-240"
+              y="-25"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="local-personalized-inference-b"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;startArrow=block;startFill=1;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="twin-b"
+          target="personalized-model-b">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="local-personalized-inference-b-label"
+          value="本地推理请求 / 结果"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#35698B;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="local-personalized-inference-b"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="225"
+            height="48"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="-240"
+              y="-25"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

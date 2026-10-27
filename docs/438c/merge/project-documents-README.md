@@ -28,6 +28,7 @@ python3 scripts/merge-438c-project-documents.py
 - 训练、模型交付、应用推理及业务反馈的内部交互见[系统集成关系图](federated-twin-internal-integration.md)，同样以原生 draw.io 维护；原 `docs/mermaid-diagram.png` 已作为该图的导出入口。
 - 院内既有系统、检测与可穿戴设备的接入关系见[院内系统与设备集成关系](federated-twin-hospital-device-integration.md)，区分授权业务信息使用与原始训练数据不出域，并提供可供总稿使用的正文。
 - 联邦学习业务总流程见[端到端业务流程](federation-learning-end-to-end.md)，按当前用户旅程保留 16 个阶段及 18 条连接，以 draw.io 维护；明确前置条件、可选安全聚合、多轮训练回路和独立监控分支。
+- 云端与医院侧的实际部署分工见[总体部署架构](federated-twin-deployment-overview.md)，区分云端大模型、通用医疗模型与联邦平台，以及医院孪生应用、本院个性化模型和联邦代理，明确孪生与联邦医院集合可部分重叠。
 
 - 01 原稿为 `.doc`，脚本先转为 `.docx` 再插入内容；Word 中应复核页码、目录、跨页表格与字体。
 - 03 原稿数据库级设计决策中仍有“仅由一份主数据库文件”等与联邦学习架构不符的表述；该章暂保留总稿原文，待统稿审定。
