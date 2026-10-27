@@ -29,7 +29,7 @@
         </mxCell>
         <mxCell
           id="subtitle"
-          value="通用模型与联邦平台部署在云端 · 医院部署孪生应用及本院个性化模型 · 代理按参与情况部署"
+          value="云端部署通用模型与联邦平台 · 医院按需部署孪生应用 · 参与训练的医院部署代理及个性化模型"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=25;fontColor=#536773;fontStyle=0;spacing=0;"
           vertex="1"
           parent="1">
@@ -224,7 +224,7 @@
         </mxCell>
         <mxCell
           id="hospital-b-title"
-          value="医院 B：孪生应用与本院个性化模型"
+          value="医院 B：仅部署孪生应用，不参与训练"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#243440;fontStyle=1;spacing=0;"
           vertex="1"
           parent="hospital-b">
@@ -276,7 +276,7 @@
         </mxCell>
         <mxCell
           id="hospital-c-title"
-          value="医院 C：仅部署联邦节点"
+          value="医院 C：联邦节点与本院个性化模型"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#243440;fontStyle=1;spacing=0;"
           vertex="1"
           parent="hospital-c">
@@ -824,12 +824,17 @@
         <mxCell
           id="c-local-training-read"
           value=""
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#11786C;strokeWidth=3;endArrow=block;endFill=1;exitX=0.5294117647058824;exitY=0.0;exitPerimeter=0;entryX=0.5294117647058824;entryY=1.0;entryPerimeter=0;"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#11786C;strokeWidth=3;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;"
           edge="1"
           parent="1"
           source="data-c"
           target="agent-c">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1725" y="1555" />
+              <mxPoint x="1725" y="1100" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell
           id="c-local-training-read-label"
@@ -841,19 +846,19 @@
           <mxGeometry
             x="0"
             y="0"
-            width="165"
+            width="160"
             height="42"
             as="geometry"
             relative="1">
             <mxPoint
               x="15"
-              y="40"
+              y="107.5"
               as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell
           id="set-note"
-          value="孪生与联邦参与医院可部分重叠；医院个性化模型在本院部署，不要求该医院同时部署联邦代理。"
+          value="只有部署运行时代理并参与训练的医院才具有本院个性化模型；仅部署孪生应用的医院不配置该模型。"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#243440;fontStyle=1;spacing=0;"
           vertex="1"
           parent="1">
@@ -930,45 +935,6 @@
             as="geometry" />
         </mxCell>
         <mxCell
-          id="personalized-model-b"
-          value=""
-          style="rounded=1;arcSize=3;container=1;collapsible=0;fillColor=#F3F5F9;strokeColor=#929FB9;strokeWidth=2;"
-          vertex="1"
-          parent="hospital-b">
-          <mxGeometry
-            x="100"
-            y="350"
-            width="550"
-            height="150"
-            as="geometry" />
-        </mxCell>
-        <mxCell
-          id="personalized-model-b-title"
-          value="本地个性化推理服务"
-          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=23;fontColor=#35698B;fontStyle=1;spacing=0;"
-          vertex="1"
-          parent="personalized-model-b">
-          <mxGeometry
-            x="78"
-            y="15"
-            width="452.0"
-            height="38"
-            as="geometry" />
-        </mxCell>
-        <mxCell
-          id="personalized-model-b-detail"
-          value="加载本院适配模型，院内执行"
-          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
-          vertex="1"
-          parent="personalized-model-b">
-          <mxGeometry
-            x="20"
-            y="63"
-            width="510"
-            height="30"
-            as="geometry" />
-        </mxCell>
-        <mxCell
           id="local-personalized-inference-a"
           value=""
           style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;startArrow=block;startFill=1;endArrow=block;endFill=1;exitX=0.6470588235294118;exitY=1;exitPerimeter=0;entryX=0.6470588235294118;entryY=0;entryPerimeter=0;"
@@ -984,36 +950,6 @@
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#35698B;fontStyle=0;spacing=0;"
           vertex="1"
           parent="local-personalized-inference-a"
-          connectable="0">
-          <mxGeometry
-            x="0"
-            y="0"
-            width="225"
-            height="48"
-            as="geometry"
-            relative="1">
-            <mxPoint
-              x="-240"
-              y="-25"
-              as="offset" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell
-          id="local-personalized-inference-b"
-          value=""
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;startArrow=block;startFill=1;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;"
-          edge="1"
-          parent="1"
-          source="twin-b"
-          target="personalized-model-b">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell
-          id="local-personalized-inference-b-label"
-          value="本地推理请求 / 结果"
-          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#35698B;fontStyle=0;spacing=0;"
-          vertex="1"
-          parent="local-personalized-inference-b"
           connectable="0">
           <mxGeometry
             x="0"
@@ -1341,45 +1277,6 @@
             as="geometry" />
         </mxCell>
         <mxCell
-          id="personalized-model-b-component-body"
-          value=""
-          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
-          vertex="1"
-          parent="personalized-model-b">
-          <mxGeometry
-            x="28"
-            y="18"
-            width="34"
-            height="32"
-            as="geometry" />
-        </mxCell>
-        <mxCell
-          id="personalized-model-b-component-upper-tab"
-          value=""
-          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
-          vertex="1"
-          parent="personalized-model-b">
-          <mxGeometry
-            x="18"
-            y="24"
-            width="19"
-            height="7"
-            as="geometry" />
-        </mxCell>
-        <mxCell
-          id="personalized-model-b-component-lower-tab"
-          value=""
-          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
-          vertex="1"
-          parent="personalized-model-b">
-          <mxGeometry
-            x="18"
-            y="38"
-            width="19"
-            height="7"
-            as="geometry" />
-        </mxCell>
-        <mxCell
           id="cloud-symbol"
           value=""
           style="shape=cloud;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#7E9FB7;strokeWidth=2;"
@@ -1428,19 +1325,6 @@
             x="20"
             y="105.0"
             width="300.0"
-            height="32"
-            as="geometry" />
-        </mxCell>
-        <mxCell
-          id="personalized-model-b-artifact"
-          value="本院个性化模型工件"
-          style="shape=note;whiteSpace=wrap;html=0;size=14;fillColor=#FFFFFF;strokeColor=#929FB9;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;align=left;verticalAlign=middle;spacingLeft=12;"
-          vertex="1"
-          parent="personalized-model-b">
-          <mxGeometry
-            x="20"
-            y="105.0"
-            width="510.0"
             height="32"
             as="geometry" />
         </mxCell>
@@ -1684,6 +1568,97 @@
             y="1960"
             width="250"
             height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-artifact-c"
+          value="本院个性化模型工件&#10;本地适配训练产物&#10;保留于本院，不表示已部署推理服务"
+          style="shape=note;whiteSpace=wrap;html=0;size=24;fillColor=#F3F5F9;strokeColor=#929FB9;strokeWidth=2;fontFamily=PingFang SC;fontSize=23;fontColor=#35698B;align=center;verticalAlign=middle;"
+          vertex="1"
+          parent="hospital-c">
+          <mxGeometry
+            x="60"
+            y="350"
+            width="510"
+            height="150"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="a-personalized-training-artifact"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#11786C;strokeWidth=3;endArrow=block;endFill=1;exitX=0;exitY=0.75;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="agent-a"
+          target="personalized-model-a-artifact">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1250" y="1140" />
+              <mxPoint x="1250" y="1391" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="a-personalized-training-artifact-label"
+          value="本地适配&#10;训练产物&#10;部署后推理"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#11786C;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="a-personalized-training-artifact"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="160"
+            height="110"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="10"
+              y="-20.5"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="c-personalized-training-artifact"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#11786C;strokeWidth=3;endArrow=block;endFill=1;exitX=0.529412;exitY=1;exitPerimeter=0;entryX=0.529412;entryY=0;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="agent-c"
+          target="personalized-artifact-c">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="c-personalized-training-artifact-label"
+          value="本地适配训练产物"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#11786C;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="c-personalized-training-artifact"
+          connectable="0">
+          <mxGeometry
+            x="0"
+            y="0"
+            width="215"
+            height="55"
+            as="geometry"
+            relative="1">
+            <mxPoint
+              x="15"
+              y="-25"
+              as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="hospital-b-no-local-model"
+          value="未部署运行时代理，不参与联邦训练&#10;不配置本院个性化模型&#10;孪生业务按需调用云端模型"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=23;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="hospital-b">
+          <mxGeometry
+            x="100"
+            y="350"
+            width="550"
+            height="150"
             as="geometry" />
         </mxCell>
       </root>
