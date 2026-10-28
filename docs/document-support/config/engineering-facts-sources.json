@@ -1,11 +1,11 @@
 {
-  "environment": "local",
-  "operationsModel": "operations/model/local/operations-model.json",
-  "dockerCompose": "operations/docker-compose/local/docker-compose.yml",
+  "environment": "test",
+  "operationsModel": "operations/model/test/operations-model.json",
+  "dockerCompose": "operations/docker-compose/test/docker-compose.yml",
   "operationsReadmes": [
-    "operations/model/local/README.md",
-    "operations/model/local/network-topology.md",
-    "operations/docker-compose/local/README.md",
+    "operations/model/test/README.md",
+    "operations/model/test/network-topology.md",
+    "operations/docker-compose/test/README.md",
     "operations/k3s/README.md",
     "operations/kubernetes/README.md"
   ],

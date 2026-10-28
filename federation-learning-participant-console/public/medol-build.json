@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "builtAt": "2026-10-28T07:23:44.537Z",
+  "imageVersion": "0.0.1-SNAPSHOT",
+  "buildIdentity": "e28414bc134ccecb804b1ed65d684fe29f1c67541ac6c4ccfc796c6ec91878fa",
+  "codeSha256": "4cf9443e050a852333cc7eac96c22706dfd8ed092f60c4d3a8dce054d837d726",
+  "buildOptionsSha256": "8a34e1b154bad09065da576787be32919f6e518e986849c975bdcff1bfdab06f",
+  "git": {
+    "revision": "88b6bee5bcaa11fd908d4baa8a04c0211bf5845f",
+    "dirty": true
+  },
+  "generation": {
+    "schemaVersion": 1,
+    "target": "refine",
+    "scope": "release-support",
+    "selection": {
+      "environment": "dev"
+    },
+    "generatedAt": "2026-10-28T07:19:07.448Z",
+    "generator": {
+      "name": "medol-codegen",
+      "version": "1.0.0",
+      "sha256": "def1169ea9651c8f2aad0cda6f15066262a2f6c7ac075b750b0214ad61dbf697"
+    },
+    "model": {
+      "sha256": "99b9eee3347e33e147cc1a23b1c2eabf776c843bcd45c01d1bc97628b3a89070",
+      "metadata": {
+        "schemaVersion": 1,
+        "medolVersion": "0.1.0",
+        "source": {
+          "sha256": "0610060148b1b1c037d937161ea7d3ccea1ae0387f691f4d14e3cfef8d771815"
+        }
+      }
+    },
+    "config": {
+      "sha256": "e1bb17ce7ca8eada5f89670e583a635cb51c5b3d71c0bd902de346c1bd3c5991"
+    },
+    "inputs": [
+      {
+        "path": "../.medol/codegen-model.json",
+        "sha256": "99b9eee3347e33e147cc1a23b1c2eabf776c843bcd45c01d1bc97628b3a89070"
+      },
+      {
+        "path": "../.medol/medol.yml",
+        "sha256": "f3f72759925093d87a4a6841a1a58fbd9d91a6d07660e72443e3bff369aa864e"
+      },
+      {
+        "path": "../.medol/medol.local.yml",
+        "sha256": "6b534915bda481ba5fd110af7d775b0422b7647d04f5e916d438b9ddd75a88cd"
+      },
+      {
+        "path": "../.medol/source.medol",
+        "sha256": "0610060148b1b1c037d937161ea7d3ccea1ae0387f691f4d14e3cfef8d771815"
+      },
+      {
+        "path": "../dictionary-init/dictionaries.json",
+        "sha256": "efb7481cb7be3b7145a33032af8647729c3400e92725a6add352b30aee4428bc"
+      }
+    ]
+  },
+  "images": []
+}

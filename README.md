@@ -106,7 +106,13 @@ directory is present. `local` is a separate deployment environment; generate it
 with `--environment local`. There is no shared `local.yml` because local
 settings vary by machine. Use `operations/config/local.private.yml` when needed.
 
-From the repository root, use `node operations/images/dev/images.mjs list` to
+After generating an environment once, changes to its private registry address
+do not require regenerating operations. Run
+`bash operations/scripts/prepare-registry.sh <environment>`
+to refresh ignored registry overlays, K3s node registry configuration, and
+private image settings.
+
+From the repository root, use `node operations/images/images.mjs list --environment dev` to
 inspect image settings. For Compose, copy
 `operations/docker-compose/dev/.env-example` to `.env` in that directory and run
 `docker compose --env-file .env up -d` there. APISIX configuration is mounted
@@ -250,7 +256,7 @@ when both addresses are identical. Regenerate operations after changing this
 configuration so `operations/model/dev/operations-model.private.json` and registry mirrors
 are updated. Recreate k3d if its registry mirror configuration changes.
 
-Both `node operations/images/dev/images.mjs list` and flow `--dry-run` show the resolved
+Both `node operations/images/images.mjs list --environment dev` and flow `--dry-run` show the resolved
 build/deployment prefixes. Explicit CLI prefixes take precedence, followed by
 environment variables and the generated environment configuration.
 The runtime-engine image helper also reads this configuration when used inside
@@ -266,8 +272,8 @@ uses `registry.host`, both with the configured namespace.
 Build and publish the three backends (platform, runtime-agent, support):
 
 ```bash
-node operations/images/dev/images.mjs build --skip-console --platform linux/amd64
-node operations/images/dev/images.mjs push --skip-console
+node operations/images/images.mjs build --environment dev --skip-console --platform linux/amd64
+node operations/images/images.mjs push --environment dev --skip-console
 ```
 
 `--skip-console` skips both frontend images: `federation-learning-console` and

@@ -1,0 +1,7 @@
+# Copy to test.private.yml on the deployment preparation machine.
+# After editing, run: bash operations/scripts/prepare-registry.sh test
+# Leave this file absent when importing the application images into K3s directly.
+registry:
+  host: registry.example.com:5000
+  namespace: fl
+  insecure: true

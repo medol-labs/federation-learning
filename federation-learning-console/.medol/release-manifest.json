@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "builtAt": "2026-10-28T07:27:11.531Z",
+  "imageVersion": "0.0.1-SNAPSHOT",
+  "buildIdentity": "d6118a80aecf76a80ae0d4bf44e675311b75c8c178fef738ea89aea58106e64a",
+  "codeSha256": "f692a22b55fbbd1b3e32a83e5becc5164d63d3671c5de4d2c38ac33cecc4a1ad",
+  "buildOptionsSha256": "75f598b834313256bead025d89babbe8672a627bbc6c58498fc6902dd3bdc61b",
+  "git": {
+    "revision": "88b6bee5bcaa11fd908d4baa8a04c0211bf5845f",
+    "dirty": true
+  },
+  "generation": {
+    "schemaVersion": 1,
+    "target": "refine",
+    "scope": "release-support",
+    "selection": {
+      "environment": "dev"
+    },
+    "generatedAt": "2026-10-28T07:09:11.483Z",
+    "generator": {
+      "name": "medol-codegen",
+      "version": "1.0.0",
+      "sha256": "def1169ea9651c8f2aad0cda6f15066262a2f6c7ac075b750b0214ad61dbf697"
+    },
+    "model": {
+      "sha256": "99b9eee3347e33e147cc1a23b1c2eabf776c843bcd45c01d1bc97628b3a89070",
+      "metadata": {
+        "schemaVersion": 1,
+        "medolVersion": "0.1.0",
+        "source": {
+          "sha256": "0610060148b1b1c037d937161ea7d3ccea1ae0387f691f4d14e3cfef8d771815"
+        }
+      }
+    },
+    "config": {
+      "sha256": "e1bb17ce7ca8eada5f89670e583a635cb51c5b3d71c0bd902de346c1bd3c5991"
+    },
+    "inputs": [
+      {
+        "path": "../.medol/codegen-model.json",
+        "sha256": "99b9eee3347e33e147cc1a23b1c2eabf776c843bcd45c01d1bc97628b3a89070"
+      },
+      {
+        "path": "../.medol/medol.yml",
+        "sha256": "f3f72759925093d87a4a6841a1a58fbd9d91a6d07660e72443e3bff369aa864e"
+      },
+      {
+        "path": "../.medol/medol.local.yml",
+        "sha256": "6b534915bda481ba5fd110af7d775b0422b7647d04f5e916d438b9ddd75a88cd"
+      },
+      {
+        "path": "../.medol/source.medol",
+        "sha256": "0610060148b1b1c037d937161ea7d3ccea1ae0387f691f4d14e3cfef8d771815"
+      },
+      {
+        "path": "../dictionary-init/dictionaries.json",
+        "sha256": "efb7481cb7be3b7145a33032af8647729c3400e92725a6add352b30aee4428bc"
+      }
+    ]
+  },
+  "images": [
+    {
+      "name": "192.168.50.2:5000/fl/federation-learning-console:0.0.1-SNAPSHOT",
+      "id": "sha256:e9e3250b951293f9acc87ae4a5cef6ad4fb0935e4ac369eb19acafcc854fee68",
+      "repoDigests": [
+        "192.168.50.2:5000/fl/federation-learning-console@sha256:2b7b87f1a0e0485b912f88d8e939ff4b9430e03ef6f1cb74979e00c979f85e32"
+      ]
+    }
+  ]
+}

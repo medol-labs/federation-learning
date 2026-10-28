@@ -44,13 +44,13 @@ Commit `operations-model.json` as the portable deployment model. Configure deplo
 Use `images.mjs` to orchestrate generated backend, frontend, and infrastructure images from this monorepo:
 
 ```bash
-node operations/images/<environment>/images.mjs list
-node operations/images/<environment>/images.mjs all
-node operations/images/<environment>/images.mjs build --exclude-service <service>
-node operations/images/<environment>/images.mjs build --service <backend-module>
-node operations/images/<environment>/images.mjs push --prefix registry.example.com/team
-node operations/images/<environment>/images.mjs push-dependencies --prefix registry.example.com/team
-node operations/images/<environment>/images.mjs import
+node operations/images/images.mjs list --environment <environment>
+node operations/images/images.mjs all --environment <environment>
+node operations/images/images.mjs build --environment <environment> --exclude-service <service>
+node operations/images/images.mjs build --environment <environment> --service <backend-module>
+node operations/images/images.mjs push --environment <environment> --prefix registry.example.com/team
+node operations/images/images.mjs push-dependencies --environment <environment> --prefix registry.example.com/team
+node operations/images/images.mjs import --environment <environment>
 ```
 
 Application image builds use the native Docker platform by default. Pass `--platform linux/amd64` or `--platform linux/arm64` only when you intentionally need a fixed target architecture; cross-architecture frontend builds can be much slower.

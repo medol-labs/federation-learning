@@ -1,5 +1,8 @@
 # Runtime Scheduling Component
 
+For disconnected native K3s environments other than `local`, follow the
+[offline deployment runbook](../../OFFLINE-DEPLOYMENT.md).
+
 This component contains Federation Learning-specific K3s resources: scheduler
 ServiceAccounts and RBAC, runtime dataset mounts, the platform aggregation
 engine, and platform/runtime-agent configuration patches. It is maintained in

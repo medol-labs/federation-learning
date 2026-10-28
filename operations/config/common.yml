@@ -1,3 +1,4 @@
+imagePrefix: fl
 networkTopology:
   sites:
     platform:

@@ -29,8 +29,8 @@ loadEnvFiles([
 const environment = stringArg('environment', 'FL_OPERATIONS_ENVIRONMENT', 'local');
 if (!/^[a-z][a-z0-9-]*$/.test(environment)) fail(`Invalid operations environment: ${environment}`);
 const imageDirectory = resolve(repoRoot, 'operations/images', environment);
-const imageConfigFile = resolve(imageDirectory, 'image-config.mjs');
-if (!existsSync(imageConfigFile)) {
+const imageConfigFile = resolve(repoRoot, 'operations/images/image-config.mjs');
+if (!existsSync(resolve(repoRoot, 'operations/model', environment, 'operations-model.json'))) {
     fail(`Operations environment ${environment} has not been generated. Generate operations with --environment ${environment} first.`);
 }
 const {resolveImageConfig, resolveImageArtifact} = await import(pathToFileURL(imageConfigFile).href);
@@ -459,13 +459,14 @@ async function prepareParticipant(slot) {
 }
 
 function rebuildApplicationImages() {
-    const imagesScript = resolve(imageDirectory, 'images.mjs');
+    const imagesScript = resolve(repoRoot, 'operations/images/images.mjs');
     if (!existsSync(imagesScript)) {
         fail(`Application image helper was not found: ${imagesScript}`);
     }
     run('node', [
         imagesScript,
         'build',
+        '--environment', environment,
         '--prefix', imageConfig.buildPrefix,
         '--version', imageVersion,
         '--skip-console'
@@ -473,6 +474,7 @@ function rebuildApplicationImages() {
     if (imageConfig.mode === 'registry') run('node', [
         imagesScript,
         'push',
+        '--environment', environment,
         '--prefix', imageConfig.buildPrefix,
         '--version', imageVersion,
         '--skip-console'

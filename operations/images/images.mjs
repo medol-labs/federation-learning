@@ -8,9 +8,18 @@ import {resolveImageConfig} from './image-config.mjs';
 import {prepareRelease} from './release-runtime.mjs';
 import {verifyArchiveManifest, verifyLoadedImages} from './image-archive-runtime.mjs';
 
-const scriptDir = dirname(fileURLToPath(import.meta.url));
+const imagesDir = dirname(fileURLToPath(import.meta.url));
 const args = parseArgs(process.argv.slice(2));
 const command = args._[0] ?? 'help';
+const environment = String(args.environment ?? process.env.OPERATIONS_ENVIRONMENT ?? '').trim();
+if (command !== 'help' && command !== '--help' && command !== '-h' && !/^[a-zA-Z0-9_-]+$/.test(environment)) {
+    throw new Error('Specify a valid --environment <name> or OPERATIONS_ENVIRONMENT.');
+}
+const scriptDir = join(imagesDir, environment);
+if (command !== 'help' && command !== '--help' && command !== '-h' &&
+    !existsSync(join(imagesDir, '..', 'model', environment, 'operations-model.json'))) {
+    throw new Error(`Operations model for environment ${environment} was not found. Generate that environment first.`);
+}
 const monorepoRoot = resolve(scriptDir, args.root ?? process.env.MONOREPO_ROOT ?? '../../..');
 const platform = String(args.platform ?? process.env.DOCKER_DEFAULT_PLATFORM ?? '').trim();
 const dependencyPlatform = platform || hostDockerPlatform();
@@ -271,7 +280,7 @@ function writeManifest() {
     const manifest = {
         ...release.manifest,
         generatedAt: new Date().toISOString(),
-        environment: 'local',
+        environment,
         platform: platform || 'native',
         dependencyPlatform,
         imagePrefix,
@@ -478,7 +487,7 @@ function isConsoleProject(root) {
 
 function printPlan() {
     console.log('[operations-images] monorepo:', monorepoRoot);
-    console.log('[operations-images] environment:', 'local');
+    console.log('[operations-images] environment:', environment);
     console.log('[operations-images] application platform:', platform || 'native');
     console.log('[operations-images] dependency platform:', dependencyPlatform);
     console.log('[operations-images] fast build:', fastBuild ? 'enabled' : 'disabled');
@@ -676,17 +685,7 @@ function parseArgs(argv) {
 
 function printUsage() {
     console.log(`Usage:
-  node operations/images/local/images.mjs list [options]
-  node operations/images/local/images.mjs build [options]
-  node operations/images/local/images.mjs export [options]
-  node operations/images/local/images.mjs import [options]
-  node operations/images/local/images.mjs push --prefix <registry/namespace> [options]
-  node operations/images/local/images.mjs pull-dependencies [options]
-  node operations/images/local/images.mjs export-dependencies [options]
-  node operations/images/local/images.mjs import-dependencies [options]
-  node operations/images/local/images.mjs push-dependencies --prefix <registry/namespace> [options]
-  node operations/images/local/images.mjs package [options]
-  node operations/images/local/images.mjs all [options]
+  node operations/images/images.mjs <command> --environment <name> [options]
 
 Commands:
   build                Build backend and frontend images.
@@ -698,6 +697,9 @@ Commands:
   import-dependencies  Load dependency-images.tar.
   push-dependencies    Retag dependencies under a registry-root mirror path and push them.
   package, all         Build, pull dependencies, export images, collect compose files, and tar the bundle.
+
+Environment:
+  --environment <name>          Select operations/model/<name> configuration and images/<name> output.
 
 Options:
   --prefix <name>                 Image prefix or registry namespace. Defaults to DOCKER_IMAGE_PREFIX or fl.

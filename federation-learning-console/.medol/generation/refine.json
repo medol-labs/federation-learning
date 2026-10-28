@@ -5,11 +5,11 @@
   "selection": {
     "environment": "dev"
   },
-  "generatedAt": "2026-10-21T14:52:08.882Z",
+  "generatedAt": "2026-10-28T07:09:11.483Z",
   "generator": {
     "name": "medol-codegen",
     "version": "1.0.0",
-    "sha256": "2f918efba9fb522d4dd4651fb6aa8ae2c0cd313d4362cb4c9f75756ae422fcc7"
+    "sha256": "def1169ea9651c8f2aad0cda6f15066262a2f6c7ac075b750b0214ad61dbf697"
   },
   "model": {
     "sha256": "99b9eee3347e33e147cc1a23b1c2eabf776c843bcd45c01d1bc97628b3a89070",
@@ -22,7 +22,7 @@
     }
   },
   "config": {
-    "sha256": "5e05462c9c9a7c051a1c5791df67e01872bc0dc1a4e14961f16ae5c100900a97"
+    "sha256": "e1bb17ce7ca8eada5f89670e583a635cb51c5b3d71c0bd902de346c1bd3c5991"
   },
   "inputs": [
     {
@@ -31,11 +31,11 @@
     },
     {
       "path": "../.medol/medol.yml",
-      "sha256": "af230491e348036bcc313e24cce7200a649079f7bef9fabb5883579746b947fd"
+      "sha256": "f3f72759925093d87a4a6841a1a58fbd9d91a6d07660e72443e3bff369aa864e"
     },
     {
       "path": "../.medol/medol.local.yml",
-      "sha256": "17986c81b52296c8ec5d5c7b0aa660256ad8f3ee63a4b846cab713f380f422b4"
+      "sha256": "6b534915bda481ba5fd110af7d775b0422b7647d04f5e916d438b9ddd75a88cd"
     },
     {
       "path": "../.medol/source.medol",

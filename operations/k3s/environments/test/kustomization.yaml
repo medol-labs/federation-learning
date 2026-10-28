@@ -1,0 +1,16 @@
+resources:
+  - "../../base"
+  - "configmap.yaml"
+namespace: "federation-learning-platform"
+labels:
+  - pairs:
+      "app.kubernetes.io/part-of": "federation-learning-platform"
+      "medol.dev/environment": "test"
+    includeSelectors: true
+    includeTemplates: true
+patches:
+  - path: "patches/federation-learning-console-envfrom.yaml"
+  - path: "patches/federation-learning-participant-console-envfrom.yaml"
+  - path: "patches/federation-learning-platform-envfrom.yaml"
+  - path: "patches/federation-learning-runtime-agent-envfrom.yaml"
+  - path: "patches/federation-learning-support-envfrom.yaml"
