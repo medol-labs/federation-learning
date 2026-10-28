@@ -1,8 +1,8 @@
 # 院内信息系统、检测与可穿戴设备集成关系
 
-![院内系统与设备集成关系](figures/federated-twin-hospital-device-integration.png)
+![院内系统与设备集成关系](../../generated/diagrams/federated-twin-hospital-device-integration.png)
 
-[draw.io 图源](figures/federated-twin-hospital-device-integration.drawio) · [SVG 矢量图](figures/federated-twin-hospital-device-integration.svg)
+[draw.io 图源](figures/federated-twin-hospital-device-integration.drawio) · [SVG 矢量图](../../generated/diagrams/federated-twin-hospital-device-integration.svg)
 
 本图描述面向示范医疗机构的数据接入及用途，补充[业务架构](federated-twin-business-architecture.md)和[平台内部集成关系](federated-twin-internal-integration.md)。分区表示信息处理职责及授权边界，不限定实际服务器位置，也不表示院内既有系统属于本项目建设范围。
 
@@ -35,4 +35,4 @@ python3 docs/diagrams/drawio.py check docs/438c/merge/figures/federated-twin-hos
 python3 docs/diagrams/drawio.py export docs/438c/merge/figures/federated-twin-hospital-device-integration.drawio
 ```
 
-随图源一并维护 PNG、SVG 和本文。蓝色实线表示业务信息接入或使用，绿色实线表示联邦训练协作及模型工件交付；不表示接口、数据权限和设备对接已经全部实现。
+提交图源与本文，PNG、SVG 导出至已忽略的 `docs/generated/diagrams/`，不提交生成图片。蓝色实线表示业务信息接入或使用，绿色实线表示联邦训练协作及模型工件交付；不表示接口、数据权限和设备对接已经全部实现。

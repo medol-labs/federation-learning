@@ -221,15 +221,15 @@ def merge_database(target, out, check):
     figures = {
         'FL-DB-FIG-GOVERNANCE': (
             {'widthCm': 12.5, 'caption': '联邦学习组织与数据治理概念关系图'},
-            SOURCE_DIR / 'figures/conceptual-data-governance.png',
+            ROOT / 'docs/generated/diagrams/conceptual-data-governance.png',
         ),
         'FL-DB-FIG-TRAINING': (
             {'widthCm': 9.5, 'caption': '联邦学习训练与模型更新概念关系图'},
-            SOURCE_DIR / 'figures/conceptual-data-training.png',
+            ROOT / 'docs/generated/diagrams/conceptual-data-training.png',
         ),
     }
     if any(not path.is_file() for _, path in figures.values()):
-        raise ValueError('Database conceptual figure is missing')
+        raise ValueError('Database conceptual figure is missing; run python3 docs/diagrams/drawio.py export docs/438c/merge/figures/*.dot')
     forward = heading(document, '正向追溯', 'Heading 2')
     reverse = heading(document, '逆向追溯', 'Heading 2')
     forward_table = following_table(document, forward)

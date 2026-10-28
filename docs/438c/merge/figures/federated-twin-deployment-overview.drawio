@@ -572,7 +572,7 @@
         </mxCell>
         <mxCell
           id="b-cloud-inference-label"
-          value="按场景调用区内模型服务&#10;推理请求 / 推理结果&#10;传输必要信息须经授权"
+          value="按场景调用区内模型服务&#10;推理请求 / 推理结果"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#35698B;fontStyle=0;spacing=0;"
           vertex="1"
           parent="b-cloud-inference"
@@ -608,7 +608,7 @@
         </mxCell>
         <mxCell
           id="a-cloud-inference-label"
-          value="按场景调用区内模型服务&#10;推理请求 / 推理结果&#10;传输必要信息须经授权"
+          value="按场景调用区内模型服务&#10;推理请求 / 推理结果"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#35698B;fontStyle=0;spacing=0;"
           vertex="1"
           parent="a-cloud-inference"

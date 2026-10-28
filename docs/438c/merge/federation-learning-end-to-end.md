@@ -1,8 +1,8 @@
 # 联邦学习端到端业务流程
 
-![联邦学习端到端业务流程](figures/federation-learning-end-to-end.png)
+![联邦学习端到端业务流程](../../generated/diagrams/federation-learning-end-to-end.png)
 
-[draw.io 图源](figures/federation-learning-end-to-end.drawio) · [SVG 矢量图](figures/federation-learning-end-to-end.svg)
+[draw.io 图源](figures/federation-learning-end-to-end.drawio) · [SVG 矢量图](../../generated/diagrams/federation-learning-end-to-end.svg)
 
 本图以当前建模中的 `FederationLearningEndToEnd` 用户旅程为依据，将原有 Mermaid 流程整理为与业务架构、内部集成关系一致的原生 draw.io 图稿。保留全部 16 个阶段和 18 条连接关系，中文标题按业务阅读习惯调整，节点 ID 保留对应阶段名称。它是项目文档图稿，不修改 MEDOL 建模或文档生成器。
 
@@ -40,7 +40,7 @@
 
 ## 编辑与导出
 
-以同名 `.drawio` 文件作为唯一布局编辑来源，后续建模调整时核对阶段与连接关系，并同步更新图源、本文及导出图片。
+以 `.drawio` 文件作为唯一布局编辑来源，后续建模调整时核对阶段与连接关系，并同步更新图源和本文。导出图片位于已忽略的 `docs/generated/diagrams/`，不提交 PNG、SVG。
 
 ```bash
 python3 docs/diagrams/drawio.py format docs/438c/merge/figures/federation-learning-end-to-end.drawio

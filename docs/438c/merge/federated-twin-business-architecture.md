@@ -1,6 +1,6 @@
 # 联邦孪生平台业务架构
 
-![联邦孪生平台业务架构](figures/federated-twin-business-architecture.png)
+![联邦孪生平台业务架构](../../generated/diagrams/federated-twin-business-architecture.png)
 
 [打开原生 draw.io 图稿](figures/federated-twin-business-architecture.drawio)
 
@@ -55,7 +55,7 @@
 
 - 唯一编辑来源：[原生 draw.io 图稿](figures/federated-twin-business-architecture.drawio)，记录文字、形状、系统边界、连接线及精确布局。
 - 统一样式：[draw.io 图库](../../diagrams/project-styles.mxlibrary)，供后续架构图复用。
-- 矢量图：`figures/federated-twin-business-architecture.svg`。
-- 高清图：`figures/federated-twin-business-architecture.png`，以 2 倍分辨率导出。
+- 矢量图：`docs/generated/diagrams/federated-twin-business-architecture.svg`。
+- 高清图：`docs/generated/diagrams/federated-twin-business-architecture.png`，以 2 倍分辨率导出。
 
-用 draw.io 编辑、保存源文件后，在项目根目录执行 `python3 docs/diagrams/drawio.py format docs/438c/merge/figures/federated-twin-business-architecture.drawio`，再将 `format` 改为 `export` 导出两种图稿。源文件采用未压缩 XML、稳定节点 ID 和逐属性格式，可随 Git 跟踪文字、连线及坐标变化。图稿与配套文字作为本项目总文档的受控来源维护，工具及共享编辑方法见[维护说明](../../diagrams/README.md)。
+用 draw.io 编辑、保存源文件后，在项目根目录执行 `python3 docs/diagrams/drawio.py format docs/438c/merge/figures/federated-twin-business-architecture.drawio`，再将 `format` 改为 `export` 导出两种图稿。源文件采用未压缩 XML、稳定节点 ID 和逐属性格式，可随 Git 跟踪文字、连线及坐标变化。只提交图源及配套文字，PNG、SVG 输出到已忽略的 `docs/generated/diagrams/`，工具及共享编辑方法见[维护说明](../../diagrams/README.md)。

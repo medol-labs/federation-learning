@@ -79,7 +79,27 @@ def normalize(path):
 
 
 def export(path):
-    read_diagram(path)
+    if path.suffix == '.drawio':
+        read_diagram(path)
+    elif path.suffix != '.dot':
+        raise ValueError(f'Expected .drawio or .dot source: {path}')
+    output_dir = Path(__file__).resolve().parents[1] / 'generated' / 'diagrams'
+    output_dir.mkdir(parents=True, exist_ok=True)
+    if path.suffix == '.dot':
+        executable = shutil.which('dot')
+        if executable is None:
+            raise ValueError('Install Graphviz to export .dot diagram sources')
+        for extension in ('svg', 'png'):
+            output = output_dir / f'{path.stem}.{extension}'
+            command = [executable, f'-T{extension}']
+            if extension == 'png':
+                command.append('-Gdpi=180')
+            command.extend([str(path), '-o', str(output)])
+            subprocess.run(command, check=True, timeout=90)
+            if not output.is_file() or output.stat().st_size == 0:
+                raise ValueError(f'Graphviz did not produce {output}')
+            print(output)
+        return
     executable = os.environ.get('DRAWIO_EXECUTABLE') or shutil.which('drawio')
     if executable is None:
         mac_app = Path('/Applications/draw.io.app/Contents/MacOS/draw.io')
@@ -88,7 +108,7 @@ def export(path):
     if executable is None:
         raise ValueError('Install draw.io Desktop or set DRAWIO_EXECUTABLE to its executable')
     for extension in ('svg', 'png'):
-        output = path.with_suffix(f'.{extension}')
+        output = output_dir / f'{path.stem}.{extension}'
         command = [executable, '--export', '--format', extension,
                    '--border', '20', '--output', str(output), str(path)]
         if extension == 'png':
@@ -106,8 +126,8 @@ def main():
     args = parser.parse_args()
     for source in args.sources:
         source = source.resolve()
-        if source.suffix != '.drawio':
-            parser.error(f'Expected .drawio source: {source}')
+        if source.suffix != '.drawio' and not (args.action == 'export' and source.suffix == '.dot'):
+            parser.error(f'Expected .drawio source (export also accepts .dot): {source}')
         if args.action == 'format':
             normalize(source)
             print(f'Formatted: {source}')

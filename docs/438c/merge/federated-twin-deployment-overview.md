@@ -1,8 +1,8 @@
 # 联邦孪生平台总体部署架构
 
-![总体部署架构](figures/federated-twin-deployment-overview.png)
+![总体部署架构](../../generated/diagrams/federated-twin-deployment-overview.png)
 
-[draw.io 图源](figures/federated-twin-deployment-overview.drawio) · [SVG 矢量图](figures/federated-twin-deployment-overview.svg)
+[draw.io 图源](figures/federated-twin-deployment-overview.drawio) · [SVG 矢量图](../../generated/diagrams/federated-twin-deployment-overview.svg)
 
 ## 部署说明
 
@@ -32,7 +32,7 @@
 
 ## 维护
 
-本图以同名 `.drawio` 为唯一编辑来源，按实际部署情况调整组件与医院组合，同步导出 PNG 和 SVG。它是部署架构图，不替代详细网络拓扑、端口清单或医院地址配置。
+本图以 `.drawio` 为唯一编辑来源，按实际部署情况调整组件与医院组合。PNG、SVG 统一导出至已忽略的 `docs/generated/diagrams/`，不提交生成图片。它是部署架构图，不替代详细网络拓扑、端口清单或医院地址配置。
 
 图例使用原生可编辑符号：云形表示部署环境，组件符号表示运行服务或进程，折角文档表示被加载的模型工件，文档符号表示院内系统或数据来源。模型推理服务与其模型工件分别表示，不把模型文件本身作为服务。院内数据来源不等同于共享数据库，图中不因此新增具体数据库或服务实例；数据库、容器等细节需在实际服务级部署方案确认后展开。
 

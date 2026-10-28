@@ -30,7 +30,7 @@
       {
         "id": "FL-SD-DBC-04",
         "type": "figure",
-        "image": "docs/438c/merge/figures/conceptual-data-governance.png",
+        "image": "docs/generated/diagrams/conceptual-data-governance.png",
         "source": "docs/438c/merge/figures/conceptual-data-governance.dot",
         "caption": "联邦学习概念数据关系（治理与数据准备）",
         "widthCm": 15.0
@@ -38,7 +38,7 @@
       {
         "id": "FL-SD-DBC-05",
         "type": "figure",
-        "image": "docs/438c/merge/figures/conceptual-data-training.png",
+        "image": "docs/generated/diagrams/conceptual-data-training.png",
         "source": "docs/438c/merge/figures/conceptual-data-training.dot",
         "caption": "联邦学习概念数据关系（训练与结果）",
         "widthCm": 12.5

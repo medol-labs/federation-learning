@@ -1,6 +1,6 @@
 # 文档图表的 draw.io 来源与统一样式
 
-业务架构图以原生 `.drawio` 文件作为唯一编辑来源，SVG、PNG 是用于文档的导出结果。原生形状、文字、分组及连接线均可编辑，手工调整保存后直接用于后续导出。
+业务架构图以原生 `.drawio` 文件作为唯一编辑来源，SVG、PNG 是用于文档的导出结果。图源、说明、图库及导出工具提交 Git；所有图表导出图片统一进入 `docs/generated/diagrams/`，已由 `.gitignore` 忽略，不再提交。原生形状、文字、分组及连接线均可编辑，手工调整保存后直接用于后续导出。
 
 ## 编辑与共享
 
@@ -18,7 +18,15 @@ python3 docs/diagrams/drawio.py format docs/438c/merge/figures/federated-twin-bu
 python3 docs/diagrams/drawio.py export docs/438c/merge/figures/federated-twin-business-architecture.drawio
 ```
 
-`check` 检查 XML、重复 ID 及缺失的父元素或连接端点。`format` 自动展开 draw.io 保存的压缩页并逐属性排版 XML，保留元素顺序与 ID，去除保存时间等易变元数据；此操作不重新布局。`export` 用 draw.io Desktop 导出同目录 SVG 和 2 倍尺寸 PNG，读取源文件而不改写它。
+`check` 检查 XML、重复 ID 及缺失的父元素或连接端点。`format` 自动展开 draw.io 保存的压缩页并逐属性排版 XML，保留元素顺序与 ID，去除保存时间等易变元数据；此操作不重新布局。`export` 用 draw.io Desktop 将 SVG 和 2 倍尺寸 PNG 导出到 `docs/generated/diagrams/<图源文件名>.svg` 和 `.png`，读取源文件而不改写它。图源文件名须在本项目内保持唯一。
+
+新克隆仓库后，需要先导出图片，Markdown 预览与 Word 合并才能使用它们。批量导出当前全部图表：
+
+```bash
+python3 docs/diagrams/drawio.py export docs/mermaid-diagram.drawio docs/438c/merge/figures/*.drawio docs/438c/merge/figures/*.dot
+```
+
+`export` 也接受 Graphviz `.dot` 图源，调用本地 `dot` 生成 SVG 和 180 DPI PNG，输出到同一生成目录。Word 合并所需的概念图也按此方式重新生成。
 
 脚本使用 Python 标准库。导出需要本机安装 draw.io Desktop，支持 PATH 中的 `drawio` 和 macOS 默认安装路径；其他位置可通过 `DRAWIO_EXECUTABLE` 指定。图源、图形编辑和导出均不依赖原来的 Mermaid 或 Python 绘图逻辑。
 
@@ -39,4 +47,4 @@ draw.io 内置图形可从左下角“更多图形”按需启用，部署图通
 
 源文件保存为未压缩 XML，提交前运行 `format`。文字、连接关系及几何位置可逐行对照；节点移动会产生坐标差异，仍需配合预览图审阅。不要重建或随机替换原有节点 ID，不要对 XML 元素排序，以免改变图层顺序。
 
-当前业务架构图及[系统集成关系图](../438c/merge/federated-twin-internal-integration.md)均以 draw.io 维护。系统集成图保留历史文件名 `docs/mermaid-diagram`，其 `.drawio` 为图源，`.png`、`.svg` 为导出结果，与 Mermaid 无关。已有概念关系图的 DOT 来源按原流程维护。
+当前业务架构图及[系统集成关系图](../438c/merge/federated-twin-internal-integration.md)均以 draw.io 维护。系统集成图保留历史图源名 `docs/mermaid-diagram.drawio`，与 Mermaid 无关；导出图片位于 `docs/generated/diagrams/mermaid-diagram.png` 和 `.svg`。已有概念关系图继续维护 DOT 图源，导出目录与 draw.io 统一。移动导出图片不重写旧提交；Git 历史体积不会因此立即缩小。

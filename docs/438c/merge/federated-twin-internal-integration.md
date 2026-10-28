@@ -1,10 +1,10 @@
 # 联邦孪生平台系统集成关系
 
-![系统集成关系](../../mermaid-diagram.png)
+![系统集成关系](../../generated/diagrams/mermaid-diagram.png)
 
-[原生 draw.io 图稿](../../mermaid-diagram.drawio) · [矢量图](../../mermaid-diagram.svg)
+[原生 draw.io 图稿](../../mermaid-diagram.drawio) · [矢量图](../../generated/diagrams/mermaid-diagram.svg)
 
-本图细化三大业务模块之间的集成关系，机构本地节点作为协同训练交互对象一并展示，不表示服务器或网络拓扑。沿用原图片路径 `docs/mermaid-diagram.png`，但不再由 Mermaid 维护；同名 `.drawio` 是唯一编辑来源。
+本图细化三大业务模块之间的集成关系，机构本地节点作为协同训练交互对象一并展示，不表示服务器或网络拓扑。图源沿用历史名称 `docs/mermaid-diagram.drawio`，但不由 Mermaid 维护；导出 PNG、SVG 位于 `docs/generated/diagrams/`。
 
 布局按业务职责划分为左侧“联邦训练协作侧”和右侧“孪生业务应用侧”。左侧组织各机构本地执行与平台协作，右侧由应用推理服务支持医疗数字人及风险评估，两侧以模型工件交付连接。用户置于底部，业务结果使用与人工反馈分别走独立路径。分区不表示机构节点与平台共用环境，也不表示跨系统共享服务或数据库。
 
@@ -37,4 +37,4 @@ python3 docs/diagrams/drawio.py check docs/mermaid-diagram.drawio
 python3 docs/diagrams/drawio.py export docs/mermaid-diagram.drawio
 ```
 
-提交图源及同名 PNG、SVG，并同步维护本文交互说明。图形使用[统一图库与工具](../../diagrams/README.md)，节点、连接线、标签均可在 draw.io 中继续编辑。
+只提交图源并同步维护本文交互说明，PNG、SVG 是已忽略的生成产物。图形使用[统一图库与工具](../../diagrams/README.md)，节点、连接线、标签均可在 draw.io 中继续编辑。

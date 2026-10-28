@@ -14,7 +14,7 @@ CSCI 详细设计按训练主链的软件单元展开启动条件、输入来源
 
 第 6 章沿用总稿已有的“正向追溯”“逆向追溯”两张表。合并时将原有 10 条过期且设计侧为空的联邦学习占位行替换为当前 `3.3.1-function-register.json` 的全部功能需求。正向表列出每项需求与第 5 章 `FL-SD-OP-Fxxxx` 操作设计行的对应关系；已有 19 项训练主链需求还对应 `FL-SD-DET-05` 的关键处理设计行。逆向表按实际设计行汇总需求标识，长列表分行显示。设计标识在第 5 章的 Word 表格中可见；部署单元名称不作为设计对应项。原稿其他模块行保留，序号顺延。需求、模型定义或关键处理映射变化时，合并基线报告差异并要求人工复核。
 
-数据库概念设计的关系图源位于 `figures/conceptual-data-*.dot`，对应 PNG 随结构化条目插入 Word；图和图源的文件指纹纳入合并基线。修改图源后用 Graphviz 重新生成图片，例如 `dot -Tpng -Gdpi=180 docs/438c/merge/figures/conceptual-data-training.dot -o docs/438c/merge/figures/conceptual-data-training.png`，再审阅图片并同步基线。图表达概念关联和平台/参与方归属，不表达物理表或跨库外键。
+数据库概念设计的关系图源位于 `figures/conceptual-data-*.dot`，PNG 导出至已忽略的 `docs/generated/diagrams/`，随结构化条目插入 Word；只提交图源，图和图源的文件指纹仍纳入合并基线。修改图源后执行 `python3 docs/diagrams/drawio.py export docs/438c/merge/figures/*.dot`，再审阅图片并同步基线。路径迁移也会触发基线差异，须按现有审阅及 `--sync` 流程确认，不自动接受。图表达概念关联和平台/参与方归属，不表达物理表或跨库外键。
 
 当前总文档底稿位于 `../../../../tmp/merge/02“感一通一算”一体化的跨域健康管理联邦孪生平台-软件设计说明v1.0.docx`。原始文件不受脚本修改。执行：
 
