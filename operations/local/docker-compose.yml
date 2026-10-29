@@ -1,0 +1,71 @@
+name: federation-learning-platform-host-local
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres:16}
+    restart: unless-stopped
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-medol}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER:-medol}
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U ${POSTGRES_USER:-medol} -d ${POSTGRES_DB:-medol}
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infrastructure/postgres/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - medol-network
+    ports:
+      - 127.0.0.1:${POSTGRES_PORT:-5432}:5432
+  umadb:
+    image: ${UMADB_IMAGE:-umadb/umadb:0.7.8}
+    restart: unless-stopped
+    expose:
+      - "50051"
+    volumes:
+      - umadb_data:/data
+    networks:
+      - medol-network
+    ports:
+      - 127.0.0.1:${UMADB_PORT:-50051}:50051
+  axon-server:
+    image: ${AXON_SERVER_IMAGE:-axoniq/axonserver:2026.0.3-jdk-21}
+    hostname: axon-server
+    profiles:
+      - axon-server
+    expose:
+      - "8124"
+      - "8024"
+    environment:
+      axoniq_axonserver_autocluster_contexts: _admin,default
+      axoniq_axonserver_autocluster_dcb: "true"
+      axoniq_axonserver_autocluster_first: axon-server
+      axoniq_axonserver_hostname: axon-server
+    volumes:
+      - axon_server_data:/axonserver/data
+      - axon_server_events:/axonserver/events
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget -qO- http://127.0.0.1:8024/actuator/health >/dev/null 2>&1 ||
+          exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - medol-network
+networks:
+  medol-network:
+    driver: bridge
+volumes:
+  postgres_data: {}
+  umadb_data: {}
+  axon_server_data: {}
+  axon_server_events: {}

@@ -1,0 +1,19 @@
+resources:
+  - "namespace.yaml"
+  - "infrastructure.yaml"
+  - "applications.yaml"
+  - "configmap.yaml"
+  - "apisix-config.yaml"
+  - "apisix.yaml"
+namespace: "federation-learning-platform"
+labels:
+  - pairs:
+      "app.kubernetes.io/part-of": "federation-learning-platform"
+      "medol.dev/environment": "dev"
+      "medol.dev/site": "platform"
+    includeSelectors: true
+    includeTemplates: true
+patches:
+  - path: "patches/federation-learning-console-envfrom.yaml"
+  - path: "patches/federation-learning-platform-envfrom.yaml"
+  - path: "patches/federation-learning-support-envfrom.yaml"

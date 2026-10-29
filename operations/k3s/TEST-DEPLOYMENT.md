@@ -1,12 +1,14 @@
 # Test K3s deployment
 
-The generated test overlay is `environments/test`. It uses the same Kubernetes
-namespace and resource names as dev. Deploy test to a separate cluster; applying
-both overlays to one cluster will update the same workloads and PVCs.
+The generated test site entry points are `environments/test/sites/platform`
+and `environments/test/sites/participant`. Each is independently deployable
+and contains only that site's applications and infrastructure. Deploy test to
+clusters separate from dev; resource names and PVC names are unchanged across
+environments.
 
 ## Before deployment
 
-1. Review `operations/config/common.yml` and the generated test ConfigMap,
+1. Review `operations/config/common.yml` and both generated site ConfigMaps,
    especially frontend API URLs and browser CORS origins. The test overlay does
    not enable the dev-only localhost CORS defaults. Put environment-specific
    non-secret overrides in `operations/config/test.yml`, for example:
@@ -29,12 +31,12 @@ both overlays to one cluster will update the same workloads and PVCs.
    `operations/config/test.private.example.yml` to ignored
    `operations/config/test.private.yml`, set the reachable registry address,
    and run `bash operations/scripts/prepare-registry.sh test`.
-   Apply the locally prepared
-   `environments/test-registry` overlay. Otherwise, import the exact images
-   referenced by `environments/test` into every node that may run them.
-3. Create real test Secrets from `environments/test/secrets.example.yaml` or
-   an external secret manager. Replace all example passwords, JWT keys, and
-   internal tokens. Do not commit real Secret manifests.
+   Apply the matching `environments/test-registry/sites/<site>` overlay.
+   Otherwise, import the exact images referenced by the corresponding
+   `environments/test/sites/<site>` entry into eligible nodes.
+3. Create separate real Secrets from each site's `secrets.example.yaml`, or
+   use an external secret manager. Replace all example passwords, JWT keys,
+   and internal tokens. Do not commit real Secret manifests.
 4. Ensure K3s system images, CoreDNS, local-path-provisioner, PostgreSQL,
    UmaDB, and APISIX are available to the cluster. Verify that the nodes can
    resolve the registry if registry mode is used.
@@ -44,23 +46,25 @@ both overlays to one cluster will update the same workloads and PVCs.
 
 ## Apply
 
-Run from `operations/k3s` with `kubectl` pointing at the **test** cluster:
+Prefer `node scripts/package-offline.mjs --environment test` from the repository
+root so the matching Federation Learning scheduling component is rendered into
+each site package. On each control node, apply only the received site package:
 
 ```bash
 kubectl config current-context
 kubectl create namespace federation-learning-platform --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n federation-learning-platform apply -f environments/test/secrets.test.yaml
-kubectl apply -k environments/test
+kubectl -n federation-learning-platform apply -f /secure/path/runtime-secrets.yaml
+kubectl apply -f manifests/deployment.yaml
 kubectl -n federation-learning-platform get pods,svc,pvc
 ```
 
-Use `kubectl apply -k environments/test-registry` instead of `environments/test`
-when a test registry overlay was generated. The Secret file is local and is
+For source-based validation before packaging, render
+`environments/test/sites/<site>` or
+`environments/test-registry/sites/<site>`. The real Secret is external and is
 not included by Kustomize.
 
-The `runtime-scheduling` component is application-specific. The current
-`federation-learning-dev.sh` helper generates development credentials and
-localhost URLs by default, so do not run it against test unchanged. Prepare
-an environment-owned component with real Secrets, node mounts, image
-references, and scheduler RBAC before platform-managed runtime-agent
-deployment or runtime-engine scheduling.
+The `runtime-scheduling` component is application-specific and split into
+`platform` and `participant` subcomponents. The package wrapper selects the
+matching one. The root component and `federation-learning-dev.sh` are for the
+combined local development topology and must not be used as the formal
+split-site test release.

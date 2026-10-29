@@ -3,10 +3,23 @@
 For disconnected native K3s environments other than `local`, follow the
 [offline deployment runbook](../../OFFLINE-DEPLOYMENT.md).
 
-This component contains Federation Learning-specific K3s resources: scheduler
-ServiceAccounts and RBAC, runtime dataset mounts, the platform aggregation
-engine, and platform/runtime-agent configuration patches. It is maintained in
-Git and is not an environment or registry overlay.
+This directory contains Federation Learning-specific K3s resources. The
+deployable components are split by generated site:
+
+- `platform/` adds the aggregation engine and platform/support configuration
+  patches. It does not grant same-cluster Runtime Agent deployment permissions.
+- `participant/` adds runtime-engine scheduler RBAC, runtime dataset/work
+  mounts, and runtime-agent configuration patches.
+
+The root component remains for the combined local development topology. Formal
+site delivery must select the matching subcomponent. These files are maintained
+in Git and are not generated environment or registry overlays.
+
+The split-site topology deploys Runtime Agent from the participant package.
+The root component retains same-cluster platform-managed agent scheduling only
+for the combined development topology. Remote participant-cluster provisioning
+requires a separate cross-cluster credential and control-plane design; the
+site package does not pretend that an in-cluster ServiceAccount can do that.
 
 The helper defaults to the generated `environments/local` environment. A
 machine-specific `operations/config/local.private.yml` may generate the ignored

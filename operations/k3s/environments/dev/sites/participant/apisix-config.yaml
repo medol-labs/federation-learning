@@ -1,0 +1,43 @@
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "apisix-config"
+data:
+  config.yaml: |
+    apisix:
+      node_listen: 9080
+      enable_admin: false
+    deployment:
+      role: "data_plane"
+      role_data_plane:
+        config_provider: "yaml"
+  apisix.yaml: |
+    routes:
+      - id: "federation-learning-participant-console-root"
+        name: "Federation Learning Participant Console Root"
+        uri: "/federation-learning-participant-console/*"
+        upstream_id: "federation-learning-participant-console"
+        plugins:
+          proxy-rewrite:
+            regex_uri:
+              - "^/federation-learning-participant-console/(.*)"
+              - "/$1"
+      - id: "federation-learning-runtime-agent-api"
+        name: "Federation Learning Runtime Agent API"
+        uri: "/api/federation-learning-runtime-agent/*"
+        upstream_id: "federation-learning-runtime-agent"
+        plugins:
+          proxy-rewrite:
+            regex_uri:
+              - "^/api/federation-learning-runtime-agent/(.*)"
+              - "/$1"
+    upstreams:
+      - id: "federation-learning-participant-console"
+        type: "roundrobin"
+        nodes:
+          "federation-learning-participant-console:80": 1
+      - id: "federation-learning-runtime-agent"
+        type: "roundrobin"
+        nodes:
+          "federation-learning-runtime-agent:8082": 1
+    #END

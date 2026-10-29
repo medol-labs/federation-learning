@@ -475,6 +475,7 @@ function rebuildApplicationImages() {
         imagesScript,
         'push',
         '--environment', environment,
+        '--push-prefix', imageConfig.pushPrefix,
         '--prefix', imageConfig.buildPrefix,
         '--version', imageVersion,
         '--skip-console'

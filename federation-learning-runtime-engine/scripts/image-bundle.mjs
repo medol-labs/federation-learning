@@ -14,8 +14,10 @@ const args = parseArgs(process.argv.slice(2));
 const command = args._[0] ?? 'help';
 const root = resolve(process.cwd(), args.root ?? '.');
 loadDotEnv(resolve(root, '.env'));
-const operationsDirectory = resolve(root, '../operations/images/dev');
-const sharedConfigPath = resolve(operationsDirectory, 'image-config.mjs');
+const environment = String(args.environment ?? process.env.OPERATIONS_ENVIRONMENT ?? 'local');
+if (!/^[a-zA-Z0-9_-]+$/.test(environment)) throw new Error('Invalid operations environment.');
+const operationsDirectory = resolve(root, '../operations/images', environment);
+const sharedConfigPath = resolve(root, '../operations/images/image-config.mjs');
 const sharedConfig = existsSync(sharedConfigPath)
     ? (await import(pathToFileURL(sharedConfigPath).href)).resolveImageConfig(operationsDirectory, {prefix: args.prefix, version: args.version})
     : undefined;
@@ -107,8 +109,11 @@ async function importImage() {
 function pushImage() {
     release.verifyImages([fullImageName]);
     release.claim();
-    run('docker', ['push', fullImageName]);
-    release.writeManifest('.medol/release-manifest.json', [fullImageName], {requireRepoDigests: true});
+    const prefix = String(args['push-prefix'] ?? process.env.DOCKER_PUSH_IMAGE_PREFIX ?? sharedConfig?.pushPrefix ?? imagePrefix).replace(/\/+$/, '');
+    const target = prefix + fullImageName.slice(imagePrefix.length);
+    if (target !== fullImageName) run('docker', ['tag', fullImageName, target]);
+    run('docker', ['push', target]);
+    release.writeManifest('.medol/release-manifest.json', [target], {requireRepoDigests: true});
 }
 
 function printPlan() {
@@ -265,6 +270,7 @@ function parseArgs(argv) {
 }
 
 function printUsage() {
+    console.log('--push-prefix <registry/namespace>: push destination only; defaults to DOCKER_PUSH_IMAGE_PREFIX or the source prefix. --prefix/DOCKER_IMAGE_PREFIX selects the local build/export name.');
     console.log(`Usage:
   node scripts/image-bundle.mjs build [options]
   node scripts/image-bundle.mjs export [options]

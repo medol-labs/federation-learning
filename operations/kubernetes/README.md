@@ -24,6 +24,9 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 - `environments/<environment>/patches/*-envfrom.yaml` attaches environment ConfigMaps and optional per-application Secrets to Deployments.
 - `environments/<environment>/patches/*-environment.yaml` contains resource differences from the common base.
 - `environments/<environment>-registry/` may be generated from local `operations.registry` settings. It rewrites application images to a registry without changing the committed base overlay.
+- `environments/<environment>/sites/<site>/` is a complete site-specific entry point containing only that site's applications, infrastructure, gateway, ConfigMaps, and Secret example.
+- `environments/<environment>-registry/sites/<site>/` applies Registry image names to the same isolated site.
+- Deploy a site entry point directly. The parent environment remains a combined compatibility overlay and must not be used for physically separated sites.
 
 ## Before Applying
 
@@ -46,16 +49,16 @@ Create the namespace before applying environment-specific Secret objects:
 kubectl create namespace federation-learning-platform --dry-run=client -o yaml | kubectl apply -f -
 ```
 
-The generated `secrets.example.yaml` contains `postgres-secret` and the per-application Secret objects required by the workloads. Copy it to an environment-owned file, replace every example value, and apply it separately:
+The generated `environments/<environment>/sites/<site>/secrets.example.yaml` contains only the infrastructure and per-application Secret objects required by the selected deployment entry point. Copy it outside generated sources, replace every example value, and apply it separately:
 
 ```bash
-cp environments/<environment>/secrets.example.yaml environments/<environment>/secrets.<environment>.yaml
-# Edit secrets.<environment>.yaml and replace change-me, development tokens, and empty credentials.
-kubectl -n federation-learning-platform apply -f environments/<environment>/secrets.<environment>.yaml
+cp environments/<environment>/sites/<site>/secrets.example.yaml /secure/path/runtime-secrets.yaml
+# Edit /secure/path/runtime-secrets.yaml and replace change-me, development tokens, and empty credentials.
+kubectl -n federation-learning-platform apply -f /secure/path/runtime-secrets.yaml
 kubectl -n federation-learning-platform get secret postgres-secret
 ```
 
-`secrets.<environment>.yaml` is intentionally not referenced by the generated Kustomization and must not be committed. Production deployments should create the same Secret objects through the selected secret manager or deployment pipeline instead.
+`runtime-secrets.yaml` is intentionally not referenced by the generated Kustomization and must not be committed. Production deployments should create the same Secret objects through the selected secret manager or deployment pipeline instead.
 
 ## First Administrator
 
@@ -65,10 +68,10 @@ Administrator bootstrap is enabled by default for `federation-learning-runtime-a
 Apply both files and restart the IAM application before submitting `POST /api/auth/setup-admin`:
 
 ```bash
-kubectl -n federation-learning-platform apply -f environments/<environment>/secrets.<environment>.yaml
-kubectl apply -k environments/<environment>
+kubectl -n federation-learning-platform apply -f /secure/path/runtime-secrets.yaml
+kubectl apply -k environments/<environment>/sites/<site>
 # Or, when a local registry overlay was generated:
-# kubectl apply -k environments/<environment>-registry
+# kubectl apply -k environments/<environment>-registry/sites/<site>
 kubectl -n federation-learning-platform rollout restart deploy/federation-learning-runtime-agent
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-runtime-agent
 ```
@@ -79,8 +82,8 @@ After the administrator is created, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED`
 
 Generated Deployments keep non-sensitive application settings in environment ConfigMaps so each environment can own its runtime configuration:
 
-- ConfigMaps are generated in `environments/<environment>/configmap.yaml` and are applied with the overlay through `envFrom`.
-- Secret templates are generated in `environments/<environment>/secrets.example.yaml`; copy or translate them into your local/secret-manager workflow before applying real secrets.
+- ConfigMaps are generated in `environments/<environment>/sites/<site>/configmap.yaml` and are applied with the overlay through `envFrom`.
+- Secret templates are generated in `environments/<environment>/sites/<site>/secrets.example.yaml`; copy or translate them into your local/secret-manager workflow before applying real secrets.
 - Base Deployments keep only direct secret references such as `DB_USERNAME` and `DB_PASSWORD`; non-sensitive values should be changed in the environment ConfigMap.
 
 ## Apply
@@ -88,9 +91,9 @@ Generated Deployments keep non-sensitive application settings in environment Con
 Apply exactly one environment overlay after the namespace and real Secret objects exist:
 
 ```bash
-kubectl apply -k environments/<environment>
+kubectl apply -k environments/<environment>/sites/<site>
 # Or, when a local registry overlay was generated:
-# kubectl apply -k environments/<environment>-registry
+# kubectl apply -k environments/<environment>-registry/sites/<site>
 kubectl -n federation-learning-platform get pods,svc,pvc
 ```
 
@@ -100,11 +103,11 @@ APISIX is exposed with a LoadBalancer service. Use the external address assigned
 
 Default routes:
 
-- `/*` -> `undefined`
-- `/federation-learning-participant-console/*` -> `undefined`
-- `/api/federation-learning-platform/*` -> `undefined`
-- `/api/federation-learning-runtime-agent/*` -> `undefined`
-- `/api/federation-learning-support/*` -> `undefined`
+- `/*` -> `federation-learning-console`
+- `/federation-learning-participant-console/*` -> `federation-learning-participant-console`
+- `/api/federation-learning-platform/*` -> `federation-learning-platform`
+- `/api/federation-learning-runtime-agent/*` -> `federation-learning-runtime-agent`
+- `/api/federation-learning-support/*` -> `federation-learning-support`
 
 ## Validation
 
@@ -131,13 +134,13 @@ Use these commands from this directory unless another path is shown. For the gen
 Apply environment ConfigMaps and generated manifests:
 
 ```bash
-kubectl apply -k environments/<environment>
+kubectl apply -k environments/<environment>/sites/<site>
 ```
 
-Apply Secret values when using a copied `secrets.<environment>.yaml` file:
+Apply the real Secret manifest prepared outside generated sources:
 
 ```bash
-kubectl -n federation-learning-platform apply -f environments/<environment>/secrets.<environment>.yaml
+kubectl -n federation-learning-platform apply -f /secure/path/runtime-secrets.yaml
 ```
 
 ConfigMap and Secret changes are read when a Pod starts. Restart the affected Deployments after changing them:

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: federation-learning-platform-dev-config
+data:
+  FL_AGGREGATION_MODE: runtime-engine
+  FL_AGGREGATION_RUNTIME_ENGINE_ENDPOINT: http://federation-learning-aggregation-runtime-engine:8080
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: federation-learning-support-dev-config
+data:
+  SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: 128MB
+  SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: 130MB

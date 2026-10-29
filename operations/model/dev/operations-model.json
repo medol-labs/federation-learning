@@ -651,7 +651,7 @@
           "postgres",
           "umadb"
         ],
-        "gateway": false
+        "gateway": true
       }
     ],
     "connections": [
@@ -672,6 +672,57 @@
   "environments": [
     {
       "name": "dev",
+      "variables": {
+        "IMAGE_TAG": "0.0.1-SNAPSHOT",
+        "GATEWAY_PORT": "9080",
+        "POSTGRES_USER": "medol",
+        "POSTGRES_PASSWORD": "change-me",
+        "POSTGRES_DB": "medol"
+      },
+      "applicationOverrides": {
+        "federation-learning-console": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false
+        },
+        "federation-learning-participant-console": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false
+        },
+        "federation-learning-platform": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": true,
+          "hostPort": 8081
+        },
+        "federation-learning-runtime-agent": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": true,
+          "hostPort": 8082
+        },
+        "federation-learning-support": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": true,
+          "hostPort": 8080
+        }
+      },
+      "infrastructureOverrides": {
+        "axon-server": {
+          "exposePorts": false
+        },
+        "postgres": {
+          "exposePorts": true
+        },
+        "umadb": {
+          "exposePorts": true
+        }
+      }
+    },
+    {
+      "name": "local",
       "variables": {
         "IMAGE_TAG": "0.0.1-SNAPSHOT",
         "GATEWAY_PORT": "9080",

@@ -13,6 +13,7 @@ networkTopology:
         umadb: true
     participant:
       title: Participant environment (per organization)
+      gateway: true
       applications:
         federation-learning-participant-console: true
         federation-learning-runtime-agent: true

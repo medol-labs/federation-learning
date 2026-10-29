@@ -1,0 +1,15 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "federation-learning-support"
+spec:
+  template:
+    spec:
+      containers:
+        - name: "federation-learning-support"
+          envFrom:
+            - configMapRef:
+                name: "federation-learning-support-dev-config"
+            - secretRef:
+                name: "federation-learning-support-dev-secret"
+                optional: true

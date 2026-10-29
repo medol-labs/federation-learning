@@ -651,7 +651,7 @@
           "postgres",
           "umadb"
         ],
-        "gateway": false
+        "gateway": true
       }
     ],
     "connections": [

@@ -1,0 +1,15 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "federation-learning-runtime-agent"
+spec:
+  template:
+    spec:
+      containers:
+        - name: "federation-learning-runtime-agent"
+          envFrom:
+            - configMapRef:
+                name: "federation-learning-runtime-agent-dev-config"
+            - secretRef:
+                name: "federation-learning-runtime-agent-dev-secret"
+                optional: true

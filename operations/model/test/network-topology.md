@@ -14,6 +14,7 @@ flowchart LR
     N9["umadb :50051"]
   end
   subgraph Site2["Participant environment (per organization)"]
+    N2["apisix :9080"]
     N4["federation-learning-participant-console :80"]
     N6["federation-learning-runtime-agent :8082"]
     N10["postgres :5432"]
