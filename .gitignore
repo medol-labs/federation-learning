@@ -93,6 +93,9 @@ operations/**/kubernetes/environments/*-registry/**
 operations/**/kubernetes/overlays/*-registry/**
 
 # Image and deployment bundles
+# Build provenance is delivered with images/bundles, not committed as source.
+**/.medol/build-manifest.json
+**/medol-build.json
 *.tar
 *.tar.gz
 *.tgz
