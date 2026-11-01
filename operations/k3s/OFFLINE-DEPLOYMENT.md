@@ -1,7 +1,7 @@
 # Offline K3s Deployment
 
 This runbook applies to non-`local` environments such as `dev`, `test`, and
-production. It assumes native K3s on disconnected machines. Build and export
+`production`. It assumes native K3s on disconnected machines. Build and export
 images on a connected build host; do not build, pull, or push on the target.
 The generated K3s `base/` and `environments/<env>/sites/<site>/` directories
 are generator-owned. Federation Learning scheduling components and this
@@ -14,7 +14,6 @@ to their respective clusters. Configure platform-to-participant and
 participant-to-platform URLs with addresses reachable across those clusters;
 Kubernetes Service names such as `federation-learning-runtime-agent` resolve
 only inside the cluster where that Service exists.
-
 
 ## 1. Record the release
 
@@ -32,7 +31,6 @@ generated operations files match the code and Medol generation inputs before
 building. Do not bypass a generation hash or image manifest failure. Preserve
 the commit ID, image names/tags, architecture, and archive checksums with the
 release.
-
 
 ## 2. Prepare deployment configuration
 
@@ -76,7 +74,6 @@ ServiceAccount names.
 Review the final rendered YAML rather than assuming a suffix replacement
 makes the configuration correct. Physical node directories are prepared in
 step 6, not during image construction.
-
 
 ## 3. Build and export on the connected host
 
@@ -138,7 +135,6 @@ image and the dynamically scheduled engine image in the runtime configuration.
 Check that the managed agent and participant console image references also
 match the exported images. The current component contains explicit image tags;
 they do not change automatically with the application release.
-
 
 ## 4. Assemble the automated delivery
 
@@ -214,7 +210,6 @@ Kustomize errors fail packaging. No manual `releases/<env>` entry point is
 needed when using this command. The appendix contains manual assembly instructions as an
 alternative, not additional steps for this automated package.
 
-
 ## 5. Transfer and check native K3s on target
 
 Transfer each site delivery only to its intended target. The platform package
@@ -234,7 +229,6 @@ kubectl -n kube-system get deploy coredns local-path-provisioner
 If CoreDNS, the pause image, or local-path-provisioner cannot start, fix the
 K3s air-gap image installation before applying application resources. Ensure
 the default StorageClass and DNS work if the generated manifests require them.
-
 
 ## 6. Prepare target nodes and import images
 
@@ -275,7 +269,6 @@ external registry. Do not use a locally imported `fl/...` image with a
 registry-qualified manifest reference unless that exact reference is also
 present in containerd.
 
-
 ## 7. Apply the automated delivery
 
 On the control node, change into the received delivery directory. Images
@@ -290,7 +283,6 @@ kubectl apply -f manifests/deployment.yaml
 
 Replace the Secret path/environment with the separately delivered credentials.
 The target does not need Node.js, project sources, or Kustomize composition.
-
 
 ## 8. Verify infrastructure, application, and training
 
@@ -316,7 +308,6 @@ datasets and work directories on those same nodes. Then register/verify the
 participant infrastructure, deploy the agent, initialize business data, and
 submit a small training job. Confirm the platform and participant read models
 and the resulting model artifact, not just Pod readiness.
-
 
 ## Alternative: target nodes can reach an internal Registry
 
@@ -546,7 +537,6 @@ workloads, or provide the configured artifact service. Runtime work directories
 normally need to be created with appropriate permissions on eligible nodes;
 do not copy a build host's temporary training results as deployment inputs.
 
-
 ### Compose and preview a single Kustomize release
 
 Do not apply a generated site and its runtime-scheduling component as two
@@ -578,7 +568,6 @@ Confirm there are no leftover `-dev-config` or `-dev-secret` references when
 deploying another environment, and no registry-only image references if using
 local imports. Verify all referenced images exist under the same name/tag in
 K3s containerd on their eligible nodes.
-
 
 ### Apply Secret, then the combined release
 
