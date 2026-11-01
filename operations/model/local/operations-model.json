@@ -25,7 +25,7 @@
       "environmentVariables": [
         {
           "name": "VITE_API_URL",
-          "value": "https://iwdfzvfqbtokqetmbmbp.supabase.co"
+          "value": ""
         },
         {
           "name": "VITE_SUPABASE_API_KEY",
@@ -46,6 +46,10 @@
         {
           "name": "VITE_AXON_API_URL",
           "value": "/api/federation-learning-platform"
+        },
+        {
+          "name": "VITE_AUTH_PROVIDER",
+          "value": "local"
         }
       ],
       "dependencies": [],
@@ -75,7 +79,7 @@
       "environmentVariables": [
         {
           "name": "VITE_API_URL",
-          "value": "https://iwdfzvfqbtokqetmbmbp.supabase.co"
+          "value": ""
         },
         {
           "name": "VITE_SUPABASE_API_KEY",
@@ -92,6 +96,10 @@
         {
           "name": "VITE_AXON_API_URL",
           "value": "/api/federation-learning-runtime-agent"
+        },
+        {
+          "name": "VITE_AUTH_PROVIDER",
+          "value": "local"
         }
       ],
       "dependencies": [],
@@ -115,6 +123,16 @@
       "imageName": "fl/federation-learning-platform",
       "servicePort": 8081,
       "exposeExternally": false,
+      "resources": {
+        "requests": {
+          "cpu": "250m",
+          "memory": "512Mi"
+        },
+        "limits": {
+          "cpu": "2",
+          "memory": "1536Mi"
+        }
+      },
       "contexts": [
         "OrganizationManagement",
         "FederationManagement",
@@ -206,7 +224,8 @@
         "intervalSeconds": 10,
         "timeoutSeconds": 5,
         "retries": 12,
-        "startPeriodSeconds": 30
+        "startPeriodSeconds": 30,
+        "startupTimeoutSeconds": 180
       },
       "deploymentProfile": {
         "replicas": 1,
@@ -222,6 +241,16 @@
       "imageName": "fl/federation-learning-runtime-agent",
       "servicePort": 8082,
       "exposeExternally": false,
+      "resources": {
+        "requests": {
+          "cpu": "250m",
+          "memory": "512Mi"
+        },
+        "limits": {
+          "cpu": "2",
+          "memory": "1536Mi"
+        }
+      },
       "contexts": [
         "RuntimeAgentOperations",
         "IdentityAccessManagement"
@@ -306,7 +335,8 @@
         "intervalSeconds": 10,
         "timeoutSeconds": 5,
         "retries": 12,
-        "startPeriodSeconds": 30
+        "startPeriodSeconds": 30,
+        "startupTimeoutSeconds": 180
       },
       "deploymentProfile": {
         "replicas": 1,
@@ -322,6 +352,16 @@
       "imageName": "fl/federation-learning-support",
       "servicePort": 8080,
       "exposeExternally": false,
+      "resources": {
+        "requests": {
+          "cpu": "250m",
+          "memory": "512Mi"
+        },
+        "limits": {
+          "cpu": "2",
+          "memory": "1536Mi"
+        }
+      },
       "contexts": [
         "SystemNotification",
         "DataExchange",
@@ -409,7 +449,8 @@
         "intervalSeconds": 10,
         "timeoutSeconds": 5,
         "retries": 12,
-        "startPeriodSeconds": 30
+        "startPeriodSeconds": 30,
+        "startupTimeoutSeconds": 180
       },
       "deploymentProfile": {
         "replicas": 1,
@@ -425,6 +466,7 @@
       "image": "postgres:16",
       "servicePort": 5432,
       "volumeName": "postgres_data",
+      "storageSize": "10Gi",
       "environmentVariables": [
         {
           "name": "POSTGRES_USER",
@@ -453,6 +495,7 @@
       "image": "umadb/umadb:0.7.8",
       "servicePort": 50051,
       "volumeName": "umadb_data",
+      "storageSize": "10Gi",
       "environmentVariables": [],
       "enabled": true
     },

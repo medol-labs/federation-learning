@@ -70,6 +70,10 @@ the extension locations documented by each generated module.
 
 ## Operations Layout
 
+For native single-node K3s debugging in any generated environment, see
+[Native Single-Node Debugging](operations/k3s/SINGLE-NODE.md). This uses one Linux
+K3s server and a combined deployment entry, independently of k3d and split-site releases.
+
 Operations files are grouped by component, then environment. Generating another
 environment adds its files under the same component directory:
 
@@ -100,9 +104,8 @@ Deployment settings live in `operations/config/common.yml`. Add
 `operations/config/<environment>.yml` for committed environment differences,
 or copy `operations/config/dev.private.example.yml` to
 `operations/config/dev.private.yml` for a private registry address. Private files
-are ignored by Git and apply only to their matching environment. The old
-`.medol/medol.local.yml` registry setting is not used once this configuration
-directory is present. `local` is a separate deployment environment; generate it
+are ignored by Git and apply only to their matching environment.
+`local` is a separate deployment environment; generate it
 with `--environment local`. There is no shared `local.yml` because local
 settings vary by machine. Use `operations/config/local.private.yml` when needed.
 

@@ -1,0 +1,54 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "apisix"
+  labels:
+    "app.kubernetes.io/name": "apisix"
+    "app.kubernetes.io/component": "gateway"
+    "app.kubernetes.io/managed-by": "medol-operations-generator"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "apisix"
+  template:
+    metadata:
+      labels:
+        app: "apisix"
+    spec:
+      containers:
+        - name: "apisix"
+          image: "apache/apisix:3.13.0-debian"
+          ports:
+            - containerPort: 9080
+          volumeMounts:
+            - name: "apisix-config"
+              mountPath: "/usr/local/apisix/conf/config.yaml"
+              subPath: "config.yaml"
+              readOnly: true
+            - name: "apisix-config"
+              mountPath: "/usr/local/apisix/conf/apisix.yaml"
+              subPath: "apisix.yaml"
+              readOnly: true
+      volumes:
+        - name: "apisix-config"
+          configMap:
+            name: "apisix-config"
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "apisix"
+  labels:
+    "app.kubernetes.io/name": "apisix"
+    "app.kubernetes.io/component": "gateway"
+    "app.kubernetes.io/managed-by": "medol-operations-generator"
+spec:
+  type: "NodePort"
+  selector:
+    app: "apisix"
+  ports:
+    - name: "http"
+      port: 9080
+      targetPort: 9080
+      nodePort: 30080

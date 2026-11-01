@@ -1,4 +1,14 @@
 imagePrefix: fl
+frontend:
+  supabaseUrl: ""
+  environmentVariables:
+    - name: VITE_AUTH_PROVIDER
+      value: local
+infrastructure:
+  postgres:
+    storageSize: 10Gi
+  umadb:
+    storageSize: 10Gi
 networkTopology:
   sites:
     platform:
@@ -34,7 +44,22 @@ networkTopology:
 applications:
   federation-learning-support:
     servicePort: 8080
+    resources:
+      requests: {cpu: 250m, memory: 512Mi}
+      limits: {cpu: "2", memory: 1536Mi}
+    healthCheck:
+      startupTimeoutSeconds: 180
   federation-learning-platform:
     servicePort: 8081
+    resources:
+      requests: {cpu: 250m, memory: 512Mi}
+      limits: {cpu: "2", memory: 1536Mi}
+    healthCheck:
+      startupTimeoutSeconds: 180
   federation-learning-runtime-agent:
     servicePort: 8082
+    resources:
+      requests: {cpu: 250m, memory: 512Mi}
+      limits: {cpu: "2", memory: 1536Mi}
+    healthCheck:
+      startupTimeoutSeconds: 180

@@ -7,7 +7,8 @@ metadata:
     "app.kubernetes.io/component": "application-config"
     "app.kubernetes.io/managed-by": "medol-operations-generator"
 data:
-  VITE_API_URL: "https://iwdfzvfqbtokqetmbmbp.supabase.co"
+  VITE_API_URL: ""
+  VITE_AUTH_PROVIDER: "local"
   VITE_AXON_API_URL: "/api/federation-learning-platform"
   VITE_FEDERATION_LEARNING_PLATFORM_API_URL: "/api/federation-learning-platform"
   VITE_FEDERATION_LEARNING_SUPPORT_API_URL: "/api/federation-learning-support"
@@ -23,7 +24,8 @@ metadata:
     "app.kubernetes.io/component": "application-config"
     "app.kubernetes.io/managed-by": "medol-operations-generator"
 data:
-  VITE_API_URL: "https://iwdfzvfqbtokqetmbmbp.supabase.co"
+  VITE_API_URL: ""
+  VITE_AUTH_PROVIDER: "local"
   VITE_AXON_API_URL: "/api/federation-learning-runtime-agent"
   VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL: "/api/federation-learning-runtime-agent"
   VITE_FRONTEND_APP: "FederationLearningParticipantConsole"

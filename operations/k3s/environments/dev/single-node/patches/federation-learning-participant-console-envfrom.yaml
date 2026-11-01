@@ -1,0 +1,15 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "federation-learning-participant-console"
+spec:
+  template:
+    spec:
+      containers:
+        - name: "federation-learning-participant-console"
+          envFrom:
+            - configMapRef:
+                name: "federation-learning-participant-console-dev-config"
+            - secretRef:
+                name: "federation-learning-participant-console-dev-secret"
+                optional: true

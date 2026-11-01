@@ -129,6 +129,13 @@ spec:
       containers:
         - name: "federation-learning-platform"
           image: "fl/federation-learning-platform:0.0.1-SNAPSHOT"
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "2"
+              memory: "1536Mi"
           ports:
             - containerPort: 8081
           env:
@@ -149,7 +156,6 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 12
-            initialDelaySeconds: 30
           livenessProbe:
             httpGet:
               path: "/actuator/health"
@@ -157,7 +163,13 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 12
-            initialDelaySeconds: 30
+          startupProbe:
+            httpGet:
+              path: "/actuator/health"
+              port: 8081
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 18
 ---
 apiVersion: "v1"
 kind: "Service"
@@ -197,6 +209,13 @@ spec:
       containers:
         - name: "federation-learning-runtime-agent"
           image: "fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT"
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "2"
+              memory: "1536Mi"
           ports:
             - containerPort: 8082
           env:
@@ -217,7 +236,6 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 12
-            initialDelaySeconds: 30
           livenessProbe:
             httpGet:
               path: "/actuator/health"
@@ -225,7 +243,13 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 12
-            initialDelaySeconds: 30
+          startupProbe:
+            httpGet:
+              path: "/actuator/health"
+              port: 8082
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 18
 ---
 apiVersion: "v1"
 kind: "Service"
@@ -265,6 +289,13 @@ spec:
       containers:
         - name: "federation-learning-support"
           image: "fl/federation-learning-support:0.0.1-SNAPSHOT"
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "2"
+              memory: "1536Mi"
           ports:
             - containerPort: 8080
           env:
@@ -285,7 +316,6 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 12
-            initialDelaySeconds: 30
           livenessProbe:
             httpGet:
               path: "/actuator/health"
@@ -293,7 +323,13 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 12
-            initialDelaySeconds: 30
+          startupProbe:
+            httpGet:
+              path: "/actuator/health"
+              port: 8080
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 18
 ---
 apiVersion: "v1"
 kind: "Service"
