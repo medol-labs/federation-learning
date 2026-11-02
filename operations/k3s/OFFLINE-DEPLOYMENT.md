@@ -1,8 +1,19 @@
 # Offline K3s Deployment
 
 This runbook applies to non-`local` environments such as `dev`, `test`, and
-`production`. It assumes native K3s on disconnected machines. Build and export
-images on a connected build host; do not build, pull, or push on the target.
+`production`. It covers native K3s with two distinct image-delivery paths:
+
+- **Offline archive delivery:** follow numbered steps 1-8. Build/export on the
+  build host, transfer site image tar archives, and import them into K3s.
+- **Internal Zot Registry delivery:** complete common steps 1-2, then follow
+  [the Registry alternative](#alternative-target-nodes-can-reach-an-internal-registry)
+  A-D. Do not execute offline steps 3-7; the alternative gives its own ordered
+  build/push, configuration packaging, node preparation, and deployment commands.
+  Finish with the shared verification in step 8. No application image tar
+  export, transfer, or import is required in this path.
+
+Do not build application images on target nodes. Registry-mode nodes pull
+published images; offline-mode nodes use imported images.
 The generated K3s `base/` and `environments/<env>/sites/<site>/` directories
 are generator-owned. Federation Learning scheduling components and this
 runbook are project-owned and must not be added to the generic generator.
@@ -249,6 +260,9 @@ will actually run. Do not copy old build-host temporary training results.
 Registry-based deployments need this node preparation too, even when image
 tar import is skipped.
 
+The following image import commands apply only to the offline archive path.
+For Zot delivery, use alternative C below instead of importing tar archives.
+
 Change into the received site delivery directory and run
 `sha256sum -c SHA256SUMS`. Copy its tar files only to nodes eligible to run that
 site's workloads. Import them into **K3s containerd**, not Docker:
@@ -272,7 +286,8 @@ present in containerd.
 ## 7. Apply the automated delivery
 
 On the control node, change into the received delivery directory. Images
-must already have been imported in step 6. Apply the namespace, separately
+must already have been imported in step 6 for this offline archive path.
+For Zot delivery, use alternative D instead. Apply the namespace, separately
 delivered Secrets, and then the rendered workloads:
 
 ```bash
@@ -311,26 +326,17 @@ and the resulting model artifact, not just Pod readiness.
 
 ## Alternative: target nodes can reach an internal Registry
 
-Use this branch when target nodes cannot reach the Internet but can reach an
-internal Registry. Follow steps 1-3 for source selection, configuration, and
-building; replace tar delivery/import (steps 4-7) with the following steps.
-Archive export is optional for this branch. Real Secrets, datasets, K3s
-installation prerequisites, and workload verification still apply.
+Use this separate path when target nodes can reach an internal Zot Registry,
+even if they cannot reach the Internet. Complete common steps 1-2, then execute
+A-D below in order. Skip offline steps 3-7: do not build/export a tar package
+and then repeat these commands. Real Secrets, datasets, native K3s installation,
+and the shared verification in step 8 are still required.
 
 Do not run `images.mjs package` for a normal Registry delivery. That command
 performs build plus image export and creates site-specific image tar files;
 those archives are for offline import. Build and push directly, then run
 `scripts/package-offline.mjs --image-source registry` to package only the
-Kubernetes manifests and checksums:
-
-```bash
-node operations/images/images.mjs build --environment <env> --platform linux/amd64
-node operations/images/images.mjs push --environment <env>
-node operations/images/images.mjs pull-dependencies --environment <env> --platform linux/amd64
-node operations/images/images.mjs push-dependencies --environment <env>
-node scripts/package-offline.mjs --environment <env> --image-source registry \
-  --output /tmp/application-<env>-registry
-```
+Kubernetes manifests and checksums as shown in A-B below.
 
 With no `--site`, these commands publish all configured application and
 dependency images once to the shared Registry. Platform and participant
@@ -356,51 +362,30 @@ registry:
 Replace the example host. Use `insecure: true` only for the site's intended
 plain-HTTP Registry setup; configure TLS trust/authentication as required by
 the actual Registry. Keep credentials outside the public delivery files.
-Prepare the local Registry overlay, then push the already built images:
+Prepare the Registry overlay, build application images, and publish them:
 
 ```bash
 bash operations/scripts/prepare-registry.sh test
+node operations/images/images.mjs build --environment test --platform linux/amd64
 node operations/images/images.mjs push --environment test
 node operations/images/images.mjs pull-dependencies --environment test --platform linux/amd64
 node operations/images/images.mjs push-dependencies --environment test
 cd federation-learning-runtime-engine
+node scripts/build-images.mjs --environment test --platform linux/amd64 --plugin-profile pytorch-vision
 node scripts/push-images.mjs --environment test --plugin-profile pytorch-vision
 cd ..
-node scripts/package-offline.mjs --environment test --image-source registry \
-  --output /tmp/federation-learning-test-registry
 ```
 
-Replace `test` and the engine profile. Push every engine profile needed by
+Replace `test`, the CPU architecture, and the engine profile. If the exact release
+images are already built and verified, skip their build commands and publish
+those images without rebuilding. Push every engine profile needed by
 training and aggregation. Push retags the stable local build rather than
 rebuilding it. Registry configuration must match the namespace used by the
 generated deployment overlay. For K3s dependency mirrors, infrastructure/system
 images use their original repository paths at the Registry root rather than
 the application `/fl` namespace; review the printed dependency targets.
 
-### B. Prepare every target node and deliver manifests
-
-Deliver the prepared `operations/k3s/cluster/registries.yaml` through the
-site's configuration channel when mirrors are required. On native K3s nodes,
-install the appropriate configuration as `/etc/rancher/k3s/registries.yaml`
-before installation, or restart the applicable K3s server/agent service after
-changing it on an existing cluster. Configure credentials and CA trust on
-every eligible node. A Docker daemon Registry setting does not configure
-K3s containerd. Do not recreate a production cluster just to change Registry
-configuration.
-
-Verify the Registry is reachable from the nodes, the required application and
-K3s system images are published, and K3s can pull them. A mirror can redirect
-image requests, but it cannot supply an image that has not been published.
-
-Transfer the generated site directories under the chosen output, for example
-`/tmp/application-test-registry/platform` and
-`/tmp/application-test-registry/participant`. Each contains rendered
-`manifests/deployment.yaml`, copied `config/*.example.yaml` templates, a
-target-side README, and checksums. It contains no image tar files and no real
-Secret values. Deliver the corresponding site directory only to that site,
-then create or deliver the actual Secret separately.
-
-### C. Package and review Registry-based site releases
+### B. Package, review and transfer site configuration
 
 After `prepare-registry.sh` and image publication, create all site releases:
 
@@ -422,6 +407,117 @@ the Registry overlay's full names. Dependency and custom workload references
 may retain their original names and rely on the K3s mirror in
 `registries.yaml`; verify those paths exist in the Registry and that every
 target node received the same mirror configuration.
+
+Transfer the generated site directories under the chosen output, for example
+`/tmp/federation-learning-test-registry/platform` and
+`/tmp/federation-learning-test-registry/participant`. Each contains rendered
+`manifests/deployment.yaml`, copied `config/*.example.yaml` templates, a
+target-side README, and checksums. It contains no image tar files and no real
+Secret values. Deliver the corresponding site directory only to that site,
+then create or deliver the actual Secret separately.
+
+### C. Prepare target nodes and verify Zot pulls
+
+Prepare native K3s server/agent installations and verify node readiness, DNS,
+and the StorageClass using the installation checks in step 5. If the cluster
+is not yet installed, install its pinned K3s binary and matching architecture
+system images first; do not use the k3d development cluster configuration.
+Deliver any credential-bearing Registry configuration through a secure channel.
+
+Prepare the hostPath directories specified by the final manifest on every
+eligible workload node. Participant nodes need dataset and work directories;
+aggregation nodes need the aggregation work directory. With the current defaults:
+
+```bash
+sudo mkdir -p /workspace/datasets /workspace/tmp/runtime-engine
+```
+
+Use the actual configured host paths if different, copy real participant data,
+and verify container-user read/write permissions and node selectors. These
+paths are on the target node, not the build host. Do not copy old training
+temporary results. This Registry path does not use the tar import loop in step 6.
+
+In each received site directory, verify the manifest delivery before deployment:
+
+```bash
+sha256sum -c SHA256SUMS
+```
+
+Every eligible K3s node, including schedulable server nodes, must be able to
+resolve and reach Zot. Configure `/etc/rancher/k3s/registries.yaml` on each
+node when using HTTP, a private CA, authentication, or public-registry mirrors.
+This is a node/containerd configuration, not an application ConfigMap or a
+Docker daemon setting. Merge into existing configuration; do not overwrite
+unrelated mirrors or credentials.
+
+For a plain-HTTP LAN Zot, the minimal example is:
+
+```yaml
+mirrors:
+  "registry.example.com:5000":
+    endpoint:
+      - "http://registry.example.com:5000"
+```
+
+Replace the example hostname with the actual Zot endpoint. For HTTPS, use
+`https://` and configure the trusted CA when it is not publicly trusted:
+
+```yaml
+configs:
+  "registry.example.com:5000":
+    tls:
+      ca_file: /etc/rancher/k3s/registry-ca.crt
+```
+
+If authentication is enabled, configure the same registry key's `auth` block
+with deployment credentials through a secure channel, or use namespace-owned
+`imagePullSecrets` on every relevant workload, including dynamically created
+training Pods. Do not include real credentials in this runbook or public bundles.
+Protect credential-bearing node configuration with root-only permissions.
+
+Restart the appropriate service on each changed node, one node at a time:
+
+```bash
+# Server installation:
+sudo systemctl restart k3s
+# Agent installation instead:
+sudo systemctl restart k3s-agent
+```
+
+Check connectivity and perform a real pull through K3s containerd on each
+eligible node. Use an exact image reference from the delivered manifest:
+
+```bash
+curl -i http://registry.example.com:5000/v2/
+sudo k3s crictl pull registry.example.com:5000/fl/federation-learning-platform:0.0.1-SNAPSHOT
+sudo k3s ctr images list
+```
+
+The pull command above is for a platform node; use the agent/engine image
+references on participant nodes. Use HTTPS for a TLS-enabled Zot. A `401`
+from `/v2/` can mean the Registry requires authentication; it does not prove
+that image pulling is authorized. A successful CRI pull tests the configured
+node credentials and transport, while `docker pull` does not test K3s.
+
+Check **all** static and dynamic image references, not only application images:
+
+- Application images must use the Registry-qualified repository and correct tag.
+- Runtime Engine images in the agent ConfigMap/execution plan and platform
+  aggregation Deployment must also resolve to available Registry images.
+- Unqualified infrastructure images such as `postgres:16` still refer to public
+  registries. Either import them with option A, rewrite their references, or
+  install the prepared registry mirrors on every node. Merely configuring the
+  Zot hostname above does not redirect `docker.io` or other public registries.
+- K3s system images need matching air-gap installation artifacts or correctly
+  configured mirrors; publishing application images alone is insufficient.
+
+`IfNotPresent` permits cached images and pulls missing ones; `Always` requires
+Registry access even when layers are cached. Registry mode does not require
+manual pre-pulling, but the test above catches transport, credentials, missing
+tags, and architecture problems before workloads are applied.
+
+See [K3s private Registry configuration](https://docs.k3s.io/installation/private-registry)
+for the complete `registries.yaml` authentication, TLS, mirror and fallback rules.
 
 ### D. Apply on the control node
 
@@ -446,7 +542,7 @@ image with a reused tag.
 
 - [ ] Generation state and commit ID recorded; build passed.
 - [ ] Application, dependency, Runtime Engine, and K3s system images match node architecture.
-- [ ] Archive checksums verified after transfer; exact image names/tags imported on eligible nodes.
+- [ ] Delivery checksums verified after transfer. Offline: exact image names/tags imported on eligible nodes. Registry: node-side Zot pulls verified for every required image/profile.
 - [ ] Environment Secret, ConfigMaps, ports, paths, image policies, and managed-workload images reviewed.
 - [ ] Runtime-scheduling dev references adapted in the deployment copy.
 - [ ] One combined Kustomize release rendered and applied.
