@@ -45,6 +45,8 @@ draw.io 内置图形可从左下角“更多图形”按需启用，部署图通
 
 ## Git 对照
 
+图稿视图须区分：[通信需求拓扑](../438c/merge/federation-learning-communication-requirements.md)说明必须支持的网络边界和通信关系，不预设地址或产品；总体部署图说明组件所在位置；operations 中的具体实施网络拓扑用于实际部署。通用导出工具不根据 MEDOL 业务关系自动推断医院接入条件。
+
 源文件保存为未压缩 XML，提交前运行 `format`。文字、连接关系及几何位置可逐行对照；节点移动会产生坐标差异，仍需配合预览图审阅。不要重建或随机替换原有节点 ID，不要对 XML 元素排序，以免改变图层顺序。
 
 当前业务架构图及[系统集成关系图](../438c/merge/federated-twin-internal-integration.md)均以 draw.io 维护。系统集成图保留历史图源名 `docs/mermaid-diagram.drawio`，与 Mermaid 无关；导出图片位于 `docs/generated/diagrams/mermaid-diagram.png` 和 `.svg`。已有概念关系图继续维护 DOT 图源，导出目录与 draw.io 统一。移动导出图片不重写旧提交；Git 历史体积不会因此立即缩小。
