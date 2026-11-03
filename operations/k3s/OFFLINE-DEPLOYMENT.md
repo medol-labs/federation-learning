@@ -223,6 +223,10 @@ alternative, not additional steps for this automated package.
 
 ## 5. Transfer and check native K3s on target
 
+For a new cluster, follow [Native K3s Installation](INSTALLATION.md), using
+`v1.33.5+k3s1` as the pinned example, before continuing. That manual covers
+offline artifacts, host checks, server installation and optional agent joining.
+
 Transfer each site delivery only to its intended target. The platform package
 goes to the platform site; each independent participant receives the
 participant package and required Runtime Engine profiles. Deliver real Secrets
@@ -283,6 +287,123 @@ external registry. Do not use a locally imported `fl/...` image with a
 registry-qualified manifest reference unless that exact reference is also
 present in containerd.
 
+### Participant node labels and scheduling isolation (both image-delivery paths)
+
+Complete this review before applying workloads in step 7 or Registry alternative
+D. Installing `k3s agent` joins a Kubernetes worker; it does not automatically
+assign Federation Learning organization/infrastructure labels or reserve that
+node for a participant. A namespace also does not restrict physical placement.
+
+Choose the intended topology first:
+
+- Independent participant cluster: workers belong to that participant; keep
+  its agent and training workloads in that cluster. A dedicated runtime worker
+  can be tainted, but leave capacity for its database, gateway, console, and
+  required system components elsewhere, or explicitly design their placement.
+- Shared cluster: constrain each participant agent and training workload to
+  that participant's infrastructure labels. Keep platform applications and the
+  platform aggregation engine off participant-only workers.
+- Single-node combined debugging: do not add the runtime-only taint by default;
+  all required applications must remain schedulable on the only node.
+
+#### Label the actual participant worker
+
+Run from a server/admin machine with the intended cluster kubeconfig. Use the
+actual node name and the organization/infrastructure UUIDs registered in the
+platform, not newly generated example IDs:
+
+```bash
+kubectl get nodes -o wide
+kubectl label node <participant-node> \
+  medol.dev/node-role=runtime \
+  medol.dev/organization-id=<organization-uuid> \
+  medol.dev/runtime-infrastructure-id=<infrastructure-uuid> \
+  --overwrite
+kubectl get node <participant-node> --show-labels
+```
+
+Prepare datasets, host directories and images on this same physical worker.
+Labels alone do not repel other workloads. A toleration allows placement on
+a tainted node but does not force the Pod to choose it; selectors/affinity and
+taints/tolerations solve different parts of isolation.
+
+#### Review workloads before adding the taint
+
+Current project limitations must be resolved in the deployment configuration
+before claiming dedicated participant scheduling:
+
+- Platform-managed agent manifests already select runtime nodes by infrastructure
+  and tolerate `medol.dev/runtime-only=true:NoSchedule`.
+- The standalone agent patch in
+  `components/runtime-scheduling/patches/runtime-agent-engine-scheduler.yaml`
+  currently adds volumes and a ServiceAccount, but no node selector or matching
+  toleration. Add both in the project-owned deployment overlay before tainting
+  its intended worker. A restart alone does not add these fields.
+- Dynamically created training engines select `medol.dev/node-role=runtime`
+  and tolerate the runtime-only taint. Their optional infrastructure selector
+  must also be configured for multiple participants in one cluster. Set the
+  agent's `RUNTIME_INFRASTRUCTURE_ID` to the actual infrastructure UUID (mapped
+  to `kubernetes-runtime-infrastructure-id`) and check the actual generated
+  engine Deployment. A runtime label alone does not distinguish organizations.
+- `components/runtime-scheduling/platform-aggregation-runtime-engine.yaml`
+  currently also selects runtime nodes and tolerates this same taint. In a
+  shared cluster, explicitly place aggregation on a platform/aggregation node
+  and review/remove that participant toleration as appropriate. Otherwise the
+  taint does not keep this platform workload off participant workers.
+
+For example, the intended participant agent Pod spec needs the following
+fields, merged with its existing spec rather than replacing it:
+
+```yaml
+spec:
+  template:
+    spec:
+      nodeSelector:
+        medol.dev/node-role: runtime
+        medol.dev/runtime-infrastructure-id: "<infrastructure-uuid>"
+      tolerations:
+        - key: medol.dev/runtime-only
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+```
+
+This snippet is a configuration example, not an already-applied change. Maintain
+the changes in project-owned overlays/components and re-render the site release.
+The equivalent training-engine settings must be supplied through the agent's
+configuration because those Deployments are created dynamically. Inspect final
+rendered YAML and dynamic engine specs before proceeding. Do not encode these
+business-specific rules in the generic generator.
+
+#### Reserve the worker and verify placement
+
+Only after the selected workloads have matching placement/toleration rules and
+other required services have eligible nodes, apply:
+
+```bash
+kubectl taint node <participant-node> \
+  medol.dev/runtime-only=true:NoSchedule --overwrite
+kubectl describe node <participant-node>
+kubectl get pods -A -o wide --field-selector spec.nodeName=<participant-node>
+```
+
+`NoSchedule` blocks new Pods without a matching toleration; it does not evict
+existing Pods. Some system DaemonSets or broadly tolerating Pods may still run
+there. It is a scheduling policy, not a security boundary. Do not switch to
+`NoExecute`, drain a worker, or delete existing Pods without planning disruption,
+especially for hostPath data and local PVCs. To remove this particular taint:
+
+```bash
+kubectl taint node <participant-node> medol.dev/runtime-only:NoSchedule-
+```
+
+For a Pending Pod, inspect `kubectl describe pod <pod> -n <namespace>` for
+untolerated taints, label mismatches or insufficient resources. Verify that new
+training Pods land on the correct participant worker and that platform Pods do
+not. Existing Pods will not move automatically when node labels change.
+
+See [Kubernetes taints and tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/).
+
 ## 7. Apply the automated delivery
 
 On the control node, change into the received delivery directory. Images
@@ -316,10 +437,9 @@ For a failed Pod, use `kubectl -n federation-learning-platform describe pod
 Check image pull events first, then Secret/ConfigMap references, storage,
 service DNS, and application logs.
 
-Before deploying managed runtime agents, label eligible participant nodes
-with `medol.dev/node-role=runtime`, organization ID, and runtime infrastructure
-ID, and apply the intended taint only after confirming tolerations. Prepare
-datasets and work directories on those same nodes. Then register/verify the
+Follow the participant node labels and scheduling isolation review in step 6
+before deploying agents or submitting training. Prepare datasets and work
+directories on the selected nodes. Then register/verify the
 participant infrastructure, deploy the agent, initialize business data, and
 submit a small training job. Confirm the platform and participant read models
 and the resulting model artifact, not just Pod readiness.
@@ -417,6 +537,9 @@ Secret values. Deliver the corresponding site directory only to that site,
 then create or deliver the actual Secret separately.
 
 ### C. Prepare target nodes and verify Zot pulls
+
+The participant label/taint and workload-placement review in step 6 applies
+to this Registry path as well. It does not require importing image archives.
 
 Prepare native K3s server/agent installations and verify node readiness, DNS,
 and the StorageClass using the installation checks in step 5. If the cluster
