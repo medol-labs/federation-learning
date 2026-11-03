@@ -1,5 +1,9 @@
 # Native Single-Node Debugging
 
+Install the Linux server first using [Native K3s Installation](INSTALLATION.md).
+The example pins `v1.33.5+k3s1`; a single server can run workloads without
+joining any additional K3s agents.
+
 This is a combined debugging topology, available for every generated environment
 (local, dev, test, staging, prod, or a custom environment). It does not change the
 formal split-site releases. Never apply both site releases into this namespace.
