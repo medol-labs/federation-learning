@@ -1,11 +1,11 @@
 {
-  "environment": "test",
-  "operationsModel": "operations/model/test/operations-model.json",
-  "dockerCompose": "operations/docker-compose/test/docker-compose.yml",
+  "environment": "prod",
+  "operationsModel": "operations/model/prod/operations-model.json",
+  "dockerCompose": "operations/docker-compose/prod/docker-compose.yml",
   "operationsReadmes": [
-    "operations/model/test/README.md",
-    "operations/model/test/network-topology.md",
-    "operations/docker-compose/test/README.md",
+    "operations/model/prod/README.md",
+    "operations/model/prod/network-topology.md",
+    "operations/docker-compose/prod/README.md",
     "operations/k3s/README.md",
     "operations/kubernetes/README.md"
   ],

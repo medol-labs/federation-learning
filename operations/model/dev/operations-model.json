@@ -4,7 +4,7 @@
     "schemaVersion": 1,
     "medolVersion": "0.1.0",
     "source": {
-      "sha256": "0610060148b1b1c037d937161ea7d3ccea1ae0387f691f4d14e3cfef8d771815"
+      "sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
     }
   },
   "name": "federation-learning-platform",
@@ -323,6 +323,14 @@
         },
         {
           "name": "FEDERATION_LEARNING_SUPPORT_URL",
+          "value": "http://federation-learning-support:8080"
+        },
+        {
+          "name": "MEDOL_SYNC_SOURCE_BASE_URL",
+          "value": "http://federation-learning-platform:8081"
+        },
+        {
+          "name": "MEDOL_SYNC_SOURCE_BASE_URLS_DICTIONARYMAINTENANCE",
           "value": "http://federation-learning-support:8080"
         }
       ],

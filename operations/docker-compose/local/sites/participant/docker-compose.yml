@@ -1,0 +1,155 @@
+name: "federation-learning-platform-participant-local"
+services:
+  apisix:
+    image: "${APISIX_IMAGE:-apache/apisix:3.13.0-debian}"
+    restart: "unless-stopped"
+    ports:
+      - "${GATEWAY_PORT:-9080}:9080"
+    volumes:
+      - "./gateway/config.yaml:/usr/local/apisix/conf/config.yaml:ro"
+      - "./gateway/apisix.yaml:/usr/local/apisix/conf/apisix.yaml:ro"
+    depends_on:
+      federation-learning-participant-console:
+        condition: "service_healthy"
+      federation-learning-runtime-agent:
+        condition: "service_healthy"
+    networks:
+      - "medol-network"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE:-10m}"
+        max-file: "${LOG_MAX_FILES:-5}"
+  federation-learning-participant-console:
+    image: "${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_IMAGE:-fl/federation-learning-participant-console:0.0.1-SNAPSHOT}"
+    restart: "unless-stopped"
+    expose:
+      - "80"
+    environment:
+      VITE_API_URL: ""
+      VITE_AUTH_PROVIDER: "local"
+      VITE_AXON_API_URL: "/api/federation-learning-runtime-agent"
+      VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL: "/api/federation-learning-runtime-agent"
+      VITE_FRONTEND_APP: "FederationLearningParticipantConsole"
+      VITE_SUPABASE_API_KEY: "${VITE_SUPABASE_API_KEY:-}"
+    networks:
+      - "medol-network"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "wget -qO- http://127.0.0.1:80/health >/dev/null 2>&1 || exit 1"
+      interval: "10s"
+      timeout: "3s"
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE:-10m}"
+        max-file: "${LOG_MAX_FILES:-5}"
+  federation-learning-runtime-agent:
+    image: "${FEDERATION_LEARNING_RUNTIME_AGENT_IMAGE:-fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT}"
+    restart: "unless-stopped"
+    expose:
+      - "8082"
+    environment:
+      MEDOL_SECURITY_JWT_SECRET: "${MEDOL_SECURITY_JWT_SECRET:?Set MEDOL_SECURITY_JWT_SECRET}"
+      MEDOL_SECURITY_INTERNAL_TOKEN: "${MEDOL_SECURITY_INTERNAL_TOKEN:?Set MEDOL_SECURITY_INTERNAL_TOKEN}"
+      MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED: "${MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED:-false}"
+      MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN: "${MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN:-}"
+      MEDOL_SECURITY_ALLOWED_ORIGINS: "${MEDOL_SECURITY_ALLOWED_ORIGINS:-}"
+      AXON_SERVER_ENABLED: "false"
+      AXON_SERVER_EVENT_STORE_ENABLED: "false"
+      AXON_SERVER_SERVERS: "${AXON_SERVER_SERVERS:-axon-server:8124}"
+      AXON_UPDATE_CHECK_DISABLED: "${AXON_UPDATE_CHECK_DISABLED:-true}"
+      DB_PASSWORD: "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
+      DB_URL: "jdbc:postgresql://postgres:5432/federation_learning_runtime_agent"
+      DB_USERNAME: "${POSTGRES_USER:-medol}"
+      FEDERATION_LEARNING_PLATFORM_URL: "${FEDERATION_LEARNING_PLATFORM_URL:?Set reachable remote service URL}"
+      FEDERATION_LEARNING_SUPPORT_URL: "${FEDERATION_LEARNING_SUPPORT_URL:?Set reachable remote service URL}"
+      MEDOL_AXON_EVENT_STORAGE: "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
+      MEDOL_SYNC_SOURCE_BASE_URL: "${MEDOL_SYNC_SOURCE_BASE_URL:?Set reachable remote service URL}"
+      MEDOL_SYNC_SOURCE_BASE_URLS_DICTIONARYMAINTENANCE: "${MEDOL_SYNC_SOURCE_BASE_URLS_DICTIONARYMAINTENANCE:?Set reachable remote service URL}"
+      SERVER_PORT: "8082"
+      SPRING_DOCKER_COMPOSE_ENABLED: "false"
+      UMADB_API_KEY: "${UMADB_API_KEY:-}"
+      UMADB_BATCH_SIZE: "${UMADB_BATCH_SIZE:-256}"
+      UMADB_PLAINTEXT: "${UMADB_PLAINTEXT:-true}"
+      UMADB_REQUEST_TIMEOUT: "${UMADB_REQUEST_TIMEOUT:-PT10S}"
+      UMADB_TARGET: "${UMADB_TARGET:-umadb:50051}"
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: "1536m"
+    networks:
+      - "medol-network"
+    depends_on:
+      postgres:
+        condition: "service_healthy"
+      umadb:
+        condition: "service_started"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "wget -qO- http://127.0.0.1:8082/actuator/health >/dev/null 2>&1 || exit 1"
+      interval: "10s"
+      timeout: "5s"
+      retries: 12
+      start_period: "180s"
+    ports:
+      - "${FEDERATION_LEARNING_RUNTIME_AGENT_PORT:-8082}:8082"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE:-10m}"
+        max-file: "${LOG_MAX_FILES:-5}"
+  postgres:
+    image: "${POSTGRES_IMAGE:-postgres:16}"
+    restart: "unless-stopped"
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB:-medol}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
+      POSTGRES_USER: "${POSTGRES_USER:-medol}"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "pg_isready -U ${POSTGRES_USER:-medol} -d ${POSTGRES_DB:-medol}"
+      interval: "5s"
+      timeout: "5s"
+      retries: 10
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+      - "./infrastructure/postgres/init:/docker-entrypoint-initdb.d:ro"
+    networks:
+      - "medol-network"
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE:-10m}"
+        max-file: "${LOG_MAX_FILES:-5}"
+  umadb:
+    image: "${UMADB_IMAGE:-umadb/umadb:0.7.8}"
+    restart: "unless-stopped"
+    expose:
+      - "50051"
+    volumes:
+      - "umadb_data:/data"
+    networks:
+      - "medol-network"
+    ports:
+      - "${UMADB_PORT:-50051}:50051"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE:-10m}"
+        max-file: "${LOG_MAX_FILES:-5}"
+networks:
+  medol-network:
+    driver: "bridge"
+volumes:
+  postgres_data: {}
+  umadb_data: {}

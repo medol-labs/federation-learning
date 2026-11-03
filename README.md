@@ -70,6 +70,10 @@ the extension locations documented by each generated module.
 
 ## Operations Layout
 
+For the initial single-host production deployment with Docker Compose, see
+[Compose Production Deployment](operations/COMPOSE-PRODUCTION.md). Application
+deployment and training-engine readiness are separate validation steps.
+
 For native single-node K3s debugging in any generated environment, see
 [Native Single-Node Debugging](operations/k3s/SINGLE-NODE.md). This uses one Linux
 K3s server and a combined deployment entry, independently of k3d and split-site releases.
