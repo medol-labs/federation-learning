@@ -1073,19 +1073,6 @@
             as="geometry" />
         </mxCell>
         <mxCell
-          id="scope-note"
-          value="不规定具体 IP、端口、网关品牌或容器拓扑；链路带宽、传输时限、峰值及异常诊断要求需配合通信需求表确认。"
-          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#536773;fontStyle=0;spacing=0;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="60"
-            y="1800"
-            width="2280"
-            height="40"
-            as="geometry" />
-        </mxCell>
-        <mxCell
           id="legend"
           value="图例：蓝色为平台发起的跨域调用，绿色为医院发起的跨域调用，灰色为域内通信；虚线区域表示跨域网络通道。"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
