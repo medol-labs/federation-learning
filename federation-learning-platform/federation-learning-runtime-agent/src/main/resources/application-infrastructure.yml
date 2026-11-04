@@ -31,6 +31,7 @@ runtime-agent:
   local-runtime-engine:
     enabled: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENABLED:true}
     mode: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODE:docker-compose}
+    prestarted-image: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_PRESTARTED_IMAGE:}
     compose-file: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_COMPOSE_FILE:../../federation-learning-runtime-engine/docker-compose.yml}
     project-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_PROJECT_NAME:federation-learning-runtime-engine}
     service-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_SERVICE_NAME:federation-learning-runtime-engine}

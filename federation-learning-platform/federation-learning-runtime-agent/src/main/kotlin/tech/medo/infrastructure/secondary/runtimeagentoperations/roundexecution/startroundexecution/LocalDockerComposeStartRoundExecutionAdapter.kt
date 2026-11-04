@@ -23,7 +23,8 @@ class LocalDockerComposeStartRoundExecutionAdapter(
 ) : StartRoundExecutionService {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    override fun supports(input: StartRoundExecutionInput): Boolean = properties.enabled && properties.usesDockerCompose()
+    override fun supports(input: StartRoundExecutionInput): Boolean =
+        properties.enabled && (properties.usesDockerCompose() || properties.usesPrestartedEngine())
 
     override fun execute(input: StartRoundExecutionInput): StartRoundExecutionResult {
         input.personalizationParameters()
@@ -44,15 +45,28 @@ class LocalDockerComposeStartRoundExecutionAdapter(
                 failureReason = "Execution plan ${input.executionPlanId} does not provide a runtime engine model plugin.",
             )
 
-        val compose = commandRunner.run(properties, listOf("up", "-d", properties.serviceName))
-        if (!compose.succeeded) {
-            return StartRoundExecutionResult.Unavailable(
-                failureReason = if (compose.timedOut) {
-                    "Runtime engine docker compose up timed out after ${properties.commandTimeout}."
-                } else {
-                    "Runtime engine docker compose up failed with exitCode=${compose.exitCode}: ${compose.output}"
-                }
-            )
+        if (properties.usesPrestartedEngine()) {
+            val requestedImage = runCatching {
+                runtimeEngineImageReference(input.runtimeEngineImage, input.runtimeEngineImageDigest)
+            }.getOrElse {
+                return StartRoundExecutionResult.Unavailable(failureReason = it.message ?: "Invalid runtime engine image.")
+            }
+            if (requestedImage != properties.prestartedImage) {
+                return StartRoundExecutionResult.Unavailable(
+                    failureReason = "Execution plan image $requestedImage does not match the configured prestarted engine image."
+                )
+            }
+        } else {
+            val compose = commandRunner.run(properties, listOf("up", "-d", properties.serviceName))
+            if (!compose.succeeded) {
+                return StartRoundExecutionResult.Unavailable(
+                    failureReason = if (compose.timedOut) {
+                        "Runtime engine docker compose up timed out after ${properties.commandTimeout}."
+                    } else {
+                        "Runtime engine docker compose up failed with exitCode=${compose.exitCode}: ${compose.output}"
+                    }
+                )
+            }
         }
 
         val endpoint = properties.endpoint.trim().removeSuffix("/")

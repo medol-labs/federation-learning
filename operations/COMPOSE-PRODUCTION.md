@@ -2,8 +2,8 @@
 
 This runbook deploys each modeled deployment site to its own Docker host/project.
 Platform and participant Compose files are isolated using networkTopology.sites,
-the same deployment boundaries used by the Kubernetes/K3s outputs. It is not an HA solution or an
-automatic training-runtime deployment. Use Linux and Docker Compose v2. Verify
+the same deployment boundaries used by the Kubernetes/K3s outputs. It is not an HA solution.
+Use Linux and Docker Compose v2. Verify
 the CPU architecture and reserve memory for three JVMs, databases and any engines.
 
 ## Prepare the release
@@ -84,23 +84,41 @@ Project names scope networks, containers and volumes by environment. Multiple
 environments on one host require different GATEWAY_PORT values. Changing the
 project name can create new empty database volumes; keep it fixed for upgrades.
 
-## Training readiness is separate
+## Add training engines
 
-The generic generator deploys services and their infrastructure. It does not
-deploy the Federation Learning aggregation engine or participant training engines.
-The current agent Docker Compose adapter invokes docker compose inside the agent,
-uses host-visible dataset/work paths, and must reach the created engine through
-a configured endpoint. Default relative paths and localhost endpoints are not
-production container networking settings.
+The project owns the optional overlays in operations/docker-compose/runtime/.
+Transfer the matching platform.yml or participant.yml alongside the generated
+site Compose file as runtime.yml. These are separate from generated files and
+must be delivered explicitly; the image packaging command does not include them.
+Use the overlay on every config, pull, up, ps and down command for that project:
 
-Do not submit production training jobs until the engine image/profile, mounts,
-reachable endpoint and execution adapter have been configured and exercised in a
-project-owned Compose extension. The packaged backend image must include the
-required Docker CLI/Compose plugin if this adapter is selected. Granting access
-to the host Docker socket effectively grants control over the host; it is not
-enabled by this deployment template. K3s-managed runtime-agent installation is
-not available in a Compose-only deployment. Register this standalone agent through
-the applicable manual workflow instead of selecting PLATFORM_MANAGED K3S mode.
+```bash
+docker compose --env-file .env -f docker-compose.yml -f runtime.yml config --quiet
+docker compose --env-file .env -f docker-compose.yml -f runtime.yml up -d --wait --wait-timeout 300
+```
+
+- Platform: set AGGREGATION_ENGINE_IMAGE to the delivered engine image and
+  AGGREGATION_ENGINE_PLUGIN_PROFILE to its profile (default pytorch-vision).
+  Platform calls the private aggregation-engine service.
+- Participant: rebuild the runtime-agent image with prestarted mode support.
+  Set PARTICIPANT_ENGINE_IMAGE to the exact image reference used by the
+  RuntimeEngineProfile, including digest when the execution plan pins one.
+  Set PARTICIPANT_ENGINE_PLUGIN_PROFILE to the matching image profile and
+  PARTICIPANT_DATASETS_DIR to an existing absolute directory on the Docker host.
+  Register dataset paths under /workspace/datasets. The agent and engine share a
+  read-only dataset mount and a writable project-scoped training-work volume.
+  Set PARTICIPANT_ENGINE_NODE_NAME if needed; both services use the same value.
+- Deliver engine images separately from application/dependency archives.
+  Verify that the chosen profiles support the selected model and aggregation
+  algorithm. For encrypted jobs prepare key material and verify the encrypted
+  workflow separately; these overlays do not provision encryption keys.
+
+The participant overlay starts one engine with Compose. The agent uses HTTP to
+that engine and rejects a different image in the execution plan; it does not
+launch or replace containers per job. No Docker CLI/socket is required inside
+the agent. Start with one training job and verify a complete round before
+production use. K3s-managed runtime-agent installation is not available in a
+Compose-only deployment; register the standalone agent manually.
 
 ## Upgrade, backup and rollback
 

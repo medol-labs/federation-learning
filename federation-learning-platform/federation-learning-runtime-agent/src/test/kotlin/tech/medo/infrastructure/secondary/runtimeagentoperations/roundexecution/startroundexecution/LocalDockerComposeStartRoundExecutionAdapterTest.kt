@@ -52,6 +52,25 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
     }
 
     @Test
+    fun prestartedEngineUsesConfiguredEndpointWithoutInvokingDocker() {
+        val runner = RecordingRunner(LocalRuntimeEngineCommandResult(exitCode = 1, output = "must not run", timedOut = false))
+        val client = RecordingClient()
+        val image = "registry.example/engine:v1"
+        val adapter = LocalDockerComposeStartRoundExecutionAdapter(
+            LocalRuntimeEngineProperties(mode = "prestarted", endpoint = "http://training-engine:8080", prestartedImage = image),
+            runner, client, bindingRepository(listOf(binding(filePath = "/workspace/datasets/alice.csv")))
+        )
+        val plan = input().copy(runtimeEngineImage = image, runtimeEngineImageDigest = null)
+        assertTrue(adapter.supports(plan))
+        assertTrue(adapter.execute(plan.copy(runtimeEngineImage = "registry.example/other:v1")) is StartRoundExecutionResult.Unavailable)
+        assertTrue(client.healthEndpoints.isEmpty())
+        assertTrue(adapter.execute(plan) is StartRoundExecutionResult.Succeeded)
+        assertTrue(runner.commands.isEmpty())
+        assertEquals(listOf("http://training-engine:8080"), client.healthEndpoints)
+        assertEquals(1, client.jobs.size)
+    }
+
+    @Test
     fun startsRuntimeEngineAndSubmitsTrainingJob() {
         val runner = RecordingRunner(LocalRuntimeEngineCommandResult(exitCode = 0, output = "started", timedOut = false))
         val client = RecordingClient()

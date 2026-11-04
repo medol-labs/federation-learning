@@ -32,8 +32,11 @@ data class LocalRuntimeEngineProperties(
     val kubernetesContainerPort: Int = 8080,
     val kubernetesRuntimeInfrastructureId: String = "",
     val kubernetesDatasetHostPath: String = "/workspace/datasets",
-    val kubernetesRuntimeHostPath: String = "/workspace/tmp/runtime-engine"
+    val kubernetesRuntimeHostPath: String = "/workspace/tmp/runtime-engine",
+    val prestartedImage: String = ""
 ) {
+    fun usesPrestartedEngine(): Boolean = mode.equals("prestarted", ignoreCase = true)
+
     fun usesDockerCompose(): Boolean = mode.equals("docker-compose", ignoreCase = true)
 
     fun usesKubernetes(): Boolean = mode.equals("kubernetes", ignoreCase = true) || mode.equals("k3s", ignoreCase = true)

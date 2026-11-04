@@ -1,0 +1,34 @@
+services:
+  federation-learning-platform:
+    environment:
+      FL_AGGREGATION_MODE: runtime-engine
+      FL_AGGREGATION_RUNTIME_ENGINE_ENDPOINT: http://aggregation-engine:8080
+    depends_on:
+      aggregation-engine:
+        condition: service_healthy
+  aggregation-engine:
+    image: ${AGGREGATION_ENGINE_IMAGE:?Set AGGREGATION_ENGINE_IMAGE}
+    restart: unless-stopped
+    environment:
+      RUNTIME_ENGINE_HOST: 0.0.0.0
+      RUNTIME_ENGINE_PORT: "8080"
+      RUNTIME_ENGINE_NODE_NAME: platform-aggregator
+      RUNTIME_ENGINE_ROOT: /workspace/tmp/runtime-engine
+      RUNTIME_ENGINE_PLUGIN_PROFILE: ${AGGREGATION_ENGINE_PLUGIN_PROFILE:-pytorch-vision}
+      RUNTIME_ENGINE_FILE_ACCESS_BASE_URL: http://federation-learning-support:8080
+      MEDOL_SECURITY_INTERNAL_TOKEN: ${MEDOL_SECURITY_INTERNAL_TOKEN:?Set MEDOL_SECURITY_INTERNAL_TOKEN}
+    volumes:
+      - aggregation-work:/workspace/tmp/runtime-engine
+    networks: [medol-network]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 24
+    logging:
+      driver: json-file
+      options:
+        max-size: "${LOG_MAX_SIZE:-10m}"
+        max-file: "${LOG_MAX_FILES:-5}"
+volumes:
+  aggregation-work: {}
