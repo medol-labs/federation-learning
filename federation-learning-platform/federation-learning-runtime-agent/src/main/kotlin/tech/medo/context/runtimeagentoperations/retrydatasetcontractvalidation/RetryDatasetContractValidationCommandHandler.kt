@@ -25,17 +25,17 @@ class RetryDatasetContractValidationCommandHandler(
         eventAppender: EventAppender
     ) {
 
-        if (state.currentState != DatasetStateEnum.ContractValidationCompleted) {
+        if (state.currentState != DatasetStateEnum.ContractValidationFailed) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
                 i18nKey = "errors.runtimeagentoperations.retryDatasetContractValidation.requiresState",
                 args = mapOf(
                     "command" to "RetryDatasetContractValidation",
                     "aggregate" to "Dataset",
-                    "expectedState" to "ContractValidationCompleted",
+                    "expectedState" to "ContractValidationFailed",
                     "actualState" to state.currentState.toString()
                 ),
-                message = "RetryDatasetContractValidation requires Dataset to be ContractValidationCompleted."
+                message = "RetryDatasetContractValidation requires Dataset to be ContractValidationFailed."
             )
         }
         val input = RetryDatasetContractValidationInput(datasetId = command.datasetId)

@@ -725,7 +725,7 @@ export const DatasetCapabilityList = () => {
                 "rowActions.before",
                 { resource: "dataset-capability", record: row.original },
               )}
-                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
+                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationFailed"]) && (
                   <CommandButton
                     variant="ghost"
                     command="retryDatasetContractValidation"

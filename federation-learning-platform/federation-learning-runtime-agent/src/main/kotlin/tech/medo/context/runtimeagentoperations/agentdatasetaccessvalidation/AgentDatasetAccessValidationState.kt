@@ -56,6 +56,7 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AgentDatasetAccessValidationFailedEvent): AgentDatasetAccessValidationState = apply {
+        currentState = AgentDatasetAccessValidationStateEnum.Failed
         datasetAccessValidationId = event.datasetAccessValidationId
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
@@ -72,6 +73,7 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AgentDatasetAccessRevalidatedEvent): AgentDatasetAccessValidationState = apply {
+        currentState = AgentDatasetAccessValidationStateEnum.Checked
         datasetAccessValidationId = event.datasetAccessValidationId
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
@@ -90,6 +92,7 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AgentDatasetAccessRevalidationFailedEvent): AgentDatasetAccessValidationState = apply {
+        currentState = AgentDatasetAccessValidationStateEnum.Failed
         datasetAccessValidationId = event.datasetAccessValidationId
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId

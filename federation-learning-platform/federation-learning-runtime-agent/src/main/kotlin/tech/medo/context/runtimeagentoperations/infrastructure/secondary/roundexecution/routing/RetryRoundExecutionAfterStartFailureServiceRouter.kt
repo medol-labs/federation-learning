@@ -21,10 +21,16 @@ class RetryRoundExecutionAfterStartFailureServiceRouter(private val adapters: Ob
             1 -> try {
                 candidates.first().execute(input)
             } catch (ex: Exception) {
-                throw ex
+                RetryRoundExecutionAfterStartFailureResult.Unavailable(
+                    failureReason = ex.message ?: "RetryRoundExecutionAfterStartFailureService is unavailable."
+                )
             }
-            0 -> error("No RetryRoundExecutionAfterStartFailureService adapter supports the requested input.")
-            else -> error("Multiple RetryRoundExecutionAfterStartFailureService adapters support the requested input.")
+            0 -> RetryRoundExecutionAfterStartFailureResult.Unavailable(
+                failureReason = "No RetryRoundExecutionAfterStartFailureService adapter supports the requested input."
+            )
+            else -> RetryRoundExecutionAfterStartFailureResult.Unavailable(
+                failureReason = "Multiple RetryRoundExecutionAfterStartFailureService adapters support the requested input."
+            )
         }
     }
 }

@@ -40,8 +40,9 @@ class RetryRoundExecutionAfterStartFailureCommandHandler(
         }
         val input = RetryRoundExecutionAfterStartFailureInput(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, baseModelId = command.baseModelId, runtimeEngineJobId = command.runtimeEngineJobId, retryReason = command.retryReason)
         val portResult = retryRoundExecutionAfterStartFailureService.execute(input)
+        val now = java.time.LocalDateTime.now()
 
-        eventAppender.append(decision.decide(command, state, portResult))
+        eventAppender.append(decision.decide(command, state, portResult, now))
 
     }
 }

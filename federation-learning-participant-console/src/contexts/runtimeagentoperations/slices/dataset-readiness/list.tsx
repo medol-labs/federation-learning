@@ -1149,7 +1149,7 @@ export const DatasetReadinessList = () => {
                     }}
                   />
                 )}
-                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
+                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationFailed"]) && (
                   <CommandButton
                     variant="ghost"
                     command="retryDatasetContractValidation"

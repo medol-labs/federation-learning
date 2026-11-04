@@ -12,7 +12,7 @@ import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
 
 interface RetryRoundExecutionAfterStartFailureDecision {
-    fun decide(command: RetryRoundExecutionAfterStartFailureCommand, state: RoundExecutionState, portResult: RetryRoundExecutionAfterStartFailureResult): List<Any> {
+    fun decide(command: RetryRoundExecutionAfterStartFailureCommand, state: RoundExecutionState, portResult: RetryRoundExecutionAfterStartFailureResult, now: java.time.LocalDateTime): List<Any> {
         if (state.currentState != RoundExecutionStateEnum.StartFailed) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
@@ -30,6 +30,8 @@ interface RetryRoundExecutionAfterStartFailureDecision {
                     is RetryRoundExecutionAfterStartFailureResult.Succeeded -> listOf(
             RoundExecutionStartRetryStartedEvent(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, baseModelId = command.baseModelId, runtimeEngineJobId = command.runtimeEngineJobId, retryReason = command.retryReason)
             )
+                    is RetryRoundExecutionAfterStartFailureResult.Rejected -> listOf(RoundExecutionStartRetryFailedEvent(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, baseModelId = command.baseModelId, runtimeEngineJobId = command.runtimeEngineJobId, retryReason = command.retryReason, failureReason = portResult.failureReason))
+                    is RetryRoundExecutionAfterStartFailureResult.Unavailable -> listOf(RoundExecutionStartRetryFailedEvent(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, baseModelId = command.baseModelId, runtimeEngineJobId = command.runtimeEngineJobId, retryReason = command.retryReason, failureReason = portResult.failureReason))
                 }
     }
 }

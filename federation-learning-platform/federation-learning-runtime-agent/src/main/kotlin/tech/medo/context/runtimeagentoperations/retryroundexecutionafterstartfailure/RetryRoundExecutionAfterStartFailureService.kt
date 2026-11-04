@@ -26,5 +26,11 @@ data class RetryRoundExecutionAfterStartFailureInput(
 sealed interface RetryRoundExecutionAfterStartFailureResult {
     class Succeeded : RetryRoundExecutionAfterStartFailureResult
 
+    data class Rejected(
+        val failureReason: String
+    ) : RetryRoundExecutionAfterStartFailureResult
 
+    data class Unavailable(
+        val failureReason: String
+    ) : RetryRoundExecutionAfterStartFailureResult
 }

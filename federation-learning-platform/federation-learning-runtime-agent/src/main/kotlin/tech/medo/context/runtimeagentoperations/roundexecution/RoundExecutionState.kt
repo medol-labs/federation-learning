@@ -481,7 +481,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RoundExecutionStartRetryFailedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.Failed
+        currentState = RoundExecutionStateEnum.StartFailed
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId

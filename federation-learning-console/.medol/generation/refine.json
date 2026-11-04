@@ -1,31 +1,121 @@
 {
   "schemaVersion": 1,
   "target": "refine",
-  "scope": "release-support",
-  "selection": {},
-  "generatedAt": "2026-11-01T14:09:22.787Z",
+  "scope": "application",
+  "selection": {
+    "generatorType": "all",
+    "frontendApp": "FederationLearningConsole",
+    "commands": [
+      "command-bdd9dc49",
+      "command-0e2c68c7",
+      "command-23f9926b",
+      "command-99cc0fef",
+      "command-90777aaa",
+      "command-bcdf1e10",
+      "command-f5e35ce0",
+      "command-229f58df",
+      "command-aa7dfd8d",
+      "command-24c0ae1d",
+      "command-478724df",
+      "command-8352654f",
+      "command-1c4afee6",
+      "command-79318a5e",
+      "command-520c2ebe",
+      "command-f6faba10",
+      "command-964f15aa",
+      "command-482cb0b6",
+      "command-e8b264a6",
+      "command-e1f5dd76",
+      "command-bc91bffa",
+      "command-b6718efc",
+      "command-ee7c4c14",
+      "command-124f6258",
+      "command-6be4ee0a",
+      "command-0fddcb7a",
+      "command-5b794a08",
+      "command-8365e522",
+      "command-a553f89e",
+      "command-8fd72c8e",
+      "command-e26ba12c",
+      "command-2cbd251a",
+      "command-fa945b96",
+      "command-abc68736",
+      "command-3f4cc432",
+      "command-f0348b4a",
+      "command-bbffe073",
+      "command-1dce3ca3",
+      "command-dd7cfdae",
+      "command-e6ef3846",
+      "command-955d5238",
+      "command-65c03858",
+      "command-01fcdf36",
+      "command-09732d38",
+      "command-cc9d4dda",
+      "command-ec1dfd06",
+      "command-c3afc769",
+      "command-428dcbcd",
+      "command-545f831f",
+      "command-ac6c6e57",
+      "command-b9f345c7",
+      "command-78d183e2",
+      "command-8568e8b1",
+      "command-8495b9b3",
+      "command-1f153a8b",
+      "command-9affbd63",
+      "command-2c329e29",
+      "command-48a4b749",
+      "command-4abdd87b",
+      "command-c3dfe846",
+      "command-7bfdf5a7",
+      "command-de6c6b0e",
+      "command-1ad3eddc",
+      "command-c293f32c",
+      "command-ab1f69fc",
+      "command-bd43a736",
+      "command-2864c526",
+      "command-60bb4715",
+      "command-a3478fed",
+      "command-c4a297d1",
+      "command-1ac9bcf9",
+      "command-703c1eed",
+      "command-cd31996d",
+      "command-f8a685e9",
+      "command-11ac738b",
+      "command-1f0b2f8b",
+      "command-33a73df6",
+      "command-e63f60d0",
+      "command-e3603d8c",
+      "command-0118ab42",
+      "command-4f06876a",
+      "command-6d4c655a",
+      "command-0d92bf52",
+      "command-c00913ea",
+      "command-54ee0de8"
+    ]
+  },
+  "generatedAt": "2026-11-04T08:59:39.572Z",
   "generator": {
     "name": "medol-codegen",
     "version": "1.0.0",
-    "sha256": "576e6b8185ca56d93ea48ec64a748a1226d6a645d612eb1c178d4c9f987cdb9b"
+    "sha256": "c20a119ef4928e119b198c9f7bde4f8a91b1f56798b1a74aafac8a144b31b937"
   },
   "model": {
-    "sha256": "99b9eee3347e33e147cc1a23b1c2eabf776c843bcd45c01d1bc97628b3a89070",
+    "sha256": "9c884e066c967a4e3ad07bad910226b5e33b2d787e7703a7136316de5c73ff03",
     "metadata": {
       "schemaVersion": 1,
       "medolVersion": "0.1.0",
       "source": {
-        "sha256": "0610060148b1b1c037d937161ea7d3ccea1ae0387f691f4d14e3cfef8d771815"
+        "sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
       }
     }
   },
   "config": {
-    "sha256": "162f5f38f001ad787fe41e1c84a0da92ace59d90d25398f4c62f0c46a19c48cf"
+    "sha256": "20e0214955f6c124b6deaf8e02d0c9764336d4608b3490f7df2df6e2ee7cd9fa"
   },
   "inputs": [
     {
       "path": "../.medol/codegen-model.json",
-      "sha256": "99b9eee3347e33e147cc1a23b1c2eabf776c843bcd45c01d1bc97628b3a89070"
+      "sha256": "9c884e066c967a4e3ad07bad910226b5e33b2d787e7703a7136316de5c73ff03"
     },
     {
       "path": "../.medol/medol.yml",
@@ -33,7 +123,7 @@
     },
     {
       "path": "../.medol/source.medol",
-      "sha256": "0610060148b1b1c037d937161ea7d3ccea1ae0387f691f4d14e3cfef8d771815"
+      "sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
     },
     {
       "path": "../dictionary-init/dictionaries.json",

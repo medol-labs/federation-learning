@@ -297,8 +297,8 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeEngineImageDigest = event.runtimeEngineImageDigest
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
-            entity.runtimeEngineReleaseFailureReason = event.failureReason
             entity.state = RoundExecutionStateEnum.StartFailed
+            entity.runtimeEngineReleaseFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -444,8 +444,8 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.retryReason = event.retryReason
-            entity.runtimeEngineReleaseFailureReason = event.failureReason
             entity.state = RoundExecutionStateEnum.StartFailed
+            entity.runtimeEngineReleaseFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -502,8 +502,9 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.retryReason = event.retryReason
-            entity.runtimeEngineReleaseFailureReason = event.failureReason
             entity.state = RoundExecutionStateEnum.Failed
+            entity.failedAt = eventTime(message)
+            entity.runtimeEngineReleaseFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 

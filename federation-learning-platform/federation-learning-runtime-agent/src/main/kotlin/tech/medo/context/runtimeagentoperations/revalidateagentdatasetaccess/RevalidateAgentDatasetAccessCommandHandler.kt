@@ -25,17 +25,17 @@ class RevalidateAgentDatasetAccessCommandHandler(
         eventAppender: EventAppender
     ) {
 
-        if (state.currentState != AgentDatasetAccessValidationStateEnum.Checked) {
+        if (state.currentState != AgentDatasetAccessValidationStateEnum.Failed) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
                 i18nKey = "errors.runtimeagentoperations.revalidateAgentDatasetAccess.requiresState",
                 args = mapOf(
                     "command" to "RevalidateAgentDatasetAccess",
                     "aggregate" to "AgentDatasetAccessValidation",
-                    "expectedState" to "Checked",
+                    "expectedState" to "Failed",
                     "actualState" to state.currentState.toString()
                 ),
-                message = "RevalidateAgentDatasetAccess requires AgentDatasetAccessValidation to be Checked."
+                message = "RevalidateAgentDatasetAccess requires AgentDatasetAccessValidation to be Failed."
             )
         }
         val input = RevalidateAgentDatasetAccessInput(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = command.runtimeDatasetBindingId)

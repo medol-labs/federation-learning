@@ -9,25 +9,25 @@ object Concepts {
 
     data object Dataset {
         const val NAME = "Dataset"
-        val slices = listOf("DeclareDataset", "ValidateDatasetContract", "RetryDatasetContractValidation", "RejectDatasetForTraining", "ApproveDatasetForTraining", "RevokeDatasetTrainingApproval", "DatasetCapability", "DatasetReadiness")
-        val states = listOf("Registered", "ContractValidationCompleted", "Approved", "Rejected", "ApprovalRevoked")
+        val slices = listOf("DeclareDataset", "ValidateDatasetContract", "RecordDatasetContractValidationFailure", "RetryDatasetContractValidation", "RejectDatasetForTraining", "ApproveDatasetForTraining", "RevokeDatasetTrainingApproval", "DatasetCapability", "DatasetReadiness")
+        val states = listOf("Registered", "ContractValidationFailed", "ContractValidationCompleted", "Approved", "Rejected", "ApprovalRevoked")
     }
 
     data object AgentDatasetAccessValidation {
         const val NAME = "AgentDatasetAccessValidation"
-        val slices = listOf("ValidateAgentDatasetAccess", "RevalidateAgentDatasetAccess", "AgentDatasetAccessValidationCatalog")
-        val states = listOf("Checked")
+        val slices = listOf("ValidateAgentDatasetAccess", "RecordAgentDatasetAccessValidationFailure", "RevalidateAgentDatasetAccess", "AgentDatasetAccessValidationCatalog")
+        val states = listOf("Checked", "Failed")
     }
 
     data object AgentDatasetProfile {
         const val NAME = "AgentDatasetProfile"
-        val slices = listOf("ProfileAgentDataset", "ReprofileAgentDataset")
-        val states = listOf("Reported")
+        val slices = listOf("ProfileAgentDataset", "RecordAgentDatasetProfilingFailure", "ReprofileAgentDataset")
+        val states = listOf("Reported", "Failed")
     }
 
     data object RoundExecution {
         const val NAME = "RoundExecution"
-        val slices = listOf("ReceiveParticipantExecutionPlan", "AcceptExecutionPlan", "StartRoundExecution", "ObserveRuntimeEngineJob", "CompleteRoundExecution", "FailRoundExecution", "RetryRoundExecutionAfterStartFailure", "RetryRoundExecutionAfterRuntimeFailure", "SubmitAgentLocalModelUpdate", "ReleaseRuntimeEngineJobAfterCompletion", "ReleaseRuntimeEngineJobAfterFailure", "ReleaseRuntimeEngineJobAfterStartFailure", "ReleaseRuntimeEngineJobAfterRetryFailure", "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure", "RoundExecutionCatalog")
+        val slices = listOf("ReceiveParticipantExecutionPlan", "AcceptExecutionPlan", "StartRoundExecution", "RecordRoundExecutionStartFailure", "ObserveRuntimeEngineJob", "CompleteRoundExecution", "FailRoundExecution", "RetryRoundExecutionAfterStartFailure", "RecordRoundExecutionStartRetryFailure", "RetryRoundExecutionAfterRuntimeFailure", "RecordRoundExecutionRuntimeRetryFailure", "SubmitAgentLocalModelUpdate", "ReleaseRuntimeEngineJobAfterCompletion", "ReleaseRuntimeEngineJobAfterFailure", "ReleaseRuntimeEngineJobAfterStartFailure", "ReleaseRuntimeEngineJobAfterRetryFailure", "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure", "RoundExecutionCatalog")
         val states = listOf("PlanReceived", "PlanAccepted", "PlanRejected", "Running", "StartFailed", "Retried", "Completed", "Failed", "UpdateSubmitted", "RuntimeEngineReleased", "RuntimeEngineReleaseHandled")
     }
 

@@ -69,6 +69,7 @@ class AgentDatasetProfileState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AgentDatasetProfilingFailedEvent): AgentDatasetProfileState = apply {
+        currentState = AgentDatasetProfileStateEnum.Failed
         metadataReportId = event.metadataReportId
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
@@ -85,6 +86,7 @@ class AgentDatasetProfileState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AgentDatasetReprofiledEvent): AgentDatasetProfileState = apply {
+        currentState = AgentDatasetProfileStateEnum.Reported
         metadataReportId = event.metadataReportId
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
@@ -109,6 +111,7 @@ class AgentDatasetProfileState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AgentDatasetReprofilingFailedEvent): AgentDatasetProfileState = apply {
+        currentState = AgentDatasetProfileStateEnum.Failed
         metadataReportId = event.metadataReportId
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId

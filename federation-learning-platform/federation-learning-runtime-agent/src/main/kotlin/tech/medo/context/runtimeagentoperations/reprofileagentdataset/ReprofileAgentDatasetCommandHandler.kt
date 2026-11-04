@@ -25,17 +25,17 @@ class ReprofileAgentDatasetCommandHandler(
         eventAppender: EventAppender
     ) {
 
-        if (state.currentState != AgentDatasetProfileStateEnum.Reported) {
+        if (state.currentState != AgentDatasetProfileStateEnum.Failed) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
                 i18nKey = "errors.runtimeagentoperations.reprofileAgentDataset.requiresState",
                 args = mapOf(
                     "command" to "ReprofileAgentDataset",
                     "aggregate" to "AgentDatasetProfile",
-                    "expectedState" to "Reported",
+                    "expectedState" to "Failed",
                     "actualState" to state.currentState.toString()
                 ),
-                message = "ReprofileAgentDataset requires AgentDatasetProfile to be Reported."
+                message = "ReprofileAgentDataset requires AgentDatasetProfile to be Failed."
             )
         }
         val input = ReprofileAgentDatasetInput(metadataReportId = command.metadataReportId, runtimeDatasetBindingId = command.runtimeDatasetBindingId)

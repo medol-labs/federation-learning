@@ -13,17 +13,17 @@ import tech.medo.runtimeagentoperations.domain.states.DatasetStateEnum
 
 interface RetryDatasetContractValidationDecision {
     fun decide(command: RetryDatasetContractValidationCommand, state: DatasetState, portResult: RetryDatasetContractValidationResult, now: java.time.LocalDateTime): List<Any> {
-        if (state.currentState != DatasetStateEnum.ContractValidationCompleted) {
+        if (state.currentState != DatasetStateEnum.ContractValidationFailed) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
                 i18nKey = "errors.runtimeagentoperations.retryDatasetContractValidation.requiresState",
                 args = mapOf(
                     "command" to "RetryDatasetContractValidation",
                     "aggregate" to "Dataset",
-                    "expectedState" to "ContractValidationCompleted",
+                    "expectedState" to "ContractValidationFailed",
                     "actualState" to state.currentState.toString()
                 ),
-                message = "RetryDatasetContractValidation requires Dataset to be ContractValidationCompleted."
+                message = "RetryDatasetContractValidation requires Dataset to be ContractValidationFailed."
             )
         }
         return when (portResult) {

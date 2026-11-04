@@ -84,7 +84,7 @@ class DatasetState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DatasetContractValidationFailedEvent): DatasetState = apply {
-        currentState = DatasetStateEnum.ContractValidationCompleted
+        currentState = DatasetStateEnum.ContractValidationFailed
         datasetId = event.datasetId
         featureSchemaId = event.featureSchemaId
         metadataReportId = event.metadataReportId
@@ -97,6 +97,7 @@ class DatasetState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DatasetContractRevalidatedEvent): DatasetState = apply {
+        currentState = DatasetStateEnum.ContractValidationCompleted
         datasetId = event.datasetId
         featureSchemaId = event.featureSchemaId
         metadataReportId = event.metadataReportId
@@ -108,7 +109,7 @@ class DatasetState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DatasetContractRevalidationFailedEvent): DatasetState = apply {
-        currentState = DatasetStateEnum.ContractValidationCompleted
+        currentState = DatasetStateEnum.ContractValidationFailed
         datasetId = event.datasetId
         featureSchemaId = event.featureSchemaId
         metadataReportId = event.metadataReportId

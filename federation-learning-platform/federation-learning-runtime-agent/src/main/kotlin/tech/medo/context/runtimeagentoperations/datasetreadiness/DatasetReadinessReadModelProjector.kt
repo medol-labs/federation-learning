@@ -183,6 +183,7 @@ open class DefaultDatasetReadinessReadModelProjectionUpdater(
             entity.featureSchemaVersion = event.featureSchemaVersion
             entity.datasetAccessValidationId = event.datasetAccessValidationId
             entity.accessStatus = "Failed"
+            entity.contractStatus = "Failed"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -209,6 +210,7 @@ open class DefaultDatasetReadinessReadModelProjectionUpdater(
             entity.readable = event.readable
             entity.schemaReadable = event.schemaReadable
             entity.sampleBatchReadable = event.sampleBatchReadable
+            entity.accessStatus = "Checked"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -318,6 +320,7 @@ open class DefaultDatasetReadinessReadModelProjectionUpdater(
             entity.nonIidScore = event.nonIidScore
             entity.classBalanceScore = event.classBalanceScore
             entity.metadataReportId = event.metadataReportId
+            entity.metadataStatus = "Reported"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -385,7 +388,7 @@ open class DefaultDatasetReadinessReadModelProjectionUpdater(
             entity.qualityScore = event.qualityScore
             entity.nonIidScore = event.nonIidScore
             entity.metadataReportId = event.metadataReportId
-            entity.contractStatus = "Failed"
+            entity.contractStatus = "ContractValidationFailed"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -407,6 +410,7 @@ open class DefaultDatasetReadinessReadModelProjectionUpdater(
             entity.qualityScore = event.qualityScore
             entity.nonIidScore = event.nonIidScore
             entity.metadataReportId = event.metadataReportId
+            entity.contractStatus = "ContractValidationCompleted"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
