@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "builtAt": "2026-11-04T02:56:54.236Z",
+  "imageVersion": "0.0.1-SNAPSHOT",
+  "buildIdentity": "3240e8ea44bb9836d719bca685074dd91ae4dc800c6a87af9b3544af7cc9f58e",
+  "codeSha256": "5f5d3bf2c8bd78057c7056cb2f58187b12dd0e59af1665c035374a5aedea1978",
+  "buildOptionsSha256": "af0aaeda142551ffd03a9b64232433baa63f05d217902453736a27420814bb90",
+  "variant": "pytorch-vision",
+  "git": {
+    "revision": "d002d5d32b17d65e0c075086915cfc10e9eac3b7",
+    "dirty": false
+  },
+  "generation": {
+    "schemaVersion": 1,
+    "target": "operations",
+    "scope": "partial",
+    "selection": {
+      "environment": "prod"
+    },
+    "generatedAt": "2026-11-03T12:52:08.898Z",
+    "generator": {
+      "name": "medol-codegen",
+      "version": "1.0.0",
+      "sha256": "c20a119ef4928e119b198c9f7bde4f8a91b1f56798b1a74aafac8a144b31b937"
+    },
+    "model": {
+      "sha256": "9c884e066c967a4e3ad07bad910226b5e33b2d787e7703a7136316de5c73ff03",
+      "metadata": {
+        "schemaVersion": 1,
+        "medolVersion": "0.1.0",
+        "source": {
+          "sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
+        }
+      }
+    },
+    "config": {
+      "sha256": "c10d3c56fcd2d29bbfdd46b1a59fd6b621e30b4d1a20a805ba70a33b09477a5d"
+    },
+    "inputs": [
+      {
+        "path": ".medol/codegen-model.json",
+        "sha256": "9c884e066c967a4e3ad07bad910226b5e33b2d787e7703a7136316de5c73ff03"
+      },
+      {
+        "path": ".medol/medol.yml",
+        "sha256": "f3f72759925093d87a4a6841a1a58fbd9d91a6d07660e72443e3bff369aa864e"
+      },
+      {
+        "path": ".medol/source.medol",
+        "sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
+      },
+      {
+        "path": "dictionary-init/dictionaries.json",
+        "sha256": "efb7481cb7be3b7145a33032af8647729c3400e92725a6add352b30aee4428bc"
+      }
+    ]
+  },
+  "images": [
+    {
+      "name": "fl/federation-learning-runtime-engine:pytorch-vision-0.0.1-SNAPSHOT",
+      "id": "sha256:00b94ff5dc1a17197242210694020f1bfaa6f541deba058ce954511955b40b5d",
+      "repoDigests": [],
+      "labels": {
+        "org.opencontainers.image.revision": "d002d5d32b17d65e0c075086915cfc10e9eac3b7",
+        "org.opencontainers.image.version": "0.0.1-SNAPSHOT",
+        "tech.medol.build.identity": "3240e8ea44bb9836d719bca685074dd91ae4dc800c6a87af9b3544af7cc9f58e",
+        "tech.medol.code.sha256": "5f5d3bf2c8bd78057c7056cb2f58187b12dd0e59af1665c035374a5aedea1978",
+        "tech.medol.generation.sha256": "9a05c5ab76680e72835459c8148dabdda484fb4fd61bd8f9faa6fbde39717cf4",
+        "tech.medol.generator.sha256": "c20a119ef4928e119b198c9f7bde4f8a91b1f56798b1a74aafac8a144b31b937",
+        "tech.medol.model.sha256": "9c884e066c967a4e3ad07bad910226b5e33b2d787e7703a7136316de5c73ff03",
+        "tech.medol.runtime.profile": "pytorch-vision",
+        "tech.medol.source.sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
+      }
+    }
+  ],
+  "archive": {
+    "sha256": "f8b53e176fa801f4f661d65c3e86ed5b101e6556d251aab81b86b807feb6e101",
+    "size": 1514215424
+  }
+}
