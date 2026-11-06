@@ -1,25 +1,28 @@
 #!/usr/bin/env node
 import {cpSync, existsSync, mkdtempSync, readdirSync, readFileSync, writeFileSync, rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
-import {dirname, join, resolve} from 'node:path';
+import {basename, dirname, join, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {packageOffline, parseArguments} from '../operations/scripts/package-offline.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2);
+const managedRuntimeAgent = argv.includes('--managed-runtime-agent');
+if (managedRuntimeAgent) argv.splice(argv.indexOf('--managed-runtime-agent'), 1);
 const engineIndex = argv.indexOf('--engine-archive');
 const engine = engineIndex >= 0 ? argv.splice(engineIndex, 2)[1] : undefined;
 const temporaryDirectories = [];
 try {
     const options = parseArguments(argv);
     if (options.help) {
-        console.log('node scripts/package-offline.mjs --environment <name> [--site <network-topology-site>] [--image-source import|registry] [--engine-archive <engine-images.tar>] [--archive <site-images.tar> ...] [--output <new-directory>]');
+        console.log('node scripts/package-offline.mjs --environment <name> [--site <network-topology-site>] [--managed-runtime-agent] [--image-source import|registry] [--engine-archive <engine-images.tar>] [--archive <site-images.tar> ...] [--output <new-directory>]');
     } else {
         if (!/^[a-zA-Z0-9_-]+$/.test(options.environment ?? '') || options.environment === 'local') throw new Error('Select a non-local --environment.');
         if (engineIndex >= 0 && (!engine || engine.startsWith('--'))) throw new Error('--engine-archive requires an archive path when specified.');
         const imageSource = options.imageSource ?? 'import';
         if (imageSource === 'registry' && engine) throw new Error('Registry delivery does not include a Runtime Engine archive; push the engine image to the Registry instead.');
         if (options.root || options.k3sRoot || options.components.length) throw new Error('This project wrapper owns the root, K3s source, and business component selection.');
+        if (managedRuntimeAgent && options.site !== 'platform') throw new Error('--managed-runtime-agent requires --site platform.');
         const model = JSON.parse(readFileSync(join(root, 'operations/model', options.environment, 'operations-model.json'), 'utf8'));
         const sites = model.networkTopology?.sites ?? [];
         const requestedSite = options.site ? sites.find((candidate) => candidate.name === options.site) : undefined;
@@ -31,16 +34,20 @@ try {
         const archiveDirectory = join(root, 'operations/images', options.environment, '.work/image-bundle/images');
         const outputs = [];
         for (const site of selectedSites) {
-            const archivePrefix = `${site.name.replace(/_/g, '-').toLowerCase()}-`;
+            const archiveSites = managedRuntimeAgent ? sites : [site];
+            const archivePrefixes = archiveSites.map(({name}) => `${name.replace(/_/g, '-').toLowerCase()}-`);
             const archives = imageSource === 'registry' ? [] : options.archives.length ? options.archives : readdirSync(archiveDirectory)
-                .filter((name) => name.startsWith(archivePrefix) && name.endsWith('.tar'))
+                .filter((name) => archivePrefixes.some((prefix) => name.startsWith(prefix)) && name.endsWith('.tar'))
                 .map((name) => join(archiveDirectory, name));
-            if (imageSource === 'import' && !archives.length) throw new Error(`Export images for ${site.name} before packaging: node operations/images/images.mjs export --environment ${options.environment} --site ${site.name}`);
+            if (imageSource === 'import' && !options.archives.length) {
+                const missing = archivePrefixes.find((prefix) => !archives.some((file) => basename(file).startsWith(prefix)));
+                if (missing) throw new Error(`Export images for ${missing.slice(0, -1)} before packaging.`);
+            }
             const temporary = mkdtempSync(join(tmpdir(), 'fl-offline-'));
             temporaryDirectories.push(temporary);
             const components = [];
             const componentRoot = join(root, 'operations/k3s/components/runtime-scheduling');
-            const sourceComponent = join(componentRoot, site.name);
+            const sourceComponent = join(componentRoot, managedRuntimeAgent ? 'platform-managed' : site.name);
             if (existsSync(sourceComponent)) {
                 const component = join(temporary, 'runtime-scheduling');
                 cpSync(sourceComponent, component, {recursive: true});

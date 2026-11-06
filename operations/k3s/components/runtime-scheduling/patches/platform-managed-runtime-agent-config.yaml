@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: federation-learning-platform-dev-config
+data:
+  PLATFORM_RUNTIME_K3S_NAMESPACE: federation-learning-platform
+  PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_SERVICE_ACCOUNT_NAME: federation-learning-platform-runtime-engine-scheduler

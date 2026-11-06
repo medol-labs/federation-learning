@@ -11,15 +11,26 @@ deployable components are split by generated site:
 - `participant/` adds runtime-engine scheduler RBAC, runtime dataset/work
   mounts, and runtime-agent configuration patches.
 
-The root component remains for the combined local development topology. Formal
-site delivery must select the matching subcomponent. These files are maintained
-in Git and are not generated environment or registry overlays.
+The root component remains for the combined local development topology. These
+files are maintained in Git and are not generated environment or registry overlays.
 
-The split-site topology deploys Runtime Agent from the participant package.
-The root component retains same-cluster platform-managed agent scheduling only
-for the combined development topology. Remote participant-cluster provisioning
-requires a separate cross-cluster credential and control-plane design; the
-site package does not pretend that an in-cluster ServiceAccount can do that.
+The default split-site topology deploys Runtime Agent from the participant
+package. When Platform instead provisions agents on workers in its **own**
+cluster, package the platform site explicitly with the managed variant:
+
+```bash
+node scripts/package-offline.mjs --environment test --site platform \
+  --managed-runtime-agent --output /tmp/fl-test-managed
+```
+
+This binds Platform to the dedicated agent scheduler and provisions the
+namespaced engine scheduler for agents it creates. In import mode, export both
+sites' archives first, or explicitly supply all required archives. Include the
+required Runtime Engine profile via `--engine-archive` unless it is already
+available to the nodes. Verify the managed Agent's Secret, image references and
+storage settings before deploying. Do not apply the participant site's static
+Agent manifest to the same cluster for this topology. Remote provisioning is
+not enabled by these in-cluster credentials.
 
 The helper defaults to the generated `environments/local` environment. A
 machine-specific `operations/config/local.private.yml` may generate the ignored
