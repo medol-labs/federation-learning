@@ -1,5 +1,10 @@
 {
   "schemaVersion": 1,
+  "sharedRequirementTraces": [
+    {"id": "3.3.1（查询通用要求）", "title": "目录、看板与状态视图查询通用要求", "designHeadings": ["FL-SD-INT-QUERY"]},
+    {"id": "LBLS-ZY-TX", "title": "计算机通信需求（联邦学习）", "designHeadings": ["FL-SD-INT-COMM"]},
+    {"id": "LBLS-ZL-XL", "title": "效率要求（联邦学习）", "designHeadings": ["FL-SD-PER-01"]}
+  ],
   "sections": {
     "db-conceptual": [
       {
@@ -110,6 +115,16 @@
       }
     ],
     "architecture": [
+      {"id": "FL-SD-ARC-HEADING-01", "type": "heading", "level": 4, "text": "部件图"},
+      {
+        "id": "FL-SD-ARC-FIG-01",
+        "type": "figure",
+        "image": "docs/generated/diagrams/federation-learning-components.png",
+        "source": "docs/438c/merge/figures/federation-learning-components.drawio",
+        "caption": "联邦学习模块部件图",
+        "widthCm": 15.0
+      },
+      {"id": "FL-SD-ARC-HEADING-02", "type": "heading", "level": 4, "text": "部件描述"},
       {
         "id": "FL-SD-ARC-INTRO-01",
         "type": "paragraph",
@@ -273,7 +288,7 @@
       {
         "id": "FL-SD-PER-02",
         "type": "paragraph",
-        "text": "训练作业提交与跨节点训练完成是不同时间尺度。用户操作接口应尽快返回已受理结果，训练进度通过轮次和执行状态查询；不能将模型训练、跨节点等待或聚合全部压在一次同步 HTTP 请求中。前端对投影延迟显示处理中状态，避免把暂未查询到视为失败。"
+        "text": "训练作业提交与跨节点训练完成是不同时间尺度。用户操作接口应尽快返回已受理结果，训练进度通过轮次和执行状态查询；不能将模型训练、跨节点等待或聚合全部压在一次同步 HTTP 请求中。前端对投影延迟显示处理中状态，避免把暂未查询到视为失败。需规效率要求（LBLS-ZL-XL）给出的普通查询页面不超过3秒、统计分析页面不超过5秒、消息事件处理响应不超过3秒，作为适用场景的验证目标，不作为已达标结论。测试应分别记录页面可用时间、事件处理和投影可见时间；消息事件起止点、统计页面范围及负载条件应在测试方案中确认，不能以命令HTTP受理或训练完成耗时替代。"
       },
       {
         "id": "FL-SD-PER-03",
@@ -304,12 +319,12 @@
       {
         "id": "FL-SD-PER-07",
         "type": "paragraph",
-        "text": "交付时应为每项性能测量记录目标硬件、网络条件、数据规模、参与节点数、模型与算法、测试样本和通过阈值。当前文档只定义测量口径与风险点；在没有目标环境压测数据之前，不填写看似精确的响应时间或资源容量承诺。"
+        "text": "交付时应为每项性能测量记录目标硬件、网络条件、数据规模、参与节点数、模型与算法、测试样本和通过阈值。已规定的效率目标按需规验证；需规未规定的训练耗时、容量和恢复指标在目标环境中另行确认。"
       },
       {
         "id": "FL-SD-PER-08",
         "type": "table",
-        "headers": ["待锁定指标", "验收场景与证据", "当前状态"],
+        "headers": ["测量指标", "验收场景与证据", "当前状态"],
         "rows": [
           {"id": "FL-SD-PER-08-R01", "cells": ["命令受理与视图可见延迟", "分别记录 HTTP 受理和事件投影可查询的分位数、失败率及并发负载。", "阈值待目标环境性能测试计划确认。"]},
           {"id": "FL-SD-PER-08-R02", "cells": ["逐节点计划分发", "在不同参与节点数、节点不可达与部分超时场景下测量耗时和失败隔离。", "最大节点数、超时与通过阈值待联调确认。"]},
@@ -325,10 +340,30 @@
         "level": 3,
         "text": "联邦学习模块接口设计"
       },
+      {"id": "FL-SD-INT-SCOPE", "type": "heading", "level": 4, "text": "接口总体设计"},
       {
         "id": "FL-SD-INT-INTRO",
         "type": "paragraph",
         "text": "本节先按调用边界说明接口，再列出各部署单元当前对外提供的应用 HTTP 接口清单。清单依据平台、代理、支撑服务的资源路由及训练引擎的业务路由生成；框架管理端点（如 Actuator 和 OpenAPI 文档端点）由部署配置管理，不属于业务接口清单。清单标识中的 P、A、S、E 分别代表平台、参与方代理、共享支撑服务、训练引擎，标识与方法、路径关联，部署地址变化不影响标识。关键跨服务接口在清单之后补充消息与处理语义；完整请求和响应结构应随交付版本归档为 OpenAPI 定义。"
+      },
+      {
+        "id": "FL-SD-INT-SCOPE-01",
+        "type": "paragraph",
+        "text": "本节以联邦学习模块为范围，沿用部件设计中的控制台（FL-SU-UI）、平台（FL-SU-P）、参与方代理（FL-SU-A）、支撑服务（FL-SU-S）和引擎（FL-SU-E）标识。用户与控制台的人机交互由相应操作及查询设计说明；控制台分别访问经部署开放的平台、支撑及参与方本地接口。跨机构接口交换控制信息、状态、元数据与模型工件，不传输原始训练样本。未将网关、对象存储或在线业务推理假定为已部署的接口实体。"
+      },
+      {"id": "FL-SD-INT-RELATIONS", "type": "heading", "level": 4, "text": "接口标识与接口关系图"},
+      {
+        "id": "FL-SD-INT-RELATIONS-01",
+        "type": "paragraph",
+        "text": "FL-IF-01 至 FL-IF-06 为逻辑接口组，其下编号标识具体交互；HTTP 清单中的 P、A、S、E 编号定位实际路由。同一逻辑接口组可包含多个路由，同一路由可服务多个业务场景。箭头表示调用发起方向，响应沿对应调用返回；逻辑编号不代表独立服务、端口或协议。"
+      },
+      {
+        "id": "FL-SD-INT-RELATIONS-FIG",
+        "type": "figure",
+        "image": "docs/generated/diagrams/federation-learning-interface-relations.png",
+        "source": "docs/438c/merge/figures/federation-learning-interface-relations.drawio",
+        "caption": "联邦学习主要接口关系图",
+        "widthCm": 15.0
       },
       {
         "id": "FL-SD-INT-02",
@@ -342,7 +377,7 @@
           {
             "id": "FL-SD-INT-02-R01",
             "cells": [
-              "FL-IF-01 控制台到平台及支撑服务",
+              "FL-IF-01 控制台到平台、参与方代理及支撑服务",
               "管理命令的输入与受理结果、目录查询条件与分页结果、文件上传内容与文件引用",
               "HTTP 接口鉴权；命令受理与查询视图更新分离"
             ]
@@ -389,6 +424,7 @@
           }
         ]
       },
+      {"id": "FL-SD-INT-COMMON", "type": "heading", "level": 4, "text": "接口设计通用约定"},
       {
         "id": "FL-SD-INT-03",
         "type": "paragraph",
@@ -560,70 +596,207 @@
           }
         ]
       },
+      {"id":"FL-SD-INT-06","type":"heading","level":4,"text":"关键接口详细设计"},
+      {"id":"FL-SD-INT-06-NOTE","type":"paragraph","text":"下列条目以逻辑接口下的具体操作为单位，按接口实体和方向、数据元素、消息结构、通信与异常说明。字段表列出关键元素，不等同于完整 DTO；未归档的 OpenAPI 或插件文件格式不作为已提供的契约引用。公共安全与错误处理见本节通用约定。"},
+      {"id":"FL-SD-INT-DETAIL-01","type":"heading","level":5,"text":"执行计划下发（FL-IF-02-01）"},
+      {"id":"FL-SD-INT-DETAIL-01-METHOD","type":"paragraph","text":"平台 → 参与方代理；POST /roundexecution/receiveparticipantexecutionplan；HTTP/JSON。平台按运行时端点目录主动下发，不依赖代理轮询取任务。"},
       {
-        "id": "FL-SD-INT-06",
-        "type": "heading",
-        "level": 4,
-        "text": "关键数据元素与消息结构"
+        "id": "FL-SD-INT-DETAIL-01-FIELDS",
+        "type": "table",
+        "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
+        "rows": [
+          {"id":"FL-SD-INT-DETAIL-01-F01","cells":["executionPlanId","UUID","必填","计划生成方分配；关联接收、接受或拒绝及后续执行。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F02","cells":["roundExecutionId","UUID","必填","本地轮次执行标识；结果沿用该标识。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F03","cells":["executionSessionId","UUID","必填","关联执行会话。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F04","cells":["trainingJobId","UUID","必填","所属训练作业。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F05","cells":["trainingRunConfigurationId","UUID","必填","该作业锁定的训练配置。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F06","cells":["roundId","UUID","必填","平台轮次标识。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F07","cells":["roundNumber","整数","必填","轮次序号；不同于 roundId。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F08","cells":["runtimeId","UUID","必填","目标运行时，用于选择已登记的代理端点。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F09","cells":["organizationId","UUID","必填","目标组织，应与目标运行时一致。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F10","cells":["featureSchemaId","UUID","必填","本地输入采用的特征架构。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F11","cells":["baseModelId","UUID","必填","本轮基础模型标识。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F12","cells":["baseModelArtifactUri","字符串","必填","基础模型工件引用；目标执行环境需可读取。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F13","cells":["baseModelArtifactDigest","字符串","必填","基础模型工件摘要；用于核对内容。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F14","cells":["secureAggregationRequired","布尔值","必填","标识是否要求安全聚合。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F15","cells":["secureAggregationSessionId","UUID","可空","安全聚合分支使用的会话标识。"]},
+          {"id":"FL-SD-INT-DETAIL-01-F16","cells":["publicKeyRef","字符串","可空","安全分支的公钥引用，不传私钥。"]}
+        ]
+      },
+      {"id":"FL-SD-INT-DETAIL-01-RESULT","type":"paragraph","text":"请求为执行计划 JSON 对象；还包括接收端定义的模型格式、插件、运行环境与个性化参数。成功响应回显已受理的命令；代理接受或拒绝、引擎执行状态以本地轮次结果为准。缺失或不可达端点属于分发异常；重复投递不能假定幂等。"},
+      {"id":"FL-SD-INT-DETAIL-02","type":"heading","level":5,"text":"运行时连接报告（FL-IF-03-01）"},
+      {"id":"FL-SD-INT-DETAIL-02-METHOD","type":"paragraph","text":"参与方代理 → 平台；POST /runtimeinfrastructure/recordruntimeconnectionestablished；HTTP/JSON。"},
+      {
+        "id": "FL-SD-INT-DETAIL-02-FIELDS",
+        "type": "table",
+        "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
+        "rows": [
+          {"id":"FL-SD-INT-DETAIL-02-F01","cells":["runtimeInfrastructureId","UUID","必填","关联平台预配记录。"]},
+          {"id":"FL-SD-INT-DETAIL-02-F02","cells":["runtimeAgentId","UUID","必填","上报方的代理标识。"]},
+          {"id":"FL-SD-INT-DETAIL-02-F03","cells":["organizationId","UUID","必填","上报方所属组织。"]},
+          {"id":"FL-SD-INT-DETAIL-02-F04","cells":["organizationName","字符串","可空","组织显示名称。"]},
+          {"id":"FL-SD-INT-DETAIL-02-F05","cells":["agentInstallMode","字符串","必填","代理安装方式。"]},
+          {"id":"FL-SD-INT-DETAIL-02-F06","cells":["runtimeName","字符串","必填","运行时显示名称。"]},
+          {"id":"FL-SD-INT-DETAIL-02-F07","cells":["runtimeAgentEndpoint","字符串","必填","供平台访问的代理端点。"]},
+          {"id":"FL-SD-INT-DETAIL-02-F08","cells":["endpointScope","字符串","必填","端点可达范围。"]}
+        ]
+      },
+      {"id":"FL-SD-INT-DETAIL-02-RESULT","type":"paragraph","text":"响应回显受理命令。连接上报不替代从平台到代理的可达性验证，也不代表代理已完成就绪。"},
+      {"id":"FL-SD-INT-DETAIL-03","type":"heading","level":5,"text":"特征架构查询（FL-IF-03-02）"},
+      {"id":"FL-SD-INT-DETAIL-03-METHOD","type":"paragraph","text":"参与方代理 → 平台；GET /featureschema/featureschemacatalog/{id}。"},
+      {
+        "id": "FL-SD-INT-DETAIL-03-FIELDS",
+        "type": "table",
+        "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
+        "rows": [
+          {"id":"FL-SD-INT-DETAIL-03-F01","cells":["id","UUID","路径参数，必填","由参与方引用目标特征架构。"]},
+          {"id":"FL-SD-INT-DETAIL-03-F02","cells":["featureSchemaId","UUID","响应","返回的架构标识。"]},
+          {"id":"FL-SD-INT-DETAIL-03-F03","cells":["features","对象数组","响应","特征定义，包括名称、类型、是否必填及校验规则。"]},
+          {"id":"FL-SD-INT-DETAIL-03-F04","cells":["labels","对象数组","响应","标签定义，包括名称、类型及类别配置。"]},
+          {"id":"FL-SD-INT-DETAIL-03-F05","cells":["schemaStatus","字符串","响应","架构状态。"]}
+        ]
+      },
+      {"id":"FL-SD-INT-DETAIL-03-RESULT","type":"paragraph","text":"读取平台查询视图，不改变业务状态。代理以读取到的定义执行本地校验；无记录或接口调用失败不得视为校验成功。"},
+      {"id":"FL-SD-INT-DETAIL-04","type":"heading","level":5,"text":"数据集元数据上报（FL-IF-03-03）"},
+      {"id":"FL-SD-INT-DETAIL-04-METHOD","type":"paragraph","text":"参与方代理 → 平台；POST /runtimedatasetmetadata/recordruntimedatasetmetadata；HTTP/JSON。"},
+      {
+        "id": "FL-SD-INT-DETAIL-04-FIELDS",
+        "type": "table",
+        "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
+        "rows": [
+          {"id":"FL-SD-INT-DETAIL-04-F01","cells":["runtimeDatasetBindingId","UUID","必填","本地绑定标识；作为目录记录关联键。"]},
+          {"id":"FL-SD-INT-DETAIL-04-F02","cells":["metadataReportId","UUID","必填","本次报告标识。"]},
+          {"id":"FL-SD-INT-DETAIL-04-F03","cells":["datasetId","UUID","必填","本地数据集标识。"]},
+          {"id":"FL-SD-INT-DETAIL-04-F04","cells":["datasetName","字符串","必填","数据集显示名称。"]},
+          {"id":"FL-SD-INT-DETAIL-04-F05","cells":["organizationId","UUID","必填","数据所属组织。"]},
+          {"id":"FL-SD-INT-DETAIL-04-F06","cells":["runtimeId","UUID","必填","执行检查的运行时。"]},
+          {"id":"FL-SD-INT-DETAIL-04-F07","cells":["featureSchemaId","UUID","必填","校验所用架构。"]},
+          {"id":"FL-SD-INT-DETAIL-04-F08","cells":["sampleCount","整数","必填","样本数量，单位为条。"]},
+          {"id":"FL-SD-INT-DETAIL-04-F09","cells":["featureCount","整数","必填","特征数量，单位为列。"]},
+          {"id":"FL-SD-INT-DETAIL-04-F10","cells":["schemaCompatible","布尔值","可空","特征兼容结果；空不等于通过。"]},
+          {"id":"FL-SD-INT-DETAIL-04-F11","cells":["labelCompatible","布尔值","可空","标签兼容结果；空不等于通过。"]},
+          {"id":"FL-SD-INT-DETAIL-04-F12","cells":["qualityScore","十进制数","可空","本地检查产出的质量评分。"]}
+        ]
+      },
+      {"id":"FL-SD-INT-DETAIL-04-RESULT","type":"paragraph","text":"回显已受理的报告命令。查询目录异步更新；仅传元数据和统计量，不传原始样本。"},
+      {"id":"FL-SD-INT-DETAIL-05","type":"heading","level":5,"text":"模型更新提交（FL-IF-03-04）"},
+      {"id":"FL-SD-INT-DETAIL-05-METHOD","type":"paragraph","text":"参与方代理 → 平台；POST /traininground/submitmodelupdatesubmission；HTTP/JSON。"},
+      {
+        "id": "FL-SD-INT-DETAIL-05-FIELDS",
+        "type": "table",
+        "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
+        "rows": [
+          {"id":"FL-SD-INT-DETAIL-05-F01","cells":["modelUpdateSubmissionId","UUID","可省略，由服务端生成","调用方应保留返回标识供结果关联。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F02","cells":["executionPlanId","UUID","必填","关联目标参与方计划。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F03","cells":["executionSessionId","UUID","必填","关联执行会话。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F04","cells":["trainingJobId","UUID","必填","关联训练作业。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F05","cells":["trainingRunConfigurationId","UUID","必填","关联训练配置。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F06","cells":["roundId","UUID","必填","所属平台轮次。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F07","cells":["roundExecutionId","UUID","必填","所属本地执行。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F08","cells":["runtimeId","UUID","必填","提交更新的运行时。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F09","cells":["featureSchemaId","UUID","必填","训练使用的特征架构。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F10","cells":["localModelId","UUID","必填","本地模型标识。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F11","cells":["updateArtifactId","UUID","必填","已上传更新工件的标识。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F12","cells":["artifactRef","字符串","必填","平台可读取的工件引用，不是本地数据集路径。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F13","cells":["artifactDigest","字符串","必填","用于核对工件内容。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F14","cells":["updateProtectionType","字符串","必填","更新保护类型，应符合该轮聚合方式。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F15","cells":["trainingLoss","十进制数","必填","训练损失。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F16","cells":["secureAggregationRequired","布尔值","必填","本轮是否采用安全聚合。"]},
+          {"id":"FL-SD-INT-DETAIL-05-F17","cells":["personalizedArtifactAvailable","布尔值","必填","是否产出可用个性化工件。"]}
+        ]
+      },
+      {"id":"FL-SD-INT-DETAIL-05-RESULT","type":"paragraph","text":"先上传更新工件，再提交其引用；安全聚合上下文及个性化字段按配置传递。响应回显已受理的命令；是否接受更新以平台后续业务结果为准。上传成功但提交失败不等于更新已计入聚合。"},
+      {"id":"FL-SD-INT-DETAIL-06","type":"heading","level":5,"text":"工件上传（FL-IF-05-01）"},
+      {"id":"FL-SD-INT-DETAIL-06-METHOD","type":"paragraph","text":"平台或参与方代理 → 支撑服务；POST /uploadedfile/uploadfile/file；multipart/form-data。"},
+      {
+        "id": "FL-SD-INT-DETAIL-06-FIELDS",
+        "type": "table",
+        "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
+        "rows": [
+          {"id":"FL-SD-INT-DETAIL-06-F01","cells":["uploadedFile","二进制分段","必填","工件文件内容；不得借此上传原始训练样本。"]},
+          {"id":"FL-SD-INT-DETAIL-06-F02","cells":["purpose","字符串","必填","上传用途。"]},
+          {"id":"FL-SD-INT-DETAIL-06-F03","cells":["fileId","UUID","可选","省略时由接收端生成。"]},
+          {"id":"FL-SD-INT-DETAIL-06-F04","cells":["fileLocation","字符串","响应","保存后的文件引用。"]},
+          {"id":"FL-SD-INT-DETAIL-06-F05","cells":["originalFileName","字符串","响应","原始文件名。"]},
+          {"id":"FL-SD-INT-DETAIL-06-F06","cells":["contentType","字符串","响应，可空","文件媒体类型。"]},
+          {"id":"FL-SD-INT-DETAIL-06-F07","cells":["sizeBytes","长整数","响应，可空","文件大小，单位为字节。"]},
+          {"id":"FL-SD-INT-DETAIL-06-F08","cells":["checksum","字符串","响应，可空","存储端计算的内容校验值。"]},
+          {"id":"FL-SD-INT-DETAIL-06-F09","cells":["expiresAt","日期时间","响应","文件留存期限。"]}
+        ]
+      },
+      {"id":"FL-SD-INT-DETAIL-06-RESULT","type":"paragraph","text":"成功响应为上传命令对象，包含 fileId 和用途等元数据；uploadedFile 在响应中是保存后的引用，不是文件原文。当前接口不声明分块续传、跨站复制或重复提交幂等。"},
+      {"id":"FL-SD-INT-DETAIL-07","type":"heading","level":5,"text":"工件读取（FL-IF-05-02）"},
+      {"id":"FL-SD-INT-DETAIL-07-METHOD","type":"paragraph","text":"平台 → 支撑服务；GET /api/files/{fileId}/content；成功时返回二进制。"},
+      {
+        "id": "FL-SD-INT-DETAIL-07-FIELDS",
+        "type": "table",
+        "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
+        "rows": [
+          {"id":"FL-SD-INT-DETAIL-07-F01","cells":["fileId","UUID","路径参数，必填","上传后获得的文件标识。"]},
+          {"id":"FL-SD-INT-DETAIL-07-F02","cells":["Content-Disposition","响应头","成功响应","以附件方式返回原始文件名。"]},
+          {"id":"FL-SD-INT-DETAIL-07-F03","cells":["Content-Length","响应头","成功响应","文件大小，单位为字节。"]},
+          {"id":"FL-SD-INT-DETAIL-07-F04","cells":["Content-Type","响应头","成功响应","按文件元数据确定，缺失时使用 application/octet-stream。"]}
+        ]
+      },
+      {"id":"FL-SD-INT-DETAIL-07-RESULT","type":"paragraph","text":"接收端当前要求全权限授权；文件找不到返回 HTTP 404。调用方依据业务引用获取工件，不能把目录记录当成文件内容。"},
+      {"id":"FL-SD-INT-DETAIL-08","type":"heading","level":5,"text":"训练与聚合作业提交（FL-IF-04-02、FL-IF-06-01）"},
+      {"id":"FL-SD-INT-DETAIL-08-METHOD","type":"paragraph","text":"参与方代理或平台 → 对应训练或聚合引擎实例；POST /jobs；HTTP/JSON。同一路由分别承载本地训练与平台聚合。"},
+      {
+        "id": "FL-SD-INT-DETAIL-08-FIELDS",
+        "type": "table",
+        "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
+        "rows": [
+          {"id":"FL-SD-INT-DETAIL-08-F01","cells":["jobId","字符串","必填、非空","调用方提供，供观察或取消；正在运行的同标识作业会被拒绝。"]},
+          {"id":"FL-SD-INT-DETAIL-08-F02","cells":["roundId","整数","调用方提交","引擎轮次编号，不是平台的 UUID。"]},
+          {"id":"FL-SD-INT-DETAIL-08-F03","cells":["nodeName","字符串","可省略","缺省使用引擎节点名。"]},
+          {"id":"FL-SD-INT-DETAIL-08-F04","cells":["operation","字符串","调用方提交","本接口场景使用 train 或 aggregate。"]},
+          {"id":"FL-SD-INT-DETAIL-08-F05","cells":["role","字符串","调用方提交","区分作业角色。"]},
+          {"id":"FL-SD-INT-DETAIL-08-F06","cells":["input","JSON 对象","按插件提供","本地训练引用本地数据；聚合引用可读取的更新工件。"]},
+          {"id":"FL-SD-INT-DETAIL-08-F07","cells":["output","JSON 对象","按作业提供","作业输出位置；聚合引擎可补默认输出。"]},
+          {"id":"FL-SD-INT-DETAIL-08-F08","cells":["modelParameter","JSON 对象","按插件提供","模型或聚合插件及参数。"]},
+          {"id":"FL-SD-INT-DETAIL-08-F09","cells":["jobParameter","JSON 对象","按作业提供","作业运行参数。"]},
+          {"id":"FL-SD-INT-DETAIL-08-F10","cells":["runtimeRoot","字符串","可省略","缺省使用引擎运行目录配置。"]}
+        ]
+      },
+      {"id":"FL-SD-INT-DETAIL-08-RESULT","type":"paragraph","text":"HTTP 202 返回作业描述，不代表完成；同步提交失败返回 HTTP 400 与 error 字段。具体插件的输入输出结构随交付版本确定，不能用任意 JSON 示例充当规范。引擎接口当前无应用层令牌校验，须限制网络可达范围。"},
+      {"id":"FL-SD-INT-DETAIL-09","type":"heading","level":5,"text":"作业状态查询与取消（FL-IF-04-03、FL-IF-06-01）"},
+      {"id":"FL-SD-INT-DETAIL-09-METHOD","type":"paragraph","text":"调用方 → 对应引擎；GET /jobs/{jobId} 查询；POST /jobs/{jobId}/cancel 仅在需取消时调用。"},
+      {
+        "id": "FL-SD-INT-DETAIL-09-FIELDS",
+        "type": "table",
+        "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
+        "rows": [
+          {"id":"FL-SD-INT-DETAIL-09-F01","cells":["jobId","字符串","路径参数，必填","使用原作业提交标识。"]},
+          {"id":"FL-SD-INT-DETAIL-09-F02","cells":["status","字符串","响应","引擎状态，供调用方判断运行及终态。"]},
+          {"id":"FL-SD-INT-DETAIL-09-F03","cells":["exitCode","整数","响应，可空","进程未结束时为空。"]},
+          {"id":"FL-SD-INT-DETAIL-09-F04","cells":["output","JSON 对象","响应","输出工件位置或引用。"]},
+          {"id":"FL-SD-INT-DETAIL-09-F05","cells":["progress","JSON 对象","响应","可获得的作业进度。"]},
+          {"id":"FL-SD-INT-DETAIL-09-F06","cells":["metrics","字符串数组","响应","已记录的指标文件名。"]}
+        ]
+      },
+      {"id":"FL-SD-INT-DETAIL-09-RESULT","type":"paragraph","text":"查询成功 HTTP 200，取消调用 HTTP 202；不存在返回 HTTP 404。取消受理与资源释放不是同一操作；调用方仍按作业状态及资源释放流程处理。"},
+      {"id":"FL-SD-INT-DETAIL-10","type":"heading","level":5,"text":"聚合工件读取（FL-IF-06-02）"},
+      {"id":"FL-SD-INT-DETAIL-10-METHOD","type":"paragraph","text":"平台 → 聚合引擎；GET /jobs/{jobId}/artifacts/{artifactName}。"},
+      {
+        "id": "FL-SD-INT-DETAIL-10-FIELDS",
+        "type": "table",
+        "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
+        "rows": [
+          {"id":"FL-SD-INT-DETAIL-10-F01","cells":["jobId","字符串","路径参数，必填","对应的聚合作业。"]},
+          {"id":"FL-SD-INT-DETAIL-10-F02","cells":["artifactName","字符串","路径参数，必填","请求读取的作业输出项名称。"]}
+        ]
+      },
+      {"id":"FL-SD-INT-DETAIL-10-RESULT","type":"paragraph","text":"HTTP 200 返回 application/octet-stream，并附长度和文件名；作业或工件未找到返回 HTTP 404。平台应在作业完成并确认工件可读取后登记结果。"},
+      {"id": "FL-SD-INT-BOUNDARIES", "type": "heading", "level": 4, "text": "本地数据、持久化及安全聚合接口边界"},
+      {
+        "id": "FL-SD-INT-BOUNDARIES-01",
+        "type": "paragraph",
+        "text": "参与方代理按本地数据集绑定定位文件，训练引擎在同一机构受控环境读取；特征与标签定义参照 FL-IF-03-02。文件路径和数据内容不作为平台接口输入。平台、代理和支撑服务分别通过本服务持久化适配器访问 PostgreSQL 与 UmaDB，存储对象、连接边界和恢复规则见数据库设计说明；不通过跨库联查交换业务数据。"
       },
       {
-        "id": "FL-SD-INT-07",
-        "type": "table",
-        "headers": [
-          "接口标识",
-          "主要输入及类型",
-          "输出及校验约束"
-        ],
-        "rows": [
-          {
-            "id": "FL-SD-INT-07-R01",
-            "cells": [
-              "FL-IF-02-01",
-              "executionPlanId、roundExecutionId、trainingJobId、roundId、runtimeId、organizationId 为 UUID；roundNumber 为整数；初始模型引用、格式、摘要及引擎配置为字符串；安全聚合标志为布尔值，密钥上下文字段按需要提供",
-              "返回计划及关联标识。HTTP 命令受理不等于参与方已接受计划或已完成执行；按轮次执行目录及后续事件确认结果"
-            ]
-          },
-          {
-            "id": "FL-SD-INT-07-R02",
-            "cells": [
-              "FL-IF-03-01",
-              "runtimeInfrastructureId、runtimeAgentId、organizationId 为 UUID；runtimeAgentEndpoint、endpointScope、runtimeName、agentInstallMode 为字符串",
-              "返回连接记录信息。端点必须能从平台部署环境访问；端点作用域用于区分可达范围"
-            ]
-          },
-          {
-            "id": "FL-SD-INT-07-R03",
-            "cells": [
-              "FL-IF-03-03",
-              "runtimeDatasetBindingId、metadataReportId、datasetId、organizationId、runtimeId、featureSchemaId 为 UUID；sampleCount、featureCount 为整数；兼容性为可空布尔值；质量指标为可空十进制数",
-              "返回 metadataReportId。只传数据集元数据和统计量，不传本地原始样本"
-            ]
-          },
-          {
-            "id": "FL-SD-INT-07-R04",
-            "cells": [
-              "FL-IF-03-04",
-              "modelUpdateSubmissionId、trainingJobId、roundId、roundExecutionId、runtimeId、executionPlanId 为 UUID；artifactRef、artifactDigest、updateProtectionType 为字符串；trainingLoss 为十进制数；安全聚合与个性化字段按配置提供",
-              "返回 modelUpdateSubmissionId。模型更新文件先上传，提交时传工件引用及摘要；业务接受或拒绝通过后续事件和查询视图确认"
-            ]
-          },
-          {
-            "id": "FL-SD-INT-07-R05",
-            "cells": [
-              "FL-IF-05-01",
-              "uploadedFile 为二进制文件分段；purpose 为字符串；fileId 为可选 UUID",
-              "返回 fileId、fileLocation、originalFileName、contentType、sizeBytes、checksum。文件原文不放入业务事件"
-            ]
-          },
-          {
-            "id": "FL-SD-INT-07-R06",
-            "cells": [
-              "FL-IF-04-02、FL-IF-06-01",
-              "jobId、nodeName、role、operation 为字符串；roundId 为整数；input、modelParameter、jobParameter 为 JSON 对象；本地训练作业另提供 output 与 runtimeRoot",
-              "POST /jobs 返回 jobId、status、output 等作业信息；GET /jobs/{jobId} 返回最新状态、exitCode 及输出。提交受理不是训练或聚合完成"
-            ]
-          }
-        ]
+        "id": "FL-SD-INT-BOUNDARIES-02",
+        "type": "paragraph",
+        "text": "安全聚合不另设虚构的网络端点：轮次所需上下文随 FL-IF-02-01 传递，参与方通过 FL-IF-05 上传工件并经 FL-IF-03-04 提交更新类型、摘要及会话关联，平台通过 FL-IF-06 提交聚合作业。密钥材料不随工件对外公开；算法与轮次约束见详细设计的模型聚合单元。当前开发配置不构成生产密钥管理或隐私保护能力已验证的证据。"
       },
       {
         "id": "FL-SD-INT-08",
@@ -661,6 +834,18 @@
         "id": "FL-SD-INT-13",
         "type": "paragraph",
         "text": "跨服务接口联调还须逐接口确认身份凭据、调用权限、连接与响应超时、重试条件、重复请求的幂等标识、失败后补偿和异步结果查询方式。当前代码未形成覆盖所有调用的统一重试与幂等策略；本说明不据此作兼容或可靠性承诺，确定后的参数及验证结果应与本章接口标识一同归档。"
+      },
+      {"id": "FL-SD-INT-QUERY", "type": "heading", "level": 4, "text": "目录与看板查询设计"},
+      {
+        "id": "FL-SD-INT-QUERY-01",
+        "type": "paragraph",
+        "text": "列表、总数与详情按同一身份授权及组织、联邦和部署边界约束查询，详情入口不得通过直接输入标识绕过授权。查询不改变业务状态，平台不读取参与方原始数据。业务标识支持精确定位，文本、状态、数值和时间使用适用的筛选方式；不同字段取交集，同一字段多选取并集。列表按稳定顺序分页，总数与列表使用相同条件。控制台在筛选变化时回到第一页，清除条件后重新查询，翻页、刷新或返回列表时保留未清除的条件及排序。空结果、查询失败和命令受理后投影尚未更新应区别展示，允许保留条件重试或重新查询，不以重复提交命令代替刷新。"
+      },
+      {"id": "FL-SD-INT-COMM", "type": "heading", "level": 4, "text": "平台与参与方通信设计"},
+      {
+        "id": "FL-SD-INT-COMM-01",
+        "type": "paragraph",
+        "text": "平台按已登记端点发起计划下发（FL-IF-02）；参与方发起连接、状态及模型更新上报（FL-IF-03），并按文件接口约定传输模型工件。两种调用分别验证网络可达性及身份凭据；原始训练数据的读取留在机构侧，不通过跨域接口。跨域联调应覆盖超时、不可达和工件传输失败，并以作业、轮次、计划或运行时标识关联故障记录；链路及传输限值按部署和验收方案确认。"
       }
     ],
     "detailed": [
@@ -739,7 +924,7 @@
           {"id": "FL-SD-DET-05-R01", "cells": ["FL-U-SEL 参与者选择", "输入作业配置、成员资格、运行时身份和数据集元数据；按特征架构兼容性及最小节点数判断候选范围", "输出所选组织与运行时快照；不足时记录阻塞原因，保留作业供显式重试"], "sourceRefs": ["federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/infrastructure/secondary/trainingorchestration/traininground/selecttrainingroundparticipants/ReadModelTrainingRoundParticipantSelectionAdapter.kt"]},
           {"id": "FL-SD-DET-05-R02", "cells": ["FL-U-PLAN 计划生成", "按设计输入轮次、已选运行时、基础模型、数据集和训练参数；每个运行时形成目标计划", "当前逐参与方生成已实现，但基础模型与引擎配置仍有占位值，尚不能声明缺失配置已被阻止分发"], "sourceRefs": ["federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/context/trainingorchestration/generateparticipantexecutionplan/GeneratePlanForSelectedRuntimeProcessor.kt"]},
           {"id": "FL-SD-DET-05-R03", "cells": ["FL-U-DISPATCH 计划分发", "按运行时端点目录选择地址，逐计划调用目标代理；单个目标的响应不得代表全部目标", "HTTP 接收不等于本地已接受或训练完成；当前不可达或拒绝由异常报告，尚无逐节点独立补偿"], "sourceRefs": ["federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/infrastructure/secondary/trainingorchestration/participantexecutionplan/dispatchparticipantexecutionplan/RuntimeAgentDispatchParticipantExecutionPlanAdapter.kt"]},
-          {"id": "FL-SD-DET-05-R04", "cells": ["FL-U-EXEC 本地执行", "代理接收计划后检查本地绑定；接受后按需启动训练引擎，保存作业标识并查询状态；其他本地校验尚有占位", "本地执行从已接收、已接受或已拒绝进入运行、完成或失败；启动失败与运行失败分别记录并释放资源"], "sourceRefs": ["federation-learning-platform/federation-learning-runtime-agent/src/main/kotlin/tech/medo/infrastructure/secondary/runtimeagentoperations/roundexecution/acceptexecutionplan/LocalAcceptExecutionPlanAdapter.kt", "federation-learning-platform/federation-learning-runtime-agent/src/main/kotlin/tech/medo/infrastructure/secondary/runtimeagentoperations/roundexecution/startroundexecution/LocalDockerComposeStartRoundExecutionAdapter.kt", "federation-learning-platform/federation-learning-runtime-agent/src/main/kotlin/tech/medo/infrastructure/secondary/runtimeagentoperations/roundexecution/observeruntimeenginejob/LocalRuntimeEngineObserveRuntimeEngineJobAdapter.kt"]},
+          {"id": "FL-SD-DET-05-R04", "cells": ["FL-U-EXEC 本地执行", "代理接收计划后检查本地绑定；接受后按需启动训练引擎，保存作业标识并查询状态；其他本地校验尚有占位", "本地执行从已接收、已接受或已拒绝进入运行、完成或失败；启动失败与运行失败分别记录原因，并按对应失败状态重试，沿用原执行与计划标识；完成或失败后按原引擎作业标识释放资源，释放结果与训练结果分开记录"], "sourceRefs": ["federation-learning-platform/federation-learning-runtime-agent/src/main/kotlin/tech/medo/infrastructure/secondary/runtimeagentoperations/roundexecution/acceptexecutionplan/LocalAcceptExecutionPlanAdapter.kt", "federation-learning-platform/federation-learning-runtime-agent/src/main/kotlin/tech/medo/infrastructure/secondary/runtimeagentoperations/roundexecution/startroundexecution/LocalDockerComposeStartRoundExecutionAdapter.kt", "federation-learning-platform/federation-learning-runtime-agent/src/main/kotlin/tech/medo/infrastructure/secondary/runtimeagentoperations/roundexecution/observeruntimeenginejob/LocalRuntimeEngineObserveRuntimeEngineJobAdapter.kt"]},
           {"id": "FL-SD-DET-05-R05", "cells": ["FL-U-UPDATE 更新提交", "代理读取本地模型更新工件，先上传文件再提交引用、摘要及训练指标；平台核对作业、轮次、计划和运行时", "输出更新接受或拒绝结果；上传成功但提交失败时保留工件引用供追踪，不将本地路径误作跨节点地址"], "sourceRefs": ["federation-learning-platform/federation-learning-runtime-agent/src/main/kotlin/tech/medo/infrastructure/secondary/runtimeagentoperations/roundexecution/submitagentlocalmodelupdate/PlatformSubmitAgentLocalModelUpdateAdapter.kt"]},
           {"id": "FL-SD-DET-05-R06", "cells": ["FL-U-AGG 模型聚合", "平台按配置区分明文与安全聚合，输入已接受的更新工件引用与算法参数；适配器调用嵌入式实现或训练引擎", "成功时形成带摘要和版本的全局模型工件；当前输入不足、引擎失败或超时可抛出异常，不能视为均已转换成失败事件"], "sourceRefs": ["federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/infrastructure/secondary/trainingorchestration/traininground/aggregateplainmodelupdates/RuntimeEngineAggregatePlainModelUpdatesAdapter.kt", "federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/infrastructure/secondary/secureaggregation/secureaggregationsession/completehomomorphicaggregationsession/RuntimeEngineCompleteHomomorphicAggregationSessionAdapter.kt"]},
           {"id": "FL-SD-DET-05-R07", "cells": ["FL-U-EVAL 评估与轮次调度", "设计上根据全局模型评估结果、停止条件和最大轮次判断继续或完成；当前评估结果仍是固定占位值", "轮次完成后选择下一轮或完成作业；真实模型评估和完成前状态校验尚需实现"], "sourceRefs": ["federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/infrastructure/secondary/trainingorchestration/traininground/submitglobalmodelevaluation/LocalSubmitGlobalModelEvaluationAdapter.kt", "federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/context/trainingorchestration/completetraininground/CompleteTrainingRoundDecision.kt"]},
@@ -939,7 +1124,16 @@
           {"id": "FL-SD-DET-23-R16", "cells": ["LBLS-GN-LBXX-F0078", "提交全局模型评估", "FL-U-EVAL"]},
           {"id": "FL-SD-DET-23-R17", "cells": ["LBLS-GN-LBXX-F0079", "完成训练轮次", "FL-U-EVAL"]},
           {"id": "FL-SD-DET-23-R18", "cells": ["LBLS-GN-LBXX-F0064", "安排下一训练轮次", "FL-U-EVAL、FL-U-SEL"]},
-          {"id": "FL-SD-DET-23-R19", "cells": ["LBLS-GN-LBXX-F0081", "训练轮次进度", "FL-U-PROJ"]}
+          {"id": "FL-SD-DET-23-R19", "cells": ["LBLS-GN-LBXX-F0081", "训练轮次进度", "FL-U-PROJ"]},
+          {"id": "FL-SD-DET-23-R20", "cells": ["LBLS-GN-LBXX-F0067", "重试训练轮次参与者选择", "FL-U-SEL"]},
+          {"id": "FL-SD-DET-23-R21", "cells": ["LBLS-GN-LBXX-F0133", "失败轮次执行", "FL-U-EXEC"]},
+          {"id": "FL-SD-DET-23-R22", "cells": ["LBLS-GN-LBXX-F0134", "启动失败后重试轮次执行", "FL-U-EXEC"]},
+          {"id": "FL-SD-DET-23-R23", "cells": ["LBLS-GN-LBXX-F0135", "运行时失败后重试轮次执行", "FL-U-EXEC"]},
+          {"id": "FL-SD-DET-23-R24", "cells": ["LBLS-GN-LBXX-F0137", "完成后释放运行时引擎作业", "FL-U-EXEC"]},
+          {"id": "FL-SD-DET-23-R25", "cells": ["LBLS-GN-LBXX-F0138", "失败后释放运行时引擎作业", "FL-U-EXEC"]},
+          {"id": "FL-SD-DET-23-R26", "cells": ["LBLS-GN-LBXX-F0139", "启动失败后释放运行时引擎作业", "FL-U-EXEC"]},
+          {"id": "FL-SD-DET-23-R27", "cells": ["LBLS-GN-LBXX-F0140", "重试失败后释放运行时引擎作业", "FL-U-EXEC"]},
+          {"id": "FL-SD-DET-23-R28", "cells": ["LBLS-GN-LBXX-F0141", "运行时重试失败后释放运行时引擎作业", "FL-U-EXEC"]}
         ]
       },
       {

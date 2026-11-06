@@ -420,6 +420,27 @@ def traceability_rows(source, register_path=REQUIREMENT_REGISTER, operation_grou
         })
     if set(detailed_by_requirement) - seen:
         raise ValueError('Detailed design traces contain requirements absent from the current register.')
+    headings = {
+        block['id']: block['text']
+        for section in ('architecture', 'execution', 'performance', 'interfaces')
+        for block in source['sections'][section]
+        if block['type'] == 'heading'
+    }
+    for trace in source.get('sharedRequirementTraces', []):
+        identifier = trace['id']
+        targets = trace['designHeadings']
+        if not identifier or identifier in seen or not targets or len(set(targets)) != len(targets):
+            raise ValueError(f'Invalid shared requirement trace: {identifier}')
+        if any(target not in headings for target in targets):
+            raise ValueError(f'Unknown design heading in shared requirement trace: {identifier}')
+        seen.add(identifier)
+        refs = [f'第4章 {headings[target]}' for target in targets]
+        rows.append({
+            'id': identifier,
+            'requirement': f'{trace["title"]}/{identifier}' if 'title' in trace else identifier,
+            'design': '；'.join(refs),
+            'designRefs': refs,
+        })
     return rows
 
 
@@ -632,6 +653,7 @@ def update_traceability_chapter(document, rows):
                 document, paragraph,
                 '联邦学习功能需求按本版软件需求规格说明中的功能标识，与本软件设计说明第5章的'
                 '操作处理设计行双向对照；训练主链已有的关键处理设计行同时列出。'
+                '查询通用要求、计算机通信需求和效率要求单独追溯至相应的体系结构设计，不在各功能行重复列出。'
                 '正向表逐条列需求，逆向表按设计项汇总需求标识。设计对应关系用于核对方案覆盖范围，'
                 '不等于实现和验收已经完成。',
             )
@@ -840,7 +862,13 @@ def format_inserted_tables(document, tables):
             and [cell.text.strip() for cell in table.rows[0].cells]
             == ['业务过程', '触发与输入', '状态与校验决策', '结果及异常', '查询展示']
         )
-        if inventory_table:
+        interface_fields = (
+            [cell.text.strip() for cell in table.rows[0].cells]
+            == ['字段名', '类型', '必填性或位置', '来源、含义与约束']
+        )
+        if interface_fields:
+            widths = [2600, 1050, 1450, 3900]
+        elif inventory_table:
             widths = [1500, 1500, 4500, 1500]
         elif detailed_table:
             widths = [2000, 7000]
@@ -855,7 +883,7 @@ def format_inserted_tables(document, tables):
             total_width = sum(original_widths)
             widths = [round(9000 * width / total_width) for width in original_widths[:-1]]
             widths.append(9000 - sum(widths))
-        if inventory_table or detailed_table or context_table or operation_table or behavior_table:
+        if interface_fields or inventory_table or detailed_table or context_table or operation_table or behavior_table:
             header = OxmlElement('w:tblHeader')
             header.set(qn('w:val'), 'true')
             table.rows[0]._tr.get_or_add_trPr().append(header)

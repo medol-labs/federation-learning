@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" compressed="false">
+  <diagram id="database-landscape" name="数据库分布与访问关系">
+    <mxGraphModel
+      grid="1"
+      page="1"
+      pageWidth="1640"
+      pageHeight="1250">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell
+          id="title"
+          value="联邦孪生平台数据库分布与访问关系"
+          style="whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;text;strokeColor=none;fontSize=28;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="200"
+            y="15"
+            width="1200"
+            height="60"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform"
+          value="云端 · 联邦学习平台"
+          style="whiteSpace=wrap;html=0;fillColor=#F7F9FB;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;swimlane;startSize=40;fontStyle=1;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="70"
+            y="115"
+            width="700"
+            height="455"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="support"
+          value="云端 · 联邦学习支撑服务"
+          style="whiteSpace=wrap;html=0;fillColor=#F7F9FB;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;swimlane;startSize=40;fontStyle=1;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="870"
+            y="115"
+            width="700"
+            height="455"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent"
+          value="医院侧 · 联邦训练节点（每个参与方独立）"
+          style="whiteSpace=wrap;html=0;fillColor=#F7F9FB;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;swimlane;startSize=40;fontStyle=1;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="70"
+            y="650"
+            width="700"
+            height="455"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin"
+          value="医院侧 · 孪生应用（独立于联邦学习）"
+          style="whiteSpace=wrap;html=0;fillColor=#F7F9FB;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;swimlane;startSize=40;fontStyle=1;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="870"
+            y="650"
+            width="700"
+            height="455"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-service"
+          value="平台业务服务"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;"
+          vertex="1"
+          parent="platform">
+          <mxGeometry
+            x="100"
+            y="75"
+            width="500"
+            height="80"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-event"
+          value="UmaDB&#10;业务事件"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=cylinder;size=0.15;"
+          vertex="1"
+          parent="platform">
+          <mxGeometry
+            x="25"
+            y="235"
+            width="195"
+            height="105"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-read"
+          value="PostgreSQL&#10;查询视图&#10;事件处理位置"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=cylinder;size=0.15;"
+          vertex="1"
+          parent="platform">
+          <mxGeometry
+            x="250"
+            y="235"
+            width="200"
+            height="105"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-files"
+          value="文件存储&#10;模型或上传工件"
+          style="whiteSpace=wrap;html=0;fillColor=#FFF7E9;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=cylinder;size=0.15;"
+          vertex="1"
+          parent="platform">
+          <mxGeometry
+            x="480"
+            y="235"
+            width="195"
+            height="105"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-ev"
+          value="追加 / 消费"
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=0.1;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="platform-service"
+          target="platform-event">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-rd"
+          value="投影 / 查询"
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="platform-service"
+          target="platform-read">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-fl"
+          value="工件读写"
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=0.9;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="platform-service"
+          target="platform-files">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-note"
+          value="事件由本服务消费并投影；工件以标识或引用关联。&#10;分别配置存储和恢复，不跨库建立外键。"
+          style="whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;text;strokeColor=none;fontSize=16;"
+          vertex="1"
+          parent="platform">
+          <mxGeometry
+            x="25"
+            y="365"
+            width="650"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="support-service"
+          value="IAM、文件、字典、通知等支撑服务"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;"
+          vertex="1"
+          parent="support">
+          <mxGeometry
+            x="100"
+            y="75"
+            width="500"
+            height="80"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="support-event"
+          value="UmaDB&#10;业务事件"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=cylinder;size=0.15;"
+          vertex="1"
+          parent="support">
+          <mxGeometry
+            x="25"
+            y="235"
+            width="195"
+            height="105"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="support-read"
+          value="PostgreSQL&#10;查询视图&#10;事件处理位置"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=cylinder;size=0.15;"
+          vertex="1"
+          parent="support">
+          <mxGeometry
+            x="250"
+            y="235"
+            width="200"
+            height="105"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="support-files"
+          value="文件存储&#10;模型或上传工件"
+          style="whiteSpace=wrap;html=0;fillColor=#FFF7E9;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=cylinder;size=0.15;"
+          vertex="1"
+          parent="support">
+          <mxGeometry
+            x="480"
+            y="235"
+            width="195"
+            height="105"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="support-ev"
+          value="追加 / 消费"
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=0.1;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="support-service"
+          target="support-event">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="support-rd"
+          value="投影 / 查询"
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="support-service"
+          target="support-read">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="support-fl"
+          value="工件读写"
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=0.9;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="support-service"
+          target="support-files">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="support-note"
+          value="事件由本服务消费并投影；工件以标识或引用关联。&#10;分别配置存储和恢复，不跨库建立外键。"
+          style="whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;text;strokeColor=none;fontSize=16;"
+          vertex="1"
+          parent="support">
+          <mxGeometry
+            x="25"
+            y="365"
+            width="650"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-service"
+          value="运行时代理及本地训练执行"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;"
+          vertex="1"
+          parent="agent">
+          <mxGeometry
+            x="100"
+            y="75"
+            width="500"
+            height="80"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-event"
+          value="UmaDB&#10;业务事件"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=cylinder;size=0.15;"
+          vertex="1"
+          parent="agent">
+          <mxGeometry
+            x="25"
+            y="235"
+            width="195"
+            height="105"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-read"
+          value="PostgreSQL&#10;查询视图&#10;事件处理位置"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=cylinder;size=0.15;"
+          vertex="1"
+          parent="agent">
+          <mxGeometry
+            x="250"
+            y="235"
+            width="200"
+            height="105"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-files"
+          value="本地文件&#10;训练数据集&#10;更新及模型工件"
+          style="whiteSpace=wrap;html=0;fillColor=#FFF7E9;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=cylinder;size=0.15;"
+          vertex="1"
+          parent="agent">
+          <mxGeometry
+            x="480"
+            y="235"
+            width="195"
+            height="105"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-ev"
+          value="追加 / 消费"
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=0.1;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="agent-service"
+          target="agent-event">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-rd"
+          value="投影 / 查询"
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="agent-service"
+          target="agent-read">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-fl"
+          value="工件读写"
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=0.9;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="agent-service"
+          target="agent-files">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-note"
+          value="事件由本服务消费并投影；工件以标识或引用关联。&#10;分别配置存储和恢复，不跨库建立外键。"
+          style="whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;text;strokeColor=none;fontSize=16;"
+          vertex="1"
+          parent="agent">
+          <mxGeometry
+            x="25"
+            y="365"
+            width="650"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-service"
+          value="医疗数字人 · 风险动态评估与管理&#10;自身系统管理"
+          style="whiteSpace=wrap;html=0;fillColor=#EDF5EF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;"
+          vertex="1"
+          parent="twin">
+          <mxGeometry
+            x="100"
+            y="75"
+            width="500"
+            height="80"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-db"
+          value="PostgreSQL 业务数据域&#10;患者 / 诊疗 / 监测 / 风险结果&#10;用户权限 / 系统配置"
+          style="whiteSpace=wrap;html=0;fillColor=#EDF5EF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=cylinder;size=0.15;"
+          vertex="1"
+          parent="twin">
+          <mxGeometry
+            x="30"
+            y="235"
+            width="365"
+            height="105"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-files"
+          value="文件与模型资源&#10;三维资源 / 模型工件&#10;相关文件"
+          style="whiteSpace=wrap;html=0;fillColor=#FFF7E9;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=cylinder;size=0.15;"
+          vertex="1"
+          parent="twin">
+          <mxGeometry
+            x="435"
+            y="235"
+            width="235"
+            height="105"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-read"
+          value="本系统数据访问"
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=0.25;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="twin-service"
+          target="twin-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-write"
+          value="资源读写"
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=0.9;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="twin-service"
+          target="twin-files">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-note"
+          value="逻辑数据域不代表一个或多个固定数据库实例。&#10;物理库划分按孪生侧设计；不共享联邦学习数据库。"
+          style="whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;text;strokeColor=none;fontSize=16;"
+          vertex="1"
+          parent="twin">
+          <mxGeometry
+            x="25"
+            y="365"
+            width="650"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-support"
+          value="服务接口"
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0;entryY=0.5;dashed=1;"
+          edge="1"
+          parent="1"
+          source="platform-service"
+          target="support-service">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="interactions"
+          value="跨系统关联：平台与代理通过接口传递任务、元数据和模型更新；联邦模型下载后由应用推理侧部署。&#10;这些是业务标识及工件关联，不是数据库直连、跨库外键或数据库复制。"
+          style="whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;text;strokeColor=none;fontSize=18;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="100"
+            y="1145"
+            width="1440"
+            height="75"
+            as="geometry" />
+        </mxCell>
+        <mxCell id="platform-agent" value="任务 / 结果" style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=2;dashed=1;startArrow=block;endArrow=block;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="platform-service" target="agent-service"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="35" y="230"/><mxPoint x="35" y="765"/></Array></mxGeometry></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

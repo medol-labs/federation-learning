@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" compressed="false">
+  <diagram id="system-architecture" name="系统体系结构">
+    <mxGraphModel
+      grid="1"
+      page="1"
+      pageWidth="1400"
+      pageHeight="1100">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell
+          id="title"
+          value="联邦孪生平台系统体系结构"
+          style="text;strokeColor=none;fontStyle=1;fontSize=26;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="350"
+            y="10"
+            width="700"
+            height="50"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="cloud"
+          value="云端部署环境"
+          style="swimlane;startSize=40;fontStyle=1;whiteSpace=wrap;html=0;fillColor=#F4F7FB;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="30"
+            y="80"
+            width="1340"
+            height="280"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="admin"
+          value="平台管理终端&#10;浏览器访问"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="60"
+            y="150"
+            width="220"
+            height="100"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="flserver"
+          value="联邦学习服务器&#10;平台、支撑服务及聚合引擎&#10;事件、查询数据及模型工件"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="320"
+            y="140"
+            width="380"
+            height="140"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="modelserver"
+          value="模型推理服务器&#10;大模型及通用医疗业务模型&#10;应用推理侧部署"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#EEF5EE;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="760"
+            y="140"
+            width="360"
+            height="140"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="cloudnet"
+          value="云端网络"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="60"
+            y="300"
+            width="1280"
+            height="40"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="wan"
+          value="跨站点通信网络（云端与各医院接入）"
+          style="rounded=1;whiteSpace=wrap;html=0;fillColor=#E9F0F7;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="100"
+            y="380"
+            width="1200"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="hA"
+          value="医院 A：孪生应用 + 联邦训练"
+          style="swimlane;startSize=40;fontStyle=1;whiteSpace=wrap;html=0;fillColor=#FAFBFD;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="30"
+            y="510"
+            width="430"
+            height="460"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="hB"
+          value="医院 B：仅孪生应用"
+          style="swimlane;startSize=40;fontStyle=1;whiteSpace=wrap;html=0;fillColor=#FAFBFD;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="485"
+            y="510"
+            width="430"
+            height="460"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="hC"
+          value="医院 C：仅联邦训练"
+          style="swimlane;startSize=40;fontStyle=1;whiteSpace=wrap;html=0;fillColor=#FAFBFD;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="940"
+            y="510"
+            width="430"
+            height="460"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="netA"
+          value="院内网络"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#E9F0F7;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="50"
+            y="575"
+            width="390"
+            height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="netB"
+          value="院内网络"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#E9F0F7;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="505"
+            y="575"
+            width="390"
+            height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="netC"
+          value="院内网络"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#E9F0F7;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="960"
+            y="575"
+            width="390"
+            height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="appA"
+          value="应用服务器&#10;医疗数字人&#10;风险评估与管理&#10;本院个性化推理"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#EEF5EE;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="50"
+            y="650"
+            width="190"
+            height="125"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="trainA"
+          value="训练服务器&#10;代理与训练引擎&#10;本地数据&#10;个性化模型"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="255"
+            y="650"
+            width="185"
+            height="125"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="appB"
+          value="应用服务器&#10;医疗数字人、风险评估与管理&#10;按需调用云端模型"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#EEF5EE;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="505"
+            y="650"
+            width="390"
+            height="125"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="trainC"
+          value="训练服务器&#10;运行时代理、训练引擎&#10;本地数据及个性化模型工件"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="960"
+            y="650"
+            width="390"
+            height="125"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="terminalA"
+          value="工作终端&#10;临床 / 科研人员"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="50"
+            y="820"
+            width="190"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="terminalB"
+          value="工作终端&#10;临床 / 科研人员"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="505"
+            y="820"
+            width="190"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="terminalC"
+          value="运维与科研终端&#10;本地节点管理"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="960"
+            y="820"
+            width="185"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="dataA"
+          value="院内业务系统&#10;检测设备&#10;项目可穿戴设备&#10;及接入端"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#FFF7E9;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="255"
+            y="820"
+            width="185"
+            height="110"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="dataB"
+          value="院内业务系统&#10;检测设备&#10;项目可穿戴设备&#10;及接入端"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#FFF7E9;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="710"
+            y="820"
+            width="185"
+            height="110"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="dataC"
+          value="院内业务系统&#10;授权本地训练数据"
+          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#FFF7E9;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1160"
+            y="820"
+            width="190"
+            height="110"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="cloudlink"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="cloudnet"
+          target="wan">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="wanA"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.277;exitY=1;entryX=0.98;entryY=0;"
+          edge="1"
+          parent="1"
+          source="wan"
+          target="netA">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="wanB"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.656;exitY=1;entryX=0.98;entryY=0;"
+          edge="1"
+          parent="1"
+          source="wan"
+          target="netB">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="wanC"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.985;exitY=1;entryX=0.98;entryY=0;"
+          edge="1"
+          parent="1"
+          source="wan"
+          target="netC">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="a1"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="netA"
+          target="appA">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="a2"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="netA"
+          target="trainA">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="b1"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="netB"
+          target="appB">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="c1"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="netC"
+          target="trainC">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="a3"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="appA"
+          target="terminalA">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="a4"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="trainA"
+          target="dataA">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="b2"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="appB"
+          target="terminalB">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="b3"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="appB"
+          target="dataB">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="c2"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="trainC"
+          target="terminalC">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="c3"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;startArrow=block;startFill=1;endFill=1;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="trainC"
+          target="dataC">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend"
+          value="图例：蓝灰色框为计算与接入资源；绿色框承载孪生应用或推理；浅黄色框为系统与设备来源。&#10;连线表示网络接入，不表示数据均可跨院流转。服务器框为逻辑资源分组，不限定物理机数量。"
+          style="text;strokeColor=none;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="30"
+            y="995"
+            width="1340"
+            height="75"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="admin-network"
+          style="edgeStyle=orthogonalEdgeStyle;strokeColor=#35698B;strokeWidth=2;endArrow=none;exitX=0.5;exitY=1;entryX=0.086;entryY=0;"
+          edge="1"
+          parent="1"
+          source="admin"
+          target="cloudnet">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-network"
+          style="edgeStyle=orthogonalEdgeStyle;strokeColor=#35698B;strokeWidth=2;endArrow=none;exitX=0.5;exitY=1;entryX=0.352;entryY=0;"
+          edge="1"
+          parent="1"
+          source="flserver"
+          target="cloudnet">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="model-network"
+          style="edgeStyle=orthogonalEdgeStyle;strokeColor=#35698B;strokeWidth=2;endArrow=none;exitX=0.5;exitY=1;entryX=0.688;entryY=0;"
+          edge="1"
+          parent="1"
+          source="modelserver"
+          target="cloudnet">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" compressed="false">
+  <diagram id="layered-software-architecture" name="软件分层体系结构">
+    <mxGraphModel
+      grid="1"
+      page="1"
+      pageWidth="1540"
+      pageHeight="1000">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell
+          id="title"
+          value="联邦孪生平台软件分层体系结构"
+          style="whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;text;strokeColor=none;fontSize=28;fontStyle=1;align=center;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="150"
+            y="15"
+            width="1220"
+            height="50"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="application"
+          value="应用层"
+          style="whiteSpace=wrap;html=0;fillColor=#F5F7FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;swimlane;startSize=38;fontStyle=1;align=left;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="25"
+            y="140"
+            width="1490"
+            height="180"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="integration"
+          value="应用集成框架层"
+          style="whiteSpace=wrap;html=0;fillColor=#F5F7FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;swimlane;startSize=38;fontStyle=1;align=left;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="25"
+            y="345"
+            width="1490"
+            height="180"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="foundation"
+          value="基础层"
+          style="whiteSpace=wrap;html=0;fillColor=#F5F7FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;swimlane;startSize=38;fontStyle=1;align=left;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="25"
+            y="550"
+            width="1490"
+            height="150"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data"
+          value="数据层"
+          style="whiteSpace=wrap;html=0;fillColor=#F5F7FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;swimlane;startSize=38;fontStyle=1;align=left;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="25"
+            y="725"
+            width="1490"
+            height="150"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="fl-label"
+          value="联邦学习软件"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;fontStyle=1;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="55"
+            y="85"
+            width="700"
+            height="40"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-label"
+          value="孪生应用软件（医疗数字人、风险评估与管理）"
+          style="whiteSpace=wrap;html=0;fillColor=#EDF5EF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;fontStyle=1;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="785"
+            y="85"
+            width="700"
+            height="40"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="fl-app1"
+          value="组织与联邦管理&#10;数据集元数据治理"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="application">
+          <mxGeometry
+            x="30"
+            y="65"
+            width="210"
+            height="85"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="fl-app2"
+          value="训练编排与安全聚合&#10;运行时与本地执行管理"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="application">
+          <mxGeometry
+            x="265"
+            y="65"
+            width="230"
+            height="85"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="fl-app3"
+          value="模型工件管理&#10;控制台及状态查询"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="application">
+          <mxGeometry
+            x="520"
+            y="65"
+            width="210"
+            height="85"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-app"
+          value="医疗数字人&#10;患者档案、孪生展示、疾病推演"
+          style="whiteSpace=wrap;html=0;fillColor=#EDF5EF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="application">
+          <mxGeometry
+            x="760"
+            y="65"
+            width="340"
+            height="85"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="risk-app"
+          value="风险动态评估与管理&#10;风险画像、评估及预警"
+          style="whiteSpace=wrap;html=0;fillColor=#EDF5EF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="application">
+          <mxGeometry
+            x="1125"
+            y="65"
+            width="335"
+            height="85"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="fl-framework"
+          value="界面与接口适配&#10;Refine / React&#10;Spring HTTP 接口"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="integration">
+          <mxGeometry
+            x="30"
+            y="60"
+            width="210"
+            height="95"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="fl-event"
+          value="业务处理框架&#10;Axon 命令与事件处理&#10;事件溯源 / 查询投影"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="integration">
+          <mxGeometry
+            x="265"
+            y="60"
+            width="230"
+            height="95"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="fl-support"
+          value="联邦自身支撑&#10;IAM、文件、字典、通知&#10;外部能力适配"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="integration">
+          <mxGeometry
+            x="520"
+            y="60"
+            width="210"
+            height="95"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-framework"
+          value="孪生应用集成&#10;界面与业务接口、院内数据接入&#10;模型推理调用、数字人与风险业务协作"
+          style="whiteSpace=wrap;html=0;fillColor=#EDF5EF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="integration">
+          <mxGeometry
+            x="760"
+            y="60"
+            width="340"
+            height="95"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-support"
+          value="孪生自身管理&#10;用户权限、配置管理&#10;业务数据访问"
+          style="whiteSpace=wrap;html=0;fillColor=#EDF5EF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="integration">
+          <mxGeometry
+            x="1125"
+            y="60"
+            width="335"
+            height="95"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="fl-runtime"
+          value="运行与算法基础&#10;Java 21 / Kotlin / Spring Boot&#10;Python 训练与聚合插件"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="foundation">
+          <mxGeometry
+            x="30"
+            y="58"
+            width="450"
+            height="70"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="fl-env"
+          value="基础运行环境&#10;浏览器 / openEuler&#10;容器运行环境"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="foundation">
+          <mxGeometry
+            x="505"
+            y="58"
+            width="225"
+            height="70"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-runtime"
+          value="孪生基础能力&#10;浏览器运行环境、可视化与模型推理运行环境&#10;操作系统及应用运行环境"
+          style="whiteSpace=wrap;html=0;fillColor=#EDF5EF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="foundation">
+          <mxGeometry
+            x="760"
+            y="58"
+            width="700"
+            height="70"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="fl-eventdata"
+          value="业务事件&#10;UmaDB"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="data">
+          <mxGeometry
+            x="30"
+            y="58"
+            width="210"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="fl-querydata"
+          value="查询视图与处理位置&#10;PostgreSQL"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="data">
+          <mxGeometry
+            x="265"
+            y="58"
+            width="230"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="fl-filedata"
+          value="文件与模型工件&#10;本地训练数据"
+          style="whiteSpace=wrap;html=0;fillColor=#EAF1FA;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="data">
+          <mxGeometry
+            x="520"
+            y="58"
+            width="210"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-data"
+          value="孪生业务数据&#10;患者、诊疗、监测及风险评估数据"
+          style="whiteSpace=wrap;html=0;fillColor=#EDF5EF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="data">
+          <mxGeometry
+            x="760"
+            y="58"
+            width="340"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-model"
+          value="应用模型与资源&#10;模型工件、三维资源及业务配置"
+          style="whiteSpace=wrap;html=0;fillColor=#EDF5EF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;shape=component;fontSize=16;spacingLeft=25;"
+          vertex="1"
+          parent="data">
+          <mxGeometry
+            x="1125"
+            y="58"
+            width="335"
+            height="65"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="notes"
+          value="同层表示职责分类，不表示共用服务或数据库；各软件体系分别管理自身框架、权限与数据。&#10;联邦学习通过可下载模型工件与推理侧衔接，下载后由推理侧部署；原始训练样本保留在医院。"
+          style="whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#657C90;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=10;text;strokeColor=none;fontSize=17;align=center;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="55"
+            y="900"
+            width="1430"
+            height="75"
+            as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -49,7 +49,7 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
     def test_detailed_design_requirement_references_are_current(self):
         source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
         signatures = merge.requirement_signatures(source)
-        self.assertEqual(len(signatures), 19)
+        self.assertEqual(len(signatures), 28)
         self.assertIn('LBLS-GN-LBXX-F0066', signatures)
         changed = deepcopy(source)
         table = next(block for block in changed['sections']['detailed'] if block['id'] == 'FL-SD-DET-23')
@@ -71,13 +71,21 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
     def test_chapter_six_traces_every_current_function_in_both_directions(self):
         source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
         traces = merge.traceability_rows(source)
-        self.assertEqual(len(traces), 192)
+        self.assertEqual(len(traces), 195)
         self.assertEqual(len({row['id'] for row in traces}), len(traces))
         selected = next(row for row in traces if row['id'] == 'LBLS-GN-LBXX-F0066')
         self.assertIn('FL-SD-OP-F0066', selected['design'])
         self.assertIn('FL-SD-DET-05-R01', selected['design'])
         self.assertIn('FL-SD-OP-F0001', traces[0]['design'])
-        self.assertIn('FL-SD-OP-F0192', traces[-1]['design'])
+        self.assertIn('FL-SD-OP-F0192', traces[191]['design'])
+        self.assertEqual(
+            {row['id']: row['design'] for row in traces[192:]},
+            {
+                '3.3.1（查询通用要求）': '第4章 目录与看板查询设计',
+                'LBLS-ZY-TX': '第4章 平台与参与方通信设计',
+                'LBLS-ZL-XL': '第4章 联邦学习模块性能设计',
+            },
+        )
         self.assertNotIn('FL-SU-', traces[0]['design'])
 
         document = Document(merge.DEFAULT_TARGET)
@@ -95,14 +103,18 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
         reverse_rows = merge.reverse_traceability_rows(traces)
         reverse_ids = [identifier for row in reverse_rows for identifier in row['requirement'].split('、')]
         self.assertEqual(set(reverse_ids), {row['id'] for row in traces})
-        self.assertEqual(len([row for row in traces if 'FL-SD-DET-05' in row['design']]), 19)
+        self.assertEqual(len([row for row in traces if 'FL-SD-DET-05' in row['design']]), 28)
+        by_id = {row['id']: row['design'] for row in traces}
+        self.assertIn('FL-SD-DET-05-R01', by_id['LBLS-GN-LBXX-F0067'])
+        for identifier in ('F0133', 'F0134', 'F0135', 'F0137', 'F0138', 'F0139', 'F0140', 'F0141'):
+            self.assertIn('FL-SD-DET-05-R04', by_id[f'LBLS-GN-LBXX-{identifier}'])
         for index, row in enumerate(reverse_rows, start=1):
             self.assertEqual(reverse.rows[index].cells[1].text, row['design'])
             self.assertEqual(reverse.rows[index].cells[2].text, row['requirement'])
             self.assertEqual(reverse.rows[index].cells[3].text, '')
-        self.assertIn('LBLS-GN-SZR-HOME', forward.rows[193].cells[1].text)
+        self.assertIn('LBLS-GN-SZR-HOME', forward.rows[len(traces) + 1].cells[1].text)
         self.assertIn('LBLS-GN-SZR-HOME', reverse.rows[len(reverse_rows) + 1].cells[2].text)
-        self.assertEqual(forward.rows[193].cells[0].text, '193')
+        self.assertEqual(forward.rows[len(traces) + 1].cells[0].text, str(len(traces) + 1))
         self.assertEqual(reverse.rows[len(reverse_rows) + 1].cells[0].text, str(len(reverse_rows) + 1))
         self.assertIn('操作处理设计行双向对照', '\n'.join(p.text for p in document.paragraphs))
 
@@ -114,6 +126,12 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
         table['rows'][0]['cells'][2] = 'FL-U-EVAL'
         updated = merge.traceability_signatures(merge.traceability_rows(changed))
         self.assertEqual(merge.changed_entries(original, updated), ['LBLS-GN-LBXX-F0066'])
+
+    def test_shared_requirement_trace_rejects_missing_design_heading(self):
+        source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
+        source['sharedRequirementTraces'][0]['designHeadings'] = ['FL-SD-UNKNOWN']
+        with self.assertRaisesRegex(ValueError, 'Unknown design heading'):
+            merge.traceability_rows(source)
 
     def test_context_unit_coverage_rejects_new_unmapped_context(self):
         source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
@@ -172,6 +190,20 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
             references = re.findall(r'\b[APSE]-[0-9A-F]{8}\b', row['cells'][0])
             self.assertTrue(references, row['id'])
             self.assertTrue(set(references) <= inventory_ids, row['id'])
+
+    def test_interface_design_has_identified_field_tables_and_relation_figure(self):
+        source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
+        blocks = {block['id']: block for block in source['sections']['interfaces']}
+        self.assertEqual(blocks['FL-SD-INT-RELATIONS-FIG']['type'], 'figure')
+        self.assertEqual(blocks['FL-SD-INT-INVENTORY']['type'], 'interfaceInventory')
+        self.assertNotIn('FL-SD-INT-07', blocks)
+        for index in range(1, 11):
+            key = f'FL-SD-INT-DETAIL-{index:02d}'
+            self.assertIn('FL-IF-', blocks[key]['text'])
+            self.assertEqual(blocks[key]['level'], 5)
+            self.assertTrue(blocks[key + '-METHOD']['text'])
+            self.assertTrue(blocks[key + '-FIELDS']['rows'])
+            self.assertTrue(blocks[key + '-RESULT']['text'])
 
     def test_table_row_change_reports_stable_id(self):
         source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)

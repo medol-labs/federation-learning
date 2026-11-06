@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" compressed="false">
+  <diagram id="fl-interfaces" name="联邦学习主要接口关系图">
+    <mxGraphModel
+      grid="1"
+      page="1"
+      pageWidth="1160"
+      pageHeight="760">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell
+          id="ui"
+          value="前端控制台&#10;FL-SU-UI"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="455"
+            y="35"
+            width="250"
+            height="75"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform"
+          value="平台服务&#10;FL-SU-P"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="100"
+            y="260"
+            width="250"
+            height="75"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent"
+          value="参与方运行时代理&#10;FL-SU-A"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="810"
+            y="260"
+            width="250"
+            height="75"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="support"
+          value="共享支撑服务&#10;FL-SU-S"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="455"
+            y="465"
+            width="250"
+            height="75"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="aggregation"
+          value="聚合引擎实例&#10;FL-SU-E（按需）"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#EDF6F3;strokeColor=#11786C;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="100"
+            y="570"
+            width="250"
+            height="75"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="training"
+          value="本地训练引擎实例&#10;FL-SU-E（按需）"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#EDF6F3;strokeColor=#11786C;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="810"
+            y="570"
+            width="250"
+            height="75"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="ui-platform"
+          value="FL-IF-01 平台操作与查询"
+          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.25;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="ui"
+          target="platform">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="517.5" y="172" />
+              <mxPoint x="225" y="172" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="ui-agent"
+          value="FL-IF-01 参与方本地操作与查询"
+          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.75;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1"
+          source="ui"
+          target="agent">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="642.5" y="172" />
+              <mxPoint x="935" y="172" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="ui-support"
+          value="FL-IF-01 字典、文件与身份"
+          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=0.5;entryY=1;"
+          edge="1"
+          parent="1"
+          source="ui"
+          target="support">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="30" y="72.5" />
+              <mxPoint x="30" y="690" />
+              <mxPoint x="580" y="690" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="plan"
+          value="FL-IF-02 执行计划下发"
+          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=1;exitY=0.27;entryX=0;entryY=0.27;"
+          edge="1"
+          parent="1"
+          source="platform"
+          target="agent">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="report"
+          value="FL-IF-03 状态上报与平台查询"
+          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0;exitY=0.74;entryX=1;entryY=0.74;"
+          edge="1"
+          parent="1"
+          source="agent"
+          target="platform">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-support"
+          value="FL-IF-05 支撑接口"
+          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.8;exitY=1;entryX=0;entryY=0.5;"
+          edge="1"
+          parent="1"
+          source="platform"
+          target="support">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="502.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="agent-support"
+          value="FL-IF-05 工件访问"
+          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.2;exitY=1;entryX=1;entryY=0.5;"
+          edge="1"
+          parent="1"
+          source="agent"
+          target="support">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="860" y="502.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="aggregate"
+          value="FL-IF-06 聚合作业"
+          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.22;exitY=1;entryX=0.22;entryY=0;"
+          edge="1"
+          parent="1"
+          source="platform"
+          target="aggregation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="train"
+          value="FL-IF-04 本地训练作业"
+          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.78;exitY=1;entryX=0.78;entryY=0;"
+          edge="1"
+          parent="1"
+          source="agent"
+          target="training">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
