@@ -5,11 +5,11 @@
   "selection": {
     "environment": "prod"
   },
-  "generatedAt": "2026-11-03T12:52:08.898Z",
+  "generatedAt": "2026-11-06T06:59:36.424Z",
   "generator": {
     "name": "medol-codegen",
     "version": "1.0.0",
-    "sha256": "c20a119ef4928e119b198c9f7bde4f8a91b1f56798b1a74aafac8a144b31b937"
+    "sha256": "02214e4602251e475994e7e1b708c589f98d77f12100059e31444f7f125b0b5b"
   },
   "model": {
     "sha256": "9c884e066c967a4e3ad07bad910226b5e33b2d787e7703a7136316de5c73ff03",

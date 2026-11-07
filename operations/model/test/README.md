@@ -44,6 +44,7 @@ Commit `operations-model.json` as the portable deployment model. Configure deplo
 Use `images.mjs` to orchestrate generated backend, frontend, and infrastructure images from this monorepo:
 Build/export names use the portable model prefix, independent of Registry configuration. Push retags verified local images to the Registry destination. Use --prefix / DOCKER_IMAGE_PREFIX only to override the local source name; use --push-prefix / DOCKER_PUSH_IMAGE_PREFIX for the push destination.
 For offline K3s delivery, `node operations/scripts/package-offline.mjs --help` describes the generic packager. It collects existing archives and renders the selected environment with optional project components; it never builds or pulls images.
+For Compose delivery, use `node operations/scripts/package-compose.mjs --environment <env>`. It copies site Compose files, public configuration and existing application/dependency archives, and creates checksums and an install.sh entry point. Real .env files are excluded. Export images first; packaging never builds or pulls.
 
 ```bash
 node operations/images/images.mjs list --environment <environment>

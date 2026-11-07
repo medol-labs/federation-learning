@@ -8,7 +8,9 @@
     "port": "5000",
     "compat": [
       "docker2s2"
-    ]
+    ],
+    "readTimeout": "30m",
+    "writeTimeout": "30m"
   },
   "log": {
     "level": "info"
