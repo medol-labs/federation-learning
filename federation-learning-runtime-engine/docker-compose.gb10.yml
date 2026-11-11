@@ -1,0 +1,22 @@
+services:
+  federation-learning-runtime-engine:
+    platform: linux/arm64
+    image: ${RUNTIME_ENGINE_GB10_IMAGE:-fl/federation-learning-runtime-engine:pytorch-vision-gb10}
+    build:
+      context: .
+      dockerfile: ./docker/pytorch/Dockerfile
+      args:
+        BASE_IMAGE: ${RUNTIME_ENGINE_GB10_BASE_IMAGE:-nvcr.io/nvidia/pytorch:25.11-py3}
+        PLUGIN_PROFILE: pytorch-vision
+        TORCH_RUNTIME: preinstalled
+    environment:
+      RUNTIME_ENGINE_PLUGIN_PROFILE: pytorch-vision
+      RUNTIME_ENGINE_DEVICE: ${RUNTIME_ENGINE_DEVICE:-cuda}
+    shm_size: "2gb"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

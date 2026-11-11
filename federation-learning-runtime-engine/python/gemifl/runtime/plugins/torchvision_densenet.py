@@ -10,6 +10,7 @@ import torch
 from torch import nn, optim
 from torch.utils.data import DataLoader
 from torchvision import datasets, models, transforms
+from gemifl.runtime.device import resolve_torch_device
 
 from gemifl.runtime.plugins.io import default_artifact_path, read_artifact_bytes, read_json, write_json
 
@@ -313,10 +314,7 @@ class TorchvisionDenseNet121ClassifierPlugin:
         }
 
     def _device(self, model_parameter: dict):
-        requested_device = str(model_parameter.get("device") or "cpu").lower()
-        if requested_device != "cpu" and torch.cuda.is_available():
-            return torch.device(requested_device)
-        return torch.device("cpu")
+        return resolve_torch_device(model_parameter, torch)
 
     def _save_state_dict(self, model, path: str) -> None:
         output_path = Path(path)

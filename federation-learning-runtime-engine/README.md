@@ -588,3 +588,49 @@ For k3s, run one runtime container per step and expose the HTTP control port
 `8080`. k3s dynamically starts and places containers; it does not own FL
 business decisions. Parameter transfer happens in the Federation Learning
 platform by moving input and output artifacts between train and aggregate steps.
+# GB10 / DGX Spark Docker Compose Training
+
+The GB10 deployment uses Linux ARM64 and a CUDA-enabled NVIDIA PyTorch base
+image. The default CPU deployment remains unchanged. Install/configure the
+host NVIDIA driver and NVIDIA Container Toolkit before starting the container.
+Check the pinned base image's driver requirements against the host.
+
+Run from the runtime-engine directory on GB10:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.gb10.yml build federation-learning-runtime-engine
+docker compose -f docker-compose.yml -f docker-compose.gb10.yml up -d federation-learning-runtime-engine
+```
+
+Do not add docker-compose.build.yml to these commands: the GB10 override
+already contains its build configuration. It defaults to
+`nvcr.io/nvidia/pytorch:25.11-py3`, preserves its CUDA torch/torchvision packages,
+and installs the pytorch-vision plugin dependencies. Override
+`RUNTIME_ENGINE_GB10_BASE_IMAGE` and `RUNTIME_ENGINE_GB10_IMAGE` to use your
+validated version or private registry. CPU images cannot be reused for CUDA
+training. For offline deployment, build and transfer this ARM64 image first.
+
+Verify a real CUDA operation, not only device discovery:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.gb10.yml exec federation-learning-runtime-engine python -c 'import torch; print(torch.__version__, torch.version.cuda); assert torch.cuda.is_available(); print(torch.cuda.get_device_name(0)); x=torch.randn(128,128,device="cuda"); print((x@x).sum().item()); torch.cuda.synchronize()'
+```
+
+The torchvision DenseNet plugin resolves the device in this order:
+`modelParameter.device`, `RUNTIME_ENGINE_DEVICE`, then `cpu`. The GB10
+override defaults the environment to `cuda`, so Agent requests without a
+device also use the GPU. Supported values are `cpu`, `cuda`, `cuda:0` and
+`auto`. An explicit CUDA request fails if CUDA is unavailable; only `auto`
+falls back to CPU. Remove any existing `RUNTIME_ENGINE_DEVICE=cpu` assignment
+from your deployment environment when switching to GB10.
+
+Unified physical memory does not remove PyTorch device semantics. CPU and GPU
+allocations share system capacity, so reserve memory for the OS and other
+services. Start with one training job and a small batch size, then measure.
+The service does not yet enforce a global job concurrency limit. Mixed
+precision is not enabled by this change. Other model plugins retain their
+existing device behavior.
+
+If an Agent creates the engine container itself, configure it to use this
+GB10 Compose configuration and image as well; changing a manually launched
+engine does not change the Agent's deployment configuration.

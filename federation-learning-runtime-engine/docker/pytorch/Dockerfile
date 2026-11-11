@@ -4,6 +4,7 @@ ARG BASE_IMAGE=python:3.11-slim
 FROM ${BASE_IMAGE}
 
 ARG PLUGIN_PROFILE=full
+ARG TORCH_RUNTIME=cpu
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -24,7 +25,11 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     core|sklearn) \
       echo "Skipping PyTorch wheel installation for ${PLUGIN_PROFILE} runtime-engine profile" ;; \
     pytorch-vision|pytorch-tabular|pytorch-nlp|pytorch-graph|full) \
-      pip install --prefer-binary torch torchvision --index-url https://download.pytorch.org/whl/cpu ;; \
+      case "${TORCH_RUNTIME}" in \
+        cpu) pip install --prefer-binary torch torchvision --index-url https://download.pytorch.org/whl/cpu ;; \
+        preinstalled) python -c "import torch, torchvision; assert torch.version.cuda, 'CUDA-enabled PyTorch required'" ;; \
+        *) echo "Unsupported TORCH_RUNTIME" >&2; exit 1 ;; \
+      esac ;; \
     *) \
       echo "Unsupported runtime-engine plugin profile: ${PLUGIN_PROFILE}" >&2 && exit 1 ;; \
   esac
