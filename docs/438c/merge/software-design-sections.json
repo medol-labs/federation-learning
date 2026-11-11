@@ -344,25 +344,33 @@
       {
         "id": "FL-SD-INT-INTRO",
         "type": "paragraph",
-        "text": "本节先按调用边界说明接口，再列出各部署单元当前对外提供的应用 HTTP 接口清单。清单依据平台、代理、支撑服务的资源路由及训练引擎的业务路由生成；框架管理端点（如 Actuator 和 OpenAPI 文档端点）由部署配置管理，不属于业务接口清单。清单标识中的 P、A、S、E 分别代表平台、参与方代理、共享支撑服务、训练引擎，标识与方法、路径关联，部署地址变化不影响标识。关键跨服务接口在清单之后补充消息与处理语义；完整请求和响应结构应随交付版本归档为 OpenAPI 定义。"
+        "text": "本节规定联邦学习平台、参与方运行时代理、共享支撑服务及训练引擎提供的接口。接口索引逐项列明名称、唯一标识及提供方，后续各条说明接口实体、类型、特性、通信方法和协议。同一资源契约包含的多个操作在同一条内分别说明请求、响应及处理结果。框架管理接口与业务接口分开管理。"
       },
       {
         "id": "FL-SD-INT-SCOPE-01",
         "type": "paragraph",
-        "text": "本节以联邦学习模块为范围，沿用部件设计中的控制台（FL-SU-UI）、平台（FL-SU-P）、参与方代理（FL-SU-A）、支撑服务（FL-SU-S）和引擎（FL-SU-E）标识。用户与控制台的人机交互由相应操作及查询设计说明；控制台分别访问经部署开放的平台、支撑及参与方本地接口。跨机构接口交换控制信息、状态、元数据与模型工件，不传输原始训练样本。未将网关、对象存储或在线业务推理假定为已部署的接口实体。"
+        "text": "本节以联邦学习模块为范围，沿用部件设计中的控制台（FL-SU-UI）、平台（FL-SU-P）、参与方代理（FL-SU-A）、支撑服务（FL-SU-S）和引擎（FL-SU-E）标识。用户与控制台的人机交互由相应操作及查询设计说明；控制台分别访问经部署开放的平台、支撑及参与方本地接口。跨机构接口交换控制信息、状态、元数据与模型工件，不传输原始训练样本。"
       },
       {"id": "FL-SD-INT-RELATIONS", "type": "heading", "level": 4, "text": "接口标识与接口关系图"},
       {
         "id": "FL-SD-INT-RELATIONS-01",
         "type": "paragraph",
-        "text": "FL-IF-01 至 FL-IF-06 为逻辑接口组，其下编号标识具体交互；HTTP 清单中的 P、A、S、E 编号定位实际路由。同一逻辑接口组可包含多个路由，同一路由可服务多个业务场景。箭头表示调用发起方向，响应沿对应调用返回；逻辑编号不代表独立服务、端口或协议。"
+        "text": "接口图表示请求方与提供方的关系，响应沿调用链路返回。图中的提供方与接口索引的接口实体对应，具体接口以索引中的唯一标识定位；图上的交互说明不限定接口数量。查询视图同步客户端表示具有同步权限的调用角色，不代表新增部署服务。"
       },
       {
         "id": "FL-SD-INT-RELATIONS-FIG",
         "type": "figure",
         "image": "docs/generated/diagrams/federation-learning-interface-relations.png",
         "source": "docs/438c/merge/figures/federation-learning-interface-relations.drawio",
-        "caption": "联邦学习主要接口关系图",
+        "caption": "联邦学习业务交互接口图",
+        "widthCm": 15.0
+      },
+      {
+        "id": "FL-SD-INT-SYNC-FIG",
+        "type": "figure",
+        "image": "docs/generated/diagrams/federation-learning-sync-interface-relations.png",
+        "source": "docs/438c/merge/figures/federation-learning-sync-interface-relations.drawio",
+        "caption": "联邦学习查询视图同步接口图",
         "widthCm": 15.0
       },
       {
@@ -597,11 +605,12 @@
         ]
       },
       {"id":"FL-SD-INT-06","type":"heading","level":4,"text":"关键接口详细设计"},
-      {"id":"FL-SD-INT-06-NOTE","type":"paragraph","text":"下列条目以逻辑接口下的具体操作为单位，按接口实体和方向、数据元素、消息结构、通信与异常说明。字段表列出关键元素，不等同于完整 DTO；未归档的 OpenAPI 或插件文件格式不作为已提供的契约引用。公共安全与错误处理见本节通用约定。"},
-      {"id":"FL-SD-INT-DETAIL-01","type":"heading","level":5,"text":"执行计划下发（FL-IF-02-01）"},
+      {"id":"FL-SD-INT-06-NOTE","type":"paragraph","text":"以下按接口操作说明交互双方、数据元素、消息结构、响应及异常。公共安全与错误处理见本节通用约定；插件专用数据结构由对应插件契约规定。"},
+      {"id":"FL-SD-INT-DETAIL-01","type":"heading","level":5,"text":"执行计划下发","interfaceIdentifiers":["FL-IF-02-01"]},
       {"id":"FL-SD-INT-DETAIL-01-METHOD","type":"paragraph","text":"平台 → 参与方代理；POST /roundexecution/receiveparticipantexecutionplan；HTTP/JSON。平台按运行时端点目录主动下发，不依赖代理轮询取任务。"},
       {
         "id": "FL-SD-INT-DETAIL-01-FIELDS",
+        "commandRef": "RuntimeAgentOperations/ReceiveParticipantExecutionPlan",
         "type": "table",
         "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
         "rows": [
@@ -624,10 +633,11 @@
         ]
       },
       {"id":"FL-SD-INT-DETAIL-01-RESULT","type":"paragraph","text":"请求为执行计划 JSON 对象；还包括接收端定义的模型格式、插件、运行环境与个性化参数。成功响应回显已受理的命令；代理接受或拒绝、引擎执行状态以本地轮次结果为准。缺失或不可达端点属于分发异常；重复投递不能假定幂等。"},
-      {"id":"FL-SD-INT-DETAIL-02","type":"heading","level":5,"text":"运行时连接报告（FL-IF-03-01）"},
+      {"id":"FL-SD-INT-DETAIL-02","type":"heading","level":5,"text":"运行时连接报告","interfaceIdentifiers":["FL-IF-03-01"]},
       {"id":"FL-SD-INT-DETAIL-02-METHOD","type":"paragraph","text":"参与方代理 → 平台；POST /runtimeinfrastructure/recordruntimeconnectionestablished；HTTP/JSON。"},
       {
         "id": "FL-SD-INT-DETAIL-02-FIELDS",
+        "commandRef": "RuntimeProvisioning/RecordRuntimeConnectionEstablished",
         "type": "table",
         "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
         "rows": [
@@ -642,7 +652,7 @@
         ]
       },
       {"id":"FL-SD-INT-DETAIL-02-RESULT","type":"paragraph","text":"响应回显受理命令。连接上报不替代从平台到代理的可达性验证，也不代表代理已完成就绪。"},
-      {"id":"FL-SD-INT-DETAIL-03","type":"heading","level":5,"text":"特征架构查询（FL-IF-03-02）"},
+      {"id":"FL-SD-INT-DETAIL-03","type":"heading","level":5,"text":"特征架构查询","interfaceIdentifiers":["FL-IF-03-02"]},
       {"id":"FL-SD-INT-DETAIL-03-METHOD","type":"paragraph","text":"参与方代理 → 平台；GET /featureschema/featureschemacatalog/{id}。"},
       {
         "id": "FL-SD-INT-DETAIL-03-FIELDS",
@@ -657,10 +667,11 @@
         ]
       },
       {"id":"FL-SD-INT-DETAIL-03-RESULT","type":"paragraph","text":"读取平台查询视图，不改变业务状态。代理以读取到的定义执行本地校验；无记录或接口调用失败不得视为校验成功。"},
-      {"id":"FL-SD-INT-DETAIL-04","type":"heading","level":5,"text":"数据集元数据上报（FL-IF-03-03）"},
+      {"id":"FL-SD-INT-DETAIL-04","type":"heading","level":5,"text":"数据集元数据上报","interfaceIdentifiers":["FL-IF-03-03"]},
       {"id":"FL-SD-INT-DETAIL-04-METHOD","type":"paragraph","text":"参与方代理 → 平台；POST /runtimedatasetmetadata/recordruntimedatasetmetadata；HTTP/JSON。"},
       {
         "id": "FL-SD-INT-DETAIL-04-FIELDS",
+        "commandRef": "DatasetGovernance/RecordRuntimeDatasetMetadata",
         "type": "table",
         "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
         "rows": [
@@ -679,10 +690,11 @@
         ]
       },
       {"id":"FL-SD-INT-DETAIL-04-RESULT","type":"paragraph","text":"回显已受理的报告命令。查询目录异步更新；仅传元数据和统计量，不传原始样本。"},
-      {"id":"FL-SD-INT-DETAIL-05","type":"heading","level":5,"text":"模型更新提交（FL-IF-03-04）"},
+      {"id":"FL-SD-INT-DETAIL-05","type":"heading","level":5,"text":"模型更新提交","interfaceIdentifiers":["FL-IF-03-04"]},
       {"id":"FL-SD-INT-DETAIL-05-METHOD","type":"paragraph","text":"参与方代理 → 平台；POST /traininground/submitmodelupdatesubmission；HTTP/JSON。"},
       {
         "id": "FL-SD-INT-DETAIL-05-FIELDS",
+        "commandRef": "TrainingOrchestration/SubmitModelUpdateSubmission",
         "type": "table",
         "headers": ["字段名","类型","必填性或位置","来源、含义与约束"],
         "rows": [
@@ -706,7 +718,7 @@
         ]
       },
       {"id":"FL-SD-INT-DETAIL-05-RESULT","type":"paragraph","text":"先上传更新工件，再提交其引用；安全聚合上下文及个性化字段按配置传递。响应回显已受理的命令；是否接受更新以平台后续业务结果为准。上传成功但提交失败不等于更新已计入聚合。"},
-      {"id":"FL-SD-INT-DETAIL-06","type":"heading","level":5,"text":"工件上传（FL-IF-05-01）"},
+      {"id":"FL-SD-INT-DETAIL-06","type":"heading","level":5,"text":"工件上传","interfaceIdentifiers":["FL-IF-05-01"]},
       {"id":"FL-SD-INT-DETAIL-06-METHOD","type":"paragraph","text":"平台或参与方代理 → 支撑服务；POST /uploadedfile/uploadfile/file；multipart/form-data。"},
       {
         "id": "FL-SD-INT-DETAIL-06-FIELDS",
@@ -725,7 +737,7 @@
         ]
       },
       {"id":"FL-SD-INT-DETAIL-06-RESULT","type":"paragraph","text":"成功响应为上传命令对象，包含 fileId 和用途等元数据；uploadedFile 在响应中是保存后的引用，不是文件原文。当前接口不声明分块续传、跨站复制或重复提交幂等。"},
-      {"id":"FL-SD-INT-DETAIL-07","type":"heading","level":5,"text":"工件读取（FL-IF-05-02）"},
+      {"id":"FL-SD-INT-DETAIL-07","type":"heading","level":5,"text":"工件读取","interfaceIdentifiers":["FL-IF-05-02"]},
       {"id":"FL-SD-INT-DETAIL-07-METHOD","type":"paragraph","text":"平台 → 支撑服务；GET /api/files/{fileId}/content；成功时返回二进制。"},
       {
         "id": "FL-SD-INT-DETAIL-07-FIELDS",
@@ -739,7 +751,7 @@
         ]
       },
       {"id":"FL-SD-INT-DETAIL-07-RESULT","type":"paragraph","text":"接收端当前要求全权限授权；文件找不到返回 HTTP 404。调用方依据业务引用获取工件，不能把目录记录当成文件内容。"},
-      {"id":"FL-SD-INT-DETAIL-08","type":"heading","level":5,"text":"训练与聚合作业提交（FL-IF-04-02、FL-IF-06-01）"},
+      {"id":"FL-SD-INT-DETAIL-08","type":"heading","level":5,"text":"训练与聚合作业提交","interfaceIdentifiers":["FL-IF-04-02","FL-IF-06-01"]},
       {"id":"FL-SD-INT-DETAIL-08-METHOD","type":"paragraph","text":"参与方代理或平台 → 对应训练或聚合引擎实例；POST /jobs；HTTP/JSON。同一路由分别承载本地训练与平台聚合。"},
       {
         "id": "FL-SD-INT-DETAIL-08-FIELDS",
@@ -759,7 +771,7 @@
         ]
       },
       {"id":"FL-SD-INT-DETAIL-08-RESULT","type":"paragraph","text":"HTTP 202 返回作业描述，不代表完成；同步提交失败返回 HTTP 400 与 error 字段。具体插件的输入输出结构随交付版本确定，不能用任意 JSON 示例充当规范。引擎接口当前无应用层令牌校验，须限制网络可达范围。"},
-      {"id":"FL-SD-INT-DETAIL-09","type":"heading","level":5,"text":"作业状态查询与取消（FL-IF-04-03、FL-IF-06-01）"},
+      {"id":"FL-SD-INT-DETAIL-09","type":"heading","level":5,"text":"作业状态查询与取消","interfaceIdentifiers":["FL-IF-04-03","FL-IF-06-01"]},
       {"id":"FL-SD-INT-DETAIL-09-METHOD","type":"paragraph","text":"调用方 → 对应引擎；GET /jobs/{jobId} 查询；POST /jobs/{jobId}/cancel 仅在需取消时调用。"},
       {
         "id": "FL-SD-INT-DETAIL-09-FIELDS",
@@ -775,7 +787,7 @@
         ]
       },
       {"id":"FL-SD-INT-DETAIL-09-RESULT","type":"paragraph","text":"查询成功 HTTP 200，取消调用 HTTP 202；不存在返回 HTTP 404。取消受理与资源释放不是同一操作；调用方仍按作业状态及资源释放流程处理。"},
-      {"id":"FL-SD-INT-DETAIL-10","type":"heading","level":5,"text":"聚合工件读取（FL-IF-06-02）"},
+      {"id":"FL-SD-INT-DETAIL-10","type":"heading","level":5,"text":"聚合工件读取","interfaceIdentifiers":["FL-IF-06-02"]},
       {"id":"FL-SD-INT-DETAIL-10-METHOD","type":"paragraph","text":"平台 → 聚合引擎；GET /jobs/{jobId}/artifacts/{artifactName}。"},
       {
         "id": "FL-SD-INT-DETAIL-10-FIELDS",
@@ -796,7 +808,7 @@
       {
         "id": "FL-SD-INT-BOUNDARIES-02",
         "type": "paragraph",
-        "text": "安全聚合不另设虚构的网络端点：轮次所需上下文随 FL-IF-02-01 传递，参与方通过 FL-IF-05 上传工件并经 FL-IF-03-04 提交更新类型、摘要及会话关联，平台通过 FL-IF-06 提交聚合作业。密钥材料不随工件对外公开；算法与轮次约束见详细设计的模型聚合单元。当前开发配置不构成生产密钥管理或隐私保护能力已验证的证据。"
+        "text": "安全聚合复用执行计划、工件传输和模型更新接口：轮次上下文随 FL-IF-02-01 传递，参与方通过 FL-IF-05 上传工件并经 FL-IF-03-04 提交更新类型、摘要及会话关联，平台通过 FL-IF-06 提交聚合作业。密钥材料不随工件对外公开；算法、轮次约束及密钥管理限制见详细设计的模型聚合单元。"
       },
       {
         "id": "FL-SD-INT-08",
@@ -807,33 +819,17 @@
       {
         "id": "FL-SD-INT-09",
         "type": "paragraph",
-        "text": "控制台请求按用户身份和操作权限校验。平台、参与方代理与共享支撑服务之间使用部署配置的内部令牌，通过 X-MEDOL-INTERNAL-TOKEN 请求头传递并在接收端校验；不得把令牌、实际服务地址或内部工件路径写入交付正文。平台和参与方代理调用训练引擎时使用公共 RestClient 配置，配置了内部令牌时也会附加该请求头，但当前训练引擎服务端未校验此令牌，因此该链路不能视为已具备应用层鉴权。部署时须限制训练引擎的网络可达范围，生产环境的鉴权与传输加密方案需在交付前确认。"
+        "text": "控制台请求按用户身份和操作权限校验。平台、参与方代理与共享支撑服务之间通过 X-MEDOL-INTERNAL-TOKEN 请求头传递内部令牌，由接收端校验。训练引擎接口不执行上述令牌校验，其网络访问范围应限制为调用该引擎的平台或参与方代理。"
       },
       {
         "id": "FL-SD-INT-10",
         "type": "paragraph",
-        "text": "业务命令接口的 HTTP 成功响应只表明该命令已完成受理处理，不保证异步事件处理、查询视图更新、训练执行或聚合完成。调用方应使用训练作业、轮次、计划、运行时、元数据报告及工件标识关联后续结果；请求体缺字段、无权限、目标不存在或依赖服务不可用时，应分别按参数错误、鉴权错误、未找到或服务错误处理。训练引擎的 POST /jobs 返回受理状态；GET /jobs/{jobId} 未找到作业时返回未找到结果。现有跨服务调用未统一定义幂等键、超时和自动重试策略，不应把重复提交视为天然安全。"
-      },
-      {
-        "id": "FL-SD-INT-11",
-        "type": "paragraph",
-        "text": "交付版本应归档各服务的 OpenAPI 定义，作为控制台命令与目录查询接口的字段全集、必填性、枚举值和错误响应依据；本节的稳定接口标识与该版本的具体方法及路径建立对应关系。接口变更应同时核对调用方、提供方、权限、消息字段和异步结果，跨版本兼容性及生产环境超时、重试参数需经过联调确认。"
-      },
-      {
-        "id": "FL-SD-INT-12",
-        "type": "table",
-        "headers": ["接口提供方", "需随交付版本归档的契约", "本版核对状态"],
-        "rows": [
-          {"id": "FL-SD-INT-12-R01", "cells": ["联邦学习平台服务", "本章接口清单对应的 OpenAPI、认证方式、请求响应与错误示例。", "本章已列路由；版本化接口契约待归档。"]},
-          {"id": "FL-SD-INT-12-R02", "cells": ["参与方运行时代理", "接收计划、执行状态及本地管理接口的 OpenAPI 和跨站点调用约束。", "本章已列路由；接口版本及可达性待联调。"]},
-          {"id": "FL-SD-INT-12-R03", "cells": ["共享支撑服务", "文件上传与读取、身份管理及字典等接口的 OpenAPI 和授权范围。", "本章已列路由；下载权限与契约待归档。"]},
-          {"id": "FL-SD-INT-12-R04", "cells": ["训练引擎", "作业提交、状态观察、工件读取及失败响应的接口说明与示例。", "本章已列当前业务路由；服务端鉴权方案待确认。"]}
-        ]
+        "text": "业务命令接口的 HTTP 成功响应表示本次请求的同步处理已完成，不表示后续异步处理、查询视图更新、训练或聚合已完成。调用方通过作业、轮次、执行计划等业务标识查询并关联处理结果。参数错误、身份认证失败、权限不足、目标不存在及依赖服务异常，按各接口规定的错误响应处理。"
       },
       {
         "id": "FL-SD-INT-13",
         "type": "paragraph",
-        "text": "跨服务接口联调还须逐接口确认身份凭据、调用权限、连接与响应超时、重试条件、重复请求的幂等标识、失败后补偿和异步结果查询方式。当前代码未形成覆盖所有调用的统一重试与幂等策略；本说明不据此作兼容或可靠性承诺，确定后的参数及验证结果应与本章接口标识一同归档。"
+        "text": "请求超时或连接中断不等于业务操作未执行。对于执行结果不确定的写入请求，调用方应先核对关联业务状态，再按对应操作的重试或补偿规则处理，不得无条件重复提交。"
       },
       {"id": "FL-SD-INT-QUERY", "type": "heading", "level": 4, "text": "目录与看板查询设计"},
       {
@@ -852,7 +848,7 @@
       {
         "id": "FL-SD-DET-01",
         "type": "paragraph",
-        "text": "联邦学习的详细设计按职责链组织。平台的训练编排负责训练作业、轮次、参与者选择、计划生成和分发；参与方代理负责本地验证、引擎执行和更新提交；模型仓库管理初始与聚合后的模型工件引用；安全聚合和明文聚合为不同处理分支。已完成的业务转换以事件记录，独立查询视图用于页面和调度观察；当前部分外部调用失败仍以异常中断消息处理，不能一概视为已形成业务失败事件。"
+        "text": "联邦学习的详细设计按职责链组织。平台的训练编排负责训练作业、轮次、参与者选择、计划生成和分发；参与方代理负责本地验证、引擎执行和更新提交；模型仓库管理初始与聚合后的模型工件引用；安全聚合和明文聚合为不同处理分支。已完成的业务转换以事件记录，独立查询视图用于页面和调度观察。"
       },
       {
         "id": "FL-SD-DET-02",
@@ -1056,7 +1052,7 @@
       {
         "id": "FL-SD-DET-08",
         "type": "paragraph",
-        "text": "服务启动依赖自身查询库、事件存储连接及处理位置初始化；参与方训练引擎仅在需要执行时按部署模式准备。跨服务调用失败或投影滞后时，业务事件与处理位置是诊断依据，不能以重新生成作业、轮次或执行标识替代恢复。安全聚合所需的密钥、更新保护格式及算法能力须与目标训练引擎和部署配置一致；当前适配器存在嵌入式与远程引擎模式，应按实际部署模式验证，不把开发模式自动等同于生产级保密保证。"
+        "text": "服务启动依赖自身查询库、事件存储连接及处理位置初始化；参与方训练引擎仅在需要执行时按部署模式准备。跨服务调用失败或投影滞后时，业务事件与处理位置是诊断依据，不能以重新生成作业、轮次或执行标识替代恢复。安全聚合所需的密钥、更新保护格式及算法能力须与目标训练引擎和部署配置一致。"
       },
       {
         "id": "FL-SD-DET-25",
@@ -1067,7 +1063,7 @@
       {
         "id": "FL-SD-DET-27",
         "type": "paragraph",
-        "text": "下表按业务上下文给出软件单元的输入、核心判断、结果、异常与读侧边界，用于补足训练主链之外的设计归属。上下文单元不是对其中每一项操作的逐方法详细设计；涉及外部适配器和部署的当前实现限制仍以关键单元表及各章交付核对项为准。"
+        "text": "下表说明各业务软件单元的输入、核心判断、结果、异常与查询边界，具体操作在后续子节展开。"
       },
       {
         "id": "FL-SD-DET-26",

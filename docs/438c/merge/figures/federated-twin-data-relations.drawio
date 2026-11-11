@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" compressed="false">
+  <diagram id="relations" name="总体概念关系">
+    <mxGraphModel pageWidth="2300" pageHeight="1400">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="总体概念 E-R 与模块逻辑关系" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="15" width="2220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fl" value="联邦学习模块" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EAF1FA;strokeColor=#657C90;swimlane;startSize=40;" vertex="1" parent="1">
+          <mxGeometry x="30" y="100" width="650" height="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="twin-system" value="孪生应用系统" style="swimlane;startSize=45;rounded=0;whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=22;fontStyle=1;fillColor=#F5F7FA;swimlaneFillColor=#FFFFFF;strokeColor=#536B82;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="780" y="100" width="1490" height="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="med" value="医疗数字人模块" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EDF4F0;strokeColor=#657C90;swimlane;startSize=40;" vertex="1" parent="1">
+          <mxGeometry x="800" y="170" width="650" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="sys" value="系统管理模块（孪生侧）" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#F4F0F7;strokeColor=#657C90;swimlane;startSize=40;" vertex="1" parent="1">
+          <mxGeometry x="800" y="850" width="1450" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="risk" value="风险动态评估与管理模块" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#FFF4E8;strokeColor=#657C90;swimlane;startSize=40;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="170" width="650" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="org" value="组织／联邦成员资格" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EAF1FA;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="60" y="250" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="fed" value="联邦" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EAF1FA;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="400" y="250" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="data" value="运行时／本地数据集绑定" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EAF1FA;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="60" y="480" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="job" value="训练作业／训练轮次" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EAF1FA;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="400" y="480" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="schema" value="特征架构／训练运行配置" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EAF1FA;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="60" y="710" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="model" value="模型工件&#10;模型标识、版本、工件引用" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EAF1FA;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="400" y="950" width="250" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="patient" value="患者主索引" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EDF4F0;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="830" y="240" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="visit" value="就诊记录／患者档案" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EDF4F0;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="240" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="bind" value="患者病灶／处置绑定" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EDF4F0;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="830" y="365" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="video" value="疾病推演资源&#10;视频引用、患者关联" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EDF4F0;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="365" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="result" value="AI 辅助诊断／检查报告&#10;患者标识、报告内容" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#EDF4F0;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="830" y="495" width="590" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="inst" value="机构／科室" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#F4F0F7;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="830" y="930" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="user" value="用户" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#F4F0F7;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="930" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="roles" value="角色／菜单权限" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#F4F0F7;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="1550" y="930" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="log" value="登录／操作日志" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#F4F0F7;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="1910" y="930" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="assessment" value="风险评估记录&#10;患者标识、风险评分、等级、时间" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#FFF4E8;strokeColor=#657C90;" vertex="1" parent="1">
+          <mxGeometry x="1630" y="260" width="590" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="use" value="风险画像／预测预警&#10;复用评估记录，不新增实体表" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=#FFF4E8;strokeColor=#657C90;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1630" y="495" width="590" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" value="实线：模块内概念关联，不等同物理外键；棕色虚线：跨模块逻辑联系，不表示已建立跨库关联字段。&#10;模型下载后由应用推理侧部署，不由联邦学习提供在线推理接口。来源模型版本与结果记录的关联尚待补充。&#10;系统管理与联邦学习的组织及 IAM 独立维护，不共用用户库；原始患者数据不汇聚至联邦学习平台。" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=18;fillColor=none;strokeColor=none;text;align=left;" vertex="1" parent="1">
+          <mxGeometry x="30" y="1240" width="2220" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="e0" value="N:1 成员资格归属" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="org" target="fed" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="1:N 拥有运行时" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="org" target="data" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="参与本地训练" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="data" target="job" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" value="配置与契约约束" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=1;exitY=0.5;entryX=0;entryY=1;" edge="1" source="schema" target="job" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="355" y="742" />
+              <mxPoint x="355" y="580" />
+              <mxPoint x="400" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" value="训练、聚合与验证形成" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="job" target="model" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="1:N 就诊关联" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="patient" target="visit" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="1:N 关联" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="patient" target="bind" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="按患者标识关联" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=0.5;exitY=1;entryX=0.2;entryY=0;" edge="1" source="bind" target="result" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" value="患者关联（可选）" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="visit" target="video" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" value="1:N 所属机构用户" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="inst" target="user" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" value="通过用户角色关联" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="user" target="roles" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" value="操作身份关联" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" source="user" target="log" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1315" y="1050" />
+              <mxPoint x="2035" y="1050" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" value="复用评估数据" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#466B88;dashed=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="assessment" target="use" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" value="模型交付、应用侧部署&#10;用于诊断与检查推理" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#9B5724;dashed=1;exitX=1;exitY=0.25;entryX=0;entryY=0.5;" edge="1" source="model" target="result" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="970" />
+              <mxPoint x="720" y="535" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" value="模型交付、应用侧部署&#10;用于风险推理" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#9B5724;dashed=1;exitX=1;exitY=0.8;entryX=0;entryY=0.3;" edge="1" source="model" target="assessment" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="750" y="1014" />
+              <mxPoint x="750" y="680" />
+              <mxPoint x="1510" y="680" />
+              <mxPoint x="1510" y="284" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15" value="患者关联／风险结果展示" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#9B5724;dashed=1;exitX=1;exitY=0.8;entryX=0;entryY=0.8;" edge="1" source="result" target="assessment" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1545" y="559" />
+              <mxPoint x="1545" y="324" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e16" value="身份权限、操作审计" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#9B5724;dashed=1;exitX=0.85;exitY=0;entryX=1;entryY=0.7;" edge="1" source="user" target="assessment" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1402" y="760" />
+              <mxPoint x="2240" y="760" />
+              <mxPoint x="2240" y="316" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e17" value="身份权限、操作审计" style="edgeStyle=orthogonalEdgeStyle;html=0;fontFamily=PingFang SC;fontSize=16;labelBackgroundColor=#FFFFFF;strokeWidth=2;endArrow=block;strokeColor=#9B5724;dashed=1;exitX=0.15;exitY=0;entryX=0.5;entryY=1;" edge="1" source="user" target="result" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1227" y="720" />
+              <mxPoint x="1125" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

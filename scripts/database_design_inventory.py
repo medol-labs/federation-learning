@@ -20,6 +20,29 @@ TABLE = re.compile(r'@Table\(name\s*=\s*"([^"]+)"\)')
 PROPERTY = re.compile(r'^\s*var\s+(\w+):\s+([^=]+?)\s*=\s*null\s*$', re.MULTILINE)
 
 
+def database_field(name, kotlin_type, annotations):
+    annotation = ' '.join(annotations)
+    definition = re.search(r'columnDefinition\s*=\s*"([^"]+)"', annotation)
+    length = re.search(r'length\s*=\s*(\d+)', annotation)
+    precision = re.search(r'precision\s*=\s*(\d+)', annotation)
+    scale = re.search(r'scale\s*=\s*(\d+)', annotation)
+    column = re.search(r'@Column\([^)]*\bname\s*=\s*"([^"]+)"', annotation)
+    type_ = kotlin_type.rstrip('?')
+    sql_type = {'UUID': 'uuid', 'Boolean': 'boolean', 'Int': 'integer', 'Long': 'bigint',
+                'LocalDateTime': 'timestamp without time zone', 'BigDecimal': 'numeric'}.get(type_)
+    if type_ == 'String' or '@Enumerated(EnumType.STRING)' in annotation:
+        sql_type = f'varchar({length[1] if length else 255})'
+    if type_ == 'BigDecimal' and precision:
+        sql_type = f'numeric({precision[1]},{scale[1] if scale else 0})'
+    if definition:
+        sql_type = definition[1]
+    if not sql_type:
+        raise ValueError(f'Unsupported database mapping: {name}: {kotlin_type}; inspect the entity mapping')
+    column_name = column[1] if column else re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
+    return {'column': column_name, 'sqlType': sql_type,
+            'nullable': '@Id' not in annotations and not re.search(r'nullable\s*=\s*false', annotation)}
+
+
 def load_catalog(validate_register=True):
     model = json.loads(MODEL.read_text(encoding='utf-8'))
     translations = model.get('translations', {}).get('zh-CN', {})
@@ -65,6 +88,7 @@ def load_catalog(validate_register=True):
                     'type': match.group(2).strip(),
                     'id': '@Id' in annotations,
                     'text': '@Column(columnDefinition = "text")' in annotations,
+                    **database_field(match.group(1), match.group(2).strip(), annotations),
                 })
             model_ids = {field['name'] for field in read_model['fields'] if field.get('idAttribute')}
             entity_ids = {field['name'] for field in properties if field['id']}
@@ -160,11 +184,12 @@ def render_logical(catalog, requirement_register):
         design_id = f'FL-DB-L{item["number"]:03d}'
         key = '、'.join(field['name'] for field in item['fields'] if field.get('idAttribute'))
         rows.append([design_id, item['deployment'], item['title'], key, requirement['id']])
-        details.append(f'##### {item["title"]}（{design_id}）')
+        details.append(f'##### {item["title"]}/{design_id}')
         details.append(f'来源业务事件：{"、".join(item["events"]) if item["events"] else "无直接事件依赖"}。')
+        properties = {prop['name']: prop for prop in item['properties']}
         details.append(markdown_table(
-            ['数据元素', '逻辑类型', '数量', '必需', '标识'],
-            [[field['name'], field['type'],
+            ['数据元素', '数据库类型', '数量', '业务必需', '标识'],
+            [[field['name'], properties[field['name']]['sqlType'],
               {'Single': '单值', 'Multiple': '多值'}.get(
                   field.get('cardinality', 'Single'), field.get('cardinality', 'Single')),
               '否' if field.get('optional') else '是',
@@ -183,12 +208,12 @@ def render_physical(catalog):
         design_id = f'FL-DB-P{item["number"]:03d}'
         key = '、'.join(prop['name'] for prop in item['properties'] if prop['id'])
         rows.append([design_id, item['deployment'], item['table'], key, item['name']])
-        details.append(f'##### {item["title"]}（{design_id}）')
+        details.append(f'##### {item["title"]}/{design_id}')
         details.append(f'查询表：`{item["table"]}`。对应逻辑视图：FL-DB-L{item["number"]:03d}。')
         details.append(markdown_table(
-            ['JPA 属性', '映射类型', '主键', '长文本', '说明'],
-            [[prop['name'], prop['type'], '是' if prop['id'] else '否',
-              '是' if prop['text'] else '否',
+            ['数据库列名', '数据库类型', '主键', '允许空值', '说明'],
+            [[prop['column'], prop['sqlType'], '是' if prop['id'] else '否',
+              '是' if prop['nullable'] else '否',
               '投影元数据' if prop['name'] in {
                   'projectionUpdatedAt', 'userId', 'sessionId', 'correlationId',
                   'causationId', 'traceId', 'tenantId',
@@ -206,6 +231,25 @@ def traceability_rows(catalog, requirement_register):
         requirement = functions[item['sliceId']]
         rows.append([requirement['id'], requirement['title'], f'FL-DB-L{item["number"]:03d}',
                      f'FL-DB-P{item["number"]:03d}', item['table']])
+    slices = {s['id']: s for s in json.loads(MODEL.read_text(encoding='utf-8'))['slices']}
+    for requirement in requirement_register['functions']:
+        slice_ = slices[requirement['sourceId']]
+        outputs = {dep['id'] for command in slice_.get('commands', [])
+                   for dep in command.get('dependencies', [])
+                   if dep.get('direction') == 'OUTBOUND' and dep.get('elementType') == 'EVENT'}
+        refs = []
+        if any(event['id'] in outputs for event in slice_.get('events', [])):
+            refs.append('FL-DB-E001')
+        if requirement['sourceContext'] in ('FileUpload', 'ModelRepository'):
+            refs.append('FL-DB-A001')
+        if requirement['sourceContext'] == 'IdentityAccessManagement':
+            refs.append('FL-DB-S001')
+        for ref in refs:
+            rows.append([requirement['id'], requirement['title'], '', ref, ''])
+    rows.extend([
+        ['LBLS-JK-WB', '软件配置项外部接口需求（联邦机构节点接口鉴权与日志审计）', '', 'FL-DB-S002', ''],
+        ['LBLS-BZH', '软件保障需求（可靠性保障中的备份与恢复）', '', 'FL-DB-R001', ''],
+    ])
     return rows
 
 

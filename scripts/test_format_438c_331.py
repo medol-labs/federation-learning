@@ -15,10 +15,89 @@ spec = importlib.util.spec_from_file_location('format_438c_331', ROOT / 'scripts
 formatter = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(formatter)
 sys.path.insert(0, str(ROOT / 'docs/document-pack/federation-learning'))
-from markdown_to_docx import format_requirements_tables, write_markdown
+from markdown_to_docx import configure_document, format_requirements_body, format_requirements_headings, format_requirements_tables, number_requirements_headings, write_markdown, format_heading_styles
 
 
 class RequirementLayoutTest(unittest.TestCase):
+    def test_unnumbered_headings_keep_requirement_codes_and_body_numbers(self):
+        document = Document()
+        markdown = number_requirements_headings('## 组织管理 / LBLS-GN-LBXX-ORG\n\n**注册组织 / LBLS-GN-LBXX-F0001**\n\n（1）输入')
+        write_markdown(document, markdown, '', heading_style_offset=2, strip_heading_numbers=True)
+        self.assertEqual(document.paragraphs[0].text, '组织管理 / LBLS-GN-LBXX-ORG')
+        self.assertEqual(document.paragraphs[1].text, '注册组织 / LBLS-GN-LBXX-F0001')
+        self.assertEqual(document.paragraphs[1].style.name, 'Heading 5')
+        self.assertEqual(document.paragraphs[2].text, '（1）输入')
+
+    def test_delivery_font_sizes_and_paragraph_spacing(self):
+        document = Document()
+        heading = document.add_heading('1 标题/FL-01', 1)
+        body = document.add_paragraph('正文内容。')
+        caption = document.add_paragraph('表 1 字号和字体设置')
+        table = document.add_table(rows=1, cols=1)
+        table.cell(0, 0).text = '表头'
+        width = document.sections[0].page_width
+        format_heading_styles(document)
+        self.assertEqual(heading.runs[0]._r.rPr.rFonts.get(qn('w:eastAsia')), '黑体')
+        self.assertEqual(heading.runs[0].font.size.pt, 12)
+        self.assertEqual(heading.paragraph_format.line_spacing, 1.5)
+        self.assertEqual(body.paragraph_format.first_line_indent.pt, 24)
+        self.assertEqual(body.paragraph_format.space_after.pt, 0)
+        self.assertEqual(body.paragraph_format.line_spacing, 1.5)
+        self.assertEqual(caption.runs[0].font.name, '黑体')
+        self.assertEqual(table.cell(0, 0).paragraphs[0].runs[0].font.size.pt, 10.5)
+        self.assertEqual(document.sections[0].page_width, width)
+
+    def test_heading_fonts_and_emphasis_are_split_by_number_title_and_code(self):
+        document = Document()
+        paragraph = document.add_paragraph('3.3.1.2.1 注册组织 / LBLS-GN-LBXX-F0001', style='Heading 5')
+        format_requirements_headings(document)
+        self.assertEqual(paragraph.text, '3.3.1.2.1 注册组织/LBLS-GN-LBXX-F0001')
+        self.assertEqual([run.font.name for run in paragraph.runs], ['Times New Roman', '黑体', 'Times New Roman'])
+        self.assertTrue(all(run.bold for run in paragraph.runs))
+        self.assertTrue(all(run.italic is False for run in paragraph.runs))
+        self.assertEqual(paragraph.style.name, 'Heading 5')
+
+    def test_delivery_function_headings_are_numbered_and_level_five(self):
+        source = '## 组织管理 / LBLS-GN-LBXX-ORG\n\n**注册组织 / LBLS-GN-LBXX-F0001**\n\n## 联邦管理 / LBLS-GN-LBXX-FED\n\n**创建联邦 / LBLS-GN-LBXX-F0008**'
+        result = number_requirements_headings(source)
+        self.assertEqual(number_requirements_headings(result), result)
+        document = Document()
+        write_markdown(document, result, '', heading_style_offset=2)
+        self.assertEqual(document.paragraphs[0].text, '3.3.1.2 组织管理 / LBLS-GN-LBXX-ORG')
+        self.assertEqual(document.paragraphs[0].style.name, 'Heading 4')
+        self.assertEqual(document.paragraphs[1].text, '3.3.1.2.1 注册组织 / LBLS-GN-LBXX-F0001')
+        self.assertEqual(document.paragraphs[1].style.name, 'Heading 5')
+        self.assertTrue(document.paragraphs[3].text.startswith('3.3.1.3.1 '))
+
+    def test_numbered_subheadings_have_explicit_nested_indentation(self):
+        document = Document()
+        write_markdown(document, '**（2）处理**\n\n**1）权限要求**\n\n**2）处理逻辑**', '')
+        format_requirements_body(document)
+        for paragraph, indent in zip(document.paragraphs, (0, 24, 24)):
+            self.assertEqual(paragraph.paragraph_format.left_indent.pt, indent)
+            self.assertEqual(paragraph.paragraph_format.first_line_indent.pt, 0)
+            self.assertTrue(paragraph.paragraph_format.keep_with_next)
+
+    def test_requirements_body_uses_songti_twelve_point_without_changing_headings_or_tables(self):
+        document = Document()
+        configure_document(document, None)
+        write_markdown(document, '# 功能需求\n\n**用户故事：**正文内容\n\n- 列表内容\n\n| 输入项 | 内容及规则 |\n| --- | --- |\n| 名称 | 必填 |', '')
+        heading = document.paragraphs[0]
+        original_heading = heading._p.xml
+        format_requirements_body(document)
+        format_requirements_tables(document)
+        self.assertEqual(heading._p.xml, original_heading)
+        for paragraph in document.paragraphs[1:]:
+            for run in paragraph.runs:
+                self.assertEqual(run.font.size.pt, 12)
+                self.assertEqual(run._r.rPr.rFonts.get(qn('w:eastAsia')), '宋体')
+        self.assertFalse(document.paragraphs[1].runs[0].bold)
+        for row in document.tables[0].rows:
+            for cell in row.cells:
+                for run in cell.paragraphs[0].runs:
+                    self.assertEqual(run.font.size.pt, 10.5)
+        self.assertEqual(document.styles['Heading 1'].font.name, 'PingFang SC')
+
     def test_word_section_headings_use_final_document_levels(self):
         document = Document()
         write_markdown(document, '# 3.3.1 功能需求\n\n## 3.3.1.2 组织管理', '',

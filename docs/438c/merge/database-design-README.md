@@ -1,5 +1,11 @@
 # 联邦学习数据库设计合并稿
 
+数据库合并副本的标题统一为中文宋体、西文及序号Times New Roman，全部加粗、不斜体；保留原字号、层级和编号。脚本同时设置标题样式、文本及自动编号字体，避免继承黑体或Arial。此格式为项目指定格式，不宣称是438C唯一规定。
+
+字段表统一使用PostgreSQL数据库类型，不输出Kotlin类型或可空问号。物理字段使用数据库列名，主键及允许空值单独列示；字符串枚举、长文本和显式长度/精度依据实体注解处理，未明确的数值精度不虚构。当前输出来自实体映射而非在线数据库探测，交付前仍需核对实际DDL。公共投影与追踪字段集中解释。
+
+追溯表保留连续行号；需求侧带需规功能章节号，设计侧只列物理设计章节号、名称及稳定标识。正逆向表均不重复列逻辑设计引用，逻辑设计正文保持完整。设计章节号在内容插入后按总稿实际标题顺序计算，不使用标识末尾数字推算。
+
 `database-design-federation-learning.md` 是联邦学习部分的人工维护来源。它按总稿结构补充概念设计、逻辑设计、物理设计及数据库访问软件单元；正向、逆向需求追溯由脚本根据稳定编号与需求登记填入总稿原有表格，不另起章节或表格。数据库级设计决策章节暂时保留总稿原文，不插入联邦学习专属决策，也不改写该章段落。`database-design-corrections.json` 目前只修正范围章节的全局数据库表述；原始总稿不修改。
 
 数据库合并底稿固定为 `../tmp/merge/03“感一通一算”一体化的跨域健康管理联邦孪生平台-数据库设计说明v1.0.docx`，不再使用 `tmp/merge/项目文档v0.2/` 下的旧版。`database-design-merge-base.json` 记录已审阅底稿的 SHA-256；底稿更新时，先比较内容和章节锚点，审核后再更新指纹，不直接绕过校验。
@@ -18,3 +24,21 @@ python3 scripts/merge-438c-project-documents.py --only 03
 输出为 `docs/generated/438c/merge/project-documents/03-federation-learning-merged.docx`。该文件是可审阅的合并副本，不是人工修改入口。合并后应在 Word 中更新目录、图表编号和交叉引用；全系统其他模块的表结构不由本脚本重新设计。物理字段表记录当前 JPA 映射，不等于已验收的建库迁移：交付时应核对 PostgreSQL 实际列、约束和索引，以及 UmaDB 与文件工件的备份恢复演练。
 
 总稿数据库级设计决策仍有“仅由一份主数据库文件”等与联邦学习部署不符的表述，现阶段不自动修改；统稿时须单独审定。
+
+## v0.4 定向合并
+
+v0.4 按模块组织第4章。先生成上述受控内容，再执行以下两步；第一步仅替换联邦学习三个数据库设计分节并插入总体概念图，第二步更新联邦学习追溯和全文图表题注。其他模块业务正文保留，表格序号及图表引用按新增内容顺延。
+
+```bash
+python3 scripts/merge-438c-database-v04.py \
+  --target '../tmp/merge/项目文档v0.4/03健康管理联邦孪生平台-数据库设计说明V0.5.docx' \
+  --source docs/generated/438c/merge/project-documents/03-federation-learning-merged.docx \
+  --out docs/generated/438c/merge/database-v04-section41.docx
+python3 scripts/merge-438c-traceability-only.py \
+  --target docs/generated/438c/merge/database-v04-section41.docx \
+  --source docs/generated/438c/merge/project-documents/03-federation-learning-merged.docx \
+  --out '../tmp/merge/项目文档v0.4/03健康管理联邦孪生平台-数据库设计说明V0.5-联邦4.1及追溯合并.docx' \
+  --database-captions
+```
+
+图源 `figures/federated-twin-conceptual-er.drawio` 为当前 Word 中的总体概念图，须先使用 `docs/diagrams/drawio.py export` 导出。新增的 `figures/federated-twin-data-relations.drawio` 表达四模块逻辑关系，当前独立维护，尚未替换 Word 插图。PNG/SVG 及 Word 输出均放在忽略提交的目录。

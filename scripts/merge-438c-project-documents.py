@@ -36,7 +36,7 @@ formatter_spec = importlib.util.spec_from_file_location('requirement_formatter',
 requirement_formatter = importlib.util.module_from_spec(formatter_spec)
 formatter_spec.loader.exec_module(requirement_formatter)
 insert_section = software_merge.insert_section
-from markdown_to_docx import format_requirements_tables
+from markdown_to_docx import format_requirements_tables, format_heading_styles
 
 MARKER = re.compile(r'^<!-- INSERT ([a-z-]+) -->$', re.MULTILINE)
 
@@ -257,8 +257,9 @@ def merge_database(target, out, check):
         if paragraph.text.strip() == '训练链路概念关系图'
     )
     training_figure_heading.paragraph_format.keep_with_next = True
-    merge_database_traceability_table(forward_table, trace_rows, True)
-    merge_database_traceability_table(reverse_table, trace_rows, False)
+    chapter_refs = database_chapter_references(document)
+    merge_database_traceability_table(forward_table, trace_rows, True, chapter_refs)
+    merge_database_traceability_table(reverse_table, trace_rows, False, chapter_refs)
     empty_captions = []
     within_trace = False
     for paragraph in document.paragraphs:
@@ -272,6 +273,7 @@ def merge_database(target, out, check):
         raise ValueError('Expected one empty caption after the joint forward trace table')
     empty_captions[0]._p.getparent().remove(empty_captions[0]._p)
     format_database_tables(document, [t for t in document.tables if t._tbl not in old_tables])
+    format_database_headings(document)
     out.parent.mkdir(parents=True, exist_ok=True)
     document.save(out)
 
@@ -286,13 +288,37 @@ def validate_database_traceability_table(table, forward):
         raise ValueError('Federation-learning trace rows extend beyond the expected block')
 
 
-def merge_database_traceability_table(table, trace_rows, forward):
+def format_database_headings(document):
+    format_heading_styles(document)
+
+
+def database_chapter_references(document):
+    counters = []
+    refs = {}
+    for paragraph in document.paragraphs:
+        if not paragraph.style.name.startswith('Heading '):
+            continue
+        level = int(paragraph.style.name.split()[-1])
+        counters = counters[:level]
+        while len(counters) < level:
+            counters.append(0)
+        counters[-1] += 1
+        match = re.fullmatch(r'(.+)/(FL-DB-[LPEASR]\d+)', paragraph.text)
+        if match:
+            refs[match[2]] = '.'.join(map(str, counters)) + ' ' + match[1] + '/' + match[2]
+    requirements = software_merge.number_requirements_headings(software_merge.REQUIREMENT_TEXT.read_text(encoding='utf-8'))
+    refs.update({identifier: number for number, identifier in re.findall(
+        r'^### (3\.3\.1\.\d+\.\d+) .*/ (LBLS-GN-LBXX-F\d+)\s*$', requirements, re.MULTILINE)})
+    return refs
+
+
+def merge_database_traceability_table(table, trace_rows, forward, chapter_refs):
     original_rows = table.rows[1:11]
     insertion_point = table.rows[11]._tr
     template_run = original_rows[0].cells[1 if forward else 2].paragraphs[0].runs[0]
     for requirement_id, title, logical_id, physical_id, _table_name in trace_rows:
-        design_ref = f'{logical_id}；{physical_id}'
-        requirement_ref = f'{title}/{requirement_id}'
+        design_ref = chapter_refs[physical_id]
+        requirement_ref = f'{chapter_refs.get(requirement_id, "")} {title}/{requirement_id}'.strip()
         cells = ('', requirement_ref, design_ref, '') if forward else ('', design_ref, requirement_ref, '')
         new_row = _Row(deepcopy(original_rows[0]._tr), table)
         for cell, value in zip(new_row.cells, cells):

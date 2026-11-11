@@ -13,7 +13,7 @@ from docx.oxml.ns import qn
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
-from database_design_inventory import load_catalog, render_logical, render_physical, traceability_rows
+from database_design_inventory import load_catalog, render_logical, render_physical, traceability_rows, database_field
 
 spec = importlib.util.spec_from_file_location('project_document_merge', ROOT / 'scripts/merge-438c-project-documents.py')
 merge = importlib.util.module_from_spec(spec)
@@ -21,6 +21,16 @@ spec.loader.exec_module(merge)
 
 
 class DatabaseDesignMergeTest(unittest.TestCase):
+    def test_sql_types_and_nullable_are_independent(self):
+        self.assertEqual(database_field('userId', 'String?', [])['column'], 'user_id')
+        self.assertEqual(database_field('time', 'LocalDateTime?', [])['sqlType'], 'timestamp without time zone')
+        self.assertFalse(database_field('id', 'UUID?', ['@Id'])['nullable'])
+        self.assertEqual(database_field('state', 'StateEnum?', ['@Enumerated(EnumType.STRING)'])['sqlType'], 'varchar(255)')
+        self.assertEqual(database_field('value', 'String?', ['@Column(columnDefinition = "text")'])['sqlType'], 'text')
+        self.assertEqual(database_field('value', 'BigDecimal?', ['@Column(precision = 18, scale = 4)'])['sqlType'], 'numeric(18,4)')
+        with self.assertRaisesRegex(ValueError, 'Unsupported database mapping'):
+            database_field('value', 'Unknown?', [])
+
     @classmethod
     def setUpClass(cls):
         cls.catalog = load_catalog()
@@ -31,7 +41,12 @@ class DatabaseDesignMergeTest(unittest.TestCase):
         self.assertEqual(56, len(self.catalog))
         self.assertEqual(56, len({item['table'] for item in self.catalog}))
         self.assertTrue(all(item['properties'] and item['fields'] for item in self.catalog))
-        self.assertEqual(56, len(traceability_rows(self.catalog, self.register)))
+        rows = traceability_rows(self.catalog, self.register)
+        self.assertEqual(56, sum(row[3].startswith('FL-DB-P') for row in rows))
+        self.assertIn(['LBLS-BZH', '软件保障需求（可靠性保障中的备份与恢复）', '', 'FL-DB-R001', ''], rows)
+        self.assertTrue(any(row[0] == 'LBLS-GN-LBXX-F0001' and row[3] == 'FL-DB-E001' for row in rows))
+        self.assertTrue(any(row[0] == 'LBLS-GN-LBXX-F0155' and row[3] == 'FL-DB-A001' for row in rows))
+        self.assertTrue(any(row[0] == 'LBLS-GN-LBXX-F0185' and row[3] == 'FL-DB-S001' for row in rows))
         logical_inventory, logical_details = render_logical(self.catalog, self.register)
         physical_inventory, physical_details = render_physical(self.catalog)
         self.assertIn('LBLS-GN-LBXX-', logical_inventory)
@@ -39,7 +54,13 @@ class DatabaseDesignMergeTest(unittest.TestCase):
         self.assertIn('FL-DB-L056', logical_details)
         self.assertIn('FL-DB-P042', physical_details)
         self.assertIn('FL-DB-P056', physical_details)
+        self.assertIn('##### 数据导入作业目录/FL-DB-P045', physical_details)
+        self.assertNotIn('（FL-DB-', physical_details + logical_details)
         self.assertIn('organization_directory', physical_inventory)
+        self.assertNotIn('LocalDateTime', physical_details + logical_details)
+        self.assertNotIn('String?', physical_details + logical_details)
+        self.assertIn('projection_updated_at | timestamp without time zone', physical_details)
+        self.assertIn('允许空值', physical_details)
         reversed_inventory, _ = render_logical(list(reversed(self.catalog)), self.register)
         self.assertIn('FL-DB-L001', reversed_inventory)
         self.assertIn('FL-DB-L042', reversed_inventory)
@@ -80,6 +101,12 @@ class DatabaseDesignMergeTest(unittest.TestCase):
         self.assertNotIn('{{READ_MODEL_', text)
         headings = [paragraph for paragraph in document.paragraphs
                     if paragraph.style.name.startswith('Heading ')]
+        for paragraph in headings:
+            for run in paragraph.runs:
+                self.assertEqual(run.font.name, 'Times New Roman')
+                self.assertEqual(run._r.rPr.rFonts.get(qn('w:eastAsia')), '黑体')
+                self.assertTrue(run.bold)
+                self.assertFalse(run.italic)
         for index, heading in enumerate(headings[:-1]):
             if heading.style.name == 'Heading 3' and heading.text == '联邦学习模块':
                 self.assertEqual('Heading 4', headings[index + 1].style.name)
@@ -105,8 +132,9 @@ class DatabaseDesignMergeTest(unittest.TestCase):
         self.assertLess(body_elements.index(software_heading._p),
                         body_elements.index(federation_software_table._tbl))
         self.assertGreaterEqual(len(document.inline_shapes), 2)
+        trace_count = len(traceability_rows(self.catalog, self.register))
         trace_tables = [table for table in document.tables if len(table.columns) == 4
-                        and len(table.rows) == 82 and table.rows[0].cells[0].text == '序号']
+                        and len(table.rows) == trace_count + 26 and table.rows[0].cells[0].text == '序号']
         self.assertEqual(2, len(trace_tables))
         self.assertFalse(any(paragraph.style.name == 'RS-表-题注' and not paragraph.text.strip()
                              for paragraph in document.paragraphs))
@@ -116,17 +144,20 @@ class DatabaseDesignMergeTest(unittest.TestCase):
         for table, base_table in zip(trace_tables, base_trace_tables):
             self.assertFalse(table.autofit)
             self.assertEqual([650, 3300, 4500, 616], [column.width.twips for column in table.columns])
-            self.assertEqual([str(index) for index in range(1, 82)],
+            self.assertEqual([str(index) for index in range(1, trace_count + 26)],
                              [row.cells[0].text for row in table.rows[1:]])
             self.assertEqual([[cell.text for cell in row.cells[1:]] for row in base_table.rows[11:]],
-                             [[cell.text for cell in row.cells[1:]] for row in table.rows[57:]])
+                             [[cell.text for cell in row.cells[1:]] for row in table.rows[trace_count + 1:]])
+        refs = merge.database_chapter_references(document)
         for index, (requirement_id, title, logical_id, physical_id, _table_name) in enumerate(
                 traceability_rows(self.catalog, self.register), 1):
-            requirement = f'{title}/{requirement_id}'
-            design = f'{logical_id}；{physical_id}'
+            requirement = f'{refs.get(requirement_id, "")} {title}/{requirement_id}'.strip()
+            design = refs[physical_id]
             self.assertEqual(requirement, trace_tables[0].rows[index].cells[1].text)
             self.assertEqual(design, trace_tables[0].rows[index].cells[2].text)
             self.assertEqual(design, trace_tables[1].rows[index].cells[1].text)
+            self.assertNotIn('FL-DB-L', trace_tables[0].rows[index].cells[2].text)
+            self.assertNotIn('FL-DB-L', trace_tables[1].rows[index].cells[1].text)
             self.assertEqual(requirement, trace_tables[1].rows[index].cells[2].text)
             self.assertEqual(base_trace_tables[0].rows[1].cells[1].paragraphs[0].alignment,
                              trace_tables[0].rows[index].cells[1].paragraphs[0].alignment)

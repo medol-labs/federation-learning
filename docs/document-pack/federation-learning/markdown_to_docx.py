@@ -27,18 +27,21 @@ def parse_args():
     parser.add_argument("--landscape", action="store_true")
     parser.add_argument("--heading-number-prefix", default="")
     parser.add_argument("--requirements-tables", action="store_true")
+    parser.add_argument("--unnumbered-headings", action="store_true")
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
     markdown = args.input.read_text(encoding="utf-8")
+    if args.requirements_tables:
+        markdown = number_requirements_headings(markdown)
     document = Document()
     use_landscape = args.landscape or "数据库设计说明" in args.title or "数据库设计说明" in args.input.name
     configure_document(document, args.reference, use_landscape)
     write_markdown(document, markdown, args.title, args.heading_number_prefix,
                    heading_style_offset=2 if args.requirements_tables else 0,
-                   strip_heading_numbers=args.requirements_tables)
+                   strip_heading_numbers=args.unnumbered_headings)
     if args.requirements_tables:
         if not args.reference:
             section = document.sections[0]
@@ -46,9 +49,191 @@ def main():
             section.page_height = Cm(29.7)
             section.left_margin = Cm(2.5)
             section.right_margin = Cm(2.5)
+        format_requirements_body(document)
+        format_requirements_headings(document)
         format_requirements_tables(document)
+        format_heading_styles(document)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     document.save(args.out)
+
+
+def format_requirements_headings(document):
+    for level in range(1, 7):
+        style = document.styles[f"Heading {level}"]
+        set_style_font(style, "黑体")
+        style.font.bold = True
+        style.font.italic = False
+    for paragraph in document.paragraphs:
+        if not paragraph.style.name.startswith("Heading "):
+            continue
+        text = re.sub(r"\s*/\s*", "/", paragraph.text)
+        number = re.match(r"^(\d+(?:\.\d+)*)(\s+)(.*)$", text)
+        paragraph.clear()
+        if number:
+            run = paragraph.add_run(number.group(1))
+            set_run_font(run, "Times New Roman")
+            run.bold = True
+            run.italic = False
+            text = number.group(2) + number.group(3)
+        for part in re.split(r"([\x21-\x7e]+)", text):
+            if not part:
+                continue
+            run = paragraph.add_run(part)
+            set_run_font(run, "Times New Roman" if part.isascii() and part.strip() else "黑体")
+            run.bold = True
+            run.italic = False
+
+
+def format_heading_styles(document):
+    """Apply the delivery typography, including automatic heading numbers."""
+    format_delivery_body(document)
+    def apply(properties):
+        fonts = properties.find(qn('w:rFonts'))
+        if fonts is None:
+            fonts = OxmlElement('w:rFonts')
+            properties.insert(0, fonts)
+        for attr in list(fonts.attrib):
+            if 'theme' in attr.lower():
+                del fonts.attrib[attr]
+        for attr in ('ascii', 'hAnsi', 'cs'):
+            fonts.set(qn('w:' + attr), 'Times New Roman')
+        fonts.set(qn('w:eastAsia'), '黑体')
+        for tag, value in (('sz', '24'), ('szCs', '24'), ('b', '1'), ('bCs', '1'), ('i', '0'), ('iCs', '0')):
+            child = properties.find(qn('w:' + tag))
+            if child is None:
+                child = OxmlElement('w:' + tag)
+                properties.append(child)
+            child.set(qn('w:val'), value)
+    ids = set()
+    for paragraph in document.paragraphs:
+        if not paragraph.style.name.startswith('Heading '):
+            continue
+        for fmt in (paragraph.paragraph_format, paragraph.style.paragraph_format):
+            fmt.line_spacing = 1.5
+            fmt.space_before = Pt(0)
+            fmt.space_after = Pt(0)
+            fmt.first_line_indent = Pt(0)
+        apply(paragraph.style.element.get_or_add_rPr())
+        for run in paragraph.runs:
+            apply(run._r.get_or_add_rPr())
+        for props in (paragraph._p.pPr, paragraph.style.element.pPr):
+            if props is not None and props.numPr is not None and props.numPr.numId is not None:
+                ids.add(str(props.numPr.numId.val))
+    numbering = document.part.numbering_part.element
+    abstract_ids = {n.find(qn('w:abstractNumId')).get(qn('w:val')) for n in numbering.findall(qn('w:num')) if n.get(qn('w:numId')) in ids}
+    for abstract in numbering.findall(qn('w:abstractNum')):
+        if abstract.get(qn('w:abstractNumId')) in abstract_ids:
+            for level in abstract.findall(qn('w:lvl')):
+                props = level.find(qn('w:rPr'))
+                if props is None:
+                    props = OxmlElement('w:rPr')
+                    level.append(props)
+                apply(props)
+
+
+def format_delivery_body(document):
+    """Normalize content without changing page geometry or section numbering."""
+    def font(paragraph, family, size, bold=None):
+        for run in paragraph.runs:
+            set_run_font(run, family)
+            run.font.size = Pt(size)
+            if bold is not None:
+                run.bold = bold
+            run.italic = False
+
+    for paragraph in document.paragraphs:
+        name = paragraph.style.name
+        text = paragraph.text.strip()
+        if name.startswith('Heading '):
+            continue
+        fmt = paragraph.paragraph_format
+        if name == 'Caption' or re.match(r'^[图表]\s*\d+[ .．、:：]', text):
+            font(paragraph, '黑体', 12)
+            fmt.first_line_indent = Pt(0)
+        elif name.lower().startswith('toc') or text in ('目次', '目录'):
+            font(paragraph, '黑体' if text in ('目次', '目录') else '宋体',
+                 16 if text in ('目次', '目录') else 12)
+        elif name in ('Normal', 'Body Text', 'List Paragraph', 'List Bullet', 'List Number'):
+            # Do not indent standalone drawings or rewrite cover/title styles.
+            if not text:
+                continue
+            font(paragraph, '宋体', 12, False)
+            numbered = re.match(r'^(?:[（(]\d+[）)]|\d+[）)]|[a-z]\.)\s*', text)
+            fmt.first_line_indent = Pt(0 if numbered else 24)
+            ind = paragraph._p.get_or_add_pPr().find(qn('w:ind'))
+            if ind is not None:
+                for attr in ('firstLineChars', 'hangingChars', 'hanging'):
+                    ind.attrib.pop(qn('w:' + attr), None)
+        else:
+            continue
+        fmt.line_spacing = 1.5
+        fmt.space_before = Pt(0)
+        fmt.space_after = Pt(0)
+
+    def tables(items):
+        for table in items:
+            for row in table.rows:
+                for cell in row.cells:
+                    for paragraph in cell.paragraphs:
+                        font(paragraph, '宋体', 10.5, False)
+                        fmt = paragraph.paragraph_format
+                        fmt.first_line_indent = Pt(0)
+                        fmt.space_before = Pt(0)
+                        fmt.space_after = Pt(0)
+                    tables(cell.tables)
+    tables(document.tables)
+    for section in document.sections:
+        for footer in (section.footer, section.first_page_footer, section.even_page_footer):
+            for paragraph in footer.paragraphs:
+                if 'PAGE' in ''.join(paragraph._p.xpath('.//w:instrText/text()')):
+                    font(paragraph, '宋体', 12, False)
+                    paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+
+def number_requirements_headings(markdown):
+    section = 1
+    function = 0
+    lines = []
+    for line in markdown.splitlines():
+        context = re.fullmatch(r"##\s+(?:3\.3\.1\.\d+\s+)?(.+ / LBLS-GN-LBXX-[A-Z]+)", line)
+        operation = re.fullmatch(r"(?:\*\*|###\s+)(?:3\.3\.1\.\d+\.\d+\s+)?(.+ / LBLS-GN-LBXX-F\d+)(?:\*\*)?", line)
+        if context:
+            section += 1
+            function = 0
+            line = f"## 3.3.1.{section} {context.group(1)}"
+        elif operation:
+            function += 1
+            line = f"### 3.3.1.{section}.{function} {operation.group(1)}"
+        elif line == "## 表 3 联邦学习模块的软件功能划分":
+            line = "## 3.3.1.1 表 3 联邦学习模块的软件功能划分"
+        lines.append(line)
+    return "\n".join(lines)
+
+
+def format_requirements_body(document):
+    body_styles = ("Normal", "List Bullet", "List Number")
+    for name in body_styles:
+        style = document.styles[name]
+        set_style_font(style, "宋体")
+        style.font.size = Pt(12)
+        style.font.bold = False
+    # Runs carry explicit fonts, so changing the paragraph style alone is insufficient.
+    for paragraph in document.paragraphs:
+        if paragraph.style.name not in body_styles:
+            continue
+        text = paragraph.text.strip()
+        if re.match(r"^[（(]\d+[）)]\s*", text):
+            paragraph.paragraph_format.left_indent = Pt(0)
+            paragraph.paragraph_format.first_line_indent = Pt(0)
+            paragraph.paragraph_format.keep_with_next = True
+        elif re.match(r"^\d+[）)]\s*", text):
+            paragraph.paragraph_format.left_indent = Pt(24)
+            paragraph.paragraph_format.first_line_indent = Pt(0)
+            paragraph.paragraph_format.keep_with_next = True
+        for run in paragraph.runs:
+            set_run_font(run, "宋体")
+            run.font.size = Pt(12)
+            run.bold = False
 
 
 def configure_document(document, reference, use_landscape=False):

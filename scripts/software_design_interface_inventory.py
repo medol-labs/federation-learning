@@ -1,6 +1,7 @@
 """Discover the HTTP routes exposed by the current deployable services."""
 
 import hashlib
+import json
 import re
 from pathlib import Path
 
@@ -112,6 +113,9 @@ def discover_routes(root, translation):
                     'path': path,
                     'purpose': route_purpose(path, declaration.group(1), file.stem, translation),
                     'source': str(file.relative_to(root)),
+                    'resource': file.stem,
+                    'operation': declaration.group(1),
+                    'context': file.parts[file.parts.index('context') + 1] if 'context' in file.parts else None,
                     'sourceSha256': hashlib.sha256(source.encode()).hexdigest(),
                 })
     engine_source = root / 'federation-learning-runtime-engine/python/gemifl/runtime/node.py'
@@ -134,6 +138,9 @@ def discover_routes(root, translation):
             'path': path,
             'purpose': purpose,
             'source': str(engine_source.relative_to(root)),
+            'resource': 'RuntimeEngine',
+            'operation': method + ' ' + path,
+            'context': None,
             'sourceSha256': hashlib.sha256(source.encode()).hexdigest(),
         })
     keys = [(item['provider'], item['method'], item['path']) for item in records]
@@ -146,13 +153,25 @@ def discover_routes(root, translation):
 
 
 def render_inventory(records):
+    from software_design_interface_contracts import resource_interfaces
+    root = Path(__file__).resolve().parents[1]
+    model = json.loads((root / '.medol/codegen-model.json').read_text(encoding='utf-8'))
+    lines = ['| 接口标识 | 接口名称 | 接口实体 | 对应设计条目 |', '| --- | --- | --- | --- |']
+    for item in resource_interfaces(records, model):
+        lines.append('| ' + ' | '.join((item['id'], item['name'], item['provider'], item['name'])) + ' |')
+    return '\n'.join(lines)
+
+
+def render_route_table(records):
     parts = []
     for provider in ('联邦学习平台', '参与方运行时代理', '共享支撑服务', '训练引擎'):
         group = [record for record in records if record['provider'] == provider]
+        if not group:
+            continue
         parts.extend((
-            f'##### {provider}对外提供的 HTTP 接口（{len(group)} 项）',
+            f'**{provider}对外提供的 HTTP 接口**',
             '',
-            '| 接口标识 | 调用方 | 方法与相对路径 | 用途 |',
+            '| 操作标识 | 调用方 | 方法与相对路径 | 用途 |',
             '| --- | --- | --- | --- |',
         ))
         for record in group:

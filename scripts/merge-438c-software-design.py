@@ -35,9 +35,12 @@ REQUIREMENT_REGISTER = ROOT / 'docs/438c/merge/3.3.1-function-register.json'
 REQUIREMENT_TEXT = ROOT / 'docs/438c/merge/3.3.1-federation-learning.md'
 sys.path.insert(0, str(ROOT / 'docs/document-pack/federation-learning'))
 sys.path.insert(0, str(ROOT / 'scripts'))
-from markdown_to_docx import write_markdown  # noqa: E402
+from markdown_to_docx import write_markdown, set_run_font, number_requirements_headings, format_heading_styles  # noqa: E402
 from software_design_interface_inventory import discover_routes, render_inventory  # noqa: E402
+from software_design_interface_contracts import resource_interfaces, reference_project  # noqa: E402
 from software_design_operation_inventory import operation_rows, render_operation_design  # noqa: E402
+from software_design_template_structure import template_sections, detailed_units  # noqa: E402
+from software_design_interface_sections import render_interface_designs, validate_interface_diagrams  # noqa: E402
 
 
 ANCHORS = {
@@ -242,16 +245,46 @@ def read_structured_sections(path):
     return source
 
 
-def render_structured_sections(source, operation_groups=None):
+def interface_field_rows(block, model):
+    reference = block['commandRef']
+    matches = [command for slice_ in model['slices'] for command in slice_['commands']
+               if f'{command.get("modelContext", slice_["context"])}/{command["name"]}' == reference]
+    if len(matches) != 1:
+        raise ValueError(f'Interface command reference must resolve uniquely: {reference}')
+    descriptions = {item['cells'][0]: item['cells'][3] for item in block['rows']}
+    fields = matches[0]['fields']
+    unknown = set(descriptions) - {field['name'] for field in fields}
+    if unknown:
+        raise ValueError(f'Interface field descriptions reference removed fields: {reference}: {sorted(unknown)}')
+    return [[field['name'], field['type'] + ('[]' if field.get('cardinality') == 'Multiple' else ''),
+             '可省略，系统生成' if field.get('generated') else '可空' if field.get('optional') else '必填',
+             descriptions.get(field['name'], '按接收方数据结构传递；业务判断见对应软件单元设计。')]
+            for field in fields]
+
+
+def render_structured_sections(source, operation_groups=None, model=None):
     def row(cells):
         return '| ' + ' | '.join(value.replace('|', '\\|').replace('\n', ' ') for value in cells) + ' |'
 
+    source = template_sections(source)
     rendered = {}
     for key, blocks in source['sections'].items():
+        if key == 'detailed':
+            rendered[key] = detailed_units(blocks, operation_groups if operation_groups is not None
+                                           else load_operation_design(), render_operation_design)
+            continue
         fragments = []
         for block in blocks:
             kind = block['type']
             if kind == 'paragraph':
+                if key == 'interfaces' and '-DETAIL-' in block['id']:
+                    if block['id'].endswith('-METHOD'):
+                        entities, _, method = block['text'].partition('；')
+                        fragments.extend(['**接口实体**', entities, '**接口类型**',
+                                          'HTTP 请求/响应接口。', '**通信方法、协议**', method])
+                        continue
+                    elif block['id'].endswith('-RESULT'):
+                        fragments.append('**接口特性：响应、序列及异常约束**')
                 fragments.append(block['text'])
             elif kind == 'heading':
                 fragments.append('#' * block['level'] + ' ' + block['text'])
@@ -266,9 +299,19 @@ def render_structured_sections(source, operation_groups=None):
             elif kind == 'figure':
                 fragments.append(f'{{{{FIGURE:{block["id"]}}}}}')
             else:
+                if key == 'interfaces' and '-DETAIL-' in block['id']:
+                    fragments.append('**接口特性：数据元素、格式与取值约束**')
+                    if block.get('interfaceIdentifiers'):
+                        fragments.append(f'**名称/标识符：** {block["interfaceName"]} / '
+                                         + '、'.join(block['interfaceIdentifiers']))
                 headers = block['headers']
                 lines = [row(headers), row(['---'] * len(headers))]
-                for item in block['rows']:
+                items = block['rows']
+                if block.get('commandRef'):
+                    if model is None:
+                        model = json.loads(MODEL.read_text(encoding='utf-8'))
+                    items = [{'cells': cells} for cells in interface_field_rows(block, model)]
+                for item in items:
                     cells = list(item['cells'])
                     if block['id'] in ('FL-SD-DET-05', 'FL-SD-DET-26'):
                         cells[0] = f'{cells[0]} / {item["id"]}'
@@ -355,6 +398,31 @@ def load_operation_design(model_path=MODEL, register_path=REQUIREMENT_REGISTER,
     )
 
 
+def trace_chapter_numbers(source, operation_groups, requirement_text_path=REQUIREMENT_TEXT):
+    requirement_numbers = dict(re.findall(
+        r'^### (3\.3\.1\.\d+\.\d+) .*/ (LBLS-GN-LBXX-F\d+)\s*$',
+        number_requirements_headings(requirement_text_path.read_text(encoding='utf-8')), re.MULTILINE))
+    requirement_numbers = {identifier: number for number, identifier in requirement_numbers.items()}
+    markdown = detailed_units(source['sections']['detailed'], operation_groups, render_operation_design)
+    design_numbers = {}
+    unit = operation = 0
+    for line in markdown.splitlines():
+        heading = re.fullmatch(r'(#{3,4}) .*/\s*(FL-SD-[A-Z0-9-]+)', line)
+        if not heading:
+            continue
+        if len(heading[1]) == 3:
+            unit += 1
+            operation = 0
+            number = f'5.1.{unit}'
+        else:
+            operation += 1
+            number = f'5.1.{unit}.{operation}'
+        if heading[2] in design_numbers:
+            raise ValueError(f'Duplicate design chapter identifier: {heading[2]}')
+        design_numbers[heading[2]] = number
+    return requirement_numbers, design_numbers
+
+
 def traceability_rows(source, register_path=REQUIREMENT_REGISTER, operation_groups=None):
     """Trace requirement IDs to actual design items in this document."""
     register = json.loads(register_path.read_text(encoding='utf-8'))
@@ -374,6 +442,7 @@ def traceability_rows(source, register_path=REQUIREMENT_REGISTER, operation_grou
 
     if operation_groups is None:
         operation_groups = load_operation_design(register_path=register_path)
+    requirement_numbers, design_numbers = trace_chapter_numbers(source, operation_groups)
     operation_design = {row['requirementId']: row for group in operation_groups for row in group['rows']}
     if len(operation_design) != sum(len(group['rows']) for group in operation_groups):
         raise ValueError('Operation design contains duplicate requirement IDs.')
@@ -394,6 +463,12 @@ def traceability_rows(source, register_path=REQUIREMENT_REGISTER, operation_grou
         detailed_by_requirement[requirement_id] = (title, [key_units[code] for code in codes])
     rows = []
     seen = set()
+    covered_units = set()
+    def unit_reference(item):
+        code, title = item['cells'][0].split(' ', 1)
+        covered_units.add(code)
+        return f'{design_numbers[item["id"]]} {title}/{code}（设计标识：{item["id"]}）'
+
     for requirement in register['functions']:
         identifier = requirement['id']
         if identifier in seen:
@@ -402,24 +477,26 @@ def traceability_rows(source, register_path=REQUIREMENT_REGISTER, operation_grou
         operation = operation_design[identifier]
         if operation['title'] != requirement['title']:
             raise ValueError(f'Operation design title differs: {identifier}')
-        design_refs = [f'第5章 操作处理设计/{operation["id"]}（{operation["title"]}）']
+        unit_refs = [unit_reference(context_design_units[requirement['sourceContext']])]
         mapping = detailed_by_requirement.get(identifier)
         if mapping:
             if mapping[0] != requirement['title']:
                 raise ValueError(f'Detailed design requirement title differs: {identifier}')
-            design_refs.extend(
-                f'第5章 关键软件单元及处理决策/{item["id"]}（{item["cells"][0]}）'
-                for item in mapping[1]
-            )
+            unit_refs.extend(unit_reference(item) for item in mapping[1])
+        design_refs = [f'{design_numbers[operation["id"]]} {operation["title"]}/{operation["id"]}']
         rows.append({
             'id': identifier,
-            'requirement': f'{requirement["title"]}/{identifier}',
+            'requirement': f'{requirement_numbers[identifier]} {requirement["title"]}/{identifier}',
             'design': '；'.join(design_refs),
             'designRefs': design_refs,
+            'unitRefs': unit_refs,
             'sourceHash': requirement['sourceHash'],
         })
     if set(detailed_by_requirement) - seen:
         raise ValueError('Detailed design traces contain requirements absent from the current register.')
+    expected_units = set(key_units) | {item['cells'][0].split(' ', 1)[0] for item in context_design_units.values()}
+    if expected_units - covered_units:
+        raise ValueError(f'Software units without requirement allocation: {expected_units - covered_units}')
     headings = {
         block['id']: block['text']
         for section in ('architecture', 'execution', 'performance', 'interfaces')
@@ -440,6 +517,7 @@ def traceability_rows(source, register_path=REQUIREMENT_REGISTER, operation_grou
             'requirement': f'{trace["title"]}/{identifier}' if 'title' in trace else identifier,
             'design': '；'.join(refs),
             'designRefs': refs,
+            'unitRefs': refs,
         })
     return rows
 
@@ -450,9 +528,10 @@ def reverse_traceability_rows(rows):
     for row in rows:
         for design in row['designRefs']:
             entry = by_design.setdefault(design, {'design': design, 'requirements': []})
-            entry['requirements'].append(row['id'])
+            if row['requirement'] not in entry['requirements']:
+                entry['requirements'].append(row['requirement'])
     return [
-        {'design': entry['design'], 'requirement': '、'.join(entry['requirements'][index:index + 12])}
+        {'design': entry['design'], 'requirement': '\n'.join(entry['requirements'][index:index + 12])}
         for entry in by_design.values()
         for index in range(0, len(entry['requirements']), 12)
     ]
@@ -652,9 +731,9 @@ def update_traceability_chapter(document, rows):
             insert_before_heading(
                 document, paragraph,
                 '联邦学习功能需求按本版软件需求规格说明中的功能标识，与本软件设计说明第5章的'
-                '操作处理设计行双向对照；训练主链已有的关键处理设计行同时列出。'
+                '具体操作设计双向对照，两侧均保留章节号、名称及标识，不重复列上级软件单元。'
                 '查询通用要求、计算机通信需求和效率要求单独追溯至相应的体系结构设计，不在各功能行重复列出。'
-                '正向表逐条列需求，逆向表按设计项汇总需求标识。设计对应关系用于核对方案覆盖范围，'
+                '沿用本总稿表头：正向表为需求到操作设计，逆向表为操作设计到需求，通用需求按对应设计项列出。设计对应关系用于核对方案覆盖范围，'
                 '不等于实现和验收已经完成。',
             )
             break
@@ -715,6 +794,8 @@ def merge_register(source, target, document, sections, anchors, decisions, decis
         'decisionModelRefs': model_signatures,
         'structuredItems': structured_section_items(structured_source),
         'interfaceSourceRefs': interface_source_signatures(structured_source),
+        'interfaceDefinitions': {item['id']: digest(json.dumps(item, ensure_ascii=False, sort_keys=True))
+                                 for item in resource_interfaces(interface_records, json.loads(MODEL.read_text(encoding='utf-8')))},
         'implementationSourceRefs': implementation_source_signatures(structured_source),
         'interfaceInventoryItems': {
             item['id']: digest(json.dumps(item, ensure_ascii=False, sort_keys=True))
@@ -743,6 +824,7 @@ def register_changes(previous, current):
         ('decisionModelRefs', '关联建模定义'),
         ('structuredItems', '其他设计章节条目'),
         ('interfaceSourceRefs', '接口实现来源'),
+        ('interfaceDefinitions', '接口契约设计'),
         ('implementationSourceRefs', '详细设计实现来源'),
         ('interfaceInventoryItems', 'HTTP 接口清单'),
         ('readModelItems', '查询视图建模定义'),
@@ -819,6 +901,10 @@ def insert_section(document, anchor, markdown, figures=None):
             for attribute in ('ascii', 'hAnsi', 'eastAsia', 'cs'):
                 fonts.set(qn(f'w:{attribute}'), font)
         last.addnext(copied)
+        if copied.tag == qn('w:p'):
+            paragraph = Paragraph(copied, document._body)
+            if paragraph.style.name.startswith('Heading '):
+                format_design_heading(paragraph)
         last = copied
 
 
@@ -831,10 +917,11 @@ def insert_before_heading(document, heading, markdown):
         marker._p.getparent().remove(marker._p)
 
 
-def format_inserted_tables(document, tables):
+def format_inserted_tables(document, tables, template_properties=None):
     """Use the joint design document's table style without changing existing tables."""
-    reference = next(table for table in document.tables if table.rows[0].cells[0].text.strip() == '序号')
-    template_properties = reference._tbl.tblPr
+    if template_properties is None:
+        reference = next(table for table in document.tables if table.rows[0].cells[0].text.strip() == '序号')
+        template_properties = reference._tbl.tblPr
     for table in tables:
         table._tbl.replace(table._tbl.tblPr, deepcopy(template_properties))
         table.autofit = False
@@ -866,8 +953,11 @@ def format_inserted_tables(document, tables):
             [cell.text.strip() for cell in table.rows[0].cells]
             == ['字段名', '类型', '必填性或位置', '来源、含义与约束']
         )
+        unit_fields = [cell.text.strip() for cell in table.rows[0].cells] == ['字段', '类型与结构', '可空', '来源或约束']
         if interface_fields:
             widths = [2600, 1050, 1450, 3900]
+        elif unit_fields:
+            widths = [3000, 1700, 650, 3650]
         elif inventory_table:
             widths = [1500, 1500, 4500, 1500]
         elif detailed_table:
@@ -883,7 +973,7 @@ def format_inserted_tables(document, tables):
             total_width = sum(original_widths)
             widths = [round(9000 * width / total_width) for width in original_widths[:-1]]
             widths.append(9000 - sum(widths))
-        if interface_fields or inventory_table or detailed_table or context_table or operation_table or behavior_table:
+        if interface_fields or unit_fields or inventory_table or detailed_table or context_table or operation_table or behavior_table:
             header = OxmlElement('w:tblHeader')
             header.set(qn('w:val'), 'true')
             table.rows[0]._tr.get_or_add_trPr().append(header)
@@ -909,6 +999,52 @@ def format_inserted_tables(document, tables):
                         run.bold = None
 
 
+def format_design_heading(paragraph):
+    text = re.sub(r'\s*/\s*', '/', paragraph.text)
+    number = re.match(r'^(\d+(?:\.\d+)*)(\s+)(.*)$', text)
+    paragraph.clear()
+    if number:
+        run = paragraph.add_run(number.group(1))
+        set_run_font(run, 'Times New Roman')
+        run.bold, run.italic = True, False
+        text = number.group(2) + number.group(3)
+    for part in re.split(r'([\x21-\x7e]+)', text):
+        if part:
+            run = paragraph.add_run(part)
+            set_run_font(run, 'Times New Roman' if part.isascii() and part.strip() else '黑体')
+            run.bold, run.italic = True, False
+
+
+def number_preview_headings(document):
+    root = None
+    root_level = 0
+    counters = []
+    for paragraph in document.paragraphs:
+        if not paragraph.style.name.startswith('Heading '):
+            continue
+        level = int(paragraph.style.name.split()[-1])
+        if paragraph.text == '联邦学习模块接口设计':
+            root, root_level, counters = '4.4.1', level, []
+        elif paragraph.text == '联邦学习模块CSCI详细设计':
+            root, root_level, counters = '5.1', level, []
+        elif root is None:
+            continue
+        else:
+            depth = level - root_level
+            if depth <= 0:
+                raise ValueError('Preview heading is outside its chapter hierarchy.')
+            counters = counters[:depth]
+            while len(counters) < depth:
+                counters.append(0)
+            counters[-1] += 1
+        number = '.'.join([root, *map(str, counters)])
+        paragraph.text = f'{number} {paragraph.text}'
+        format_design_heading(paragraph)
+        # Suppress numbering inherited from the joint document's heading styles.
+        num_pr = paragraph._p.get_or_add_pPr().get_or_add_numPr()
+        num_pr.get_or_add_numId().val = 0
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--target', type=Path, default=DEFAULT_TARGET)
@@ -917,13 +1053,28 @@ def main():
     parser.add_argument('--sections', type=Path, default=DEFAULT_SECTIONS)
     parser.add_argument('--corrections', type=Path, default=DEFAULT_CORRECTIONS)
     parser.add_argument('--out', type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument('--markdown-out', type=Path, help='Export the rendered interface and detailed design chapters for review')
+    parser.add_argument('--chapter-preview', action='store_true', help='Export only interface and detailed chapters without accepting baseline changes')
+    parser.add_argument('--traceability-preview', action='store_true', help='Export Federation Learning traceability tables without accepting the baseline')
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--sync', action='store_true', help='Accept the reviewed source and joint draft as a new merge baseline')
     args = parser.parse_args()
+    if args.traceability_preview and (args.chapter_preview or args.check or args.sync):
+        parser.error('--traceability-preview cannot be combined with other preview/check/sync modes')
+    if args.traceability_preview and args.out == DEFAULT_OUTPUT:
+        args.out = DEFAULT_OUTPUT.with_name('software-design-traceability-preview.docx')
     if args.check and args.sync:
         parser.error('--check and --sync cannot be used together')
+    if args.chapter_preview and (args.check or args.sync):
+        parser.error('--chapter-preview cannot be combined with --check or --sync')
+    if args.chapter_preview and args.out == DEFAULT_OUTPUT:
+        args.out = DEFAULT_OUTPUT.with_name('software-design-interface-detail-preview.docx')
     if args.out.resolve() == args.target.resolve():
         raise ValueError('The output must be a copy; refusing to overwrite the joint source document.')
+    if args.markdown_out and args.markdown_out.resolve() in {
+        args.source.resolve(), args.sections.resolve(), args.target.resolve(), REGISTER.resolve(),
+    }:
+        raise ValueError('Rendered Markdown must not overwrite a controlled source or baseline.')
 
     sections = parse_sections(args.source.read_text(encoding='utf-8'))
     if sections['decisions'].count(DECISIONS_PLACEHOLDER) != 1:
@@ -938,6 +1089,42 @@ def main():
     requirement_refs = requirement_signatures(structured_source)
     operation_groups = load_operation_design()
     traces = traceability_rows(structured_source, operation_groups=operation_groups)
+    if args.traceability_preview:
+        document = Document(args.target)
+        update_traceability_chapter(document, traces)
+        forward, reverse = traceability_tables(document)
+        for table, count in ((forward, len(traces)), (reverse, len(reverse_traceability_rows(traces)))):
+            for row in list(table.rows)[count + 1:]:
+                table._tbl.remove(row._tr)
+        inside = False
+        for element in list(document.element.body):
+            if element.tag == qn('w:sectPr'):
+                continue
+            if element.tag == qn('w:p'):
+                paragraph = Paragraph(element, document._body)
+                if paragraph.style.name == 'Heading 1':
+                    inside = paragraph.text.strip() == '需求可追踪性'
+            if not inside:
+                document.element.body.remove(element)
+        trace_heading_numbers = {'需求可追踪性': '6', '正向追溯': '6.1', '逆向追溯': '6.2'}
+        for paragraph in document.paragraphs:
+            number = trace_heading_numbers.get(paragraph.text.strip())
+            if number and paragraph.style.name.startswith('Heading '):
+                paragraph.text = f'{number} {paragraph.text.strip()}'
+                format_design_heading(paragraph)
+                paragraph._p.get_or_add_pPr().get_or_add_numPr().get_or_add_numId().val = 0
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        format_heading_styles(document)
+        document.save(args.out)
+        if args.markdown_out:
+            lines = ['# 6 需求可追踪性', '', '## 6.1 正向追溯', '', '| 序号 | 需求名称/标识 | 对应操作设计或通用设计项 |', '| --- | --- | --- |']
+            lines.extend(f'| {i} | {row["requirement"]} | {row["design"]} |' for i, row in enumerate(traces, 1))
+            lines.extend(['', '## 6.2 逆向追溯', '', '| 序号 | 操作设计或通用设计项 | 需求名称/标识 |', '| --- | --- | --- |'])
+            lines.extend('| ' + str(i) + ' | ' + row['design'] + ' | ' + row['requirement'].replace('\n', '<br>') + ' |' for i, row in enumerate(reverse_traceability_rows(traces), 1))
+            args.markdown_out.parent.mkdir(parents=True, exist_ok=True)
+            args.markdown_out.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+        print(f'Traceability preview (baseline unchanged): {args.out}')
+        return
     rendered_sections = render_structured_sections(structured_source, operation_groups)
     for key, rendered in rendered_sections.items():
         if sections[key].strip() != SECTION_PLACEHOLDER:
@@ -951,6 +1138,12 @@ def main():
         raise ValueError('Interface design must contain one complete HTTP inventory placeholder.')
     sections['interfaces'] = sections['interfaces'].replace(
         '{{INTERFACE_INVENTORY}}', render_inventory(interface_records)
+    )
+    if sections['interfaces'].count('{{INTERFACE_DESIGNS}}') != 1:
+        raise ValueError('Interface design must contain one logical-interface placeholder.')
+    validate_interface_diagrams(structured_source, ROOT)
+    sections['interfaces'] = sections['interfaces'].replace(
+        '{{INTERFACE_DESIGNS}}', render_interface_designs(structured_source, interface_records, model, interface_field_rows)
     )
     document = Document(args.target)
     if any(paragraph.text.startswith('联邦学习子系统按平台、参与方运行时代理') for paragraph in document.paragraphs):
@@ -970,11 +1163,43 @@ def main():
         REGISTER.write_text(json.dumps(current, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         print(f'Accepted merge baseline: {REGISTER}')
         return
+    if args.chapter_preview:
+        project = reference_project(resource_interfaces(interface_records, model),
+                                    next(b['text'] for b in structured_source['sections']['interfaces']
+                                         if b['id'] == 'FL-SD-INT-INTRO'))
+        project_path = args.out.with_name('software-design-interface-project.json')
+        project_path.parent.mkdir(parents=True, exist_ok=True)
+        project_path.write_text(json.dumps(project, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        # Keep the joint document's styles and section setup, not its content.
+        table_properties = deepcopy(next(table._tbl.tblPr for table in document.tables
+                                         if table.rows[0].cells[0].text.strip() == '序号'))
+        for element in list(document.element.body):
+            if element.tag != qn('w:sectPr'):
+                document.element.body.remove(element)
+        heading = document.add_paragraph('联邦学习接口与详细设计（候选稿）', style='Heading 1')
+        insert_section(document, heading, sections['interfaces'], figures)
+        heading = document.add_paragraph('联邦学习模块CSCI详细设计', style='Heading 2')
+        insert_section(document, heading, sections['detailed'], figures)
+        number_preview_headings(document)
+        format_inserted_tables(document, document.tables, table_properties)
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        format_heading_styles(document)
+        document.save(args.out)
+        if args.markdown_out:
+            args.markdown_out.parent.mkdir(parents=True, exist_ok=True)
+            args.markdown_out.write_text('# 联邦学习接口与详细设计（候选稿）\n\n' + sections['interfaces'] +
+                                         '\n\n## 联邦学习软件单元详细设计\n\n' + sections['detailed'] + '\n', encoding='utf-8')
+        print(f'Chapter preview (baseline unchanged): {args.out}')
+        return
     if changes:
         raise ValueError('Merge baseline has changed; review the locations above, then run --sync to accept them.')
     if args.check:
         print(f'Checked {len(anchors)} design insertion points in {args.target}')
         return
+    if args.markdown_out:
+        args.markdown_out.parent.mkdir(parents=True, exist_ok=True)
+        args.markdown_out.write_text('# 联邦学习接口与详细设计\n\n' + sections['interfaces'] +
+                                     '\n\n## 联邦学习软件单元详细设计\n\n' + sections['detailed'] + '\n', encoding='utf-8')
     apply_corrections(corrections, targets)
     existing_tables = {table._tbl for table in document.tables}
     for key in ANCHORS:
@@ -987,6 +1212,7 @@ def main():
     added_tables = [table for table in document.tables if table._tbl not in existing_tables]
     format_inserted_tables(document, added_tables)
     args.out.parent.mkdir(parents=True, exist_ok=True)
+    format_heading_styles(document)
     document.save(args.out)
     print(f'Merged design copy: {args.out}')
 

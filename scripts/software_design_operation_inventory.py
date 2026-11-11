@@ -85,7 +85,8 @@ def operation_rows(model, register, srs_markdown):
         concept = concepts.get(concept_key)
         if not concept:
             raise ValueError(f'Function has no registered business object: {identifier}')
-        if current_group is None or current_group['conceptId'] != concept['id']:
+        current_group = next((group for group in groups if group['conceptId'] == concept['id']), None)
+        if current_group is None:
             current_group = {'conceptId': concept['id'], 'title': concept['title'], 'rows': []}
             groups.append(current_group)
 
@@ -113,7 +114,7 @@ def operation_rows(model, register, srs_markdown):
                         event_title = translated(dependency['title'], translations)
                         if event_title not in trigger:
                             trigger.append(event_title)
-            input_design = ('接收' + summarized_items(inputs, 8, '输入字段') + '。') if inputs else '接收关联业务标识及操作参数。'
+            input_design = ('接收' + '、'.join(inputs) + '。') if inputs else '接收关联业务标识及操作参数。'
             if trigger:
                 input_design = f'由“{"、".join(trigger)}”事件触发；' + input_design
             if commands and not any(command.get('startsLifecycle') for command in commands):
@@ -124,7 +125,7 @@ def operation_rows(model, register, srs_markdown):
                 else f'校验{concept["title"]}的必填参数与状态前置条件'
             ]
             if constraints:
-                process_parts.append(summarized_items(constraints, 2, '业务约束'))
+                process_parts.append('、'.join(constraints))
             if slice_.get('port'):
                 process_parts.append('调用本操作对应的外部能力适配器，以返回结果决定后续处理')
             if not commands:
@@ -157,24 +158,78 @@ def operation_rows(model, register, srs_markdown):
             'id': f'FL-SD-OP-{identifier.rsplit("-", 1)[1]}',
             'requirementId': identifier,
             'title': title,
+            'sourceContext': function['sourceContext'],
+            'slice': slice_,
+            'transitions': [item for item in model.get('transitions', [])
+                            if item.get('slice', {}).get('id') == slice_['id']],
+            'translations': translations,
+            'constraints': constraints,
+            'acceptance': section_lines(body, '验收情形：'),
             'cells': [f'{title} / FL-SD-OP-{identifier.rsplit("-", 1)[1]}',
                       input_design, process, result],
         })
     return groups
 
 
-def render_operation_design(groups):
+def render_operation_design(groups, nested=False):
     def table_row(cells):
         return '| ' + ' | '.join(value.replace('|', '\\|').replace('\n', ' ') for value in cells) + ' |'
 
-    parts = ['### 按业务对象的操作处理设计',
-             '以下设计行与软件需求规格说明的功能标识逐项对应。输入字段的完整定义见需求规格和接口设计；'
-             '这里说明状态来源、处理顺序、业务结果和查询更新边界。外部能力尚有未完成实现的，仍以本章关键软件单元的当前限制为准。']
+    parts = []
     for group in groups:
-        parts.append(f'#### {group["title"]} / {group["conceptId"]}')
-        parts.append('\n'.join([
-            table_row(['操作设计项', '输入与状态来源', '处理与外部依赖', '结果、异常及查询更新']),
-            table_row(['---'] * 4),
-            *(table_row(row['cells']) for row in group['rows']),
-        ]))
+        if not nested:
+            parts.append(f'### {group["title"]} / {group["conceptId"]}')
+        for row in group['rows']:
+            parts.append(f'#### {row["title"]} / {row["id"]}')
+            parts.append(f'对应需求：{row["requirementId"]}。所属软件单元：{group["title"]}。')
+            parts.extend(['**标识符、用途**', row['title'], '**单元设计决策**', row['cells'][2],
+                          '**数据元素**', row['cells'][1]])
+            slice_ = row['slice']
+            for command in slice_['commands']:
+                parts.append(f'输入数据结构：{command["name"]}。')
+                parts.append(field_table(command.get('fields', [])))
+            for event in slice_['events']:
+                parts.append(f'输出数据结构：{translated(event["title"], row["translations"])}（{event["name"]}）。')
+                parts.append(field_table(event.get('fields', [])))
+            parts.append('**约束、限定或非常规特征**')
+            transitions = row['transitions']
+            if transitions:
+                lines = [table_row(['当前状态', '处理结果事件', '下一状态']), table_row(['---'] * 3)]
+                for change in transitions:
+                    lines.append(table_row([
+                        translated(str(change.get('from', '新建' if change.get('startsLifecycle') else '未限定')), row['translations']),
+                        translated(change.get('event', {}).get('title', ''), row['translations']),
+                        translated(str(change.get('to', '保持原状态')), row['translations']),
+                    ]))
+                parts.append('\n'.join(lines))
+            else:
+                parts.append('本操作无独立状态转换定义，执行条件见处理逻辑。')
+            parts.extend(f'约束{index}：{value}。' for index, value in enumerate(row['constraints'], 1))
+            parts.extend(['**逻辑**', row['cells'][1], row['cells'][2]])
+            if row['acceptance']:
+                parts.append('分支条件与预期处理：')
+                parts.extend(f'分支{index}：{value}。' for index, value in enumerate(row['acceptance'], 1))
+            parts.append(row['cells'][3])
+            parts.append('**异常和错误处理**')
+            parts.append('异常分支按上述条件分别处理；接口错误与业务拒绝不得混同为成功结果。'
+                         '重复请求及外部副作用的恢复规则引用本章关键单元设计；未明确的操作不承诺自动重试或重复执行安全。')
     return '\n\n'.join(parts)
+
+
+def field_table(fields):
+    lines = ['| 字段 | 类型与结构 | 可空 | 来源或约束 |', '| --- | --- | --- | --- |']
+    for field in fields:
+        type_ = field['type'] + ('[]' if field.get('cardinality') == 'Multiple' else '')
+        notes = []
+        if field.get('idAttribute'):
+            notes.append('业务关联标识')
+        if field.get('generated'):
+            notes.append('系统生成')
+        if field.get('portOutput'):
+            notes.append('外部能力返回')
+        source = field.get('source') or {}
+        if source.get('from'):
+            notes.append('取自：' + '、'.join(source['from']))
+        lines.append('| ' + ' | '.join([field['name'], type_, '是' if field.get('optional') else '否',
+                                        '；'.join(notes) or '按本操作数据定义传递']) + ' |')
+    return '\n'.join(lines) if fields else '无独立字段。'

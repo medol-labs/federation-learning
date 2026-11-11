@@ -16,9 +16,144 @@ SCRIPT = Path(__file__).with_name('merge-438c-software-design.py')
 spec = importlib.util.spec_from_file_location('merge_438c_software_design', SCRIPT)
 merge = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(merge)
+from software_design_interface_contracts import resource_interfaces, reference_project, render_reference_subsections
 
 
 class SoftwareDesignTrackingTest(unittest.TestCase):
+    def test_interfaces_cover_contracts_and_use_reference_subsections(self):
+        source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
+        model = json.loads(merge.MODEL.read_text())
+        records = merge.discover_routes(merge.ROOT, model['translations']['zh-CN'])
+        items = resource_interfaces(records, model)
+        covered = [route for item in items for route in item['routes']]
+        self.assertEqual(sorted(covered), sorted(r['id'] for r in records))
+        project = reference_project(items, '接口标识和接口图正文')
+        subsection = project['structure']['4.3']['subsections']['4.3.2']
+        self.assertEqual(set(subsection), {'name', 'content'})
+        self.assertEqual(len(items), len({(r['provider'], r['source']) for r in records}))
+        rendered = merge.render_interface_designs(source, records, model, merge.interface_field_rows)
+        headings = re.findall(r'^#### (.+)', rendered, re.MULTILINE)
+        self.assertEqual(headings, [item['name'] for item in items])
+        for label in ('接口实体', '接口类型', '接口特性', '通信方法', '协议'):
+            self.assertEqual(len(re.findall(rf'^{label}：', rendered, re.MULTILINE)), len(items))
+        for number in range(1, 9):
+            self.assertEqual(len(re.findall(rf'^{number}\)', rendered, re.MULTILINE)), len(items))
+        self.assertIn('organizationName', rendered)
+        self.assertIn('请求数据：', rendered)
+        self.assertIn('响应数据：', rendered)
+        self.assertNotIn('FL-IF-07', rendered)
+        merge.validate_interface_diagrams(source, merge.ROOT)
+        changed = deepcopy(source)
+        changed['sections']['interfaces'] = [b for b in changed['sections']['interfaces']
+                                            if b['id'] != 'FL-SD-INT-RELATIONS-FIG']
+        with self.assertRaisesRegex(ValueError, 'providing entities'):
+            merge.validate_interface_diagrams(changed, merge.ROOT)
+        altered = deepcopy(project)
+        altered['structure']['4.3']['subsections']['4.3.2']['extra'] = 'invalid'
+        with self.assertRaisesRegex(ValueError, 'Invalid reference template'):
+            render_reference_subsections(altered)
+
+    def test_interface_conventions_are_design_rules_not_delivery_instructions(self):
+        source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
+        blocks = {block['id']: block for block in source['sections']['interfaces']}
+        text = '\n'.join(blocks[key]['text'] for key in ('FL-SD-INT-09', 'FL-SD-INT-10', 'FL-SD-INT-13'))
+        self.assertNotIn('FL-SD-INT-11', blocks)
+        self.assertNotIn('FL-SD-INT-12', blocks)
+        for phrase in ('交付正文', 'RestClient', '交付前确认', '当前代码', '一同归档', '接口变更须'):
+            self.assertNotIn(phrase, text)
+        self.assertIn('训练引擎接口不执行上述令牌校验', text)
+        self.assertIn('不表示后续异步处理', text)
+        self.assertIn('不得无条件重复提交', text)
+
+    def test_reference_template_structure_and_unique_operation_ownership(self):
+        source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
+        rendered = merge.render_structured_sections(source)
+        interfaces = rendered['interfaces']
+        self.assertEqual(re.findall(r'^#### (.+)', interfaces, re.MULTILINE)[0], '接口标识和接口图')
+        self.assertEqual(len(re.findall(r'^#### ', interfaces, re.MULTILINE)), 1)
+        model = json.loads(merge.MODEL.read_text())
+        records = merge.discover_routes(merge.ROOT, model['translations']['zh-CN'])
+        interfaces = interfaces.replace('{{INTERFACE_DESIGNS}}',
+            merge.render_interface_designs(source, records, model, merge.interface_field_rows))
+        self.assertEqual(len(re.findall(r'^#### ', interfaces, re.MULTILINE)), 1 + len(resource_interfaces(records, model)))
+        self.assertFalse(any('FL-IF-' in title for title in re.findall(r'^#### (.+)', interfaces, re.MULTILINE)))
+        self.assertIn('GET /jobs/{jobId}/artifacts/{artifactName}', interfaces)
+        self.assertNotRegex(interfaces, r'^#{4,5} (接口总体设计|关键接口详细设计|接口设计通用约定)')
+        self.assertNotIn('##### 执行计划下发', interfaces)
+        for label in ('接口实体', '接口类型', '通信方法', '协议', '接口特性'):
+            self.assertIn(label + '：', interfaces)
+        detailed = rendered['detailed']
+        operations = re.findall(r'^#### .+ / (FL-SD-OP-F\d+)$', detailed, re.MULTILINE)
+        self.assertEqual(len(operations), 192)
+        self.assertEqual(len(set(operations)), 192)
+        self.assertEqual(len(re.findall(r'^### ', detailed, re.MULTILINE)), 23)
+        for title in ('关键软件单元及处理决策', '其他业务上下文的软件单元设计',
+                      '按软件单元的操作详细设计', '功能需求与软件单元追踪'):
+            self.assertNotIn(title, detailed)
+        for label in ('标识符、用途', '单元设计决策', '约束、限定或非常规特征',
+                      '数据元素', '逻辑', '异常和错误处理'):
+            self.assertIn(f'**{label}**', detailed)
+
+    def test_interface_introduction_describes_design_not_document_generation(self):
+        source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
+        intro = next(item['text'] for item in source['sections']['interfaces']
+                     if item['id'] == 'FL-SD-INT-INTRO')
+        self.assertIn('本节规定', intro)
+        self.assertNotIn('路由生成', intro)
+        self.assertNotIn('OpenAPI', intro)
+        self.assertFalse(any('归档各服务的 OpenAPI' in block.get('text', '')
+                             for block in source['sections']['interfaces']))
+        self.assertIn('管理接口与业务接口分开管理', intro)
+
+    def test_design_heading_matches_requirements_typography(self):
+        document = Document()
+        paragraph = document.add_paragraph('5.1.1 参与者选择 / FL-SD-DET-05-R01', style='Heading 3')
+        merge.format_design_heading(paragraph)
+        self.assertEqual(paragraph.text, '5.1.1 参与者选择/FL-SD-DET-05-R01')
+        self.assertTrue(paragraph.runs[0].bold)
+        self.assertEqual(paragraph.runs[0].font.name, 'Times New Roman')
+        for run in paragraph.runs[1:]:
+            self.assertTrue(run.bold)
+            self.assertFalse(run.italic)
+            self.assertEqual(run.font.name, 'Times New Roman' if run.text.isascii() and run.text.strip() else '黑体')
+
+    def test_preview_chapter_numbers_are_independent(self):
+        document = Document()
+        for title, level in [('联邦学习模块接口设计', 3), ('接口总体设计', 4),
+                             ('接口详细设计', 4), ('下发计划', 5),
+                             ('联邦学习模块CSCI详细设计', 2), ('单元设计', 3),
+                             ('组织', 4), ('注册组织', 5)]:
+            document.add_paragraph(title, style=f'Heading {level}')
+        merge.number_preview_headings(document)
+        self.assertEqual([p.text.split()[0] for p in document.paragraphs],
+                         ['4.4.1', '4.4.1.1', '4.4.1.2', '4.4.1.2.1',
+                          '5.1', '5.1.1', '5.1.1.1', '5.1.1.1.1'])
+        self.assertTrue(all(p._p.pPr.numPr.numId.val == 0 for p in document.paragraphs))
+
+    def test_detailed_sections_keep_all_fields_and_group_nonadjacent_units(self):
+        groups = merge.load_operation_design()
+        self.assertEqual(len(groups), len({group['conceptId'] for group in groups}))
+        rendered = merge.render_operation_design(groups)
+        self.assertEqual(len(re.findall(r'^#### .+ / FL-SD-OP-F\d+', rendered, re.MULTILINE)), 192)
+        organization = groups[0]
+        activated = next(row for row in organization['rows'] if row['requirementId'].endswith('F0002'))
+        self.assertEqual(activated['transitions'][0]['from'], 'Registered')
+        self.assertIn('organizationId', rendered)
+        self.assertIn('分支条件与预期处理', rendered)
+        self.assertNotIn('其余输入字段见', rendered)
+
+    def test_interface_contract_expands_fields_and_rejects_stale_descriptions(self):
+        source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
+        model = json.loads(merge.MODEL.read_text())
+        block = next(item for item in source['sections']['interfaces'] if item.get('commandRef'))
+        rows = merge.interface_field_rows(block, model)
+        self.assertGreater(len(rows), len(block['rows']))
+        self.assertIn('baseModelPlugin', [row[0] for row in rows])
+        changed = deepcopy(block)
+        changed['rows'][0]['cells'][0] = 'removedField'
+        with self.assertRaisesRegex(ValueError, 'removed fields'):
+            merge.interface_field_rows(changed, model)
+
     def test_other_sections_render_from_stable_items(self):
         source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
         rendered = merge.render_structured_sections(source)
@@ -33,13 +168,14 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
         self.assertIn('各软件单元之间的通信与数据访问边界', rendered['architecture'])
         self.assertNotIn('### 安全边界与权限决策', rendered['architecture'])
         self.assertIn('FL-U-AGG 模型聚合', rendered['detailed'])
-        self.assertIn('FL-U-EXEC 本地轮次执行', rendered['detailed'])
-        self.assertIn('FL-U-C-ORG 组织管理 / FL-SD-DET-26-R01', rendered['detailed'])
-        self.assertIn('FL-U-SEL 参与者选择 / FL-SD-DET-05-R01', rendered['detailed'])
+        self.assertIn('FL-U-EXEC 本地执行', rendered['detailed'])
+        self.assertIn('### 组织管理/FL-SD-DET-26-R01', rendered['detailed'])
+        self.assertIn('### 参与者选择/FL-SD-DET-05-R01', rendered['detailed'])
         self.assertIn('注册组织 / FL-SD-OP-F0001', rendered['detailed'])
         self.assertIn('字典值翻译目录 / FL-SD-OP-F0171', rendered['detailed'])
         self.assertIn('服务账户 API 令牌目录 / FL-SD-OP-F0192', rendered['detailed'])
-        self.assertIn('FL-U-C-IAM 身份访问管理 / FL-SD-DET-26-R15', rendered['detailed'])
+        self.assertIn('### 身份访问管理/FL-SD-DET-26-R15', rendered['detailed'])
+        self.assertNotIn('不把开发模式自动等同于生产级保密保证', rendered['detailed'])
         self.assertIn('当前本地全局模型评估适配器返回固定精度与公平性数值', rendered['detailed'])
         self.assertIn('LBLS-GN-LBXX-F0131', rendered['detailed'])
         self.assertIn('{{FIGURE:FL-SD-DBC-04}}', rendered['db-conceptual'])
@@ -75,9 +211,9 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
         self.assertEqual(len({row['id'] for row in traces}), len(traces))
         selected = next(row for row in traces if row['id'] == 'LBLS-GN-LBXX-F0066')
         self.assertIn('FL-SD-OP-F0066', selected['design'])
-        self.assertIn('FL-SD-DET-05-R01', selected['design'])
         self.assertIn('FL-SD-OP-F0001', traces[0]['design'])
         self.assertIn('FL-SD-OP-F0192', traces[191]['design'])
+        self.assertTrue(all('FL-U-' not in row['design'] for row in traces))
         self.assertEqual(
             {row['id']: row['design'] for row in traces[192:]},
             {
@@ -101,10 +237,14 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
             self.assertEqual(forward.rows[index].cells[2].text, row['design'])
             self.assertEqual(forward.rows[index].cells[3].text, '')
         reverse_rows = merge.reverse_traceability_rows(traces)
-        reverse_ids = [identifier for row in reverse_rows for identifier in row['requirement'].split('、')]
+        reverse_ids = [identifier.rsplit('/', 1)[-1] for row in reverse_rows for identifier in row['requirement'].splitlines()]
+        self.assertIn('注册组织/FL-SD-OP-F0001', traces[0]['design'])
+        unit_refs = {ref for row in traces for ref in row['unitRefs'] if 'FL-U-' in ref}
+        self.assertEqual(len(unit_refs), 23)
+        self.assertEqual(sum('FL-SD-OP-' in row['design'] for row in reverse_rows), 192)
         self.assertEqual(set(reverse_ids), {row['id'] for row in traces})
-        self.assertEqual(len([row for row in traces if 'FL-SD-DET-05' in row['design']]), 28)
-        by_id = {row['id']: row['design'] for row in traces}
+        self.assertEqual(len([row for row in traces if any('FL-SD-DET-05' in ref for ref in row['unitRefs'])]), 28)
+        by_id = {row['id']: '；'.join(row['unitRefs']) for row in traces}
         self.assertIn('FL-SD-DET-05-R01', by_id['LBLS-GN-LBXX-F0067'])
         for identifier in ('F0133', 'F0134', 'F0135', 'F0137', 'F0138', 'F0139', 'F0140', 'F0141'):
             self.assertIn('FL-SD-DET-05-R04', by_id[f'LBLS-GN-LBXX-{identifier}'])
@@ -116,7 +256,14 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
         self.assertIn('LBLS-GN-SZR-HOME', reverse.rows[len(reverse_rows) + 1].cells[2].text)
         self.assertEqual(forward.rows[len(traces) + 1].cells[0].text, str(len(traces) + 1))
         self.assertEqual(reverse.rows[len(reverse_rows) + 1].cells[0].text, str(len(reverse_rows) + 1))
-        self.assertIn('操作处理设计行双向对照', '\n'.join(p.text for p in document.paragraphs))
+        self.assertIn('具体操作设计双向对照', '\n'.join(p.text for p in document.paragraphs))
+
+    def test_unallocated_software_unit_is_rejected(self):
+        source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
+        table = next(b for b in source['sections']['detailed'] if b['id'] == 'FL-SD-DET-05')
+        table['rows'].append({'id': 'FL-SD-DET-UNASSIGNED', 'cells': ['FL-U-UNASSIGNED 未分配单元', '输入', '输出']})
+        with self.assertRaisesRegex(ValueError, 'without requirement allocation'):
+            merge.traceability_rows(source)
 
     def test_traceability_mapping_changes_are_tracked(self):
         source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
@@ -125,7 +272,17 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
         table = next(block for block in changed['sections']['detailed'] if block['id'] == 'FL-SD-DET-23')
         table['rows'][0]['cells'][2] = 'FL-U-EVAL'
         updated = merge.traceability_signatures(merge.traceability_rows(changed))
-        self.assertEqual(merge.changed_entries(original, updated), ['LBLS-GN-LBXX-F0066'])
+        self.assertEqual(merge.changed_entries(original, updated),
+                         ['LBLS-GN-LBXX-F0066', 'LBLS-GN-LBXX-F0067', 'LBLS-GN-LBXX-F0078', 'LBLS-GN-LBXX-F0079'])
+
+    def test_trace_chapters_match_numbered_document_headings(self):
+        source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
+        rows = merge.traceability_rows(source)
+        first = rows[0]
+        self.assertTrue(first['requirement'].startswith('3.3.1.2.1 注册组织/'))
+        self.assertEqual(first['design'], '5.1.9.1 注册组织/FL-SD-OP-F0001')
+        selected = next(row for row in rows if row['id'] == 'LBLS-GN-LBXX-F0066')
+        self.assertIn('5.1.1.1 ', selected['design'])
 
     def test_shared_requirement_trace_rejects_missing_design_heading(self):
         source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
@@ -181,8 +338,8 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
         self.assertIn(('共享支撑服务', 'POST', '/uploadedfile/uploadfile/file'), routes)
         self.assertIn(('训练引擎', 'GET', '/jobs/{jobId}/artifacts/{artifactName}'), routes)
         rendered = merge.render_inventory(records)
-        self.assertEqual(sum(rendered.count(f'\n| {prefix}-') for prefix in 'PASE'), len(records))
-        self.assertIn('上传文件', rendered)
+        self.assertEqual(rendered.count('\n| IF-'), len(resource_interfaces(records, json.loads(merge.MODEL.read_text()))))
+        self.assertIn('文件内容读取接口', rendered)
         source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
         detail_rows = next(block['rows'] for block in source['sections']['interfaces'] if block['id'] == 'FL-SD-INT-05')
         inventory_ids = {record['id'] for record in records}
@@ -199,7 +356,9 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
         self.assertNotIn('FL-SD-INT-07', blocks)
         for index in range(1, 11):
             key = f'FL-SD-INT-DETAIL-{index:02d}'
-            self.assertIn('FL-IF-', blocks[key]['text'])
+            self.assertNotIn('FL-IF-', blocks[key]['text'])
+            self.assertTrue(blocks[key]['interfaceIdentifiers'])
+            self.assertTrue(all(value.startswith('FL-IF-') for value in blocks[key]['interfaceIdentifiers']))
             self.assertEqual(blocks[key]['level'], 5)
             self.assertTrue(blocks[key + '-METHOD']['text'])
             self.assertTrue(blocks[key + '-FIELDS']['rows'])

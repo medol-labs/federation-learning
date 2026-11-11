@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "contracts": {
+    "GET /api/me": {
+      "name": "当前用户信息", "format": "application/json",
+      "request": "无请求体；身份来自请求凭据。",
+      "response": "id：UUID；username：String；organizationId：UUID，可空；roles：String集合；permissions：String集合。",
+      "result": "返回当前请求身份的信息；未通过认证时由安全入口拒绝。"
+    },
+    "GET /audit-trail": {
+      "name": "审计记录", "format": "application/json",
+      "request": "correlationId、userId、sessionId、traceId、tenantId：String，可空；page、size、sort：分页及排序参数，默认每页20条。",
+      "response": "分页对象，content中的记录包含id：Long；userId、sessionId、correlationId、causationId、traceId、tenantId、eventType、payload：String；timestamp：Instant。记录字段可空。",
+      "result": "按correlationId、userId、sessionId、traceId、tenantId顺序采用首个非空筛选项，不将这些筛选项组合求交集；无条件时分页读取。"
+    },
+    "GET /data-export/jobs/download": {
+      "name": "导出文件下载", "format": "CSV文件响应",
+      "request": "filePath：String，必填，服务端文件路径；fileName：String，必填，下载文件名。",
+      "response": "CSV文件内容及下载响应头。",
+      "result": "要求已认证；文件不存在返回404。该接口直接使用服务端路径，不等同于按文件标识授权读取的文件服务接口。"
+    },
+    "POST /api/auth/login": {
+      "name": "用户登录", "format": "application/json",
+      "request": "username：String；password：String。",
+      "response": "accessToken：String；tokenType：String；expiresAt：Long，毫秒时间戳；user包含id：UUID、username：String、organizationId：UUID可空、roles与permissions：String集合。",
+      "result": "仅本地身份提供方启用；提供方不符返回400；凭据校验通过后签发会话令牌。"
+    },
+    "POST /api/auth/exchange-portal-jwt": {
+      "name": "门户身份交换", "format": "application/json",
+      "request": "portalJwt：String；requestedPath：String可空，限站内相对路径；systemSource：String可空。",
+      "response": "accessToken、tokenType、redirectPath：String；expiresAt：Long，毫秒时间戳；user：用户身份对象；registrationRequired、permissionAssignmentRequired：Boolean；notice：String可空。用户对象包含id、username、organizationId、roles、permissions。",
+      "result": "关闭时404；门户令牌无效时401；同名不同身份提供方冲突时409。新用户可创建无角色账户，不自动授予业务权限。"
+    },
+    "POST /api/auth/setup-admin": {
+      "name": "本地管理员初始化", "format": "application/json",
+      "request": "setupToken、username、password：String。",
+      "response": "userAccountId：UUID；username、roleCode：String。",
+      "result": "校验初始化开关、初始化令牌、本地身份提供方及尚无管理员；禁用404、令牌无效401、已初始化409、提供方或必填参数错误400。"
+    },
+    "POST /api/auth/setup-supabase-admin": {
+      "name": "外部身份管理员初始化", "format": "application/json",
+      "request": "setupToken：String；Authorization请求头提供Bearer令牌。",
+      "response": "userAccountId：UUID；username、roleCode：String。",
+      "result": "要求Supabase身份提供方；校验初始化令牌及外部JWT。禁用404、凭据无效401、已初始化409、提供方不符400。"
+    },
+    "POST /uploadedfile/uploadfile/file": {
+      "name": "文件上传", "format": "请求multipart/form-data，响应application/json",
+      "request": "uploadedFile：二进制文件，必填；fileId：UUID，可选，未传时生成；purpose：String，必填。",
+      "response": "fileId：UUID；uploadedFile、originalFileName、contentType、fileLocation、checksum、purpose：String；sizeBytes：Long；expiresAt：LocalDateTime。uploadedFile为存储引用，不是原始字节。",
+      "result": "先保存内容和元数据，再提交文件业务命令；文件存储失败不得返回成功引用。"
+    },
+    "GET /api/files/{fileId}/content": {
+      "name": "文件内容读取", "format": "二进制，使用文件contentType，无类型时application/octet-stream",
+      "request": "fileId：UUID，路径参数。",
+      "response": "文件流；Content-Length为字节长度，Content-Disposition包含原文件名。",
+      "result": "要求全权限授权；文件不存在返回404；成功200。"
+    },
+    "POST /external/runtime-agent/events/dataset-access-validated": {
+      "name": "外部数据集校验结果接收", "format": "application/json",
+      "request": "JSON键值对象，当前入口未声明固定字段约束。",
+      "response": "202，无响应体。",
+      "result": "当前入口仅返回受理响应，不发布业务事件；不能将此响应视为数据集状态已更新。"
+    },
+    "GET /healthz": {
+      "name": "训练引擎健康检查", "format": "application/json",
+      "request": "无请求参数。",
+      "response": "status：String，ok；nodeName：String。",
+      "result": "200表示HTTP服务可响应，不表示某个训练作业已完成。"
+    },
+    "POST /jobs": {
+      "name": "训练或聚合作业提交", "format": "application/json",
+      "request": "jobId：String，必填；roundId：数值；nodeName、role、operation：String；input、output、modelParameter、jobParameter：JSON对象；runtimeRoot：String。模型及算法专用键由选定引擎插件解释，不限定为固定通用字段。",
+      "response": "jobId、nodeName、status、configPath：String；exitCode：整数可空；output、progress：JSON对象；metrics：数组。",
+      "result": "202为已提交作业；同步请求错误返回400及error字段。"
+    },
+    "GET /jobs/{jobId}": {
+      "name": "作业状态查询", "format": "application/json",
+      "request": "jobId：String，路径参数。",
+      "response": "jobId、nodeName、status、configPath：String；exitCode：整数可空；output、progress：JSON对象；metrics：数组。",
+      "result": "成功200；作业不存在404及error字段。运行状态与完成、失败状态分别处理。"
+    },
+    "POST /jobs/{jobId}/cancel": {
+      "name": "取消引擎作业", "format": "application/json",
+      "request": "jobId：String，路径参数。",
+      "response": "作业描述，包含jobId、nodeName、status、exitCode、configPath、output、progress和metrics。",
+      "result": "202表示取消请求已处理；作业不存在返回404。取消与训练结果、资源释放分别处理。"
+    },
+    "GET /jobs/{jobId}/artifacts/{artifactName}": {
+      "name": "作业工件读取", "format": "application/octet-stream",
+      "request": "jobId、artifactName：String，路径参数。",
+      "response": "工件二进制内容，响应头包含文件名和长度。",
+      "result": "成功200；作业或工件不存在404。"
+    }
+  }
+}

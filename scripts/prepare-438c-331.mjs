@@ -225,7 +225,7 @@ if (mode === '--word') {
   }
   writeFileSync(finalPath, formatting.stdout);
   const conversion = spawnSync(python, [
-    converterPath, finalPath, '--out', wordPath, '--requirements-tables'
+    converterPath, finalPath, '--out', wordPath, '--requirements-tables', '--unnumbered-headings'
   ], {
     encoding: 'utf8',
     cwd: root,
