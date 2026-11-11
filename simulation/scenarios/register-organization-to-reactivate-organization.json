@@ -1,0 +1,490 @@
+{
+  "id": "register-organization-to-reactivate-organization",
+  "className": "RegisterOrganizationToReactivateOrganizationScenario",
+  "name": "Register Organization To Reactivate Organization",
+  "kind": "FLOW",
+  "context": "OrganizationManagement",
+  "given": [],
+  "steps": [
+    {
+      "id": "registerOrganization",
+      "title": "Register Organization",
+      "slice": "Register Organization",
+      "context": "OrganizationManagement",
+      "command": "RegisterOrganization",
+      "commandTitle": "Register Organization",
+      "commandClassName": "RegisterOrganizationCommand",
+      "commandFqcn": "tech.medo.organizationmanagement.registerorganization.RegisterOrganizationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/organization/registerorganization",
+        "conceptRoute": "organization",
+        "commandRoute": "registerorganization"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "32269164-2aad-4861-8bad-80888dab73ab"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "organization-name-127"
+          }
+        },
+        {
+          "name": "organizationType",
+          "label": "Organization Type",
+          "type": "OrganizationType",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "tech.medo.organizationmanagement.domain.types.OrganizationType",
+          "typeInfo": {
+            "kind": "enum",
+            "kotlinType": "tech.medo.organizationmanagement.domain.types.OrganizationType",
+            "typeName": "OrganizationType",
+            "fqcn": "tech.medo.organizationmanagement.domain.types.OrganizationType",
+            "values": [
+              "HOSPITAL",
+              "RESEARCH_INSTITUTE",
+              "PUBLIC_HEALTH_AGENCY",
+              "LABORATORY",
+              "REHABILITATION_CENTER"
+            ],
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "organization-type-504"
+          }
+        },
+        {
+          "name": "contactEmail",
+          "label": "Contact Email",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "sample-7645@example.test"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "OrganizationRegistered",
+          "title": "Organization Registered",
+          "className": "OrganizationRegisteredEvent",
+          "fqcn": "tech.medo.organizationmanagement.events.OrganizationRegisteredEvent",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "organizationType",
+              "type": "OrganizationType"
+            },
+            {
+              "name": "contactEmail",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "activateOrganization",
+      "title": "Activate Organization",
+      "slice": "Activate Organization",
+      "context": "OrganizationManagement",
+      "command": "ActivateOrganization",
+      "commandTitle": "Activate Organization",
+      "commandClassName": "ActivateOrganizationCommand",
+      "commandFqcn": "tech.medo.organizationmanagement.activateorganization.ActivateOrganizationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/organization/activateorganization",
+        "conceptRoute": "organization",
+        "commandRoute": "activateorganization"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "OrganizationRegistered",
+        "eventTitle": "Organization Registered",
+        "reaction": "Organization Registered To Activate Organization",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "OrganizationRegistered",
+            "eventTitle": "Organization Registered",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "OrganizationDirectory",
+            "eventTitle": "OrganizationDirectory",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "activationNote",
+          "label": "Activation Note",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "activation-note-037"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "OrganizationActivated",
+          "title": "Organization Activated",
+          "className": "OrganizationActivatedEvent",
+          "fqcn": "tech.medo.organizationmanagement.events.OrganizationActivatedEvent",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "activationNote",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deactivateOrganization",
+      "title": "Deactivate Organization",
+      "slice": "Deactivate Organization",
+      "context": "OrganizationManagement",
+      "command": "DeactivateOrganization",
+      "commandTitle": "Deactivate Organization",
+      "commandClassName": "DeactivateOrganizationCommand",
+      "commandFqcn": "tech.medo.organizationmanagement.deactivateorganization.DeactivateOrganizationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/organization/deactivateorganization",
+        "conceptRoute": "organization",
+        "commandRoute": "deactivateorganization"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "OrganizationActivated",
+        "eventTitle": "Organization Activated",
+        "reaction": "Organization Activated To Deactivate Organization",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "OrganizationActivated",
+            "eventTitle": "Organization Activated",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "OrganizationDirectory",
+            "eventTitle": "OrganizationDirectory",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "deactivationReason",
+          "label": "Deactivation Reason",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "deactivation-reason-794"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "OrganizationDeactivated",
+          "title": "Organization Deactivated",
+          "className": "OrganizationDeactivatedEvent",
+          "fqcn": "tech.medo.organizationmanagement.events.OrganizationDeactivatedEvent",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "deactivationReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reactivateOrganization",
+      "title": "Reactivate Organization",
+      "slice": "Reactivate Organization",
+      "context": "OrganizationManagement",
+      "command": "ReactivateOrganization",
+      "commandTitle": "Reactivate Organization",
+      "commandClassName": "ReactivateOrganizationCommand",
+      "commandFqcn": "tech.medo.organizationmanagement.reactivateorganization.ReactivateOrganizationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/organization/reactivateorganization",
+        "conceptRoute": "organization",
+        "commandRoute": "reactivateorganization"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "OrganizationDeactivated",
+        "eventTitle": "Organization Deactivated",
+        "reaction": "Organization Deactivated To Reactivate Organization",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "OrganizationDeactivated",
+            "eventTitle": "Organization Deactivated",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "OrganizationDirectory",
+            "eventTitle": "OrganizationDirectory",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "reactivationReason",
+          "label": "Reactivation Reason",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "reactivation-reason-557"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "OrganizationReactivated",
+          "title": "Organization Reactivated",
+          "className": "OrganizationReactivatedEvent",
+          "fqcn": "tech.medo.organizationmanagement.events.OrganizationReactivatedEvent",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "reactivationReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

@@ -1,0 +1,29 @@
+{
+  "services": [],
+  "hosts": {
+    "local": {
+      "transport": "local"
+    }
+  },
+  "placements": [],
+  "steps": [
+    {
+      "id": "build-images",
+      "phase": "build",
+      "command": [
+        "node",
+        "operations/images/images.mjs",
+        "build"
+      ]
+    },
+    {
+      "id": "publish-images",
+      "phase": "publish",
+      "command": [
+        "node",
+        "operations/images/images.mjs",
+        "push"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,338 @@
+{
+  "id": "register-model-artifact-to-download-model-artifact",
+  "className": "RegisterModelArtifactToDownloadModelArtifactScenario",
+  "name": "Register Model Artifact To Download Model Artifact",
+  "kind": "FLOW",
+  "context": "ModelRepository",
+  "given": [],
+  "steps": [
+    {
+      "id": "registerModelArtifact",
+      "title": "Register Model Artifact",
+      "slice": "Register Model Artifact",
+      "context": "ModelRepository",
+      "command": "RegisterModelArtifact",
+      "commandTitle": "Register Model Artifact",
+      "commandClassName": "RegisterModelArtifactCommand",
+      "commandFqcn": "tech.medo.modelrepository.registermodelartifact.RegisterModelArtifactCommand",
+      "http": {
+        "method": "POST",
+        "path": "/modelartifact/registermodelartifact",
+        "conceptRoute": "modelartifact",
+        "commandRoute": "registermodelartifact"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "modelId",
+          "label": "Model Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "56a04640-5e59-41a5-b359-3c8485573f27"
+          }
+        },
+        {
+          "name": "modelName",
+          "label": "Model Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "model-name-626"
+          }
+        },
+        {
+          "name": "modelPlugin",
+          "label": "Model Plugin",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "model-plugin-541"
+          }
+        },
+        {
+          "name": "modelVersion",
+          "label": "Model Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "model-version-966"
+          }
+        },
+        {
+          "name": "modelDescription",
+          "label": "Model Description",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "model-description-769"
+          }
+        },
+        {
+          "name": "sourceType",
+          "label": "Source Type",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "source-type-584"
+          }
+        },
+        {
+          "name": "fileId",
+          "label": "File Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "0d30c101-05e3-4586-b3e4-43bbc5e636e4"
+          }
+        },
+        {
+          "name": "modelFormat",
+          "label": "Model Format",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "model-format-604"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "ModelArtifactRegistered",
+          "title": "Model Artifact Registered",
+          "className": "ModelArtifactRegisteredEvent",
+          "fqcn": "tech.medo.modelrepository.events.ModelArtifactRegisteredEvent",
+          "fields": [
+            {
+              "name": "modelId",
+              "type": "UUID"
+            },
+            {
+              "name": "modelName",
+              "type": "String"
+            },
+            {
+              "name": "modelPlugin",
+              "type": "String"
+            },
+            {
+              "name": "modelVersion",
+              "type": "String"
+            },
+            {
+              "name": "modelDescription",
+              "type": "String"
+            },
+            {
+              "name": "sourceType",
+              "type": "String"
+            },
+            {
+              "name": "modelArtifactUri",
+              "type": "String"
+            },
+            {
+              "name": "modelRegistryRef",
+              "type": "String"
+            },
+            {
+              "name": "modelFormat",
+              "type": "String"
+            },
+            {
+              "name": "modelArtifactDigest",
+              "type": "String"
+            },
+            {
+              "name": "modelSignatureUri",
+              "type": "String"
+            },
+            {
+              "name": "modelSizeBytes",
+              "type": "Int"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "downloadModelArtifact",
+      "title": "Download Model Artifact",
+      "slice": "Download Model Artifact",
+      "context": "ModelRepository",
+      "command": "DownloadModelArtifact",
+      "commandTitle": "Download Model Artifact",
+      "commandClassName": "DownloadModelArtifactCommand",
+      "commandFqcn": "tech.medo.modelrepository.downloadmodelartifact.DownloadModelArtifactCommand",
+      "http": {
+        "method": "POST",
+        "path": "/modelartifact/downloadmodelartifact",
+        "conceptRoute": "modelartifact",
+        "commandRoute": "downloadmodelartifact"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "ModelArtifactRegistered",
+        "eventTitle": "Model Artifact Registered",
+        "reaction": "Model Artifact Registered To Download Model Artifact",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "modelId",
+          "label": "Model Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelArtifactRegistered",
+            "eventTitle": "Model Artifact Registered",
+            "field": "modelId"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "ModelArtifactDownloadAuthorized",
+          "title": "Model Artifact Download Authorized",
+          "className": "ModelArtifactDownloadAuthorizedEvent",
+          "fqcn": "tech.medo.modelrepository.events.ModelArtifactDownloadAuthorizedEvent",
+          "fields": [
+            {
+              "name": "modelId",
+              "type": "UUID"
+            },
+            {
+              "name": "modelName",
+              "type": "String"
+            },
+            {
+              "name": "modelVersion",
+              "type": "String"
+            },
+            {
+              "name": "modelFormat",
+              "type": "String"
+            },
+            {
+              "name": "modelArtifactDigest",
+              "type": "String"
+            },
+            {
+              "name": "downloadUri",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

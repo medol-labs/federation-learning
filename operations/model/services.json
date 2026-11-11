@@ -1,0 +1,44 @@
+{
+  "services": [
+    {
+      "name": "federation-learning-console",
+      "source": "generated",
+      "kind": "frontend",
+      "image": "fl/federation-learning-console"
+    },
+    {
+      "name": "federation-learning-participant-console",
+      "source": "generated",
+      "kind": "frontend",
+      "image": "fl/federation-learning-participant-console"
+    },
+    {
+      "name": "federation-learning-platform",
+      "source": "generated",
+      "kind": "backend",
+      "image": "fl/federation-learning-platform"
+    },
+    {
+      "name": "federation-learning-runtime-agent",
+      "source": "generated",
+      "kind": "backend",
+      "image": "fl/federation-learning-runtime-agent"
+    },
+    {
+      "name": "federation-learning-support",
+      "source": "generated",
+      "kind": "backend",
+      "image": "fl/federation-learning-support"
+    },
+    {
+      "name": "postgres",
+      "source": "external-image",
+      "kind": "postgres"
+    },
+    {
+      "name": "umadb",
+      "source": "external-image",
+      "kind": "umadb"
+    }
+  ]
+}

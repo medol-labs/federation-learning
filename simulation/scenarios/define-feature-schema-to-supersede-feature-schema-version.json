@@ -1,0 +1,676 @@
+{
+  "id": "define-feature-schema-to-supersede-feature-schema-version",
+  "className": "DefineFeatureSchemaToSupersedeFeatureSchemaVersionScenario",
+  "name": "Define Feature Schema To Supersede Feature Schema Version",
+  "kind": "FLOW",
+  "context": "DatasetGovernance",
+  "given": [],
+  "steps": [
+    {
+      "id": "defineFeatureSchema",
+      "title": "Define Feature Schema",
+      "slice": "Define Feature Schema",
+      "context": "DatasetGovernance",
+      "command": "DefineFeatureSchema",
+      "commandTitle": "Define Feature Schema",
+      "commandClassName": "DefineFeatureSchemaCommand",
+      "commandFqcn": "tech.medo.datasetgovernance.definefeatureschema.DefineFeatureSchemaCommand",
+      "http": {
+        "method": "POST",
+        "path": "/featureschema/definefeatureschema",
+        "conceptRoute": "featureschema",
+        "commandRoute": "definefeatureschema"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "9276aef8-8ac5-4aad-bdc5-522c7fc36fcf"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "feature-domain-380"
+          }
+        },
+        {
+          "name": "version",
+          "label": "Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "version-494"
+          }
+        },
+        {
+          "name": "dataModality",
+          "label": "Data Modality",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "data-modality-048"
+          }
+        },
+        {
+          "name": "features",
+          "label": "Features",
+          "type": "FeatureDefinition",
+          "cardinality": "Multiple",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "List<tech.medo.datasetgovernance.domain.types.FeatureDefinition>",
+          "typeInfo": {
+            "kind": "value-object",
+            "kotlinType": "List<tech.medo.datasetgovernance.domain.types.FeatureDefinition>",
+            "typeName": "FeatureDefinition",
+            "fqcn": "tech.medo.datasetgovernance.domain.types.FeatureDefinition",
+            "fields": [
+              {
+                "name": "featureName",
+                "type": "String",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "dataType",
+                "type": "String",
+                "dictionary": "FEATURE_DATA_TYPE",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "required",
+                "type": "Boolean",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "nullable",
+                "type": "Boolean",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "description",
+                "type": "String",
+                "cardinality": "Single",
+                "optional": true,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "validationRules",
+                "type": "String",
+                "cardinality": "Multiple",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "defaultValue",
+                "type": "String",
+                "cardinality": "Single",
+                "optional": true,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "isIdentifier",
+                "type": "Boolean",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "isSensitive",
+                "type": "Boolean",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "encodingStrategy",
+                "type": "String",
+                "dictionary": "FEATURE_ENCODING_STRATEGY",
+                "cardinality": "Single",
+                "optional": true,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "featureTags",
+                "type": "String",
+                "cardinality": "Multiple",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              }
+            ],
+            "list": true,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "features-874"
+          }
+        },
+        {
+          "name": "labels",
+          "label": "Labels",
+          "type": "LabelDefinition",
+          "cardinality": "Multiple",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "List<tech.medo.datasetgovernance.domain.types.LabelDefinition>",
+          "typeInfo": {
+            "kind": "value-object",
+            "kotlinType": "List<tech.medo.datasetgovernance.domain.types.LabelDefinition>",
+            "typeName": "LabelDefinition",
+            "fqcn": "tech.medo.datasetgovernance.domain.types.LabelDefinition",
+            "fields": [
+              {
+                "name": "labelName",
+                "type": "String",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "dataType",
+                "type": "String",
+                "dictionary": "FEATURE_DATA_TYPE",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "cardinality",
+                "type": "Int",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "classLabels",
+                "type": "String",
+                "cardinality": "Multiple",
+                "optional": true,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "isMultilabel",
+                "type": "Boolean",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "description",
+                "type": "String",
+                "cardinality": "Single",
+                "optional": true,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "validationRules",
+                "type": "String",
+                "cardinality": "Multiple",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "defaultValue",
+                "type": "String",
+                "cardinality": "Single",
+                "optional": true,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              }
+            ],
+            "list": true,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "labels-595"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "FeatureSchemaDefined",
+          "title": "Feature Schema Defined",
+          "className": "FeatureSchemaDefinedEvent",
+          "fqcn": "tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent",
+          "fields": [
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "version",
+              "type": "String"
+            },
+            {
+              "name": "dataModality",
+              "type": "String"
+            },
+            {
+              "name": "features",
+              "type": "FeatureDefinition"
+            },
+            {
+              "name": "labels",
+              "type": "LabelDefinition"
+            },
+            {
+              "name": "featureCount",
+              "type": "Int"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "publishFeatureSchema",
+      "title": "Publish Feature Schema",
+      "slice": "Publish Feature Schema",
+      "context": "DatasetGovernance",
+      "command": "PublishFeatureSchema",
+      "commandTitle": "Publish Feature Schema",
+      "commandClassName": "PublishFeatureSchemaCommand",
+      "commandFqcn": "tech.medo.datasetgovernance.publishfeatureschema.PublishFeatureSchemaCommand",
+      "http": {
+        "method": "POST",
+        "path": "/featureschema/publishfeatureschema",
+        "conceptRoute": "featureschema",
+        "commandRoute": "publishfeatureschema"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "FeatureSchemaDefined",
+        "eventTitle": "Feature Schema Defined",
+        "reaction": "Feature Schema Defined To Publish Feature Schema",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FeatureSchemaDefined",
+            "eventTitle": "Feature Schema Defined",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "publishNote",
+          "label": "Publish Note",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "publish-note-602"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "FeatureSchemaPublished",
+          "title": "Feature Schema Published",
+          "className": "FeatureSchemaPublishedEvent",
+          "fqcn": "tech.medo.datasetgovernance.events.FeatureSchemaPublishedEvent",
+          "fields": [
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "publishNote",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supersedeFeatureSchemaVersion",
+      "title": "Supersede Feature Schema Version",
+      "slice": "Supersede Feature Schema Version",
+      "context": "DatasetGovernance",
+      "command": "SupersedeFeatureSchemaVersion",
+      "commandTitle": "Supersede Feature Schema Version",
+      "commandClassName": "SupersedeFeatureSchemaVersionCommand",
+      "commandFqcn": "tech.medo.datasetgovernance.supersedefeatureschemaversion.SupersedeFeatureSchemaVersionCommand",
+      "http": {
+        "method": "POST",
+        "path": "/featureschema/supersedefeatureschemaversion",
+        "conceptRoute": "featureschema",
+        "commandRoute": "supersedefeatureschemaversion"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "FeatureSchemaPublished",
+        "eventTitle": "Feature Schema Published",
+        "reaction": "Feature Schema Published To Supersede Feature Schema Version",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FeatureSchemaPublished",
+            "eventTitle": "Feature Schema Published",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "supersededByFeatureSchemaId",
+          "label": "Superseded By Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "8b750998-8347-4fcd-9647-c74cc844d46f"
+          }
+        },
+        {
+          "name": "supersessionReason",
+          "label": "Supersession Reason",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "supersession-reason-678"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "FeatureSchemaVersionSuperseded",
+          "title": "Feature Schema Version Superseded",
+          "className": "FeatureSchemaVersionSupersededEvent",
+          "fqcn": "tech.medo.datasetgovernance.events.FeatureSchemaVersionSupersededEvent",
+          "fields": [
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "supersededByFeatureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "supersededVersion",
+              "type": "String"
+            },
+            {
+              "name": "supersessionReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

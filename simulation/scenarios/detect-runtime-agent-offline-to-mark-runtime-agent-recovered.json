@@ -1,0 +1,561 @@
+{
+  "id": "detect-runtime-agent-offline-to-mark-runtime-agent-recovered",
+  "className": "DetectRuntimeAgentOfflineToMarkRuntimeAgentRecoveredScenario",
+  "name": "Detect Runtime Agent Offline To Mark Runtime Agent Recovered",
+  "kind": "FLOW",
+  "context": "RuntimeMonitoring",
+  "given": [],
+  "steps": [
+    {
+      "id": "detectRuntimeAgentOffline",
+      "title": "Detect Runtime Agent Offline",
+      "slice": "Detect Runtime Agent Offline",
+      "context": "RuntimeMonitoring",
+      "command": "DetectRuntimeAgentOffline",
+      "commandTitle": "Detect Runtime Agent Offline",
+      "commandClassName": "DetectRuntimeAgentOfflineCommand",
+      "commandFqcn": "tech.medo.runtimemonitoring.detectruntimeagentoffline.DetectRuntimeAgentOfflineCommand",
+      "http": {
+        "method": "POST",
+        "path": "/noderuntimehealth/detectruntimeagentoffline",
+        "conceptRoute": "noderuntimehealth",
+        "commandRoute": "detectruntimeagentoffline"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "nodeId",
+          "label": "Node Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "nodeId"
+          }
+        },
+        {
+          "name": "runtimeAgentId",
+          "label": "Runtime Agent Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "runtimeAgentId"
+          }
+        },
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "trainingJobId"
+          }
+        },
+        {
+          "name": "trainingJobObjective",
+          "label": "Training Job Objective",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "trainingJobObjective"
+          }
+        },
+        {
+          "name": "roundExecutionId",
+          "label": "Round Execution Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "roundExecutionId"
+          }
+        },
+        {
+          "name": "runtimeNodeName",
+          "label": "Runtime Node Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "runtimeNodeName"
+          }
+        },
+        {
+          "name": "offlineReason",
+          "label": "Offline Reason",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "offlineReason"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeAgentOfflineDetected",
+          "title": "Runtime Agent Offline Detected",
+          "className": "RuntimeAgentOfflineDetectedEvent",
+          "fqcn": "tech.medo.runtimemonitoring.events.RuntimeAgentOfflineDetectedEvent",
+          "fields": [
+            {
+              "name": "nodeId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "roundExecutionId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeNodeName",
+              "type": "String"
+            },
+            {
+              "name": "offlineReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "markRuntimeAgentRecovered",
+      "title": "Mark Runtime Agent Recovered",
+      "slice": "Mark Runtime Agent Recovered",
+      "context": "RuntimeMonitoring",
+      "command": "MarkRuntimeAgentRecovered",
+      "commandTitle": "Mark Runtime Agent Recovered",
+      "commandClassName": "MarkRuntimeAgentRecoveredCommand",
+      "commandFqcn": "tech.medo.runtimemonitoring.markruntimeagentrecovered.MarkRuntimeAgentRecoveredCommand",
+      "http": {
+        "method": "POST",
+        "path": "/noderuntimehealth/markruntimeagentrecovered",
+        "conceptRoute": "noderuntimehealth",
+        "commandRoute": "markruntimeagentrecovered"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "RuntimeAgentOfflineDetected",
+        "eventTitle": "Runtime Agent Offline Detected",
+        "reaction": "Runtime Agent Offline Detected To Mark Runtime Agent Recovered",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "nodeId",
+          "label": "Node Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "nodeId"
+          }
+        },
+        {
+          "name": "runtimeAgentId",
+          "label": "Runtime Agent Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "runtimeAgentId"
+          }
+        },
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "trainingJobId"
+          }
+        },
+        {
+          "name": "trainingJobObjective",
+          "label": "Training Job Objective",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "trainingJobObjective"
+          }
+        },
+        {
+          "name": "roundExecutionId",
+          "label": "Round Execution Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "roundExecutionId"
+          }
+        },
+        {
+          "name": "runtimeNodeName",
+          "label": "Runtime Node Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "runtimeNodeName"
+          }
+        },
+        {
+          "name": "recoveryReason",
+          "label": "Recovery Reason",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeTelemetryRecorded",
+            "eventTitle": "Runtime Telemetry Recorded",
+            "field": "recoveryReason"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeAgentRecovered",
+          "title": "Runtime Agent Recovered",
+          "className": "RuntimeAgentRecoveredEvent",
+          "fqcn": "tech.medo.runtimemonitoring.events.RuntimeAgentRecoveredEvent",
+          "fields": [
+            {
+              "name": "nodeId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "roundExecutionId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeNodeName",
+              "type": "String"
+            },
+            {
+              "name": "recoveryReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

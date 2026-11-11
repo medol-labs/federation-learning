@@ -1,0 +1,285 @@
+{
+  "id": "activate-runtime-identity-to-detect-runtime-capabilities",
+  "className": "ActivateRuntimeIdentityToDetectRuntimeCapabilitiesScenario",
+  "name": "Activate Runtime Identity To Detect Runtime Capabilities",
+  "kind": "FLOW",
+  "context": "RuntimeGovernance",
+  "given": [],
+  "steps": [
+    {
+      "id": "activateRuntimeIdentity",
+      "title": "Activate Runtime Identity",
+      "slice": "Activate Runtime Identity",
+      "context": "RuntimeGovernance",
+      "command": "ActivateRuntimeIdentity",
+      "commandTitle": "Activate Runtime Identity",
+      "commandClassName": "ActivateRuntimeIdentityCommand",
+      "commandFqcn": "tech.medo.runtimegovernance.activateruntimeidentity.ActivateRuntimeIdentityCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimeidentity/activateruntimeidentity",
+        "conceptRoute": "runtimeidentity",
+        "commandRoute": "activateruntimeidentity"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "runtimeId",
+          "label": "Runtime Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeAgentInstallationSucceeded",
+            "eventTitle": "Runtime Agent Installation Succeeded",
+            "field": "runtimeAgentId"
+          }
+        },
+        {
+          "name": "runtimeInfrastructureId",
+          "label": "Runtime Infrastructure Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "5ed78e33-665f-4890-9f5f-29cddd581c2a"
+          }
+        },
+        {
+          "name": "runtimeAgentId",
+          "label": "Runtime Agent Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "04f784f5-0c9b-4c62-b59b-dafff79de728"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeAgentInstallationSucceeded",
+            "eventTitle": "Runtime Agent Installation Succeeded",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeAgentInstallationSucceeded",
+            "eventTitle": "Runtime Agent Installation Succeeded",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "runtimeName",
+          "label": "Runtime Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeAgentInstallationSucceeded",
+            "eventTitle": "Runtime Agent Installation Succeeded",
+            "field": "runtimeName"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeIdentityActivated",
+          "title": "Runtime Identity Activated",
+          "className": "RuntimeIdentityActivatedEvent",
+          "fqcn": "tech.medo.runtimegovernance.events.RuntimeIdentityActivatedEvent",
+          "fields": [
+            {
+              "name": "runtimeId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "detectRuntimeCapabilities",
+      "title": "Detect Runtime Capabilities",
+      "slice": "Detect Runtime Capabilities",
+      "context": "RuntimeGovernance",
+      "command": "DetectRuntimeCapabilities",
+      "commandTitle": "Detect Runtime Capabilities",
+      "commandClassName": "DetectRuntimeCapabilitiesCommand",
+      "commandFqcn": "tech.medo.runtimegovernance.detectruntimecapabilities.DetectRuntimeCapabilitiesCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimecapability/detectruntimecapabilities",
+        "conceptRoute": "runtimecapability",
+        "commandRoute": "detectruntimecapabilities"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "RuntimeIdentityActivated",
+        "eventTitle": "Runtime Identity Activated",
+        "reaction": "Detect Runtime Capabilities When Runtime Activated",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "runtimeId",
+          "label": "Runtime Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeIdentityActivated",
+            "eventTitle": "Runtime Identity Activated",
+            "field": "runtimeId"
+          }
+        },
+        {
+          "name": "capabilityTypes",
+          "label": "Capability Types",
+          "type": "String",
+          "cardinality": "Multiple",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "List<String>",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "List<String>",
+            "baseType": "String",
+            "list": true,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "capability-types-868"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeCapabilitiesDetected",
+          "title": "Runtime Capabilities Detected",
+          "className": "RuntimeCapabilitiesDetectedEvent",
+          "fqcn": "tech.medo.runtimegovernance.events.RuntimeCapabilitiesDetectedEvent",
+          "fields": [
+            {
+              "name": "runtimeId",
+              "type": "UUID"
+            },
+            {
+              "name": "capabilityTypes",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

@@ -1,0 +1,580 @@
+{
+  "id": "record-runtime-dataset-metadata-flow",
+  "className": "RecordRuntimeDatasetMetadataFlowScenario",
+  "name": "Record Runtime Dataset Metadata Flow",
+  "kind": "FLOW",
+  "context": "DatasetGovernance",
+  "given": [],
+  "steps": [
+    {
+      "id": "recordRuntimeDatasetMetadata",
+      "title": "Record Runtime Dataset Metadata",
+      "slice": "Record Runtime Dataset Metadata",
+      "context": "DatasetGovernance",
+      "command": "RecordRuntimeDatasetMetadata",
+      "commandTitle": "Record Runtime Dataset Metadata",
+      "commandClassName": "RecordRuntimeDatasetMetadataCommand",
+      "commandFqcn": "tech.medo.datasetgovernance.recordruntimedatasetmetadata.RecordRuntimeDatasetMetadataCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimedatasetmetadata/recordruntimedatasetmetadata",
+        "conceptRoute": "runtimedatasetmetadata",
+        "commandRoute": "recordruntimedatasetmetadata"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "runtimeDatasetBindingId",
+          "label": "Runtime Dataset Binding Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "runtimeDatasetBindingId"
+          }
+        },
+        {
+          "name": "metadataReportId",
+          "label": "Metadata Report Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "metadataReportId"
+          }
+        },
+        {
+          "name": "datasetId",
+          "label": "Dataset Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "datasetId"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "runtimeId",
+          "label": "Runtime Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "runtimeId"
+          }
+        },
+        {
+          "name": "runtimeName",
+          "label": "Runtime Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "runtimeName"
+          }
+        },
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "featureSchemaVersion"
+          }
+        },
+        {
+          "name": "datasetName",
+          "label": "Dataset Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "datasetName"
+          }
+        },
+        {
+          "name": "sampleCount",
+          "label": "Sample Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "sampleCount"
+          }
+        },
+        {
+          "name": "featureCount",
+          "label": "Feature Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "featureCount"
+          }
+        },
+        {
+          "name": "schemaCompatible",
+          "label": "Schema Compatible",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Boolean?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Boolean?",
+            "baseType": "Boolean",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "schemaCompatible"
+          }
+        },
+        {
+          "name": "labelCompatible",
+          "label": "Label Compatible",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Boolean?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Boolean?",
+            "baseType": "Boolean",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "labelCompatible"
+          }
+        },
+        {
+          "name": "missingValueRate",
+          "label": "Missing Value Rate",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "missingValueRate"
+          }
+        },
+        {
+          "name": "duplicateRate",
+          "label": "Duplicate Rate",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "duplicateRate"
+          }
+        },
+        {
+          "name": "qualityScore",
+          "label": "Quality Score",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "qualityScore"
+          }
+        },
+        {
+          "name": "nonIidScore",
+          "label": "Non Iid Score",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "nonIidScore"
+          }
+        },
+        {
+          "name": "classBalanceScore",
+          "label": "Class Balance Score",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "classBalanceScore"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "DatasetMetadataReported",
+          "title": "Dataset Metadata Reported",
+          "className": "DatasetMetadataReportedEvent",
+          "fqcn": "tech.medo.datasetgovernance.events.DatasetMetadataReportedEvent",
+          "fields": [
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID"
+            },
+            {
+              "name": "metadataReportId",
+              "type": "UUID"
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "datasetName",
+              "type": "String"
+            },
+            {
+              "name": "sampleCount",
+              "type": "Int"
+            },
+            {
+              "name": "featureCount",
+              "type": "Int"
+            },
+            {
+              "name": "schemaCompatible",
+              "type": "Boolean"
+            },
+            {
+              "name": "labelCompatible",
+              "type": "Boolean"
+            },
+            {
+              "name": "missingValueRate",
+              "type": "Decimal"
+            },
+            {
+              "name": "duplicateRate",
+              "type": "Decimal"
+            },
+            {
+              "name": "qualityScore",
+              "type": "Decimal"
+            },
+            {
+              "name": "nonIidScore",
+              "type": "Decimal"
+            },
+            {
+              "name": "classBalanceScore",
+              "type": "Decimal"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

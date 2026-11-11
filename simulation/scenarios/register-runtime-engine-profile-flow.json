@@ -1,0 +1,240 @@
+{
+  "id": "register-runtime-engine-profile-flow",
+  "className": "RegisterRuntimeEngineProfileFlowScenario",
+  "name": "Register Runtime Engine Profile Flow",
+  "kind": "FLOW",
+  "context": "TrainingOrchestration",
+  "given": [],
+  "steps": [
+    {
+      "id": "registerRuntimeEngineProfile",
+      "title": "Register Runtime Engine Profile",
+      "slice": "Register Runtime Engine Profile",
+      "context": "TrainingOrchestration",
+      "command": "RegisterRuntimeEngineProfile",
+      "commandTitle": "Register Runtime Engine Profile",
+      "commandClassName": "RegisterRuntimeEngineProfileCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.registerruntimeengineprofile.RegisterRuntimeEngineProfileCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimeengineprofile/registerruntimeengineprofile",
+        "conceptRoute": "runtimeengineprofile",
+        "commandRoute": "registerruntimeengineprofile"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "runtimeEngineProfileId",
+          "label": "Runtime Engine Profile Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "557f2b08-4d3b-487d-b43b-30fc66393d1f"
+          }
+        },
+        {
+          "name": "profileName",
+          "label": "Profile Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "profile-name-203"
+          }
+        },
+        {
+          "name": "pluginProfile",
+          "label": "Plugin Profile",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "plugin-profile-475"
+          }
+        },
+        {
+          "name": "runtimeEngineImage",
+          "label": "Runtime Engine Image",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "runtime-engine-image-345"
+          }
+        },
+        {
+          "name": "imageDigest",
+          "label": "Image Digest",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "image-digest-444"
+          }
+        },
+        {
+          "name": "supportedModelPluginsDescription",
+          "label": "Supported Model Plugins Description",
+          "type": "Text",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "supported-model-plugins-description-487"
+          }
+        },
+        {
+          "name": "supportedAggregationAlgorithmsDescription",
+          "label": "Supported Aggregation Algorithms Description",
+          "type": "Text",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "supported-aggregation-algorithms-description-623"
+          }
+        },
+        {
+          "name": "active",
+          "label": "Active",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Boolean",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Boolean",
+            "baseType": "Boolean",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": false
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeEngineProfileRegistered",
+          "title": "Runtime Engine Profile Registered",
+          "className": "RuntimeEngineProfileRegisteredEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.RuntimeEngineProfileRegisteredEvent",
+          "fields": [
+            {
+              "name": "runtimeEngineProfileId",
+              "type": "UUID"
+            },
+            {
+              "name": "profileName",
+              "type": "String"
+            },
+            {
+              "name": "pluginProfile",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEngineImage",
+              "type": "String"
+            },
+            {
+              "name": "imageDigest",
+              "type": "String"
+            },
+            {
+              "name": "supportedModelPluginsDescription",
+              "type": "Text"
+            },
+            {
+              "name": "supportedAggregationAlgorithmsDescription",
+              "type": "Text"
+            },
+            {
+              "name": "active",
+              "type": "Boolean"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

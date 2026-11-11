@@ -1,0 +1,16 @@
+{
+  "name": "federation-learning-platform-simulation-service",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Generated Medol business-flow simulation service",
+  "scripts": {
+    "start": "node src/server.js",
+    "simulate": "node src/cli.js",
+    "seed": "node src/data-plan.mjs",
+    "check": "node --check src/server.js && node --check src/cli.js && node --check src/runtime/business-client.js && node --check src/runtime/context.js && node --check src/runtime/data-generator.js && node --check src/runtime/event-observer.js && node --check src/runtime/model-loader.js && node --check src/runtime/runner.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

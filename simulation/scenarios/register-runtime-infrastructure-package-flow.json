@@ -1,0 +1,140 @@
+{
+  "id": "register-runtime-infrastructure-package-flow",
+  "className": "RegisterRuntimeInfrastructurePackageFlowScenario",
+  "name": "Register Runtime Infrastructure Package Flow",
+  "kind": "FLOW",
+  "context": "RuntimeProvisioning",
+  "given": [],
+  "steps": [
+    {
+      "id": "registerRuntimeInfrastructurePackage",
+      "title": "Register Runtime Infrastructure Package",
+      "slice": "Register Runtime Infrastructure Package",
+      "context": "RuntimeProvisioning",
+      "command": "RegisterRuntimeInfrastructurePackage",
+      "commandTitle": "Register Runtime Infrastructure Package",
+      "commandClassName": "RegisterRuntimeInfrastructurePackageCommand",
+      "commandFqcn": "tech.medo.runtimeprovisioning.registerruntimeinfrastructurepackage.RegisterRuntimeInfrastructurePackageCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimeinfrastructurepackage/registerruntimeinfrastructurepackage",
+        "conceptRoute": "runtimeinfrastructurepackage",
+        "commandRoute": "registerruntimeinfrastructurepackage"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "runtimeInfrastructurePackageId",
+          "label": "Runtime Infrastructure Package Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "21a4aec8-1948-4cbd-9348-043c8545115f"
+          }
+        },
+        {
+          "name": "packageName",
+          "label": "Package Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "package-name-633"
+          }
+        },
+        {
+          "name": "packageVersion",
+          "label": "Package Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "package-version-144"
+          }
+        },
+        {
+          "name": "runtimeEnvironmentType",
+          "label": "Runtime Environment Type",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "runtime-environment-type-448"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeInfrastructurePackageRegistered",
+          "title": "Runtime Infrastructure Package Registered",
+          "className": "RuntimeInfrastructurePackageRegisteredEvent",
+          "fqcn": "tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePackageRegisteredEvent",
+          "fields": [
+            {
+              "name": "runtimeInfrastructurePackageId",
+              "type": "UUID"
+            },
+            {
+              "name": "packageName",
+              "type": "String"
+            },
+            {
+              "name": "packageVersion",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEnvironmentType",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

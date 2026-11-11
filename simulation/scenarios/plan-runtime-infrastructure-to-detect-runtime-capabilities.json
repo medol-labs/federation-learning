@@ -1,0 +1,2214 @@
+{
+  "id": "plan-runtime-infrastructure-to-detect-runtime-capabilities",
+  "className": "PlanRuntimeInfrastructureToDetectRuntimeCapabilitiesScenario",
+  "name": "Plan Runtime Infrastructure To Detect Runtime Capabilities",
+  "kind": "FLOW",
+  "context": "RuntimeProvisioning",
+  "given": [],
+  "steps": [
+    {
+      "id": "planRuntimeInfrastructure",
+      "title": "Plan Runtime Infrastructure",
+      "slice": "Plan Runtime Infrastructure",
+      "context": "RuntimeProvisioning",
+      "command": "PlanRuntimeInfrastructure",
+      "commandTitle": "Plan Runtime Infrastructure",
+      "commandClassName": "PlanRuntimeInfrastructureCommand",
+      "commandFqcn": "tech.medo.runtimeprovisioning.planruntimeinfrastructure.PlanRuntimeInfrastructureCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimeinfrastructure/planruntimeinfrastructure",
+        "conceptRoute": "runtimeinfrastructure",
+        "commandRoute": "planruntimeinfrastructure"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "runtimeInfrastructureId",
+          "label": "Runtime Infrastructure Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInstallationPlanCreated",
+            "eventTitle": "Runtime Installation Plan Created",
+            "field": "runtimeInfrastructureId"
+          }
+        },
+        {
+          "name": "runtimeInstallationPlanId",
+          "label": "Runtime Installation Plan Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInstallationPlanCreated",
+            "eventTitle": "Runtime Installation Plan Created",
+            "field": "runtimeInstallationPlanId"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInstallationPlanCreated",
+            "eventTitle": "Runtime Installation Plan Created",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInstallationPlanCreated",
+            "eventTitle": "Runtime Installation Plan Created",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageId",
+          "label": "Runtime Infrastructure Package Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInstallationPlanCreated",
+            "eventTitle": "Runtime Installation Plan Created",
+            "field": "runtimeInfrastructurePackageId"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageName",
+          "label": "Runtime Infrastructure Package Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInstallationPlanCreated",
+            "eventTitle": "Runtime Installation Plan Created",
+            "field": "runtimeInfrastructurePackageName"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageVersion",
+          "label": "Runtime Infrastructure Package Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInstallationPlanCreated",
+            "eventTitle": "Runtime Installation Plan Created",
+            "field": "runtimeInfrastructurePackageVersion"
+          }
+        },
+        {
+          "name": "runtimeEnvironmentType",
+          "label": "Runtime Environment Type",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInstallationPlanCreated",
+            "eventTitle": "Runtime Installation Plan Created",
+            "field": "runtimeEnvironmentType"
+          }
+        },
+        {
+          "name": "runtimeName",
+          "label": "Runtime Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInstallationPlanCreated",
+            "eventTitle": "Runtime Installation Plan Created",
+            "field": "runtimeName"
+          }
+        },
+        {
+          "name": "agentInstallMode",
+          "label": "Agent Install Mode",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInstallationPlanCreated",
+            "eventTitle": "Runtime Installation Plan Created",
+            "field": "agentInstallMode"
+          }
+        },
+        {
+          "name": "expectedNodeCount",
+          "label": "Expected Node Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInstallationPlanCreated",
+            "eventTitle": "Runtime Installation Plan Created",
+            "field": "expectedNodeCount"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeInfrastructurePlanned",
+          "title": "Runtime Infrastructure Planned",
+          "className": "RuntimeInfrastructurePlannedEvent",
+          "fqcn": "tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePlannedEvent",
+          "fields": [
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInfrastructurePackageName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageVersion",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEnvironmentType",
+              "type": "String"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "agentInstallMode",
+              "type": "String"
+            },
+            {
+              "name": "expectedNodeCount",
+              "type": "Int"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "registerRuntimeInfrastructure",
+      "title": "Register Runtime Infrastructure",
+      "slice": "Register Runtime Infrastructure",
+      "context": "RuntimeProvisioning",
+      "command": "RegisterRuntimeInfrastructure",
+      "commandTitle": "Register Runtime Infrastructure",
+      "commandClassName": "RegisterRuntimeInfrastructureCommand",
+      "commandFqcn": "tech.medo.runtimeprovisioning.registerruntimeinfrastructure.RegisterRuntimeInfrastructureCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimeinfrastructure/registerruntimeinfrastructure",
+        "conceptRoute": "runtimeinfrastructure",
+        "commandRoute": "registerruntimeinfrastructure"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "RuntimeInfrastructurePlanned",
+        "eventTitle": "Runtime Infrastructure Planned",
+        "reaction": "Runtime Infrastructure Planned To Register Runtime Infrastructure",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "runtimeInfrastructureId",
+          "label": "Runtime Infrastructure Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePlanned",
+            "eventTitle": "Runtime Infrastructure Planned",
+            "field": "runtimeInfrastructureId"
+          }
+        },
+        {
+          "name": "runtimeInstallationPlanId",
+          "label": "Runtime Installation Plan Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePlanned",
+            "eventTitle": "Runtime Infrastructure Planned",
+            "field": "runtimeInstallationPlanId"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePlanned",
+            "eventTitle": "Runtime Infrastructure Planned",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePlanned",
+            "eventTitle": "Runtime Infrastructure Planned",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageId",
+          "label": "Runtime Infrastructure Package Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePlanned",
+            "eventTitle": "Runtime Infrastructure Planned",
+            "field": "runtimeInfrastructurePackageId"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageName",
+          "label": "Runtime Infrastructure Package Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePlanned",
+            "eventTitle": "Runtime Infrastructure Planned",
+            "field": "runtimeInfrastructurePackageName"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageVersion",
+          "label": "Runtime Infrastructure Package Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePlanned",
+            "eventTitle": "Runtime Infrastructure Planned",
+            "field": "runtimeInfrastructurePackageVersion"
+          }
+        },
+        {
+          "name": "runtimeEnvironmentType",
+          "label": "Runtime Environment Type",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePlanned",
+            "eventTitle": "Runtime Infrastructure Planned",
+            "field": "runtimeEnvironmentType"
+          }
+        },
+        {
+          "name": "runtimeName",
+          "label": "Runtime Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePlanned",
+            "eventTitle": "Runtime Infrastructure Planned",
+            "field": "runtimeName"
+          }
+        },
+        {
+          "name": "agentInstallMode",
+          "label": "Agent Install Mode",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePlanned",
+            "eventTitle": "Runtime Infrastructure Planned",
+            "field": "agentInstallMode"
+          }
+        },
+        {
+          "name": "expectedNodeCount",
+          "label": "Expected Node Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePlanned",
+            "eventTitle": "Runtime Infrastructure Planned",
+            "field": "expectedNodeCount"
+          }
+        },
+        {
+          "name": "runtimeAgentId",
+          "label": "Runtime Agent Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "0f119d4a-f7b1-4637-87b1-ef4675b8ecfd"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeInfrastructureRegistered",
+          "title": "Runtime Infrastructure Registered",
+          "className": "RuntimeInfrastructureRegisteredEvent",
+          "fqcn": "tech.medo.runtimeprovisioning.events.RuntimeInfrastructureRegisteredEvent",
+          "fields": [
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInfrastructurePackageName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageVersion",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEnvironmentType",
+              "type": "String"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "agentInstallMode",
+              "type": "String"
+            },
+            {
+              "name": "expectedNodeCount",
+              "type": "Int"
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "confirmRuntimeInfrastructurePrepared",
+      "title": "Confirm Runtime Infrastructure Prepared",
+      "slice": "Confirm Runtime Infrastructure Prepared",
+      "context": "RuntimeProvisioning",
+      "command": "ConfirmRuntimeInfrastructurePrepared",
+      "commandTitle": "Confirm Runtime Infrastructure Prepared",
+      "commandClassName": "ConfirmRuntimeInfrastructurePreparedCommand",
+      "commandFqcn": "tech.medo.runtimeprovisioning.confirmruntimeinfrastructureprepared.ConfirmRuntimeInfrastructurePreparedCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimeinfrastructure/confirmruntimeinfrastructureprepared",
+        "conceptRoute": "runtimeinfrastructure",
+        "commandRoute": "confirmruntimeinfrastructureprepared"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "RuntimeInfrastructureRegistered",
+        "eventTitle": "Runtime Infrastructure Registered",
+        "reaction": "Runtime Infrastructure Registered To Confirm Runtime Infrastructure Prepared",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "runtimeInfrastructureId",
+          "label": "Runtime Infrastructure Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureRegistered",
+            "eventTitle": "Runtime Infrastructure Registered",
+            "field": "runtimeInfrastructureId"
+          }
+        },
+        {
+          "name": "runtimeInstallationPlanId",
+          "label": "Runtime Installation Plan Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureRegistered",
+            "eventTitle": "Runtime Infrastructure Registered",
+            "field": "runtimeInstallationPlanId"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureRegistered",
+            "eventTitle": "Runtime Infrastructure Registered",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureRegistered",
+            "eventTitle": "Runtime Infrastructure Registered",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageId",
+          "label": "Runtime Infrastructure Package Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureRegistered",
+            "eventTitle": "Runtime Infrastructure Registered",
+            "field": "runtimeInfrastructurePackageId"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageName",
+          "label": "Runtime Infrastructure Package Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureRegistered",
+            "eventTitle": "Runtime Infrastructure Registered",
+            "field": "runtimeInfrastructurePackageName"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageVersion",
+          "label": "Runtime Infrastructure Package Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureRegistered",
+            "eventTitle": "Runtime Infrastructure Registered",
+            "field": "runtimeInfrastructurePackageVersion"
+          }
+        },
+        {
+          "name": "runtimeEnvironmentType",
+          "label": "Runtime Environment Type",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureRegistered",
+            "eventTitle": "Runtime Infrastructure Registered",
+            "field": "runtimeEnvironmentType"
+          }
+        },
+        {
+          "name": "runtimeName",
+          "label": "Runtime Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureRegistered",
+            "eventTitle": "Runtime Infrastructure Registered",
+            "field": "runtimeName"
+          }
+        },
+        {
+          "name": "agentInstallMode",
+          "label": "Agent Install Mode",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureRegistered",
+            "eventTitle": "Runtime Infrastructure Registered",
+            "field": "agentInstallMode"
+          }
+        },
+        {
+          "name": "expectedNodeCount",
+          "label": "Expected Node Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureRegistered",
+            "eventTitle": "Runtime Infrastructure Registered",
+            "field": "expectedNodeCount"
+          }
+        },
+        {
+          "name": "runtimeAgentId",
+          "label": "Runtime Agent Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureRegistered",
+            "eventTitle": "Runtime Infrastructure Registered",
+            "field": "runtimeAgentId"
+          }
+        },
+        {
+          "name": "preparedNodeCount",
+          "label": "Prepared Node Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 574
+          }
+        },
+        {
+          "name": "preparationNotes",
+          "label": "Preparation Notes",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "preparation-notes-060"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeInfrastructurePrepared",
+          "title": "Runtime Infrastructure Prepared",
+          "className": "RuntimeInfrastructurePreparedEvent",
+          "fqcn": "tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePreparedEvent",
+          "fields": [
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInfrastructurePackageName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageVersion",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEnvironmentType",
+              "type": "String"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "agentInstallMode",
+              "type": "String"
+            },
+            {
+              "name": "expectedNodeCount",
+              "type": "Int"
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID"
+            },
+            {
+              "name": "preparedNodeCount",
+              "type": "Int"
+            },
+            {
+              "name": "preparationNotes",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verifyRuntimeInfrastructure",
+      "title": "Verify Runtime Infrastructure",
+      "slice": "Verify Runtime Infrastructure",
+      "context": "RuntimeProvisioning",
+      "command": "VerifyRuntimeInfrastructure",
+      "commandTitle": "Verify Runtime Infrastructure",
+      "commandClassName": "VerifyRuntimeInfrastructureCommand",
+      "commandFqcn": "tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.VerifyRuntimeInfrastructureCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimeinfrastructure/verifyruntimeinfrastructure",
+        "conceptRoute": "runtimeinfrastructure",
+        "commandRoute": "verifyruntimeinfrastructure"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "RuntimeInfrastructurePrepared",
+        "eventTitle": "Runtime Infrastructure Prepared",
+        "reaction": "Verify Infrastructure When Prepared",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "runtimeInfrastructureId",
+          "label": "Runtime Infrastructure Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePrepared",
+            "eventTitle": "Runtime Infrastructure Prepared",
+            "field": "runtimeInfrastructureId"
+          }
+        },
+        {
+          "name": "runtimeInstallationPlanId",
+          "label": "Runtime Installation Plan Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePrepared",
+            "eventTitle": "Runtime Infrastructure Prepared",
+            "field": "runtimeInstallationPlanId"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePrepared",
+            "eventTitle": "Runtime Infrastructure Prepared",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePrepared",
+            "eventTitle": "Runtime Infrastructure Prepared",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageId",
+          "label": "Runtime Infrastructure Package Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePrepared",
+            "eventTitle": "Runtime Infrastructure Prepared",
+            "field": "runtimeInfrastructurePackageId"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageName",
+          "label": "Runtime Infrastructure Package Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePrepared",
+            "eventTitle": "Runtime Infrastructure Prepared",
+            "field": "runtimeInfrastructurePackageName"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageVersion",
+          "label": "Runtime Infrastructure Package Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePrepared",
+            "eventTitle": "Runtime Infrastructure Prepared",
+            "field": "runtimeInfrastructurePackageVersion"
+          }
+        },
+        {
+          "name": "runtimeEnvironmentType",
+          "label": "Runtime Environment Type",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePrepared",
+            "eventTitle": "Runtime Infrastructure Prepared",
+            "field": "runtimeEnvironmentType"
+          }
+        },
+        {
+          "name": "runtimeName",
+          "label": "Runtime Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePrepared",
+            "eventTitle": "Runtime Infrastructure Prepared",
+            "field": "runtimeName"
+          }
+        },
+        {
+          "name": "expectedNodeCount",
+          "label": "Expected Node Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePrepared",
+            "eventTitle": "Runtime Infrastructure Prepared",
+            "field": "expectedNodeCount"
+          }
+        },
+        {
+          "name": "runtimeAgentId",
+          "label": "Runtime Agent Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructurePrepared",
+            "eventTitle": "Runtime Infrastructure Prepared",
+            "field": "runtimeAgentId"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeInfrastructureVerified",
+          "title": "Runtime Infrastructure Verified",
+          "className": "RuntimeInfrastructureVerifiedEvent",
+          "fqcn": "tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerifiedEvent",
+          "fields": [
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInfrastructurePackageName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageVersion",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEnvironmentType",
+              "type": "String"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID"
+            },
+            {
+              "name": "agentInstallMode",
+              "type": "String"
+            },
+            {
+              "name": "expectedNodeCount",
+              "type": "Int"
+            },
+            {
+              "name": "observedNodeCount",
+              "type": "Int"
+            }
+          ]
+        },
+        {
+          "name": "RuntimeInfrastructureVerificationFailed",
+          "title": "Runtime Infrastructure Verification Failed",
+          "className": "RuntimeInfrastructureVerificationFailedEvent",
+          "fqcn": "tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationFailedEvent",
+          "fields": [
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInfrastructurePackageName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageVersion",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEnvironmentType",
+              "type": "String"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID"
+            },
+            {
+              "name": "agentInstallMode",
+              "type": "String"
+            },
+            {
+              "name": "expectedNodeCount",
+              "type": "Int"
+            },
+            {
+              "name": "observedNodeCount",
+              "type": "Int"
+            },
+            {
+              "name": "failureReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deployRuntimeAgent",
+      "title": "Deploy Runtime Agent",
+      "slice": "Deploy Runtime Agent",
+      "context": "RuntimeProvisioning",
+      "command": "DeployRuntimeAgent",
+      "commandTitle": "Deploy Runtime Agent",
+      "commandClassName": "DeployRuntimeAgentCommand",
+      "commandFqcn": "tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimeinfrastructure/deployruntimeagent",
+        "conceptRoute": "runtimeinfrastructure",
+        "commandRoute": "deployruntimeagent"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "RuntimeInfrastructureVerified",
+        "eventTitle": "Runtime Infrastructure Verified",
+        "reaction": "Deploy Runtime Agent When Infrastructure Verified",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "runtimeAgentId",
+          "label": "Runtime Agent Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureAccessView",
+            "eventTitle": "RuntimeInfrastructureAccessView",
+            "field": "runtimeAgentId"
+          }
+        },
+        {
+          "name": "runtimeInfrastructureId",
+          "label": "Runtime Infrastructure Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureVerificationFailed",
+            "eventTitle": "Runtime Infrastructure Verification Failed",
+            "field": "runtimeInfrastructureId"
+          }
+        },
+        {
+          "name": "runtimeInstallationPlanId",
+          "label": "Runtime Installation Plan Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureAccessView",
+            "eventTitle": "RuntimeInfrastructureAccessView",
+            "field": "runtimeInstallationPlanId"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureAccessView",
+            "eventTitle": "RuntimeInfrastructureAccessView",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureAccessView",
+            "eventTitle": "RuntimeInfrastructureAccessView",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageId",
+          "label": "Runtime Infrastructure Package Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureAccessView",
+            "eventTitle": "RuntimeInfrastructureAccessView",
+            "field": "runtimeInfrastructurePackageId"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageName",
+          "label": "Runtime Infrastructure Package Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureAccessView",
+            "eventTitle": "RuntimeInfrastructureAccessView",
+            "field": "runtimeInfrastructurePackageName"
+          }
+        },
+        {
+          "name": "runtimeInfrastructurePackageVersion",
+          "label": "Runtime Infrastructure Package Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureAccessView",
+            "eventTitle": "RuntimeInfrastructureAccessView",
+            "field": "runtimeInfrastructurePackageVersion"
+          }
+        },
+        {
+          "name": "runtimeEnvironmentType",
+          "label": "Runtime Environment Type",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureAccessView",
+            "eventTitle": "RuntimeInfrastructureAccessView",
+            "field": "runtimeEnvironmentType"
+          }
+        },
+        {
+          "name": "runtimeName",
+          "label": "Runtime Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureAccessView",
+            "eventTitle": "RuntimeInfrastructureAccessView",
+            "field": "runtimeName"
+          }
+        },
+        {
+          "name": "agentInstallMode",
+          "label": "Agent Install Mode",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureAccessView",
+            "eventTitle": "RuntimeInfrastructureAccessView",
+            "field": "agentInstallMode"
+          }
+        },
+        {
+          "name": "expectedNodeCount",
+          "label": "Expected Node Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeInfrastructureAccessView",
+            "eventTitle": "RuntimeInfrastructureAccessView",
+            "field": "expectedNodeCount"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeAgentInstallationSucceeded",
+          "title": "Runtime Agent Installation Succeeded",
+          "className": "RuntimeAgentInstallationSucceededEvent",
+          "fqcn": "tech.medo.runtimeprovisioning.events.RuntimeAgentInstallationSucceededEvent",
+          "fields": [
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInfrastructurePackageName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageVersion",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEnvironmentType",
+              "type": "String"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "agentInstallMode",
+              "type": "String"
+            },
+            {
+              "name": "expectedNodeCount",
+              "type": "Int"
+            },
+            {
+              "name": "agentVersion",
+              "type": "String"
+            }
+          ]
+        },
+        {
+          "name": "RuntimeAgentInstallationFailed",
+          "title": "Runtime Agent Installation Failed",
+          "className": "RuntimeAgentInstallationFailedEvent",
+          "fqcn": "tech.medo.runtimeprovisioning.events.RuntimeAgentInstallationFailedEvent",
+          "fields": [
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInfrastructurePackageName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructurePackageVersion",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEnvironmentType",
+              "type": "String"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "agentInstallMode",
+              "type": "String"
+            },
+            {
+              "name": "expectedNodeCount",
+              "type": "Int"
+            },
+            {
+              "name": "failureReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "activateRuntimeIdentity",
+      "title": "Activate Runtime Identity",
+      "slice": "Activate Runtime Identity",
+      "context": "RuntimeGovernance",
+      "command": "ActivateRuntimeIdentity",
+      "commandTitle": "Activate Runtime Identity",
+      "commandClassName": "ActivateRuntimeIdentityCommand",
+      "commandFqcn": "tech.medo.runtimegovernance.activateruntimeidentity.ActivateRuntimeIdentityCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimeidentity/activateruntimeidentity",
+        "conceptRoute": "runtimeidentity",
+        "commandRoute": "activateruntimeidentity"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "RuntimeAgentInstallationSucceeded",
+        "eventTitle": "Runtime Agent Installation Succeeded",
+        "reaction": "Activate Runtime Identity When Agent Installed",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "runtimeId",
+          "label": "Runtime Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeAgentInstallationSucceeded",
+            "eventTitle": "Runtime Agent Installation Succeeded",
+            "field": "runtimeAgentId"
+          }
+        },
+        {
+          "name": "runtimeInfrastructureId",
+          "label": "Runtime Infrastructure Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeAgentInstallationFailed",
+            "eventTitle": "Runtime Agent Installation Failed",
+            "field": "runtimeInfrastructureId"
+          }
+        },
+        {
+          "name": "runtimeAgentId",
+          "label": "Runtime Agent Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeAgentInstallationFailed",
+            "eventTitle": "Runtime Agent Installation Failed",
+            "field": "runtimeAgentId"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeAgentInstallationSucceeded",
+            "eventTitle": "Runtime Agent Installation Succeeded",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeAgentInstallationSucceeded",
+            "eventTitle": "Runtime Agent Installation Succeeded",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "runtimeName",
+          "label": "Runtime Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeAgentInstallationSucceeded",
+            "eventTitle": "Runtime Agent Installation Succeeded",
+            "field": "runtimeName"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeIdentityActivated",
+          "title": "Runtime Identity Activated",
+          "className": "RuntimeIdentityActivatedEvent",
+          "fqcn": "tech.medo.runtimegovernance.events.RuntimeIdentityActivatedEvent",
+          "fields": [
+            {
+              "name": "runtimeId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "detectRuntimeCapabilities",
+      "title": "Detect Runtime Capabilities",
+      "slice": "Detect Runtime Capabilities",
+      "context": "RuntimeGovernance",
+      "command": "DetectRuntimeCapabilities",
+      "commandTitle": "Detect Runtime Capabilities",
+      "commandClassName": "DetectRuntimeCapabilitiesCommand",
+      "commandFqcn": "tech.medo.runtimegovernance.detectruntimecapabilities.DetectRuntimeCapabilitiesCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimecapability/detectruntimecapabilities",
+        "conceptRoute": "runtimecapability",
+        "commandRoute": "detectruntimecapabilities"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "RuntimeIdentityActivated",
+        "eventTitle": "Runtime Identity Activated",
+        "reaction": "Detect Runtime Capabilities When Runtime Activated",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "runtimeId",
+          "label": "Runtime Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeIdentityActivated",
+            "eventTitle": "Runtime Identity Activated",
+            "field": "runtimeId"
+          }
+        },
+        {
+          "name": "capabilityTypes",
+          "label": "Capability Types",
+          "type": "String",
+          "cardinality": "Multiple",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "List<String>",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "List<String>",
+            "baseType": "String",
+            "list": true,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "capability-types-868"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeCapabilitiesDetected",
+          "title": "Runtime Capabilities Detected",
+          "className": "RuntimeCapabilitiesDetectedEvent",
+          "fqcn": "tech.medo.runtimegovernance.events.RuntimeCapabilitiesDetectedEvent",
+          "fields": [
+            {
+              "name": "runtimeId",
+              "type": "UUID"
+            },
+            {
+              "name": "capabilityTypes",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

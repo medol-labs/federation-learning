@@ -1,0 +1,401 @@
+{
+  "id": "raise-training-alert-to-resolve-training-alert",
+  "className": "RaiseTrainingAlertToResolveTrainingAlertScenario",
+  "name": "Raise Training Alert To Resolve Training Alert",
+  "kind": "FLOW",
+  "context": "RuntimeMonitoring",
+  "given": [],
+  "steps": [
+    {
+      "id": "raiseTrainingAlert",
+      "title": "Raise Training Alert",
+      "slice": "Raise Training Alert",
+      "context": "RuntimeMonitoring",
+      "command": "RaiseTrainingAlert",
+      "commandTitle": "Raise Training Alert",
+      "commandClassName": "RaiseTrainingAlertCommand",
+      "commandFqcn": "tech.medo.runtimemonitoring.raisetrainingalert.RaiseTrainingAlertCommand",
+      "http": {
+        "method": "POST",
+        "path": "/trainingalert/raisetrainingalert",
+        "conceptRoute": "trainingalert",
+        "commandRoute": "raisetrainingalert"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "alertId",
+          "label": "Alert Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "afd223ed-a7c4-4f2a-83c3-4dc705c63090"
+          }
+        },
+        {
+          "name": "nodeId",
+          "label": "Node Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeNodeResourcePressureDetected",
+            "eventTitle": "Runtime Node Resource Pressure Detected",
+            "field": "nodeId"
+          }
+        },
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeNodeResourcePressureDetected",
+            "eventTitle": "Runtime Node Resource Pressure Detected",
+            "field": "trainingJobId"
+          }
+        },
+        {
+          "name": "runtimeNodeName",
+          "label": "Runtime Node Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeNodeResourcePressureDetected",
+            "eventTitle": "Runtime Node Resource Pressure Detected",
+            "field": "runtimeNodeName"
+          }
+        },
+        {
+          "name": "trainingJobObjective",
+          "label": "Training Job Objective",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeNodeResourcePressureDetected",
+            "eventTitle": "Runtime Node Resource Pressure Detected",
+            "field": "trainingJobObjective"
+          }
+        },
+        {
+          "name": "severity",
+          "label": "Severity",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeNodeResourcePressureDetected",
+            "eventTitle": "Runtime Node Resource Pressure Detected",
+            "field": "alertSeverity"
+          }
+        },
+        {
+          "name": "message",
+          "label": "Message",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeNodeResourcePressureDetected",
+            "eventTitle": "Runtime Node Resource Pressure Detected",
+            "field": "alertMessage"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingAlertRaised",
+          "title": "Training Alert Raised",
+          "className": "TrainingAlertRaisedEvent",
+          "fqcn": "tech.medo.runtimemonitoring.events.TrainingAlertRaisedEvent",
+          "fields": [
+            {
+              "name": "alertId",
+              "type": "UUID"
+            },
+            {
+              "name": "nodeId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeNodeName",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "severity",
+              "type": "String"
+            },
+            {
+              "name": "message",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acknowledgeTrainingAlert",
+      "title": "Acknowledge Training Alert",
+      "slice": "Acknowledge Training Alert",
+      "context": "RuntimeMonitoring",
+      "command": "AcknowledgeTrainingAlert",
+      "commandTitle": "Acknowledge Training Alert",
+      "commandClassName": "AcknowledgeTrainingAlertCommand",
+      "commandFqcn": "tech.medo.runtimemonitoring.acknowledgetrainingalert.AcknowledgeTrainingAlertCommand",
+      "http": {
+        "method": "POST",
+        "path": "/trainingalert/acknowledgetrainingalert",
+        "conceptRoute": "trainingalert",
+        "commandRoute": "acknowledgetrainingalert"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "TrainingAlertRaised",
+        "eventTitle": "Training Alert Raised",
+        "reaction": "Training Alert Raised To Acknowledge Training Alert",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "alertId",
+          "label": "Alert Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingAlertRaised",
+            "eventTitle": "Training Alert Raised",
+            "field": "alertId"
+          }
+        },
+        {
+          "name": "acknowledgementNote",
+          "label": "Acknowledgement Note",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "acknowledgement-note-740"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingAlertAcknowledged",
+          "title": "Training Alert Acknowledged",
+          "className": "TrainingAlertAcknowledgedEvent",
+          "fqcn": "tech.medo.runtimemonitoring.events.TrainingAlertAcknowledgedEvent",
+          "fields": [
+            {
+              "name": "alertId",
+              "type": "UUID"
+            },
+            {
+              "name": "acknowledgementNote",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "resolveTrainingAlert",
+      "title": "Resolve Training Alert",
+      "slice": "Resolve Training Alert",
+      "context": "RuntimeMonitoring",
+      "command": "ResolveTrainingAlert",
+      "commandTitle": "Resolve Training Alert",
+      "commandClassName": "ResolveTrainingAlertCommand",
+      "commandFqcn": "tech.medo.runtimemonitoring.resolvetrainingalert.ResolveTrainingAlertCommand",
+      "http": {
+        "method": "POST",
+        "path": "/trainingalert/resolvetrainingalert",
+        "conceptRoute": "trainingalert",
+        "commandRoute": "resolvetrainingalert"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "TrainingAlertAcknowledged",
+        "eventTitle": "Training Alert Acknowledged",
+        "reaction": "Training Alert Acknowledged To Resolve Training Alert",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "alertId",
+          "label": "Alert Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingAlertAcknowledged",
+            "eventTitle": "Training Alert Acknowledged",
+            "field": "alertId"
+          }
+        },
+        {
+          "name": "resolutionSummary",
+          "label": "Resolution Summary",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "resolution-summary-970"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingAlertResolved",
+          "title": "Training Alert Resolved",
+          "className": "TrainingAlertResolvedEvent",
+          "fqcn": "tech.medo.runtimemonitoring.events.TrainingAlertResolvedEvent",
+          "fields": [
+            {
+              "name": "alertId",
+              "type": "UUID"
+            },
+            {
+              "name": "resolutionSummary",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

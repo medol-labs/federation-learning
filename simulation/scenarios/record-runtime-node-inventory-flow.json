@@ -1,0 +1,472 @@
+{
+  "id": "record-runtime-node-inventory-flow",
+  "className": "RecordRuntimeNodeInventoryFlowScenario",
+  "name": "Record Runtime Node Inventory Flow",
+  "kind": "FLOW",
+  "context": "RuntimeMonitoring",
+  "given": [],
+  "steps": [
+    {
+      "id": "recordRuntimeNodeInventory",
+      "title": "Record Runtime Node Inventory",
+      "slice": "Record Runtime Node Inventory",
+      "context": "RuntimeMonitoring",
+      "command": "RecordRuntimeNodeInventory",
+      "commandTitle": "Record Runtime Node Inventory",
+      "commandClassName": "RecordRuntimeNodeInventoryCommand",
+      "commandFqcn": "tech.medo.runtimemonitoring.recordruntimenodeinventory.RecordRuntimeNodeInventoryCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimenodeinventory/recordruntimenodeinventory",
+        "conceptRoute": "runtimenodeinventory",
+        "commandRoute": "recordruntimenodeinventory"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "nodeId",
+          "label": "Node Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "nodeId"
+          }
+        },
+        {
+          "name": "runtimeNodeInventoryReportId",
+          "label": "Runtime Node Inventory Report Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "runtimeNodeInventoryReportId"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "runtimeInfrastructureId",
+          "label": "Runtime Infrastructure Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "runtimeInfrastructureId"
+          }
+        },
+        {
+          "name": "runtimeAgentId",
+          "label": "Runtime Agent Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "runtimeAgentId"
+          }
+        },
+        {
+          "name": "runtimeName",
+          "label": "Runtime Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "runtimeName"
+          }
+        },
+        {
+          "name": "runtimeNodeName",
+          "label": "Runtime Node Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "runtimeNodeName"
+          }
+        },
+        {
+          "name": "infrastructureNodeId",
+          "label": "Infrastructure Node Id",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "infrastructureNodeId"
+          }
+        },
+        {
+          "name": "runtimeNodeRole",
+          "label": "Runtime Node Role",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "runtimeNodeRole"
+          }
+        },
+        {
+          "name": "nodeReady",
+          "label": "Node Ready",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Boolean",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Boolean",
+            "baseType": "Boolean",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "nodeReady"
+          }
+        },
+        {
+          "name": "runtimeEngineVersion",
+          "label": "Runtime Engine Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "runtimeEngineVersion"
+          }
+        },
+        {
+          "name": "containerEngineVersion",
+          "label": "Container Engine Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "containerEngineVersion"
+          }
+        },
+        {
+          "name": "operatingSystem",
+          "label": "Operating System",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "operatingSystem"
+          }
+        },
+        {
+          "name": "architecture",
+          "label": "Architecture",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "architecture"
+          }
+        },
+        {
+          "name": "inventoryHash",
+          "label": "Inventory Hash",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeNodeInventoryReported",
+            "eventTitle": "Agent Runtime Node Inventory Reported",
+            "field": "inventoryHash"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeNodeInventoryReported",
+          "title": "Runtime Node Inventory Reported",
+          "className": "RuntimeNodeInventoryReportedEvent",
+          "fqcn": "tech.medo.runtimemonitoring.events.RuntimeNodeInventoryReportedEvent",
+          "fields": [
+            {
+              "name": "nodeId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeNodeInventoryReportId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeNodeName",
+              "type": "String"
+            },
+            {
+              "name": "infrastructureNodeId",
+              "type": "String"
+            },
+            {
+              "name": "runtimeNodeRole",
+              "type": "String"
+            },
+            {
+              "name": "nodeReady",
+              "type": "Boolean"
+            },
+            {
+              "name": "runtimeEngineVersion",
+              "type": "String"
+            },
+            {
+              "name": "containerEngineVersion",
+              "type": "String"
+            },
+            {
+              "name": "operatingSystem",
+              "type": "String"
+            },
+            {
+              "name": "architecture",
+              "type": "String"
+            },
+            {
+              "name": "inventoryHash",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

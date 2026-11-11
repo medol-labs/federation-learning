@@ -1,0 +1,1412 @@
+{
+  "id": "record-personalized-model-result-to-download-model-artifact",
+  "className": "RecordPersonalizedModelResultToDownloadModelArtifactScenario",
+  "name": "Record Personalized Model Result To Download Model Artifact",
+  "kind": "FLOW",
+  "context": "TrainingOrchestration",
+  "given": [],
+  "steps": [
+    {
+      "id": "recordPersonalizedModelResult",
+      "title": "Record Personalized Model Result",
+      "slice": "Record Personalized Model Result",
+      "context": "TrainingOrchestration",
+      "command": "RecordPersonalizedModelResult",
+      "commandTitle": "Record Personalized Model Result",
+      "commandClassName": "RecordPersonalizedModelResultCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.recordpersonalizedmodelresult.RecordPersonalizedModelResultCommand",
+      "http": {
+        "method": "POST",
+        "path": "/personalizedmodelresult/recordpersonalizedmodelresult",
+        "conceptRoute": "personalizedmodelresult",
+        "commandRoute": "recordpersonalizedmodelresult"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "personalizedModelId",
+          "label": "Personalized Model Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizedModelId"
+          }
+        },
+        {
+          "name": "modelUpdateSubmissionId",
+          "label": "Model Update Submission Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "modelUpdateSubmissionId"
+          }
+        },
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "trainingJobId"
+          }
+        },
+        {
+          "name": "trainingRunConfigurationId",
+          "label": "Training Run Configuration Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "trainingRunConfigurationId"
+          }
+        },
+        {
+          "name": "roundId",
+          "label": "Round Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "roundId"
+          }
+        },
+        {
+          "name": "roundNumber",
+          "label": "Round Number",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "roundNumber"
+          }
+        },
+        {
+          "name": "runtimeId",
+          "label": "Runtime Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "runtimeId"
+          }
+        },
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "personalizationMode",
+          "label": "Personalization Mode",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizationMode"
+          }
+        },
+        {
+          "name": "personalizationScope",
+          "label": "Personalization Scope",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizationScope"
+          }
+        },
+        {
+          "name": "personalizedArtifactPolicy",
+          "label": "Personalized Artifact Policy",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizedArtifactPolicy"
+          }
+        },
+        {
+          "name": "personalizationMetric",
+          "label": "Personalization Metric",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizationMetric"
+          }
+        },
+        {
+          "name": "minimumPersonalizationLift",
+          "label": "Minimum Personalization Lift",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "minimumPersonalizationLift"
+          }
+        },
+        {
+          "name": "personalizationTargetType",
+          "label": "Personalization Target Type",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizationTargetType"
+          }
+        },
+        {
+          "name": "personalizationTargetId",
+          "label": "Personalization Target Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizationTargetId"
+          }
+        },
+        {
+          "name": "personalizationCohortId",
+          "label": "Personalization Cohort Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizationCohortId"
+          }
+        },
+        {
+          "name": "personalizationProfileId",
+          "label": "Personalization Profile Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizationProfileId"
+          }
+        },
+        {
+          "name": "personalizedModelArtifactRef",
+          "label": "Personalized Model Artifact Ref",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizedModelArtifactRef"
+          }
+        },
+        {
+          "name": "personalizedModelArtifactDigest",
+          "label": "Personalized Model Artifact Digest",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizedModelArtifactDigest"
+          }
+        },
+        {
+          "name": "personalizedModelStorageLocation",
+          "label": "Personalized Model Storage Location",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizedArtifactPolicy"
+          }
+        },
+        {
+          "name": "platformManagedArtifactRef",
+          "label": "Platform Managed Artifact Ref",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizedArtifactPolicy"
+          }
+        },
+        {
+          "name": "personalizedMetricsArtifactRef",
+          "label": "Personalized Metrics Artifact Ref",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizedMetricsArtifactRef"
+          }
+        },
+        {
+          "name": "personalizedAccuracy",
+          "label": "Personalized Accuracy",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizedAccuracy"
+          }
+        },
+        {
+          "name": "personalizationLift",
+          "label": "Personalization Lift",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelUpdateSubmissionAccepted",
+            "eventTitle": "Model Update Submission Accepted",
+            "field": "personalizationLift"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "PersonalizedModelResultRecorded",
+          "title": "Personalized Model Result Recorded",
+          "className": "PersonalizedModelResultRecordedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.PersonalizedModelResultRecordedEvent",
+          "fields": [
+            {
+              "name": "personalizedModelId",
+              "type": "UUID"
+            },
+            {
+              "name": "modelUpdateSubmissionId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "roundId",
+              "type": "UUID"
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int"
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "personalizationMode",
+              "type": "String"
+            },
+            {
+              "name": "personalizationScope",
+              "type": "String"
+            },
+            {
+              "name": "personalizedArtifactPolicy",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMetric",
+              "type": "String"
+            },
+            {
+              "name": "minimumPersonalizationLift",
+              "type": "Decimal"
+            },
+            {
+              "name": "personalizationTargetType",
+              "type": "String"
+            },
+            {
+              "name": "personalizationTargetId",
+              "type": "UUID"
+            },
+            {
+              "name": "personalizationCohortId",
+              "type": "UUID"
+            },
+            {
+              "name": "personalizationProfileId",
+              "type": "UUID"
+            },
+            {
+              "name": "personalizedModelArtifactRef",
+              "type": "String"
+            },
+            {
+              "name": "personalizedModelArtifactDigest",
+              "type": "String"
+            },
+            {
+              "name": "personalizedModelStorageLocation",
+              "type": "String"
+            },
+            {
+              "name": "platformManagedArtifactRef",
+              "type": "String"
+            },
+            {
+              "name": "personalizedMetricsArtifactRef",
+              "type": "String"
+            },
+            {
+              "name": "personalizedAccuracy",
+              "type": "Decimal"
+            },
+            {
+              "name": "personalizationLift",
+              "type": "Decimal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "registerPersonalizedModelArtifact",
+      "title": "Register Personalized Model Artifact",
+      "slice": "Register Personalized Model Artifact",
+      "context": "ModelRepository",
+      "command": "RegisterPersonalizedModelArtifact",
+      "commandTitle": "Register Personalized Model Artifact",
+      "commandClassName": "RegisterPersonalizedModelArtifactCommand",
+      "commandFqcn": "tech.medo.modelrepository.registerpersonalizedmodelartifact.RegisterPersonalizedModelArtifactCommand",
+      "http": {
+        "method": "POST",
+        "path": "/modelartifact/registerpersonalizedmodelartifact",
+        "conceptRoute": "modelartifact",
+        "commandRoute": "registerpersonalizedmodelartifact"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "PersonalizedModelResultRecorded",
+        "eventTitle": "Personalized Model Result Recorded",
+        "reaction": "Register Personalized Model When Result Recorded",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "modelId",
+          "label": "Model Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelResultRecorded",
+            "eventTitle": "Personalized Model Result Recorded",
+            "field": "personalizedModelId"
+          }
+        },
+        {
+          "name": "modelName",
+          "label": "Model Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": true,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "model-name-325"
+          }
+        },
+        {
+          "name": "modelPlugin",
+          "label": "Model Plugin",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfiguration",
+            "eventTitle": "TrainingRunConfiguration",
+            "field": "initialModelPlugin"
+          }
+        },
+        {
+          "name": "modelVersion",
+          "label": "Model Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": true,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "model-version-499"
+          }
+        },
+        {
+          "name": "modelDescription",
+          "label": "Model Description",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": true,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "model-description-803"
+          }
+        },
+        {
+          "name": "sourceType",
+          "label": "Source Type",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": true,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "source-type-382"
+          }
+        },
+        {
+          "name": "modelScope",
+          "label": "Model Scope",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelResultRecorded",
+            "eventTitle": "Personalized Model Result Recorded",
+            "field": "personalizationScope"
+          }
+        },
+        {
+          "name": "modelArtifactUri",
+          "label": "Model Artifact Uri",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelResultRecorded",
+            "eventTitle": "Personalized Model Result Recorded",
+            "field": "personalizedModelArtifactRef"
+          }
+        },
+        {
+          "name": "modelRegistryRef",
+          "label": "Model Registry Ref",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": true,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "model-registry-ref-186"
+          }
+        },
+        {
+          "name": "modelFormat",
+          "label": "Model Format",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfiguration",
+            "eventTitle": "TrainingRunConfiguration",
+            "field": "initialModelFormat"
+          }
+        },
+        {
+          "name": "modelArtifactDigest",
+          "label": "Model Artifact Digest",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelResultRecorded",
+            "eventTitle": "Personalized Model Result Recorded",
+            "field": "personalizedModelArtifactDigest"
+          }
+        },
+        {
+          "name": "modelSignatureUri",
+          "label": "Model Signature Uri",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": true,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "model-signature-uri-279"
+          }
+        },
+        {
+          "name": "modelSizeBytes",
+          "label": "Model Size Bytes",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": true,
+          "kotlinType": "Int?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int?",
+            "baseType": "Int",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 680
+          }
+        },
+        {
+          "name": "personalizedModelStorageLocation",
+          "label": "Personalized Model Storage Location",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelResultRecorded",
+            "eventTitle": "Personalized Model Result Recorded",
+            "field": "personalizedModelStorageLocation"
+          }
+        },
+        {
+          "name": "platformManagedArtifactRef",
+          "label": "Platform Managed Artifact Ref",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelResultRecorded",
+            "eventTitle": "Personalized Model Result Recorded",
+            "field": "platformManagedArtifactRef"
+          }
+        },
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelResultRecorded",
+            "eventTitle": "Personalized Model Result Recorded",
+            "field": "trainingJobId"
+          }
+        },
+        {
+          "name": "trainingJobObjective",
+          "label": "Training Job Objective",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJob",
+            "eventTitle": "TrainingJob",
+            "field": "objective"
+          }
+        },
+        {
+          "name": "roundId",
+          "label": "Round Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelResultRecorded",
+            "eventTitle": "Personalized Model Result Recorded",
+            "field": "roundId"
+          }
+        },
+        {
+          "name": "personalizationMode",
+          "label": "Personalization Mode",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelResultRecorded",
+            "eventTitle": "Personalized Model Result Recorded",
+            "field": "personalizationMode"
+          }
+        },
+        {
+          "name": "personalizationTargetType",
+          "label": "Personalization Target Type",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelResultRecorded",
+            "eventTitle": "Personalized Model Result Recorded",
+            "field": "personalizationTargetType"
+          }
+        },
+        {
+          "name": "personalizationTargetId",
+          "label": "Personalization Target Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelResultRecorded",
+            "eventTitle": "Personalized Model Result Recorded",
+            "field": "personalizationTargetId"
+          }
+        },
+        {
+          "name": "personalizationCohortId",
+          "label": "Personalization Cohort Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelResultRecorded",
+            "eventTitle": "Personalized Model Result Recorded",
+            "field": "personalizationCohortId"
+          }
+        },
+        {
+          "name": "baseGlobalModelId",
+          "label": "Base Global Model Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundCompleted",
+            "eventTitle": "Training Round Completed",
+            "field": "aggregatedModelId"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "PersonalizedModelArtifactRegistered",
+          "title": "Personalized Model Artifact Registered",
+          "className": "PersonalizedModelArtifactRegisteredEvent",
+          "fqcn": "tech.medo.modelrepository.events.PersonalizedModelArtifactRegisteredEvent",
+          "fields": [
+            {
+              "name": "modelId",
+              "type": "UUID"
+            },
+            {
+              "name": "modelName",
+              "type": "String"
+            },
+            {
+              "name": "modelPlugin",
+              "type": "String"
+            },
+            {
+              "name": "modelVersion",
+              "type": "String"
+            },
+            {
+              "name": "modelDescription",
+              "type": "String"
+            },
+            {
+              "name": "sourceType",
+              "type": "String"
+            },
+            {
+              "name": "modelScope",
+              "type": "String"
+            },
+            {
+              "name": "modelArtifactUri",
+              "type": "String"
+            },
+            {
+              "name": "modelRegistryRef",
+              "type": "String"
+            },
+            {
+              "name": "modelFormat",
+              "type": "String"
+            },
+            {
+              "name": "modelArtifactDigest",
+              "type": "String"
+            },
+            {
+              "name": "modelSignatureUri",
+              "type": "String"
+            },
+            {
+              "name": "modelSizeBytes",
+              "type": "Int"
+            },
+            {
+              "name": "personalizedModelStorageLocation",
+              "type": "String"
+            },
+            {
+              "name": "platformManagedArtifactRef",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "roundId",
+              "type": "UUID"
+            },
+            {
+              "name": "personalizationMode",
+              "type": "String"
+            },
+            {
+              "name": "personalizationTargetType",
+              "type": "String"
+            },
+            {
+              "name": "personalizationTargetId",
+              "type": "UUID"
+            },
+            {
+              "name": "personalizationCohortId",
+              "type": "UUID"
+            },
+            {
+              "name": "baseGlobalModelId",
+              "type": "UUID"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "downloadModelArtifact",
+      "title": "Download Model Artifact",
+      "slice": "Download Model Artifact",
+      "context": "ModelRepository",
+      "command": "DownloadModelArtifact",
+      "commandTitle": "Download Model Artifact",
+      "commandClassName": "DownloadModelArtifactCommand",
+      "commandFqcn": "tech.medo.modelrepository.downloadmodelartifact.DownloadModelArtifactCommand",
+      "http": {
+        "method": "POST",
+        "path": "/modelartifact/downloadmodelartifact",
+        "conceptRoute": "modelartifact",
+        "commandRoute": "downloadmodelartifact"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "PersonalizedModelArtifactRegistered",
+        "eventTitle": "Personalized Model Artifact Registered",
+        "reaction": "Personalized Model Artifact Registered To Download Model Artifact",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "modelId",
+          "label": "Model Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "PersonalizedModelArtifactRegistered",
+            "eventTitle": "Personalized Model Artifact Registered",
+            "field": "modelId"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "ModelArtifactDownloadAuthorized",
+          "title": "Model Artifact Download Authorized",
+          "className": "ModelArtifactDownloadAuthorizedEvent",
+          "fqcn": "tech.medo.modelrepository.events.ModelArtifactDownloadAuthorizedEvent",
+          "fields": [
+            {
+              "name": "modelId",
+              "type": "UUID"
+            },
+            {
+              "name": "modelName",
+              "type": "String"
+            },
+            {
+              "name": "modelVersion",
+              "type": "String"
+            },
+            {
+              "name": "modelFormat",
+              "type": "String"
+            },
+            {
+              "name": "modelArtifactDigest",
+              "type": "String"
+            },
+            {
+              "name": "downloadUri",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

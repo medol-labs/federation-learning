@@ -1,0 +1,2326 @@
+{
+  "id": "define-feature-schema-to-retry-dataset-contract-validation",
+  "className": "DefineFeatureSchemaToRetryDatasetContractValidationScenario",
+  "name": "Define Feature Schema To Retry Dataset Contract Validation",
+  "kind": "FLOW",
+  "context": "DatasetGovernance",
+  "given": [],
+  "steps": [
+    {
+      "id": "defineFeatureSchema",
+      "title": "Define Feature Schema",
+      "slice": "Define Feature Schema",
+      "context": "DatasetGovernance",
+      "command": "DefineFeatureSchema",
+      "commandTitle": "Define Feature Schema",
+      "commandClassName": "DefineFeatureSchemaCommand",
+      "commandFqcn": "tech.medo.datasetgovernance.definefeatureschema.DefineFeatureSchemaCommand",
+      "http": {
+        "method": "POST",
+        "path": "/featureschema/definefeatureschema",
+        "conceptRoute": "featureschema",
+        "commandRoute": "definefeatureschema"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "9276aef8-8ac5-4aad-bdc5-522c7fc36fcf"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "feature-domain-380"
+          }
+        },
+        {
+          "name": "version",
+          "label": "Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "version-494"
+          }
+        },
+        {
+          "name": "dataModality",
+          "label": "Data Modality",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "data-modality-048"
+          }
+        },
+        {
+          "name": "features",
+          "label": "Features",
+          "type": "FeatureDefinition",
+          "cardinality": "Multiple",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "List<tech.medo.datasetgovernance.domain.types.FeatureDefinition>",
+          "typeInfo": {
+            "kind": "value-object",
+            "kotlinType": "List<tech.medo.datasetgovernance.domain.types.FeatureDefinition>",
+            "typeName": "FeatureDefinition",
+            "fqcn": "tech.medo.datasetgovernance.domain.types.FeatureDefinition",
+            "fields": [
+              {
+                "name": "featureName",
+                "type": "String",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "dataType",
+                "type": "String",
+                "dictionary": "FEATURE_DATA_TYPE",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "required",
+                "type": "Boolean",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "nullable",
+                "type": "Boolean",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "description",
+                "type": "String",
+                "cardinality": "Single",
+                "optional": true,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "validationRules",
+                "type": "String",
+                "cardinality": "Multiple",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "defaultValue",
+                "type": "String",
+                "cardinality": "Single",
+                "optional": true,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "isIdentifier",
+                "type": "Boolean",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "isSensitive",
+                "type": "Boolean",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "encodingStrategy",
+                "type": "String",
+                "dictionary": "FEATURE_ENCODING_STRATEGY",
+                "cardinality": "Single",
+                "optional": true,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "featureTags",
+                "type": "String",
+                "cardinality": "Multiple",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              }
+            ],
+            "list": true,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "features-874"
+          }
+        },
+        {
+          "name": "labels",
+          "label": "Labels",
+          "type": "LabelDefinition",
+          "cardinality": "Multiple",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "List<tech.medo.datasetgovernance.domain.types.LabelDefinition>",
+          "typeInfo": {
+            "kind": "value-object",
+            "kotlinType": "List<tech.medo.datasetgovernance.domain.types.LabelDefinition>",
+            "typeName": "LabelDefinition",
+            "fqcn": "tech.medo.datasetgovernance.domain.types.LabelDefinition",
+            "fields": [
+              {
+                "name": "labelName",
+                "type": "String",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "dataType",
+                "type": "String",
+                "dictionary": "FEATURE_DATA_TYPE",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "cardinality",
+                "type": "Int",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "classLabels",
+                "type": "String",
+                "cardinality": "Multiple",
+                "optional": true,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "isMultilabel",
+                "type": "Boolean",
+                "cardinality": "Single",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "description",
+                "type": "String",
+                "cardinality": "Single",
+                "optional": true,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "validationRules",
+                "type": "String",
+                "cardinality": "Multiple",
+                "optional": false,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              },
+              {
+                "name": "defaultValue",
+                "type": "String",
+                "cardinality": "Single",
+                "optional": true,
+                "idAttribute": false,
+                "generated": false,
+                "technicalAttribute": false,
+                "query": false,
+                "display": false,
+                "uploadFile": false,
+                "file": false,
+                "portOutput": false
+              }
+            ],
+            "list": true,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "labels-595"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "FeatureSchemaDefined",
+          "title": "Feature Schema Defined",
+          "className": "FeatureSchemaDefinedEvent",
+          "fqcn": "tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent",
+          "fields": [
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "version",
+              "type": "String"
+            },
+            {
+              "name": "dataModality",
+              "type": "String"
+            },
+            {
+              "name": "features",
+              "type": "FeatureDefinition"
+            },
+            {
+              "name": "labels",
+              "type": "LabelDefinition"
+            },
+            {
+              "name": "featureCount",
+              "type": "Int"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "publishFeatureSchema",
+      "title": "Publish Feature Schema",
+      "slice": "Publish Feature Schema",
+      "context": "DatasetGovernance",
+      "command": "PublishFeatureSchema",
+      "commandTitle": "Publish Feature Schema",
+      "commandClassName": "PublishFeatureSchemaCommand",
+      "commandFqcn": "tech.medo.datasetgovernance.publishfeatureschema.PublishFeatureSchemaCommand",
+      "http": {
+        "method": "POST",
+        "path": "/featureschema/publishfeatureschema",
+        "conceptRoute": "featureschema",
+        "commandRoute": "publishfeatureschema"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "FeatureSchemaDefined",
+        "eventTitle": "Feature Schema Defined",
+        "reaction": "Feature Schema Defined To Publish Feature Schema",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FeatureSchemaDefined",
+            "eventTitle": "Feature Schema Defined",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "publishNote",
+          "label": "Publish Note",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "publish-note-602"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "FeatureSchemaPublished",
+          "title": "Feature Schema Published",
+          "className": "FeatureSchemaPublishedEvent",
+          "fqcn": "tech.medo.datasetgovernance.events.FeatureSchemaPublishedEvent",
+          "fields": [
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "publishNote",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "declareDataset",
+      "title": "Declare Dataset",
+      "slice": "Declare Dataset",
+      "context": "RuntimeAgentOperations",
+      "command": "DeclareDataset",
+      "commandTitle": "Declare Dataset",
+      "commandClassName": "DeclareDatasetCommand",
+      "commandFqcn": "tech.medo.runtimeagentoperations.declaredataset.DeclareDatasetCommand",
+      "http": {
+        "method": "POST",
+        "path": "/dataset/declaredataset",
+        "conceptRoute": "dataset",
+        "commandRoute": "declaredataset"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "FeatureSchemaPublished",
+        "eventTitle": "Feature Schema Published",
+        "reaction": "Feature Schema Published To Declare Dataset",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "datasetId",
+          "label": "Dataset Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "b1675031-a9c6-46f6-85c6-deab97c9d1d4"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentOrganizationDirectory",
+            "eventTitle": "AgentOrganizationDirectory",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentOrganizationDirectory",
+            "eventTitle": "AgentOrganizationDirectory",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentFeatureSchemaCatalog",
+            "eventTitle": "AgentFeatureSchemaCatalog",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentFeatureSchemaCatalog",
+            "eventTitle": "AgentFeatureSchemaCatalog",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentFeatureSchemaCatalog",
+            "eventTitle": "AgentFeatureSchemaCatalog",
+            "field": "featureSchemaVersion"
+          }
+        },
+        {
+          "name": "datasetName",
+          "label": "Dataset Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "dataset-name-491"
+          }
+        },
+        {
+          "name": "datasetUsage",
+          "label": "Dataset Usage",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "dataset-usage-627"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "DatasetDeclared",
+          "title": "Dataset Declared",
+          "className": "DatasetDeclaredEvent",
+          "fqcn": "tech.medo.runtimeagentoperations.events.DatasetDeclaredEvent",
+          "fields": [
+            {
+              "name": "datasetId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "datasetName",
+              "type": "String"
+            },
+            {
+              "name": "datasetUsage",
+              "type": "String"
+            },
+            {
+              "name": "features",
+              "type": "FeatureDefinition"
+            },
+            {
+              "name": "labels",
+              "type": "LabelDefinition"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "configureRuntimeDatasetBinding",
+      "title": "Configure Runtime Dataset Binding",
+      "slice": "Configure Runtime Dataset Binding",
+      "context": "RuntimeAgentOperations",
+      "command": "ConfigureRuntimeDatasetBinding",
+      "commandTitle": "Configure Runtime Dataset Binding",
+      "commandClassName": "ConfigureRuntimeDatasetBindingCommand",
+      "commandFqcn": "tech.medo.runtimeagentoperations.configureruntimedatasetbinding.ConfigureRuntimeDatasetBindingCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimedatasetbinding/configureruntimedatasetbinding",
+        "conceptRoute": "runtimedatasetbinding",
+        "commandRoute": "configureruntimedatasetbinding"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "DatasetDeclared",
+        "eventTitle": "Dataset Declared",
+        "reaction": "Dataset Declared To Configure Runtime Dataset Binding",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "runtimeDatasetBindingId",
+          "label": "Runtime Dataset Binding Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "ab7c071f-b3c9-4784-b3c9-16c921c222a6"
+          }
+        },
+        {
+          "name": "datasetId",
+          "label": "Dataset Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "DatasetCapability",
+            "eventTitle": "DatasetCapability",
+            "field": "datasetId"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "DatasetCapability",
+            "eventTitle": "DatasetCapability",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "DatasetCapability",
+            "eventTitle": "DatasetCapability",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "DatasetCapability",
+            "eventTitle": "DatasetCapability",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "DatasetCapability",
+            "eventTitle": "DatasetCapability",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "DatasetCapability",
+            "eventTitle": "DatasetCapability",
+            "field": "featureSchemaVersion"
+          }
+        },
+        {
+          "name": "datasetName",
+          "label": "Dataset Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "DatasetCapability",
+            "eventTitle": "DatasetCapability",
+            "field": "datasetName"
+          }
+        },
+        {
+          "name": "runtimeId",
+          "label": "Runtime Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeIdentityCatalog",
+            "eventTitle": "AgentRuntimeIdentityCatalog",
+            "field": "runtimeId"
+          }
+        },
+        {
+          "name": "runtimeName",
+          "label": "Runtime Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentRuntimeIdentityCatalog",
+            "eventTitle": "AgentRuntimeIdentityCatalog",
+            "field": "runtimeName"
+          }
+        },
+        {
+          "name": "filePath",
+          "label": "File Path",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "file-path-598"
+          }
+        },
+        {
+          "name": "dataFormat",
+          "label": "Data Format",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "data-format-354"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeDatasetBindingConfigured",
+          "title": "Runtime Dataset Binding Configured",
+          "className": "RuntimeDatasetBindingConfiguredEvent",
+          "fqcn": "tech.medo.runtimeagentoperations.events.RuntimeDatasetBindingConfiguredEvent",
+          "fields": [
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID"
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "datasetName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "filePath",
+              "type": "String"
+            },
+            {
+              "name": "dataFormat",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "validateAgentDatasetAccess",
+      "title": "Validate Agent Dataset Access",
+      "slice": "Validate Agent Dataset Access",
+      "context": "RuntimeAgentOperations",
+      "command": "ValidateAgentDatasetAccess",
+      "commandTitle": "Validate Agent Dataset Access",
+      "commandClassName": "ValidateAgentDatasetAccessCommand",
+      "commandFqcn": "tech.medo.runtimeagentoperations.validateagentdatasetaccess.ValidateAgentDatasetAccessCommand",
+      "http": {
+        "method": "POST",
+        "path": "/agentdatasetaccessvalidation/validateagentdatasetaccess",
+        "conceptRoute": "agentdatasetaccessvalidation",
+        "commandRoute": "validateagentdatasetaccess"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "RuntimeDatasetBindingConfigured",
+        "eventTitle": "Runtime Dataset Binding Configured",
+        "reaction": "Validate Agent Dataset Access When Binding Configured",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "datasetAccessValidationId",
+          "label": "Dataset Access Validation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "fa20b891-f28b-47d6-a18b-050b338ef934"
+          }
+        },
+        {
+          "name": "runtimeDatasetBindingId",
+          "label": "Runtime Dataset Binding Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeDatasetBindingConfigured",
+            "eventTitle": "Runtime Dataset Binding Configured",
+            "field": "runtimeDatasetBindingId"
+          }
+        },
+        {
+          "name": "datasetId",
+          "label": "Dataset Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeDatasetBindingConfigured",
+            "eventTitle": "Runtime Dataset Binding Configured",
+            "field": "datasetId"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeDatasetBindingConfigured",
+            "eventTitle": "Runtime Dataset Binding Configured",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeDatasetBindingConfigured",
+            "eventTitle": "Runtime Dataset Binding Configured",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeDatasetBindingConfigured",
+            "eventTitle": "Runtime Dataset Binding Configured",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeDatasetBindingConfigured",
+            "eventTitle": "Runtime Dataset Binding Configured",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeDatasetBindingConfigured",
+            "eventTitle": "Runtime Dataset Binding Configured",
+            "field": "featureSchemaVersion"
+          }
+        },
+        {
+          "name": "datasetName",
+          "label": "Dataset Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeDatasetBindingConfigured",
+            "eventTitle": "Runtime Dataset Binding Configured",
+            "field": "datasetName"
+          }
+        },
+        {
+          "name": "runtimeId",
+          "label": "Runtime Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeDatasetBindingConfigured",
+            "eventTitle": "Runtime Dataset Binding Configured",
+            "field": "runtimeId"
+          }
+        },
+        {
+          "name": "runtimeName",
+          "label": "Runtime Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeDatasetBindingConfigured",
+            "eventTitle": "Runtime Dataset Binding Configured",
+            "field": "runtimeName"
+          }
+        },
+        {
+          "name": "filePath",
+          "label": "File Path",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeDatasetBindingConfigured",
+            "eventTitle": "Runtime Dataset Binding Configured",
+            "field": "filePath"
+          }
+        },
+        {
+          "name": "dataFormat",
+          "label": "Data Format",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeDatasetBindingConfigured",
+            "eventTitle": "Runtime Dataset Binding Configured",
+            "field": "dataFormat"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "AgentDatasetAccessValidated",
+          "title": "Agent Dataset Access Validated",
+          "className": "AgentDatasetAccessValidatedEvent",
+          "fqcn": "tech.medo.runtimeagentoperations.events.AgentDatasetAccessValidatedEvent",
+          "fields": [
+            {
+              "name": "datasetAccessValidationId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID"
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "datasetName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "readable",
+              "type": "Boolean"
+            },
+            {
+              "name": "schemaReadable",
+              "type": "Boolean"
+            },
+            {
+              "name": "sampleBatchReadable",
+              "type": "Boolean"
+            }
+          ]
+        },
+        {
+          "name": "AgentDatasetAccessValidationFailed",
+          "title": "Agent Dataset Access Validation Failed",
+          "className": "AgentDatasetAccessValidationFailedEvent",
+          "fqcn": "tech.medo.runtimeagentoperations.events.AgentDatasetAccessValidationFailedEvent",
+          "fields": [
+            {
+              "name": "datasetAccessValidationId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID"
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "datasetName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "failureReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "profileAgentDataset",
+      "title": "Profile Agent Dataset",
+      "slice": "Profile Agent Dataset",
+      "context": "RuntimeAgentOperations",
+      "command": "ProfileAgentDataset",
+      "commandTitle": "Profile Agent Dataset",
+      "commandClassName": "ProfileAgentDatasetCommand",
+      "commandFqcn": "tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetCommand",
+      "http": {
+        "method": "POST",
+        "path": "/agentdatasetprofile/profileagentdataset",
+        "conceptRoute": "agentdatasetprofile",
+        "commandRoute": "profileagentdataset"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "AgentDatasetAccessValidated",
+        "eventTitle": "Agent Dataset Access Validated",
+        "reaction": "Profile Dataset When Access Validated",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "metadataReportId",
+          "label": "Metadata Report Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "16b944c2-1e9c-451f-bc9c-571ecaa34ae5"
+          }
+        },
+        {
+          "name": "runtimeDatasetBindingId",
+          "label": "Runtime Dataset Binding Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetAccessValidated",
+            "eventTitle": "Agent Dataset Access Validated",
+            "field": "runtimeDatasetBindingId"
+          }
+        },
+        {
+          "name": "datasetId",
+          "label": "Dataset Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetAccessValidated",
+            "eventTitle": "Agent Dataset Access Validated",
+            "field": "datasetId"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetAccessValidated",
+            "eventTitle": "Agent Dataset Access Validated",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetAccessValidated",
+            "eventTitle": "Agent Dataset Access Validated",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetAccessValidated",
+            "eventTitle": "Agent Dataset Access Validated",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetAccessValidated",
+            "eventTitle": "Agent Dataset Access Validated",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetAccessValidated",
+            "eventTitle": "Agent Dataset Access Validated",
+            "field": "featureSchemaVersion"
+          }
+        },
+        {
+          "name": "datasetName",
+          "label": "Dataset Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetAccessValidated",
+            "eventTitle": "Agent Dataset Access Validated",
+            "field": "datasetName"
+          }
+        },
+        {
+          "name": "runtimeId",
+          "label": "Runtime Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetAccessValidated",
+            "eventTitle": "Agent Dataset Access Validated",
+            "field": "runtimeId"
+          }
+        },
+        {
+          "name": "runtimeName",
+          "label": "Runtime Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetAccessValidated",
+            "eventTitle": "Agent Dataset Access Validated",
+            "field": "runtimeName"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "AgentDatasetMetadataReported",
+          "title": "Agent Dataset Metadata Reported",
+          "className": "AgentDatasetMetadataReportedEvent",
+          "fqcn": "tech.medo.runtimeagentoperations.events.AgentDatasetMetadataReportedEvent",
+          "fields": [
+            {
+              "name": "metadataReportId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID"
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "datasetName",
+              "type": "String"
+            },
+            {
+              "name": "sampleCount",
+              "type": "Int"
+            },
+            {
+              "name": "featureCount",
+              "type": "Int"
+            },
+            {
+              "name": "schemaCompatible",
+              "type": "Boolean"
+            },
+            {
+              "name": "labelCompatible",
+              "type": "Boolean"
+            },
+            {
+              "name": "missingValueRate",
+              "type": "Decimal"
+            },
+            {
+              "name": "duplicateRate",
+              "type": "Decimal"
+            },
+            {
+              "name": "qualityScore",
+              "type": "Decimal"
+            },
+            {
+              "name": "nonIidScore",
+              "type": "Decimal"
+            },
+            {
+              "name": "classBalanceScore",
+              "type": "Decimal"
+            }
+          ]
+        },
+        {
+          "name": "AgentDatasetProfilingFailed",
+          "title": "Agent Dataset Profiling Failed",
+          "className": "AgentDatasetProfilingFailedEvent",
+          "fqcn": "tech.medo.runtimeagentoperations.events.AgentDatasetProfilingFailedEvent",
+          "fields": [
+            {
+              "name": "metadataReportId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID"
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "datasetName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeName",
+              "type": "String"
+            },
+            {
+              "name": "failureReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "validateDatasetContract",
+      "title": "Validate Dataset Contract",
+      "slice": "Validate Dataset Contract",
+      "context": "RuntimeAgentOperations",
+      "command": "ValidateDatasetContract",
+      "commandTitle": "Validate Dataset Contract",
+      "commandClassName": "ValidateDatasetContractCommand",
+      "commandFqcn": "tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractCommand",
+      "http": {
+        "method": "POST",
+        "path": "/dataset/validatedatasetcontract",
+        "conceptRoute": "dataset",
+        "commandRoute": "validatedatasetcontract"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "AgentDatasetMetadataReported",
+        "eventTitle": "Agent Dataset Metadata Reported",
+        "reaction": "Validate Dataset Contract Automatically",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "datasetId",
+          "label": "Dataset Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "datasetId"
+          }
+        },
+        {
+          "name": "metadataReportId",
+          "label": "Metadata Report Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "metadataReportId"
+          }
+        },
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "AgentDatasetMetadataReported",
+            "eventTitle": "Agent Dataset Metadata Reported",
+            "field": "featureSchemaId"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "DatasetContractValidated",
+          "title": "Dataset Contract Validated",
+          "className": "DatasetContractValidatedEvent",
+          "fqcn": "tech.medo.runtimeagentoperations.events.DatasetContractValidatedEvent",
+          "fields": [
+            {
+              "name": "datasetId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "metadataReportId",
+              "type": "UUID"
+            },
+            {
+              "name": "schemaCompatible",
+              "type": "Boolean"
+            },
+            {
+              "name": "labelCompatible",
+              "type": "Boolean"
+            },
+            {
+              "name": "qualityScore",
+              "type": "Decimal"
+            },
+            {
+              "name": "nonIidScore",
+              "type": "Decimal"
+            }
+          ]
+        },
+        {
+          "name": "DatasetContractValidationFailed",
+          "title": "Dataset Contract Validation Failed",
+          "className": "DatasetContractValidationFailedEvent",
+          "fqcn": "tech.medo.runtimeagentoperations.events.DatasetContractValidationFailedEvent",
+          "fields": [
+            {
+              "name": "datasetId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "metadataReportId",
+              "type": "UUID"
+            },
+            {
+              "name": "schemaCompatible",
+              "type": "Boolean"
+            },
+            {
+              "name": "labelCompatible",
+              "type": "Boolean"
+            },
+            {
+              "name": "qualityScore",
+              "type": "Decimal"
+            },
+            {
+              "name": "nonIidScore",
+              "type": "Decimal"
+            },
+            {
+              "name": "failureReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "retryDatasetContractValidation",
+      "title": "Retry Dataset Contract Validation",
+      "slice": "Retry Dataset Contract Validation",
+      "context": "RuntimeAgentOperations",
+      "command": "RetryDatasetContractValidation",
+      "commandTitle": "Retry Dataset Contract Validation",
+      "commandClassName": "RetryDatasetContractValidationCommand",
+      "commandFqcn": "tech.medo.runtimeagentoperations.retrydatasetcontractvalidation.RetryDatasetContractValidationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/dataset/retrydatasetcontractvalidation",
+        "conceptRoute": "dataset",
+        "commandRoute": "retrydatasetcontractvalidation"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "DatasetContractValidationFailed",
+        "eventTitle": "Dataset Contract Validation Failed",
+        "reaction": "Dataset Contract Validation Failed To Retry Dataset Contract Validation",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "datasetId",
+          "label": "Dataset Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "DatasetContractValidationFailed",
+            "eventTitle": "Dataset Contract Validation Failed",
+            "field": "datasetId"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "DatasetContractRevalidated",
+          "title": "Dataset Contract Revalidated",
+          "className": "DatasetContractRevalidatedEvent",
+          "fqcn": "tech.medo.runtimeagentoperations.events.DatasetContractRevalidatedEvent",
+          "fields": [
+            {
+              "name": "datasetId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "metadataReportId",
+              "type": "UUID"
+            },
+            {
+              "name": "schemaCompatible",
+              "type": "Boolean"
+            },
+            {
+              "name": "labelCompatible",
+              "type": "Boolean"
+            },
+            {
+              "name": "qualityScore",
+              "type": "Decimal"
+            },
+            {
+              "name": "nonIidScore",
+              "type": "Decimal"
+            }
+          ]
+        },
+        {
+          "name": "DatasetContractRevalidationFailed",
+          "title": "Dataset Contract Revalidation Failed",
+          "className": "DatasetContractRevalidationFailedEvent",
+          "fqcn": "tech.medo.runtimeagentoperations.events.DatasetContractRevalidationFailedEvent",
+          "fields": [
+            {
+              "name": "datasetId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "metadataReportId",
+              "type": "UUID"
+            },
+            {
+              "name": "schemaCompatible",
+              "type": "Boolean"
+            },
+            {
+              "name": "labelCompatible",
+              "type": "Boolean"
+            },
+            {
+              "name": "qualityScore",
+              "type": "Decimal"
+            },
+            {
+              "name": "nonIidScore",
+              "type": "Decimal"
+            },
+            {
+              "name": "failureReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

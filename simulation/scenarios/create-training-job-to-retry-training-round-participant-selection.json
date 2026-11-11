@@ -1,0 +1,888 @@
+{
+  "id": "create-training-job-to-retry-training-round-participant-selection",
+  "className": "CreateTrainingJobToRetryTrainingRoundParticipantSelectionScenario",
+  "name": "Create Training Job To Retry Training Round Participant Selection",
+  "kind": "FLOW",
+  "context": "TrainingOrchestration",
+  "given": [],
+  "steps": [
+    {
+      "id": "createTrainingJob",
+      "title": "Create Training Job",
+      "slice": "Create Training Job",
+      "context": "TrainingOrchestration",
+      "command": "CreateTrainingJob",
+      "commandTitle": "Create Training Job",
+      "commandClassName": "CreateTrainingJobCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.createtrainingjob.CreateTrainingJobCommand",
+      "http": {
+        "method": "POST",
+        "path": "/trainingjob/createtrainingjob",
+        "conceptRoute": "trainingjob",
+        "commandRoute": "createtrainingjob"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "e3452c19-ebef-422e-bdef-5ef3aff16b1c"
+          }
+        },
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationOverview",
+            "eventTitle": "FederationOverview",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationOverview",
+            "eventTitle": "FederationOverview",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "trainingRunConfigurationId",
+          "label": "Training Run Configuration Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfigurationCatalog",
+            "eventTitle": "TrainingRunConfigurationCatalog",
+            "field": "trainingRunConfigurationId"
+          }
+        },
+        {
+          "name": "configurationName",
+          "label": "Configuration Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfigurationCatalog",
+            "eventTitle": "TrainingRunConfigurationCatalog",
+            "field": "configurationName"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfigurationCatalog",
+            "eventTitle": "TrainingRunConfigurationCatalog",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfigurationCatalog",
+            "eventTitle": "TrainingRunConfigurationCatalog",
+            "field": "featureSchemaVersion"
+          }
+        },
+        {
+          "name": "objective",
+          "label": "Objective",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "objective-787"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingJobCreated",
+          "title": "Training Job Created",
+          "className": "TrainingJobCreatedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingJobCreatedEvent",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "initialModelId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "objective",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "submitTrainingJob",
+      "title": "Submit Training Job",
+      "slice": "Submit Training Job",
+      "context": "TrainingOrchestration",
+      "command": "SubmitTrainingJob",
+      "commandTitle": "Submit Training Job",
+      "commandClassName": "SubmitTrainingJobCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.submittrainingjob.SubmitTrainingJobCommand",
+      "http": {
+        "method": "POST",
+        "path": "/trainingjob/submittrainingjob",
+        "conceptRoute": "trainingjob",
+        "commandRoute": "submittrainingjob"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "TrainingJobCreated",
+        "eventTitle": "Training Job Created",
+        "reaction": "Training Job Created To Submit Training Job",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobCreated",
+            "eventTitle": "Training Job Created",
+            "field": "trainingJobId"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingJobSubmitted",
+          "title": "Training Job Submitted",
+          "className": "TrainingJobSubmittedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingJobSubmittedEvent",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "objective",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "selectTrainingRoundParticipants",
+      "title": "Select Training Round Participants",
+      "slice": "Select Training Round Participants",
+      "context": "TrainingOrchestration",
+      "command": "SelectTrainingRoundParticipants",
+      "commandTitle": "Select Training Round Participants",
+      "commandClassName": "SelectTrainingRoundParticipantsCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsCommand",
+      "http": {
+        "method": "POST",
+        "path": "/traininground/selecttrainingroundparticipants",
+        "conceptRoute": "traininground",
+        "commandRoute": "selecttrainingroundparticipants"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "TrainingJobSubmitted",
+        "eventTitle": "Training Job Submitted",
+        "reaction": "Select Initial Round Participants When Training Submitted",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "trainingJobId"
+          }
+        },
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "trainingRunConfigurationId",
+          "label": "Training Run Configuration Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "trainingRunConfigurationId"
+          }
+        },
+        {
+          "name": "configurationName",
+          "label": "Configuration Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "configurationName"
+          }
+        },
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "featureSchemaVersion"
+          }
+        },
+        {
+          "name": "trainingJobObjective",
+          "label": "Training Job Objective",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "trainingJobObjective"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingRoundParticipantsSelected",
+          "title": "Training Round Participants Selected",
+          "className": "TrainingRoundParticipantsSelectedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "roundId",
+              "type": "UUID"
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int"
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int"
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal"
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMode",
+              "type": "String"
+            },
+            {
+              "name": "personalizationScope",
+              "type": "String"
+            },
+            {
+              "name": "personalizedArtifactPolicy",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMetric",
+              "type": "String"
+            },
+            {
+              "name": "minimumPersonalizationLift",
+              "type": "Decimal"
+            },
+            {
+              "name": "minimumNodesPerRound",
+              "type": "Int"
+            },
+            {
+              "name": "secureAggregationRequired",
+              "type": "Boolean"
+            },
+            {
+              "name": "selectedOrganizationIds",
+              "type": "UUID"
+            },
+            {
+              "name": "selectedRuntimeIds",
+              "type": "UUID"
+            },
+            {
+              "name": "selectedParticipants",
+              "type": "TrainingRoundParticipant"
+            },
+            {
+              "name": "selectedOrganizationCount",
+              "type": "Int"
+            },
+            {
+              "name": "selectedRuntimeCount",
+              "type": "Int"
+            }
+          ]
+        },
+        {
+          "name": "TrainingRoundParticipantSelectionFailed",
+          "title": "Training Round Participant Selection Failed",
+          "className": "TrainingRoundParticipantSelectionFailedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionFailedEvent",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "roundId",
+              "type": "UUID"
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int"
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int"
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal"
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMode",
+              "type": "String"
+            },
+            {
+              "name": "personalizationScope",
+              "type": "String"
+            },
+            {
+              "name": "personalizedArtifactPolicy",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMetric",
+              "type": "String"
+            },
+            {
+              "name": "minimumPersonalizationLift",
+              "type": "Decimal"
+            },
+            {
+              "name": "minimumNodesPerRound",
+              "type": "Int"
+            },
+            {
+              "name": "secureAggregationRequired",
+              "type": "Boolean"
+            },
+            {
+              "name": "selectedOrganizationIds",
+              "type": "UUID"
+            },
+            {
+              "name": "selectedRuntimeIds",
+              "type": "UUID"
+            },
+            {
+              "name": "selectedParticipants",
+              "type": "TrainingRoundParticipant"
+            },
+            {
+              "name": "selectedOrganizationCount",
+              "type": "Int"
+            },
+            {
+              "name": "selectedRuntimeCount",
+              "type": "Int"
+            },
+            {
+              "name": "failureReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "retryTrainingRoundParticipantSelection",
+      "title": "Retry Training Round Participant Selection",
+      "slice": "Retry Training Round Participant Selection",
+      "context": "TrainingOrchestration",
+      "command": "RetryTrainingRoundParticipantSelection",
+      "commandTitle": "Retry Training Round Participant Selection",
+      "commandClassName": "RetryTrainingRoundParticipantSelectionCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.retrytrainingroundparticipantselection.RetryTrainingRoundParticipantSelectionCommand",
+      "http": {
+        "method": "POST",
+        "path": "/traininground/retrytrainingroundparticipantselection",
+        "conceptRoute": "traininground",
+        "commandRoute": "retrytrainingroundparticipantselection"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "TrainingRoundParticipantSelectionFailed",
+        "eventTitle": "Training Round Participant Selection Failed",
+        "reaction": "Training Round Participant Selection Failed To Retry Training Round Participant Selection",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantSelectionFailed",
+            "eventTitle": "Training Round Participant Selection Failed",
+            "field": "trainingJobId"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingRoundParticipantSelectionRetryRequested",
+          "title": "Training Round Participant Selection Retry Requested",
+          "className": "TrainingRoundParticipantSelectionRetryRequestedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionRetryRequestedEvent",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Cycle detected at Select Training Round Participants; command was not repeated."
+  ]
+}

@@ -1,0 +1,3393 @@
+{
+  "id": "define-training-run-configuration-to-fail-secure-aggregation-session",
+  "className": "DefineTrainingRunConfigurationToFailSecureAggregationSessionScenario",
+  "name": "Define Training Run Configuration To Fail Secure Aggregation Session",
+  "kind": "FLOW",
+  "context": "TrainingOrchestration",
+  "given": [],
+  "steps": [
+    {
+      "id": "defineTrainingRunConfiguration",
+      "title": "Define Training Run Configuration",
+      "slice": "Define Training Run Configuration",
+      "context": "TrainingOrchestration",
+      "command": "DefineTrainingRunConfiguration",
+      "commandTitle": "Define Training Run Configuration",
+      "commandClassName": "DefineTrainingRunConfigurationCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.definetrainingrunconfiguration.DefineTrainingRunConfigurationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/trainingrunconfiguration/definetrainingrunconfiguration",
+        "conceptRoute": "trainingrunconfiguration",
+        "commandRoute": "definetrainingrunconfiguration"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "trainingRunConfigurationId",
+          "label": "Training Run Configuration Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "f33ea09a-eb8d-4bc7-9a8d-e4d60894f08d"
+          }
+        },
+        {
+          "name": "configurationName",
+          "label": "Configuration Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "configuration-name-041"
+          }
+        },
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationOverview",
+            "eventTitle": "FederationOverview",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationOverview",
+            "eventTitle": "FederationOverview",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FeatureSchemaCatalog",
+            "eventTitle": "FeatureSchemaCatalog",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FeatureSchemaCatalog",
+            "eventTitle": "FeatureSchemaCatalog",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FeatureSchemaCatalog",
+            "eventTitle": "FeatureSchemaCatalog",
+            "field": "version"
+          }
+        },
+        {
+          "name": "initialModelId",
+          "label": "Initial Model Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelArtifactCatalog",
+            "eventTitle": "ModelArtifactCatalog",
+            "field": "modelId"
+          }
+        },
+        {
+          "name": "initialModelName",
+          "label": "Initial Model Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelArtifactCatalog",
+            "eventTitle": "ModelArtifactCatalog",
+            "field": "modelName"
+          }
+        },
+        {
+          "name": "initialModelPlugin",
+          "label": "Initial Model Plugin",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelArtifactCatalog",
+            "eventTitle": "ModelArtifactCatalog",
+            "field": "modelPlugin"
+          }
+        },
+        {
+          "name": "initialModelVersion",
+          "label": "Initial Model Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ModelArtifactCatalog",
+            "eventTitle": "ModelArtifactCatalog",
+            "field": "modelVersion"
+          }
+        },
+        {
+          "name": "runtimeEngineProfileId",
+          "label": "Runtime Engine Profile Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeEngineProfileCatalog",
+            "eventTitle": "RuntimeEngineProfileCatalog",
+            "field": "runtimeEngineProfileId"
+          }
+        },
+        {
+          "name": "runtimeEngineProfileName",
+          "label": "Runtime Engine Profile Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeEngineProfileCatalog",
+            "eventTitle": "RuntimeEngineProfileCatalog",
+            "field": "profileName"
+          }
+        },
+        {
+          "name": "runtimeEnginePluginProfile",
+          "label": "Runtime Engine Plugin Profile",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeEngineProfileCatalog",
+            "eventTitle": "RuntimeEngineProfileCatalog",
+            "field": "pluginProfile"
+          }
+        },
+        {
+          "name": "runtimeEngineImage",
+          "label": "Runtime Engine Image",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeEngineProfileCatalog",
+            "eventTitle": "RuntimeEngineProfileCatalog",
+            "field": "runtimeEngineImage"
+          }
+        },
+        {
+          "name": "runtimeEngineImageDigest",
+          "label": "Runtime Engine Image Digest",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeEngineProfileCatalog",
+            "eventTitle": "RuntimeEngineProfileCatalog",
+            "field": "imageDigest"
+          }
+        },
+        {
+          "name": "strategyName",
+          "label": "Strategy Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "strategy-name-422"
+          }
+        },
+        {
+          "name": "aggregationAlgorithm",
+          "label": "Aggregation Algorithm",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "aggregation-algorithm-633"
+          }
+        },
+        {
+          "name": "personalizationMode",
+          "label": "Personalization Mode",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "personalization-mode-248"
+          }
+        },
+        {
+          "name": "personalizationScope",
+          "label": "Personalization Scope",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "personalization-scope-151"
+          }
+        },
+        {
+          "name": "personalizedArtifactPolicy",
+          "label": "Personalized Artifact Policy",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "personalized-artifact-policy-308"
+          }
+        },
+        {
+          "name": "personalizationMetric",
+          "label": "Personalization Metric",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "personalization-metric-899"
+          }
+        },
+        {
+          "name": "minimumPersonalizationLift",
+          "label": "Minimum Personalization Lift",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 7.266
+          }
+        },
+        {
+          "name": "maxRounds",
+          "label": "Max Rounds",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 419
+          }
+        },
+        {
+          "name": "minimumNodesPerRound",
+          "label": "Minimum Nodes Per Round",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 293
+          }
+        },
+        {
+          "name": "roundTimeoutSeconds",
+          "label": "Round Timeout Seconds",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 161
+          }
+        },
+        {
+          "name": "nodeResponseTimeoutSeconds",
+          "label": "Node Response Timeout Seconds",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 469
+          }
+        },
+        {
+          "name": "localEpochs",
+          "label": "Local Epochs",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 134
+          }
+        },
+        {
+          "name": "batchSize",
+          "label": "Batch Size",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 291
+          }
+        },
+        {
+          "name": "learningRate",
+          "label": "Learning Rate",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 4.639
+          }
+        },
+        {
+          "name": "optimizer",
+          "label": "Optimizer",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "optimizer-876"
+          }
+        },
+        {
+          "name": "lossFunction",
+          "label": "Loss Function",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "loss-function-236"
+          }
+        },
+        {
+          "name": "gradientClippingNorm",
+          "label": "Gradient Clipping Norm",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 8.859
+          }
+        },
+        {
+          "name": "secureAggregationRequired",
+          "label": "Secure Aggregation Required",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Boolean",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Boolean",
+            "baseType": "Boolean",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": false
+          }
+        },
+        {
+          "name": "minimumAccuracy",
+          "label": "Minimum Accuracy",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 1.352
+          }
+        },
+        {
+          "name": "minimumFairnessScore",
+          "label": "Minimum Fairness Score",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 1.85
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingRunConfigurationDefined",
+          "title": "Training Run Configuration Defined",
+          "className": "TrainingRunConfigurationDefinedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingRunConfigurationDefinedEvent",
+          "fields": [
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "initialModelId",
+              "type": "UUID"
+            },
+            {
+              "name": "initialModelName",
+              "type": "String"
+            },
+            {
+              "name": "initialModelPlugin",
+              "type": "String"
+            },
+            {
+              "name": "initialModelVersion",
+              "type": "String"
+            },
+            {
+              "name": "initialModelArtifactUri",
+              "type": "String"
+            },
+            {
+              "name": "initialModelRegistryRef",
+              "type": "String"
+            },
+            {
+              "name": "initialModelFormat",
+              "type": "String"
+            },
+            {
+              "name": "initialModelArtifactDigest",
+              "type": "String"
+            },
+            {
+              "name": "initialModelSignatureUri",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEngineProfileId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeEngineProfileName",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEnginePluginProfile",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEngineImage",
+              "type": "String"
+            },
+            {
+              "name": "runtimeEngineImageDigest",
+              "type": "String"
+            },
+            {
+              "name": "strategyName",
+              "type": "String"
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMode",
+              "type": "String"
+            },
+            {
+              "name": "personalizationScope",
+              "type": "String"
+            },
+            {
+              "name": "personalizedArtifactPolicy",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMetric",
+              "type": "String"
+            },
+            {
+              "name": "minimumPersonalizationLift",
+              "type": "Decimal"
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int"
+            },
+            {
+              "name": "minimumNodesPerRound",
+              "type": "Int"
+            },
+            {
+              "name": "roundTimeoutSeconds",
+              "type": "Int"
+            },
+            {
+              "name": "nodeResponseTimeoutSeconds",
+              "type": "Int"
+            },
+            {
+              "name": "localEpochs",
+              "type": "Int"
+            },
+            {
+              "name": "batchSize",
+              "type": "Int"
+            },
+            {
+              "name": "learningRate",
+              "type": "Decimal"
+            },
+            {
+              "name": "optimizer",
+              "type": "String"
+            },
+            {
+              "name": "lossFunction",
+              "type": "String"
+            },
+            {
+              "name": "gradientClippingNorm",
+              "type": "Decimal"
+            },
+            {
+              "name": "secureAggregationRequired",
+              "type": "Boolean"
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal"
+            },
+            {
+              "name": "minimumFairnessScore",
+              "type": "Decimal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "createTrainingJob",
+      "title": "Create Training Job",
+      "slice": "Create Training Job",
+      "context": "TrainingOrchestration",
+      "command": "CreateTrainingJob",
+      "commandTitle": "Create Training Job",
+      "commandClassName": "CreateTrainingJobCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.createtrainingjob.CreateTrainingJobCommand",
+      "http": {
+        "method": "POST",
+        "path": "/trainingjob/createtrainingjob",
+        "conceptRoute": "trainingjob",
+        "commandRoute": "createtrainingjob"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "TrainingRunConfigurationDefined",
+        "eventTitle": "Training Run Configuration Defined",
+        "reaction": "Training Run Configuration Defined To Create Training Job",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "e3452c19-ebef-422e-bdef-5ef3aff16b1c"
+          }
+        },
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationOverview",
+            "eventTitle": "FederationOverview",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationOverview",
+            "eventTitle": "FederationOverview",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "trainingRunConfigurationId",
+          "label": "Training Run Configuration Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfigurationCatalog",
+            "eventTitle": "TrainingRunConfigurationCatalog",
+            "field": "trainingRunConfigurationId"
+          }
+        },
+        {
+          "name": "configurationName",
+          "label": "Configuration Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfigurationCatalog",
+            "eventTitle": "TrainingRunConfigurationCatalog",
+            "field": "configurationName"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfigurationCatalog",
+            "eventTitle": "TrainingRunConfigurationCatalog",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfigurationCatalog",
+            "eventTitle": "TrainingRunConfigurationCatalog",
+            "field": "featureSchemaVersion"
+          }
+        },
+        {
+          "name": "objective",
+          "label": "Objective",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "objective-787"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingJobCreated",
+          "title": "Training Job Created",
+          "className": "TrainingJobCreatedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingJobCreatedEvent",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "initialModelId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "objective",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "submitTrainingJob",
+      "title": "Submit Training Job",
+      "slice": "Submit Training Job",
+      "context": "TrainingOrchestration",
+      "command": "SubmitTrainingJob",
+      "commandTitle": "Submit Training Job",
+      "commandClassName": "SubmitTrainingJobCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.submittrainingjob.SubmitTrainingJobCommand",
+      "http": {
+        "method": "POST",
+        "path": "/trainingjob/submittrainingjob",
+        "conceptRoute": "trainingjob",
+        "commandRoute": "submittrainingjob"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "TrainingJobCreated",
+        "eventTitle": "Training Job Created",
+        "reaction": "Training Job Created To Submit Training Job",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobCreated",
+            "eventTitle": "Training Job Created",
+            "field": "trainingJobId"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingJobSubmitted",
+          "title": "Training Job Submitted",
+          "className": "TrainingJobSubmittedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingJobSubmittedEvent",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "objective",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "selectTrainingRoundParticipants",
+      "title": "Select Training Round Participants",
+      "slice": "Select Training Round Participants",
+      "context": "TrainingOrchestration",
+      "command": "SelectTrainingRoundParticipants",
+      "commandTitle": "Select Training Round Participants",
+      "commandClassName": "SelectTrainingRoundParticipantsCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsCommand",
+      "http": {
+        "method": "POST",
+        "path": "/traininground/selecttrainingroundparticipants",
+        "conceptRoute": "traininground",
+        "commandRoute": "selecttrainingroundparticipants"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "TrainingJobSubmitted",
+        "eventTitle": "Training Job Submitted",
+        "reaction": "Select Initial Round Participants When Training Submitted",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "trainingJobId"
+          }
+        },
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "trainingRunConfigurationId",
+          "label": "Training Run Configuration Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "trainingRunConfigurationId"
+          }
+        },
+        {
+          "name": "configurationName",
+          "label": "Configuration Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "configurationName"
+          }
+        },
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "featureSchemaVersion"
+          }
+        },
+        {
+          "name": "trainingJobObjective",
+          "label": "Training Job Objective",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "trainingJobObjective"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingRoundParticipantsSelected",
+          "title": "Training Round Participants Selected",
+          "className": "TrainingRoundParticipantsSelectedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "roundId",
+              "type": "UUID"
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int"
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int"
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal"
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMode",
+              "type": "String"
+            },
+            {
+              "name": "personalizationScope",
+              "type": "String"
+            },
+            {
+              "name": "personalizedArtifactPolicy",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMetric",
+              "type": "String"
+            },
+            {
+              "name": "minimumPersonalizationLift",
+              "type": "Decimal"
+            },
+            {
+              "name": "minimumNodesPerRound",
+              "type": "Int"
+            },
+            {
+              "name": "secureAggregationRequired",
+              "type": "Boolean"
+            },
+            {
+              "name": "selectedOrganizationIds",
+              "type": "UUID"
+            },
+            {
+              "name": "selectedRuntimeIds",
+              "type": "UUID"
+            },
+            {
+              "name": "selectedParticipants",
+              "type": "TrainingRoundParticipant"
+            },
+            {
+              "name": "selectedOrganizationCount",
+              "type": "Int"
+            },
+            {
+              "name": "selectedRuntimeCount",
+              "type": "Int"
+            }
+          ]
+        },
+        {
+          "name": "TrainingRoundParticipantSelectionFailed",
+          "title": "Training Round Participant Selection Failed",
+          "className": "TrainingRoundParticipantSelectionFailedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionFailedEvent",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "roundId",
+              "type": "UUID"
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int"
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int"
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal"
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMode",
+              "type": "String"
+            },
+            {
+              "name": "personalizationScope",
+              "type": "String"
+            },
+            {
+              "name": "personalizedArtifactPolicy",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMetric",
+              "type": "String"
+            },
+            {
+              "name": "minimumPersonalizationLift",
+              "type": "Decimal"
+            },
+            {
+              "name": "minimumNodesPerRound",
+              "type": "Int"
+            },
+            {
+              "name": "secureAggregationRequired",
+              "type": "Boolean"
+            },
+            {
+              "name": "selectedOrganizationIds",
+              "type": "UUID"
+            },
+            {
+              "name": "selectedRuntimeIds",
+              "type": "UUID"
+            },
+            {
+              "name": "selectedParticipants",
+              "type": "TrainingRoundParticipant"
+            },
+            {
+              "name": "selectedOrganizationCount",
+              "type": "Int"
+            },
+            {
+              "name": "selectedRuntimeCount",
+              "type": "Int"
+            },
+            {
+              "name": "failureReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "requestSecureAggregation",
+      "title": "Request Secure Aggregation",
+      "slice": "Request Secure Aggregation",
+      "context": "TrainingOrchestration",
+      "command": "RequestSecureAggregation",
+      "commandTitle": "Request Secure Aggregation",
+      "commandClassName": "RequestSecureAggregationCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.requestsecureaggregation.RequestSecureAggregationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/traininground/requestsecureaggregation",
+        "conceptRoute": "traininground",
+        "commandRoute": "requestsecureaggregation"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "TrainingRoundParticipantsSelected",
+        "eventTitle": "Training Round Participants Selected",
+        "reaction": "Request Aggregation When Participants Selected",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "trainingJobId"
+          }
+        },
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "trainingRunConfigurationId",
+          "label": "Training Run Configuration Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "trainingRunConfigurationId"
+          }
+        },
+        {
+          "name": "configurationName",
+          "label": "Configuration Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "configurationName"
+          }
+        },
+        {
+          "name": "trainingJobObjective",
+          "label": "Training Job Objective",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "trainingJobObjective"
+          }
+        },
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "featureSchemaVersion"
+          }
+        },
+        {
+          "name": "roundId",
+          "label": "Round Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "roundId"
+          }
+        },
+        {
+          "name": "roundNumber",
+          "label": "Round Number",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "roundNumber"
+          }
+        },
+        {
+          "name": "requiredParticipantCount",
+          "label": "Required Participant Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "selectedRuntimeCount"
+          }
+        },
+        {
+          "name": "selectedOrganizationIds",
+          "label": "Selected Organization Ids",
+          "type": "UUID",
+          "cardinality": "Multiple",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "List<java.util.UUID>",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "List<java.util.UUID>",
+            "baseType": "UUID",
+            "list": true,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "selectedOrganizationIds"
+          }
+        },
+        {
+          "name": "selectedRuntimeIds",
+          "label": "Selected Runtime Ids",
+          "type": "UUID",
+          "cardinality": "Multiple",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "List<java.util.UUID>",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "List<java.util.UUID>",
+            "baseType": "UUID",
+            "list": true,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "selectedRuntimeIds"
+          }
+        },
+        {
+          "name": "selectedOrganizationCount",
+          "label": "Selected Organization Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "selectedOrganizationCount"
+          }
+        },
+        {
+          "name": "selectedRuntimeCount",
+          "label": "Selected Runtime Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "selectedRuntimeCount"
+          }
+        },
+        {
+          "name": "minimumNodesPerRound",
+          "label": "Minimum Nodes Per Round",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "minimumNodesPerRound"
+          }
+        },
+        {
+          "name": "maxRounds",
+          "label": "Max Rounds",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "maxRounds"
+          }
+        },
+        {
+          "name": "minimumAccuracy",
+          "label": "Minimum Accuracy",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "minimumAccuracy"
+          }
+        },
+        {
+          "name": "aggregationAlgorithm",
+          "label": "Aggregation Algorithm",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "aggregationAlgorithm"
+          }
+        },
+        {
+          "name": "personalizationMode",
+          "label": "Personalization Mode",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "personalizationMode"
+          }
+        },
+        {
+          "name": "personalizationScope",
+          "label": "Personalization Scope",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "personalizationScope"
+          }
+        },
+        {
+          "name": "personalizedArtifactPolicy",
+          "label": "Personalized Artifact Policy",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "personalizedArtifactPolicy"
+          }
+        },
+        {
+          "name": "personalizationMetric",
+          "label": "Personalization Metric",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "personalizationMetric"
+          }
+        },
+        {
+          "name": "minimumPersonalizationLift",
+          "label": "Minimum Personalization Lift",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "minimumPersonalizationLift"
+          }
+        },
+        {
+          "name": "secureAggregationRequired",
+          "label": "Secure Aggregation Required",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Boolean",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Boolean",
+            "baseType": "Boolean",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRoundParticipantsSelected",
+            "eventTitle": "Training Round Participants Selected",
+            "field": "secureAggregationRequired"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "SecureAggregationRequested",
+          "title": "Secure Aggregation Requested",
+          "className": "SecureAggregationRequestedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.SecureAggregationRequestedEvent",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "roundId",
+              "type": "UUID"
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int"
+            },
+            {
+              "name": "requiredParticipantCount",
+              "type": "Int"
+            },
+            {
+              "name": "selectedOrganizationIds",
+              "type": "UUID"
+            },
+            {
+              "name": "selectedRuntimeIds",
+              "type": "UUID"
+            },
+            {
+              "name": "selectedOrganizationCount",
+              "type": "Int"
+            },
+            {
+              "name": "selectedRuntimeCount",
+              "type": "Int"
+            },
+            {
+              "name": "minimumNodesPerRound",
+              "type": "Int"
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int"
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal"
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMode",
+              "type": "String"
+            },
+            {
+              "name": "personalizationScope",
+              "type": "String"
+            },
+            {
+              "name": "personalizedArtifactPolicy",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMetric",
+              "type": "String"
+            },
+            {
+              "name": "minimumPersonalizationLift",
+              "type": "Decimal"
+            },
+            {
+              "name": "secureAggregationRequired",
+              "type": "Boolean"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "createSecureAggregationSession",
+      "title": "Create Secure Aggregation Session",
+      "slice": "Create Secure Aggregation Session",
+      "context": "SecureAggregation",
+      "command": "CreateSecureAggregationSession",
+      "commandTitle": "Create Secure Aggregation Session",
+      "commandClassName": "CreateSecureAggregationSessionCommand",
+      "commandFqcn": "tech.medo.secureaggregation.createsecureaggregationsession.CreateSecureAggregationSessionCommand",
+      "http": {
+        "method": "POST",
+        "path": "/secureaggregationsession/createsecureaggregationsession",
+        "conceptRoute": "secureaggregationsession",
+        "commandRoute": "createsecureaggregationsession"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "SecureAggregationRequested",
+        "eventTitle": "Secure Aggregation Requested",
+        "reaction": "Create Session When Aggregation Requested",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "secureAggregationSessionId",
+          "label": "Secure Aggregation Session Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "6a605b13-72ba-41f0-97ba-122d25b3050a"
+          }
+        },
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "trainingJobId"
+          }
+        },
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "trainingRunConfigurationId",
+          "label": "Training Run Configuration Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "trainingRunConfigurationId"
+          }
+        },
+        {
+          "name": "configurationName",
+          "label": "Configuration Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "configurationName"
+          }
+        },
+        {
+          "name": "trainingJobObjective",
+          "label": "Training Job Objective",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "trainingJobObjective"
+          }
+        },
+        {
+          "name": "featureSchemaId",
+          "label": "Feature Schema Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "featureSchemaId"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "featureSchemaVersion"
+          }
+        },
+        {
+          "name": "roundId",
+          "label": "Round Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "roundId"
+          }
+        },
+        {
+          "name": "roundNumber",
+          "label": "Round Number",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "roundNumber"
+          }
+        },
+        {
+          "name": "requiredParticipantCount",
+          "label": "Required Participant Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "requiredParticipantCount"
+          }
+        },
+        {
+          "name": "selectedOrganizationIds",
+          "label": "Selected Organization Ids",
+          "type": "UUID",
+          "cardinality": "Multiple",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "List<java.util.UUID>",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "List<java.util.UUID>",
+            "baseType": "UUID",
+            "list": true,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "selectedOrganizationIds"
+          }
+        },
+        {
+          "name": "selectedRuntimeIds",
+          "label": "Selected Runtime Ids",
+          "type": "UUID",
+          "cardinality": "Multiple",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "List<java.util.UUID>",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "List<java.util.UUID>",
+            "baseType": "UUID",
+            "list": true,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "selectedRuntimeIds"
+          }
+        },
+        {
+          "name": "selectedOrganizationCount",
+          "label": "Selected Organization Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "selectedOrganizationCount"
+          }
+        },
+        {
+          "name": "selectedRuntimeCount",
+          "label": "Selected Runtime Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "selectedRuntimeCount"
+          }
+        },
+        {
+          "name": "minimumNodesPerRound",
+          "label": "Minimum Nodes Per Round",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "minimumNodesPerRound"
+          }
+        },
+        {
+          "name": "maxRounds",
+          "label": "Max Rounds",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "maxRounds"
+          }
+        },
+        {
+          "name": "minimumAccuracy",
+          "label": "Minimum Accuracy",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "minimumAccuracy"
+          }
+        },
+        {
+          "name": "aggregationAlgorithm",
+          "label": "Aggregation Algorithm",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "aggregationAlgorithm"
+          }
+        },
+        {
+          "name": "personalizationMode",
+          "label": "Personalization Mode",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "personalizationMode"
+          }
+        },
+        {
+          "name": "personalizationScope",
+          "label": "Personalization Scope",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "personalizationScope"
+          }
+        },
+        {
+          "name": "personalizedArtifactPolicy",
+          "label": "Personalized Artifact Policy",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "personalizedArtifactPolicy"
+          }
+        },
+        {
+          "name": "personalizationMetric",
+          "label": "Personalization Metric",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "personalizationMetric"
+          }
+        },
+        {
+          "name": "minimumPersonalizationLift",
+          "label": "Minimum Personalization Lift",
+          "type": "Decimal",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.math.BigDecimal?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.math.BigDecimal?",
+            "baseType": "BigDecimal",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "minimumPersonalizationLift"
+          }
+        },
+        {
+          "name": "secureAggregationRequired",
+          "label": "Secure Aggregation Required",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Boolean",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Boolean",
+            "baseType": "Boolean",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationRequested",
+            "eventTitle": "Secure Aggregation Requested",
+            "field": "secureAggregationRequired"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "SecureAggregationSessionCreated",
+          "title": "Secure Aggregation Session Created",
+          "className": "SecureAggregationSessionCreatedEvent",
+          "fqcn": "tech.medo.secureaggregation.events.SecureAggregationSessionCreatedEvent",
+          "fields": [
+            {
+              "name": "secureAggregationSessionId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "roundId",
+              "type": "UUID"
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int"
+            },
+            {
+              "name": "requiredParticipantCount",
+              "type": "Int"
+            },
+            {
+              "name": "selectedOrganizationIds",
+              "type": "UUID"
+            },
+            {
+              "name": "selectedRuntimeIds",
+              "type": "UUID"
+            },
+            {
+              "name": "selectedOrganizationCount",
+              "type": "Int"
+            },
+            {
+              "name": "selectedRuntimeCount",
+              "type": "Int"
+            },
+            {
+              "name": "minimumNodesPerRound",
+              "type": "Int"
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int"
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal"
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMode",
+              "type": "String"
+            },
+            {
+              "name": "personalizationScope",
+              "type": "String"
+            },
+            {
+              "name": "personalizedArtifactPolicy",
+              "type": "String"
+            },
+            {
+              "name": "personalizationMetric",
+              "type": "String"
+            },
+            {
+              "name": "minimumPersonalizationLift",
+              "type": "Decimal"
+            },
+            {
+              "name": "secureAggregationRequired",
+              "type": "Boolean"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "failSecureAggregationSession",
+      "title": "Fail Secure Aggregation Session",
+      "slice": "Fail Secure Aggregation Session",
+      "context": "SecureAggregation",
+      "command": "FailSecureAggregationSession",
+      "commandTitle": "Fail Secure Aggregation Session",
+      "commandClassName": "FailSecureAggregationSessionCommand",
+      "commandFqcn": "tech.medo.secureaggregation.failsecureaggregationsession.FailSecureAggregationSessionCommand",
+      "http": {
+        "method": "POST",
+        "path": "/secureaggregationsession/failsecureaggregationsession",
+        "conceptRoute": "secureaggregationsession",
+        "commandRoute": "failsecureaggregationsession"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "SecureAggregationSessionCreated",
+        "eventTitle": "Secure Aggregation Session Created",
+        "reaction": "Secure Aggregation Session Created To Fail Secure Aggregation Session",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "secureAggregationSessionId",
+          "label": "Secure Aggregation Session Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "SecureAggregationSessionCreated",
+            "eventTitle": "Secure Aggregation Session Created",
+            "field": "secureAggregationSessionId"
+          }
+        },
+        {
+          "name": "failureReason",
+          "label": "Failure Reason",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "failure-reason-516"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "SecureAggregationFailed",
+          "title": "Secure Aggregation Failed",
+          "className": "SecureAggregationFailedEvent",
+          "fqcn": "tech.medo.secureaggregation.events.SecureAggregationFailedEvent",
+          "fields": [
+            {
+              "name": "secureAggregationSessionId",
+              "type": "UUID"
+            },
+            {
+              "name": "failureReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

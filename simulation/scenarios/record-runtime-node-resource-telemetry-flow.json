@@ -1,0 +1,515 @@
+{
+  "id": "record-runtime-node-resource-telemetry-flow",
+  "className": "RecordRuntimeNodeResourceTelemetryFlowScenario",
+  "name": "Record Runtime Node Resource Telemetry Flow",
+  "kind": "FLOW",
+  "context": "RuntimeMonitoring",
+  "given": [],
+  "steps": [
+    {
+      "id": "recordRuntimeNodeResourceTelemetry",
+      "title": "Record Runtime Node Resource Telemetry",
+      "slice": "Record Runtime Node Resource Telemetry",
+      "context": "RuntimeMonitoring",
+      "command": "RecordRuntimeNodeResourceTelemetry",
+      "commandTitle": "Record Runtime Node Resource Telemetry",
+      "commandClassName": "RecordRuntimeNodeResourceTelemetryCommand",
+      "commandFqcn": "tech.medo.runtimemonitoring.recordruntimenoderesourcetelemetry.RecordRuntimeNodeResourceTelemetryCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimenoderesourcetelemetry/recordruntimenoderesourcetelemetry",
+        "conceptRoute": "runtimenoderesourcetelemetry",
+        "commandRoute": "recordruntimenoderesourcetelemetry"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "nodeId",
+          "label": "Node Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "6d5b00ab-6564-4ad8-8064-f9b52e5c0512"
+          }
+        },
+        {
+          "name": "runtimeAgentId",
+          "label": "Runtime Agent Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "0eb21836-1666-4b6b-9d66-34128b6e4069"
+          }
+        },
+        {
+          "name": "runtimeInfrastructureId",
+          "label": "Runtime Infrastructure Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID?",
+            "baseType": "UUID",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "b29ea32e-aac4-4f83-b2c4-7a8a40cc6e51"
+          }
+        },
+        {
+          "name": "runtimeNodeName",
+          "label": "Runtime Node Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "runtime-node-name-555"
+          }
+        },
+        {
+          "name": "nodeReady",
+          "label": "Node Ready",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Boolean",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Boolean",
+            "baseType": "Boolean",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": true
+          }
+        },
+        {
+          "name": "allocatableCpuCores",
+          "label": "Allocatable Cpu Cores",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 49
+          }
+        },
+        {
+          "name": "allocatableMemoryGb",
+          "label": "Allocatable Memory Gb",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 333
+          }
+        },
+        {
+          "name": "allocatableGpuCount",
+          "label": "Allocatable Gpu Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 152
+          }
+        },
+        {
+          "name": "allocatedCpuCores",
+          "label": "Allocated Cpu Cores",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 421
+          }
+        },
+        {
+          "name": "allocatedMemoryGb",
+          "label": "Allocated Memory Gb",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 941
+          }
+        },
+        {
+          "name": "allocatedGpuCount",
+          "label": "Allocated Gpu Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 210
+          }
+        },
+        {
+          "name": "availableCpuCores",
+          "label": "Available Cpu Cores",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 27
+          }
+        },
+        {
+          "name": "availableMemoryGb",
+          "label": "Available Memory Gb",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 662
+          }
+        },
+        {
+          "name": "availableGpuCount",
+          "label": "Available Gpu Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 328
+          }
+        },
+        {
+          "name": "runningWorkloadCount",
+          "label": "Running Workload Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 805
+          }
+        },
+        {
+          "name": "workloadCapacity",
+          "label": "Workload Capacity",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 127
+          }
+        },
+        {
+          "name": "observedAt",
+          "label": "Observed At",
+          "type": "DateTime",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.time.LocalDateTime",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.time.LocalDateTime",
+            "baseType": "LocalDateTime",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "2026-01-13T10:44:00"
+          }
+        },
+        {
+          "name": "lastResourceSnapshotAt",
+          "label": "Last Resource Snapshot At",
+          "type": "DateTime",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.time.LocalDateTime",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.time.LocalDateTime",
+            "baseType": "LocalDateTime",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "2026-01-13T10:20:00"
+          }
+        },
+        {
+          "name": "telemetryRetentionPolicy",
+          "label": "Telemetry Retention Policy",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "telemetry-retention-policy-910"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeNodeResourceTelemetryRecorded",
+          "title": "Runtime Node Resource Telemetry Recorded",
+          "className": "RuntimeNodeResourceTelemetryRecordedEvent",
+          "fqcn": "tech.medo.runtimemonitoring.events.RuntimeNodeResourceTelemetryRecordedEvent",
+          "fields": [
+            {
+              "name": "nodeId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID"
+            },
+            {
+              "name": "runtimeNodeName",
+              "type": "String"
+            },
+            {
+              "name": "nodeReady",
+              "type": "Boolean"
+            },
+            {
+              "name": "allocatableCpuCores",
+              "type": "Int"
+            },
+            {
+              "name": "allocatableMemoryGb",
+              "type": "Int"
+            },
+            {
+              "name": "allocatableGpuCount",
+              "type": "Int"
+            },
+            {
+              "name": "allocatedCpuCores",
+              "type": "Int"
+            },
+            {
+              "name": "allocatedMemoryGb",
+              "type": "Int"
+            },
+            {
+              "name": "allocatedGpuCount",
+              "type": "Int"
+            },
+            {
+              "name": "availableCpuCores",
+              "type": "Int"
+            },
+            {
+              "name": "availableMemoryGb",
+              "type": "Int"
+            },
+            {
+              "name": "availableGpuCount",
+              "type": "Int"
+            },
+            {
+              "name": "runningWorkloadCount",
+              "type": "Int"
+            },
+            {
+              "name": "workloadCapacity",
+              "type": "Int"
+            },
+            {
+              "name": "observedAt",
+              "type": "DateTime"
+            },
+            {
+              "name": "lastResourceSnapshotAt",
+              "type": "DateTime"
+            },
+            {
+              "name": "telemetryRetentionPolicy",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

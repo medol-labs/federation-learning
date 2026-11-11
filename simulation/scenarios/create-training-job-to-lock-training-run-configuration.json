@@ -1,0 +1,451 @@
+{
+  "id": "create-training-job-to-lock-training-run-configuration",
+  "className": "CreateTrainingJobToLockTrainingRunConfigurationScenario",
+  "name": "Create Training Job To Lock Training Run Configuration",
+  "kind": "FLOW",
+  "context": "TrainingOrchestration",
+  "given": [],
+  "steps": [
+    {
+      "id": "createTrainingJob",
+      "title": "Create Training Job",
+      "slice": "Create Training Job",
+      "context": "TrainingOrchestration",
+      "command": "CreateTrainingJob",
+      "commandTitle": "Create Training Job",
+      "commandClassName": "CreateTrainingJobCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.createtrainingjob.CreateTrainingJobCommand",
+      "http": {
+        "method": "POST",
+        "path": "/trainingjob/createtrainingjob",
+        "conceptRoute": "trainingjob",
+        "commandRoute": "createtrainingjob"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "e3452c19-ebef-422e-bdef-5ef3aff16b1c"
+          }
+        },
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationOverview",
+            "eventTitle": "FederationOverview",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationOverview",
+            "eventTitle": "FederationOverview",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "trainingRunConfigurationId",
+          "label": "Training Run Configuration Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfigurationCatalog",
+            "eventTitle": "TrainingRunConfigurationCatalog",
+            "field": "trainingRunConfigurationId"
+          }
+        },
+        {
+          "name": "configurationName",
+          "label": "Configuration Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfigurationCatalog",
+            "eventTitle": "TrainingRunConfigurationCatalog",
+            "field": "configurationName"
+          }
+        },
+        {
+          "name": "featureDomain",
+          "label": "Feature Domain",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfigurationCatalog",
+            "eventTitle": "TrainingRunConfigurationCatalog",
+            "field": "featureDomain"
+          }
+        },
+        {
+          "name": "featureSchemaVersion",
+          "label": "Feature Schema Version",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingRunConfigurationCatalog",
+            "eventTitle": "TrainingRunConfigurationCatalog",
+            "field": "featureSchemaVersion"
+          }
+        },
+        {
+          "name": "objective",
+          "label": "Objective",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "objective-787"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingJobCreated",
+          "title": "Training Job Created",
+          "className": "TrainingJobCreatedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingJobCreatedEvent",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "initialModelId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "objective",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "submitTrainingJob",
+      "title": "Submit Training Job",
+      "slice": "Submit Training Job",
+      "context": "TrainingOrchestration",
+      "command": "SubmitTrainingJob",
+      "commandTitle": "Submit Training Job",
+      "commandClassName": "SubmitTrainingJobCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.submittrainingjob.SubmitTrainingJobCommand",
+      "http": {
+        "method": "POST",
+        "path": "/trainingjob/submittrainingjob",
+        "conceptRoute": "trainingjob",
+        "commandRoute": "submittrainingjob"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "TrainingJobCreated",
+        "eventTitle": "Training Job Created",
+        "reaction": "Training Job Created To Submit Training Job",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobCreated",
+            "eventTitle": "Training Job Created",
+            "field": "trainingJobId"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingJobSubmitted",
+          "title": "Training Job Submitted",
+          "className": "TrainingJobSubmittedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingJobSubmittedEvent",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "configurationName",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID"
+            },
+            {
+              "name": "featureDomain",
+              "type": "String"
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String"
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String"
+            },
+            {
+              "name": "objective",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lockTrainingRunConfiguration",
+      "title": "Lock Training Run Configuration",
+      "slice": "Lock Training Run Configuration",
+      "context": "TrainingOrchestration",
+      "command": "LockTrainingRunConfiguration",
+      "commandTitle": "Lock Training Run Configuration",
+      "commandClassName": "LockTrainingRunConfigurationCommand",
+      "commandFqcn": "tech.medo.trainingorchestration.locktrainingrunconfiguration.LockTrainingRunConfigurationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/trainingrunconfiguration/locktrainingrunconfiguration",
+        "conceptRoute": "trainingrunconfiguration",
+        "commandRoute": "locktrainingrunconfiguration"
+      },
+      "execution": "AUTOMATIC",
+      "triggeredBy": {
+        "event": "TrainingJobSubmitted",
+        "eventTitle": "Training Job Submitted",
+        "reaction": "Lock Configuration When Training Submitted",
+        "reactionType": "PROCESSOR"
+      },
+      "inputs": [
+        {
+          "name": "trainingRunConfigurationId",
+          "label": "Training Run Configuration Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "trainingRunConfigurationId"
+          }
+        },
+        {
+          "name": "trainingJobId",
+          "label": "Training Job Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "TrainingJobSubmitted",
+            "eventTitle": "Training Job Submitted",
+            "field": "trainingJobId"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "TrainingRunConfigurationLocked",
+          "title": "Training Run Configuration Locked",
+          "className": "TrainingRunConfigurationLockedEvent",
+          "fqcn": "tech.medo.trainingorchestration.events.TrainingRunConfigurationLockedEvent",
+          "fields": [
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID"
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

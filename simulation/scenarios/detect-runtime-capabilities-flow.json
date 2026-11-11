@@ -1,0 +1,92 @@
+{
+  "id": "detect-runtime-capabilities-flow",
+  "className": "DetectRuntimeCapabilitiesFlowScenario",
+  "name": "Detect Runtime Capabilities Flow",
+  "kind": "FLOW",
+  "context": "RuntimeGovernance",
+  "given": [],
+  "steps": [
+    {
+      "id": "detectRuntimeCapabilities",
+      "title": "Detect Runtime Capabilities",
+      "slice": "Detect Runtime Capabilities",
+      "context": "RuntimeGovernance",
+      "command": "DetectRuntimeCapabilities",
+      "commandTitle": "Detect Runtime Capabilities",
+      "commandClassName": "DetectRuntimeCapabilitiesCommand",
+      "commandFqcn": "tech.medo.runtimegovernance.detectruntimecapabilities.DetectRuntimeCapabilitiesCommand",
+      "http": {
+        "method": "POST",
+        "path": "/runtimecapability/detectruntimecapabilities",
+        "conceptRoute": "runtimecapability",
+        "commandRoute": "detectruntimecapabilities"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "runtimeId",
+          "label": "Runtime Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "RuntimeIdentityActivated",
+            "eventTitle": "Runtime Identity Activated",
+            "field": "runtimeId"
+          }
+        },
+        {
+          "name": "capabilityTypes",
+          "label": "Capability Types",
+          "type": "String",
+          "cardinality": "Multiple",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "List<String>",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "List<String>",
+            "baseType": "String",
+            "list": true,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "capability-types-868"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "RuntimeCapabilitiesDetected",
+          "title": "Runtime Capabilities Detected",
+          "className": "RuntimeCapabilitiesDetectedEvent",
+          "fqcn": "tech.medo.runtimegovernance.events.RuntimeCapabilitiesDetectedEvent",
+          "fields": [
+            {
+              "name": "runtimeId",
+              "type": "UUID"
+            },
+            {
+              "name": "capabilityTypes",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

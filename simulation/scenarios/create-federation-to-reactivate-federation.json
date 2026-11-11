@@ -1,0 +1,401 @@
+{
+  "id": "create-federation-to-reactivate-federation",
+  "className": "CreateFederationToReactivateFederationScenario",
+  "name": "Create Federation To Reactivate Federation",
+  "kind": "FLOW",
+  "context": "FederationManagement",
+  "given": [],
+  "steps": [
+    {
+      "id": "createFederation",
+      "title": "Create Federation",
+      "slice": "Create Federation",
+      "context": "FederationManagement",
+      "command": "CreateFederation",
+      "commandTitle": "Create Federation",
+      "commandClassName": "CreateFederationCommand",
+      "commandFqcn": "tech.medo.federationmanagement.createfederation.CreateFederationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/federation/createfederation",
+        "conceptRoute": "federation",
+        "commandRoute": "createfederation"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "f39a358b-ebcc-4c38-b5cb-6a15a3c477f2"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "federation-name-330"
+          }
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "description-987"
+          }
+        },
+        {
+          "name": "minimumParticipantCount",
+          "label": "Minimum Participant Count",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "Int",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "Int",
+            "baseType": "Int",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": 217
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "FederationCreated",
+          "title": "Federation Created",
+          "className": "FederationCreatedEvent",
+          "fqcn": "tech.medo.federationmanagement.events.FederationCreatedEvent",
+          "fields": [
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "description",
+              "type": "String"
+            },
+            {
+              "name": "minimumParticipantCount",
+              "type": "Int"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "activateFederation",
+      "title": "Activate Federation",
+      "slice": "Activate Federation",
+      "context": "FederationManagement",
+      "command": "ActivateFederation",
+      "commandTitle": "Activate Federation",
+      "commandClassName": "ActivateFederationCommand",
+      "commandFqcn": "tech.medo.federationmanagement.activatefederation.ActivateFederationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/federation/activatefederation",
+        "conceptRoute": "federation",
+        "commandRoute": "activatefederation"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "FederationCreated",
+        "eventTitle": "Federation Created",
+        "reaction": "Federation Created To Activate Federation",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationCreated",
+            "eventTitle": "Federation Created",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "activationNote",
+          "label": "Activation Note",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "activation-note-348"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "FederationActivated",
+          "title": "Federation Activated",
+          "className": "FederationActivatedEvent",
+          "fqcn": "tech.medo.federationmanagement.events.FederationActivatedEvent",
+          "fields": [
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "activationNote",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "suspendFederation",
+      "title": "Suspend Federation",
+      "slice": "Suspend Federation",
+      "context": "FederationManagement",
+      "command": "SuspendFederation",
+      "commandTitle": "Suspend Federation",
+      "commandClassName": "SuspendFederationCommand",
+      "commandFqcn": "tech.medo.federationmanagement.suspendfederation.SuspendFederationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/federation/suspendfederation",
+        "conceptRoute": "federation",
+        "commandRoute": "suspendfederation"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "FederationActivated",
+        "eventTitle": "Federation Activated",
+        "reaction": "Federation Activated To Suspend Federation",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationActivated",
+            "eventTitle": "Federation Activated",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "suspensionReason",
+          "label": "Suspension Reason",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "suspension-reason-124"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "FederationSuspended",
+          "title": "Federation Suspended",
+          "className": "FederationSuspendedEvent",
+          "fqcn": "tech.medo.federationmanagement.events.FederationSuspendedEvent",
+          "fields": [
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "suspensionReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reactivateFederation",
+      "title": "Reactivate Federation",
+      "slice": "Reactivate Federation",
+      "context": "FederationManagement",
+      "command": "ReactivateFederation",
+      "commandTitle": "Reactivate Federation",
+      "commandClassName": "ReactivateFederationCommand",
+      "commandFqcn": "tech.medo.federationmanagement.reactivatefederation.ReactivateFederationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/federation/reactivatefederation",
+        "conceptRoute": "federation",
+        "commandRoute": "reactivatefederation"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "FederationSuspended",
+        "eventTitle": "Federation Suspended",
+        "reaction": "Federation Suspended To Reactivate Federation",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationSuspended",
+            "eventTitle": "Federation Suspended",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "reactivationReason",
+          "label": "Reactivation Reason",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "reactivation-reason-931"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "FederationReactivated",
+          "title": "Federation Reactivated",
+          "className": "FederationReactivatedEvent",
+          "fqcn": "tech.medo.federationmanagement.events.FederationReactivatedEvent",
+          "fields": [
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "reactivationReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

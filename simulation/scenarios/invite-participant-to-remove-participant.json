@@ -1,0 +1,677 @@
+{
+  "id": "invite-participant-to-remove-participant",
+  "className": "InviteParticipantToRemoveParticipantScenario",
+  "name": "Invite Participant To Remove Participant",
+  "kind": "FLOW",
+  "context": "FederationManagement",
+  "given": [],
+  "steps": [
+    {
+      "id": "inviteParticipant",
+      "title": "Invite Participant",
+      "slice": "Invite Participant",
+      "context": "FederationManagement",
+      "command": "InviteParticipant",
+      "commandTitle": "Invite Participant",
+      "commandClassName": "InviteParticipantCommand",
+      "commandFqcn": "tech.medo.federationmanagement.inviteparticipant.InviteParticipantCommand",
+      "http": {
+        "method": "POST",
+        "path": "/federationmembership/inviteparticipant",
+        "conceptRoute": "federationmembership",
+        "commandRoute": "inviteparticipant"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationOverview",
+            "eventTitle": "FederationOverview",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "FederationOverview",
+            "eventTitle": "FederationOverview",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "OrganizationDirectory",
+            "eventTitle": "OrganizationDirectory",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "OrganizationDirectory",
+            "eventTitle": "OrganizationDirectory",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "invitationNote",
+          "label": "Invitation Note",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "invitation-note-743"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "ParticipantInvited",
+          "title": "Participant Invited",
+          "className": "ParticipantInvitedEvent",
+          "fqcn": "tech.medo.federationmanagement.events.ParticipantInvitedEvent",
+          "fields": [
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "invitationNote",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "approveParticipant",
+      "title": "Approve Participant",
+      "slice": "Approve Participant",
+      "context": "FederationManagement",
+      "command": "ApproveParticipant",
+      "commandTitle": "Approve Participant",
+      "commandClassName": "ApproveParticipantCommand",
+      "commandFqcn": "tech.medo.federationmanagement.approveparticipant.ApproveParticipantCommand",
+      "http": {
+        "method": "POST",
+        "path": "/federationmembership/approveparticipant",
+        "conceptRoute": "federationmembership",
+        "commandRoute": "approveparticipant"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "ParticipantInvited",
+        "eventTitle": "Participant Invited",
+        "reaction": "Participant Invited To Approve Participant",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ParticipantInvited",
+            "eventTitle": "Participant Invited",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ParticipantInvited",
+            "eventTitle": "Participant Invited",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ParticipantInvited",
+            "eventTitle": "Participant Invited",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ParticipantInvited",
+            "eventTitle": "Participant Invited",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "approvalNote",
+          "label": "Approval Note",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "approval-note-803"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "ParticipantJoined",
+          "title": "Participant Joined",
+          "className": "ParticipantJoinedEvent",
+          "fqcn": "tech.medo.federationmanagement.events.ParticipantJoinedEvent",
+          "fields": [
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "approvalNote",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "suspendParticipant",
+      "title": "Suspend Participant",
+      "slice": "Suspend Participant",
+      "context": "FederationManagement",
+      "command": "SuspendParticipant",
+      "commandTitle": "Suspend Participant",
+      "commandClassName": "SuspendParticipantCommand",
+      "commandFqcn": "tech.medo.federationmanagement.suspendparticipant.SuspendParticipantCommand",
+      "http": {
+        "method": "POST",
+        "path": "/federationmembership/suspendparticipant",
+        "conceptRoute": "federationmembership",
+        "commandRoute": "suspendparticipant"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "ParticipantJoined",
+        "eventTitle": "Participant Joined",
+        "reaction": "Participant Joined To Suspend Participant",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ParticipantJoined",
+            "eventTitle": "Participant Joined",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ParticipantJoined",
+            "eventTitle": "Participant Joined",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ParticipantJoined",
+            "eventTitle": "Participant Joined",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ParticipantJoined",
+            "eventTitle": "Participant Joined",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "suspensionReason",
+          "label": "Suspension Reason",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "suspension-reason-226"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "ParticipantSuspended",
+          "title": "Participant Suspended",
+          "className": "ParticipantSuspendedEvent",
+          "fqcn": "tech.medo.federationmanagement.events.ParticipantSuspendedEvent",
+          "fields": [
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "suspensionReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "removeParticipant",
+      "title": "Remove Participant",
+      "slice": "Remove Participant",
+      "context": "FederationManagement",
+      "command": "RemoveParticipant",
+      "commandTitle": "Remove Participant",
+      "commandClassName": "RemoveParticipantCommand",
+      "commandFqcn": "tech.medo.federationmanagement.removeparticipant.RemoveParticipantCommand",
+      "http": {
+        "method": "POST",
+        "path": "/federationmembership/removeparticipant",
+        "conceptRoute": "federationmembership",
+        "commandRoute": "removeparticipant"
+      },
+      "execution": "COMMAND",
+      "triggeredBy": {
+        "event": "ParticipantSuspended",
+        "eventTitle": "Participant Suspended",
+        "reaction": "Participant Suspended To Remove Participant",
+        "reactionType": "FLOW"
+      },
+      "inputs": [
+        {
+          "name": "federationId",
+          "label": "Federation Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ParticipantSuspended",
+            "eventTitle": "Participant Suspended",
+            "field": "federationId"
+          }
+        },
+        {
+          "name": "federationName",
+          "label": "Federation Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ParticipantSuspended",
+            "eventTitle": "Participant Suspended",
+            "field": "federationName"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ParticipantSuspended",
+            "eventTitle": "Participant Suspended",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "ParticipantSuspended",
+            "eventTitle": "Participant Suspended",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "removalReason",
+          "label": "Removal Reason",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String",
+            "baseType": "String",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "removal-reason-960"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "ParticipantRemoved",
+          "title": "Participant Removed",
+          "className": "ParticipantRemovedEvent",
+          "fqcn": "tech.medo.federationmanagement.events.ParticipantRemovedEvent",
+          "fields": [
+            {
+              "name": "federationId",
+              "type": "UUID"
+            },
+            {
+              "name": "federationName",
+              "type": "String"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "removalReason",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}

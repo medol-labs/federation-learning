@@ -1,0 +1,198 @@
+{
+  "id": "bind-user-account-to-organization-flow",
+  "className": "BindUserAccountToOrganizationFlowScenario",
+  "name": "Bind User Account To Organization Flow",
+  "kind": "FLOW",
+  "context": "OrganizationManagement",
+  "given": [],
+  "steps": [
+    {
+      "id": "bindUserAccountToOrganization",
+      "title": "Bind User Account To Organization",
+      "slice": "Bind User Account To Organization",
+      "context": "OrganizationManagement",
+      "command": "BindUserAccountToOrganization",
+      "commandTitle": "Bind User Account To Organization",
+      "commandClassName": "BindUserAccountToOrganizationCommand",
+      "commandFqcn": "tech.medo.organizationmanagement.binduseraccounttoorganization.BindUserAccountToOrganizationCommand",
+      "http": {
+        "method": "POST",
+        "path": "/userorganizationmembership/binduseraccounttoorganization",
+        "conceptRoute": "userorganizationmembership",
+        "commandRoute": "binduseraccounttoorganization"
+      },
+      "execution": "COMMAND",
+      "inputs": [
+        {
+          "name": "userOrganizationMembershipId",
+          "label": "User Organization Membership Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": true,
+          "generated": true,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "77491858-7f1b-4b0d-951b-938cc719afaf"
+          }
+        },
+        {
+          "name": "userAccountId",
+          "label": "User Account Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "UserAccountCatalog",
+            "eventTitle": "UserAccountCatalog",
+            "field": "userAccountId"
+          }
+        },
+        {
+          "name": "username",
+          "label": "Username",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "UserAccountCatalog",
+            "eventTitle": "UserAccountCatalog",
+            "field": "username"
+          }
+        },
+        {
+          "name": "organizationId",
+          "label": "Organization Id",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "java.util.UUID",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "java.util.UUID",
+            "baseType": "UUID",
+            "list": false,
+            "optional": false
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "OrganizationDirectory",
+            "eventTitle": "OrganizationDirectory",
+            "field": "organizationId"
+          }
+        },
+        {
+          "name": "organizationName",
+          "label": "Organization Name",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "PreviousEvent",
+            "event": "OrganizationDirectory",
+            "eventTitle": "OrganizationDirectory",
+            "field": "organizationName"
+          }
+        },
+        {
+          "name": "organizationUserRole",
+          "label": "Organization User Role",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "kotlinType": "String?",
+          "typeInfo": {
+            "kind": "scalar",
+            "kotlinType": "String?",
+            "baseType": "String",
+            "list": false,
+            "optional": true
+          },
+          "source": {
+            "kind": "Generated",
+            "previewValue": "organization-user-role-850"
+          }
+        }
+      ],
+      "expectedEvents": [
+        {
+          "name": "UserAccountBoundToOrganization",
+          "title": "User Account Bound To Organization",
+          "className": "UserAccountBoundToOrganizationEvent",
+          "fqcn": "tech.medo.organizationmanagement.events.UserAccountBoundToOrganizationEvent",
+          "fields": [
+            {
+              "name": "userOrganizationMembershipId",
+              "type": "UUID"
+            },
+            {
+              "name": "userAccountId",
+              "type": "UUID"
+            },
+            {
+              "name": "username",
+              "type": "String"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID"
+            },
+            {
+              "name": "organizationName",
+              "type": "String"
+            },
+            {
+              "name": "organizationUserRole",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": []
+}
