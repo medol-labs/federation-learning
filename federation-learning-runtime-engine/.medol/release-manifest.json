@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "builtAt": "2026-11-12T07:43:31.558Z",
+  "imageVersion": "0.0.1-SNAPSHOT",
+  "buildIdentity": "d0a22eba8f4fee877206f59edc55db75cd1812518b41282ec583e7b50ffcfdc4",
+  "codeSha256": "0e338e1bb1d13ac199ac705fb33c4bb499c3d7d08f7617d8876915ddf8de0f13",
+  "buildOptionsSha256": "d243a52358a09a432776109583c6b997eb9733b2cd8e295189ff66953ad9fed9",
+  "variant": "sklearn",
+  "git": {
+    "revision": "4ba683bceb558e79699d733f0ee85daccbb1374d",
+    "dirty": true
+  },
+  "generation": {
+    "schemaVersion": 1,
+    "target": "operations",
+    "scope": "partial",
+    "selection": {
+      "environment": "test"
+    },
+    "generatedAt": "2026-11-11T08:42:47.271Z",
+    "generator": {
+      "name": "medol-codegen",
+      "version": "1.0.0",
+      "sha256": "b41ef6d82da5d0eea6fe28f2b30e5ce7a4937cdc5b99ee30c6b5c639ab6d577b"
+    },
+    "model": {
+      "sha256": "9c884e066c967a4e3ad07bad910226b5e33b2d787e7703a7136316de5c73ff03",
+      "metadata": {
+        "schemaVersion": 1,
+        "medolVersion": "0.1.0",
+        "source": {
+          "sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
+        }
+      }
+    },
+    "config": {
+      "sha256": "014a3b61dda3edbfd151fdb2066bd0469bd0951b97bc04e2e76394bf240f2ea6"
+    },
+    "inputs": [
+      {
+        "path": ".medol/codegen-model.json",
+        "sha256": "9c884e066c967a4e3ad07bad910226b5e33b2d787e7703a7136316de5c73ff03"
+      },
+      {
+        "path": ".medol/medol.yml",
+        "sha256": "f3f72759925093d87a4a6841a1a58fbd9d91a6d07660e72443e3bff369aa864e"
+      },
+      {
+        "path": ".medol/source.medol",
+        "sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
+      },
+      {
+        "path": "dictionary-init/dictionaries.json",
+        "sha256": "efb7481cb7be3b7145a33032af8647729c3400e92725a6add352b30aee4428bc"
+      }
+    ]
+  },
+  "images": [
+    {
+      "name": "192.168.50.2:5000/fl/federation-learning-runtime-engine:sklearn-0.0.1-SNAPSHOT",
+      "id": "sha256:9c3a2d91df8ddecce1342a17d3cb79e9c4d90782c0e062a6be8e8e6779c3b036",
+      "repoDigests": [
+        "192.168.50.2:5000/fl/federation-learning-runtime-engine@sha256:b922dd22c508ca337222e1dac57b391e84afae741dfa447facf06a136484f060"
+      ]
+    }
+  ]
+}
