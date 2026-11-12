@@ -5,19 +5,21 @@ import {dirname, resolve} from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 import {spawn, spawnSync} from 'node:child_process';
 import {createServer} from 'node:net';
+import {verifyTrainingResult} from '../scenarios/verify-training.mjs';
 
+export async function createTrainingEnvironment(argv = process.argv.slice(2)) {
 if (typeof fetch !== 'function') {
     fail('This script requires Node.js 18 or newer because it uses global fetch.');
 }
 
-const scriptDir = dirname(fileURLToPath(import.meta.url));
-const repoRoot = resolve(scriptDir, '..');
+const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
+const scriptDir = resolve(repoRoot, 'scripts');
 const platformRoot = resolve(repoRoot, 'federation-learning-platform');
-const args = parseArgs(process.argv.slice(2));
+const args = parseArgs(argv);
 
 if (args.help || args.h) {
     printUsage();
-    process.exit(0);
+    return {help: true};
 }
 
 loadEnvFiles([
@@ -44,7 +46,7 @@ const runtimeAgentPortForwardPort = positiveInt(args['runtime-agent-port-forward
 let runtimeAgentUrl = trimSlash(configuredRuntimeAgentUrl ?? `http://127.0.0.1:${runtimeAgentPortForwardPort}`);
 const scenario = stringArg('scenario', 'FL_TRAINING_SCENARIO', 'densenet');
 const federationMode = normalizeFederationMode(args['federation-mode'] ?? process.env.FL_FEDERATION_MODE ?? 'global');
-const trainingRunKey = optionalString(args['training-run-key'] ?? process.env.FL_TRAINING_RUN_KEY);
+const trainingRunKey = optionalString(args['training-run-key'] ?? process.env.FL_TRAINING_RUN_KEY) ?? `simulation-${process.env.MEDOL_PIPELINE_RUN_ID ?? Date.now()}`;
 const waitForTraining = Boolean(args['wait-for-training']);
 const k3sDevEnvironmentDir = resolve(repoRoot, 'operations/k3s/environments', environment);
 const k3sDevSecretsFile = resolve(k3sDevEnvironmentDir, `secrets.${environment}.yaml`);
@@ -147,11 +149,16 @@ if (!existsSync(k3dScript)) {
 
 verifyDeploymentPorts();
 
-if (dryRun) {
-    console.log('[k3d-flow] dry run stops before creating cluster or calling APIs.');
-    process.exit(0);
-}
-
+let resolvedRuntimeEngineImage;
+let applicationImages;
+const participants = [];
+let trainingSeed = null;
+return {
+    dryRun,
+    participantCount,
+    cleanup: cleanupPortForwards,
+    snapshot: () => ({participants: participants.map(({runtimeAgentId}) => ({runtimeAgentId})), trainingJobId: trainingSeed?.trainingJobId}),
+    async prepareCluster() {
 if (rebuildAppImages) {
     rebuildApplicationImages();
 }
@@ -159,8 +166,12 @@ if (!skipCluster) {
     await ensureCluster();
 }
 ensureKubeconfigUsable();
-const resolvedRuntimeEngineImage = ensureRuntimeEngineImageAvailable();
-const applicationImages = prepareApplicationImages();
+    },
+    async prepareImages() {
+resolvedRuntimeEngineImage = ensureRuntimeEngineImageAvailable();
+applicationImages = prepareApplicationImages();
+    },
+    async deploy() {
 if (!skipApply) {
     await waitForKubernetesApi();
     await waitForKubernetesNodesReady();
@@ -168,6 +179,10 @@ if (!skipApply) {
     ensureDevSecrets();
     runK3d('apply');
     refreshVerifiedImageDeployments(applicationImages);
+}
+    },
+    async waitReady() {
+if (!skipApply) {
     await waitForDeployment('postgres');
     await waitForDeployment('umadb');
     await waitForDeployment('federation-learning-support');
@@ -179,6 +194,8 @@ if (!skipApply) {
 if (skipApply) {
     await ensureAdminToken();
 }
+    },
+    async bootstrap() {
 if (!skipDictionary) {
     await initDictionaries();
 }
@@ -186,12 +203,11 @@ if (!skipAdminSetup) {
     await ensureAdminUser(supportUrl, 'support');
 }
 
-const participants = [];
-for (let slot = 1; slot <= participantCount; slot += 1) {
+    },
+    async prepareParticipant(slot) {
     participants.push(await prepareParticipant(slot));
-}
-
-let trainingSeed = null;
+    },
+    async submitTraining() {
 if (!skipTrainingJob) {
     await waitForDeployment('federation-learning-aggregation-runtime-engine', 'aggregation runtime engine');
     trainingSeed = await runInitTraining('training-job', {
@@ -200,17 +216,16 @@ if (!skipTrainingJob) {
         runtimeAgentUrl: participants[0]?.runtimeAgentUrl ?? runtimeAgentUrl,
         participantKey: participantKeyForSlot(1),
     });
-    if (waitForTraining) {
-        await verifyTrainingResult(trainingSeed.trainingJobId, participants);
-    }
 }
-
-console.log('[k3d-flow] ready');
-console.log(JSON.stringify({
-    participants,
-    trainingJobId: trainingSeed?.trainingJobId
-}, null, 2));
-cleanupPortForwards();
+    },
+    async verifyTraining() {
+    if (!skipTrainingJob && waitForTraining) {
+        await verifyTrainingResult(trainingSeed.trainingJobId, participants, {
+            getPage, platformUrl, supportUrl, waitForCondition, fail, federationMode, requestHeaders
+        });
+    }
+    }
+};
 
 async function ensureCluster() {
     if (recreateCluster) {
@@ -454,6 +469,7 @@ async function prepareParticipant(slot) {
         organizationId,
         runtimeInfrastructureId,
         runtimeAgentId,
+        runtimeId: endpoint.runtimeId,
         runtimeAgentUrl: accessibleRuntimeAgentUrl,
     };
 }
@@ -659,6 +675,7 @@ async function runInitTraining(target, options) {
         '--target', target,
         '--scenario', scenario,
         '--federation-mode', federationMode,
+        '--minimum-nodes-per-round', String(participantCount),
         ...(trainingRunKey ? ['--training-run-key', trainingRunKey] : []),
         ...(options.participantKey ? ['--participant-key', options.participantKey] : []),
         '--platform-url', platformUrl,
@@ -1046,60 +1063,6 @@ async function waitForDeployment(name, label = name) {
     ].join('\n'));
 }
 
-async function verifyTrainingResult(trainingJobId, participants) {
-    const query = {'trainingJobId.equals': trainingJobId};
-    let lastStatus = {};
-    await waitForCondition('training job completion', async () => {
-        const rounds = await getPage(platformUrl, '/traininground/trainingroundprogress', query);
-        lastStatus.rounds = rounds.content ?? [];
-        const failed = (rounds.content ?? []).find((round) => String(round.state).toUpperCase() === 'FAILED');
-        if (failed) fail(`Training round ${failed.roundId} failed: ${failed.failureReason ?? 'unknown reason'}`);
-        const jobs = await getPage(platformUrl, '/trainingjob/trainingjobdashboard', query);
-        lastStatus.jobs = jobs.content ?? [];
-        const failedJob = lastStatus.jobs.find((job) => ['FAILED', 'CANCELLED', 'CANCELED'].includes(String(job.state).toUpperCase()));
-        if (failedJob) fail(`Training job ${trainingJobId} ended in ${failedJob.state}: ${failedJob.failureReason ?? 'no failure reason reported'}`);
-        const completed = lastStatus.jobs.find((job) => String(job.state).toUpperCase() === 'COMPLETED');
-        if (completed) return completed;
-        const latestRound = [...lastStatus.rounds].sort((a, b) => Number(b.roundNumber) - Number(a.roundNumber))[0];
-        lastStatus.participants = [];
-        if (latestRound?.roundId) {
-            for (const participant of participants) {
-                const page = await getPage(participant.runtimeAgentUrl, '/roundexecution/roundexecutioncatalog', {
-                    ...query, 'roundId.equals': latestRound.roundId,
-                });
-                lastStatus.participants.push({runtimeId: participant.runtimeAgentId,
-                    executions: (page.content ?? []).map(({roundExecutionId, state, failureReason, rejectionReasons}) =>
-                        ({roundExecutionId, state, failureReason, rejectionReasons}))});
-            }
-            const failures = lastStatus.participants.filter((participant) =>
-                participant.executions.length > 0 && participant.executions.every((execution) =>
-                    ['FAILED', 'STARTFAILED', 'STARTRETRYFAILED', 'RUNTIMERETRYFAILED'].includes(String(execution.state).toUpperCase()) ||
-                    String(execution.state).toUpperCase() === 'RUNTIMEENGINERELEASEHANDLED' && Boolean(execution.failureReason)
-                ));
-            if (participants.length > 0 && failures.length === participants.length) {
-                fail(`All participants failed in round ${latestRound.roundId}: ${JSON.stringify(failures)}`);
-            }
-        }
-        return false;
-    }, () => `Last training status: ${JSON.stringify(lastStatus)}`);
-    if (federationMode === 'personalized') {
-        await waitForCondition('runtime-local personalized models for all participants', async () => {
-            const page = await getPage(platformUrl, '/personalizedmodelresult/personalizedmodelcatalog', {
-                ...query, size: Math.max(20, participants.length)
-            });
-            const models = page.content ?? [];
-            return participants.every((participant) => models.some((model) =>
-                model.runtimeId === participant.runtimeAgentId &&
-                model.personalizationTargetId === participant.runtimeAgentId &&
-                model.personalizedModelStorageLocation === 'RUNTIME_LOCAL' &&
-                model.personalizedModelArtifactDigest?.match(/^sha256:[a-f\d]{64}$/i) &&
-                model.personalizedModelArtifactRef && !model.platformManagedArtifactRef &&
-                model.personalizedAccuracy != null && model.personalizationLift != null
-            ));
-        });
-    }
-    console.log(`[k3d-flow] verified completed training job ${trainingJobId}; federationMode=${federationMode}, participants=${participants.length}`);
-}
 
 async function waitForHttp(url, label) {
     await waitForCondition(label, async () => {
@@ -1635,6 +1598,6 @@ function sleep(ms) {
 }
 
 function fail(message) {
-    console.error(`[k3d-flow] ${message}`);
-    process.exit(1);
+    throw new Error(message);
+}
 }

@@ -80,6 +80,10 @@ const seed = buildSeed(trainingScenario, runtimeDatasetPath, runtimeAgentUrl, ru
 });
 applyParticipantKey(seed, participantKey, trainingScenario);
 applyFederationMode(seed, federationMode, trainingScenario);
+seed.trainingRunConfiguration.minimumNodesPerRound = positiveInt(
+    args['minimum-nodes-per-round'] ?? process.env.FL_MINIMUM_NODES_PER_ROUND,
+    seed.trainingRunConfiguration.minimumNodesPerRound
+);
 if (trainingRunKey) {
     seed.trainingRunConfiguration.trainingRunConfigurationId = stableUuid(`fl-dev:configuration:${trainingScenario}:${federationMode}:${trainingRunKey}`);
     seed.trainingRunConfiguration.configurationName += ` ${trainingRunKey}`;

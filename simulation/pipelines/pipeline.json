@@ -1,0 +1,30 @@
+{
+  "services": [],
+  "hosts": {
+    "local": {
+      "transport": "local"
+    }
+  },
+  "placements": [],
+  "steps": [
+    {
+      "id": "validate-training-scenario",
+      "phase": "validate",
+      "timeoutMs": 60000,
+      "command": [
+        "node",
+        "simulation/extensions/runtime/run-training.mjs",
+        "--plan"
+      ]
+    },
+    {
+      "id": "execute-training-scenario",
+      "phase": "verify",
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "simulation/extensions/runtime/run-training.mjs"
+      ]
+    }
+  ]
+}

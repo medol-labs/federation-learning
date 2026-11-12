@@ -50,11 +50,13 @@ class Fabric8K3sCommandRunner(private val client: KubernetesClient) : K3sCommand
                 client.genericKubernetesResources(resourceDefinitionContext(item))
                     .inNamespace(namespace)
                     .resource(item)
-                    .createOrReplace()
+                    .fieldManager("medol-runtime-agent-deployer")
+                    .serverSideApply()
             } else {
                 client.resource(item)
                     .inNamespace(namespace)
-                    .createOrReplace()
+                    .fieldManager("medol-runtime-agent-deployer")
+                    .serverSideApply()
             }
         }
         return success("Applied ${items.size} resources from $manifest in namespace $namespace")

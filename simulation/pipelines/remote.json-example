@@ -1,0 +1,74 @@
+{
+  "hosts": {
+    "k3d": {
+      "transport": "ssh",
+      "target": "fl-test",
+      "workDir": "/opt/federation-learning-test"
+    }
+  },
+  "steps": [
+    {
+      "id": "build-local-images",
+      "phase": "build",
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "operations/images/images.mjs",
+        "build",
+        "--environment",
+        "local"
+      ]
+    },
+    {
+      "id": "publish-local-images",
+      "phase": "publish",
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "operations/images/images.mjs",
+        "push",
+        "--environment",
+        "local"
+      ]
+    },
+    {
+      "id": "sync-worker",
+      "phase": "deploy",
+      "command": [
+        "node",
+        "simulation/extensions/runtime/sync-worker.mjs",
+        "simulation/pipelines/remote.json"
+      ]
+    },
+    {
+      "id": "prepare-remote-test-configuration",
+      "phase": "ready",
+      "host": "k3d",
+      "command": [
+        "node",
+        "simulation/extensions/runtime/prepare-test-environment.mjs",
+        "--auto-test"
+      ]
+    },
+    {
+      "id": "check-remote-scenario",
+      "phase": "ready",
+      "host": "k3d",
+      "command": [
+        "node",
+        "simulation/extensions/runtime/run-training.mjs",
+        "--plan"
+      ]
+    },
+    {
+      "id": "remote-training",
+      "phase": "verify",
+      "host": "k3d",
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "simulation/extensions/runtime/run-training.mjs"
+      ]
+    }
+  ]
+}

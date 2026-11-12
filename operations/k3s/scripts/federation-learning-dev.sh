@@ -169,6 +169,8 @@ prepare_federation_learning_runtime_component() {
     mkdir -p "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches"
     cp "${K3S_DIR}/components/runtime-scheduling/runtime-scheduler-rbac.yaml" \
         "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/runtime-scheduler-rbac.yaml"
+    cp "${K3S_DIR}/components/runtime-scheduling/runtime-engine-scheduler-rbac.yaml" \
+        "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/runtime-engine-scheduler-rbac.yaml"
     sed "s/-dev-secret/-${OPERATIONS_ENVIRONMENT}-secret/g" "${K3S_DIR}/components/runtime-scheduling/platform-aggregation-runtime-engine.yaml" > \
         "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/platform-aggregation-runtime-engine.yaml"
     cp "${K3S_DIR}/components/runtime-scheduling/patches/platform-runtime-scheduler.yaml" \
@@ -182,6 +184,7 @@ apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 resources:
   - "runtime-scheduler-rbac.yaml"
+  - "runtime-engine-scheduler-rbac.yaml"
   - "platform-aggregation-runtime-engine.yaml"
   - "runtime-agent-managed-secret.yaml"
 patches:

@@ -1,0 +1,13 @@
+{
+  "arguments": ["--environment", "local", "--scenario", "csv", "--participant-count", "2", "--federation-mode", "global", "--recreate", "false", "--rebuild-app-images", "false", "--sync-default-kubeconfig", "false", "--wait-for-training", "--timeout", "600000"],
+  "steps": [
+    {"id": "cluster", "action": "prepareCluster"},
+    {"id": "images", "action": "prepareImages"},
+    {"id": "deployment", "action": "deploy"},
+    {"id": "readiness", "action": "waitReady"},
+    {"id": "authentication-and-dictionaries", "action": "bootstrap"},
+    {"id": "participants", "action": "prepareParticipant", "repeat": "participantCount"},
+    {"id": "training-submission", "action": "submitTraining"},
+    {"id": "training-verification", "action": "verifyTraining"}
+  ]
+}
