@@ -1,0 +1,19 @@
+{
+  "target": "kubernetes",
+  "environment": "local",
+  "clusterName": "federation-learning-local",
+  "kubeconfigFile": "operations/k3s/.work/kubeconfig-federation-learning-local.yaml",
+  "platform": "linux/arm64",
+  "imagePrefix": "192.168.50.2:5000/fl",
+  "timeoutMs": 600000,
+  "instances": [
+    {"service": "postgres", "replicas": 1},
+    {"service": "umadb", "replicas": 1},
+    {"service": "apisix", "replicas": 1},
+    {"service": "federation-learning-platform", "replicas": 1},
+    {"service": "federation-learning-support", "replicas": 1},
+    {"service": "federation-learning-console", "replicas": 1},
+    {"service": "federation-learning-participant-console", "replicas": 1},
+    {"service": "federation-learning-aggregation-runtime-engine", "replicas": 1}
+  ]
+}

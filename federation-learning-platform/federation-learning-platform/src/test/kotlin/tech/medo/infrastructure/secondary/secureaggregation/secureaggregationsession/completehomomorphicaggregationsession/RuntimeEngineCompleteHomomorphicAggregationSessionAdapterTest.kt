@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.*
+import java.util.Optional
+import tech.medo.trainingorchestration.infrastructure.secondary.persistence.trainingrunconfigurationcatalogreadmodel.SpringDataTrainingRunConfigurationCatalogReadModelRepository
+import tech.medo.trainingorchestration.infrastructure.secondary.persistence.trainingrunconfigurationcatalogreadmodel.TrainingRunConfigurationCatalogReadModelEntity
 import tech.medo.secureaggregation.completehomomorphicaggregationsession.CompleteHomomorphicAggregationSessionInput
 import tech.medo.secureaggregation.completehomomorphicaggregationsession.CompleteHomomorphicAggregationSessionResult
 import java.math.BigDecimal
@@ -15,6 +19,11 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapterTest {
     fun aggregatesUpdatesAndStoresGlobalModelInSupport() {
         val runtimeClient = FakeAggregationRuntimeEngineClient()
         val fileUploadClient = FakeAggregatedModelFileUploadClient()
+        val configurations = mock(SpringDataTrainingRunConfigurationCatalogReadModelRepository::class.java)
+        `when`(configurations.findById(UUID.fromString("33333333-3333-4333-8333-333333333333")))
+            .thenReturn(Optional.of(TrainingRunConfigurationCatalogReadModelEntity().apply {
+                aggregationAlgorithm = "FED_AVG_JSON"
+            }))
         val adapter = RuntimeEngineCompleteHomomorphicAggregationSessionAdapter(
             runtimeEngineClient = runtimeClient,
             fileUploadClient = fileUploadClient,
@@ -24,6 +33,7 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapterTest {
                 objectMapper = ObjectMapper(),
                 properties = AggregationRuntimeProperties(supportEndpoint = "http://support")
             ),
+            configurations = configurations,
             properties = AggregationRuntimeProperties(
                 mode = "runtime-engine",
                 runtimeEngineEndpoint = "http://runtime-engine",
@@ -54,7 +64,7 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapterTest {
 
         assertTrue(result is CompleteHomomorphicAggregationSessionResult.Succeeded)
         result as CompleteHomomorphicAggregationSessionResult.Succeeded
-        assertEquals("FED_AVG", runtimeClient.submittedRequest?.modelParameter?.get("aggregationAlgorithm"))
+        assertEquals("FED_AVG_JSON", runtimeClient.submittedRequest?.modelParameter?.get("aggregationPlugin"))
         assertEquals(2, (runtimeClient.submittedRequest?.input?.get("updates") as List<*>).size)
         assertEquals(runtimeClient.artifactBytes.toList(), fileUploadClient.uploadedContent?.toList())
         assertEquals(aggregatedModelId, fileUploadClient.uploadedFileId)

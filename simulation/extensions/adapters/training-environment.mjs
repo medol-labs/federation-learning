@@ -6,6 +6,7 @@ import {fileURLToPath, pathToFileURL} from 'node:url';
 import {spawn, spawnSync} from 'node:child_process';
 import {createServer} from 'node:net';
 import {verifyTrainingResult} from '../scenarios/verify-training.mjs';
+import {workloadPatches} from '../../src/runtime/deployment.mjs';
 
 export async function createTrainingEnvironment(argv = process.argv.slice(2)) {
 if (typeof fetch !== 'function') {
@@ -16,6 +17,14 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const scriptDir = resolve(repoRoot, 'scripts');
 const platformRoot = resolve(repoRoot, 'federation-learning-platform');
 const args = parseArgs(argv);
+const deploymentInstances = args['deployment-instances'] ? JSON.parse(args['deployment-instances']) : null;
+const deploymentServices = [
+    ...JSON.parse(readFileSync(resolve(repoRoot, 'operations/model/services.json'), 'utf8')).services.map(service => service.name),
+    'apisix', 'federation-learning-aggregation-runtime-engine'
+];
+const selectionPatches = deploymentInstances ? workloadPatches(deploymentServices, deploymentInstances) : null;
+const selected = name => !deploymentInstances || deploymentInstances.some(item => item.service === name);
+const running = name => !deploymentInstances || deploymentInstances.some(item => item.service === name && item.replicas > 0);
 
 if (args.help || args.h) {
     printUsage();
@@ -62,6 +71,7 @@ const jwtSecret = stringArg('jwt-secret', 'FL_K3D_JWT_SECRET', 'local-dev-jwt-se
 const timeoutMs = positiveInt(args.timeout ?? process.env.FL_K3D_FLOW_TIMEOUT_MS, 240000);
 const pollIntervalMs = positiveInt(args['poll-interval'] ?? process.env.FL_K3D_FLOW_POLL_INTERVAL_MS, 3000);
 const participantCount = positiveInt(args['participant-count'] ?? process.env.FL_K3D_PARTICIPANT_COUNT, 2);
+const computeNodes = positiveInt(args['compute-nodes'] ?? process.env.FL_K3D_AGENT_COUNT, 2);
 const preparedNodeCount = positiveInt(args['prepared-node-count'] ?? process.env.FL_K3D_PREPARED_NODE_COUNT, 1);
 const imageConfig = resolveImageConfig(imageDirectory, {
     prefix: args['app-image-prefix'] ?? process.env.FL_APP_IMAGE_PREFIX,
@@ -83,7 +93,7 @@ let participantConsoleImage = optionalString(args['participant-console-image'] ?
 const k3dScript = resolve(repoRoot, 'operations/k3s/scripts/federation-learning-dev.sh');
 const kubeconfigFile = resolve(
     repoRoot,
-    `operations/k3s/.work/kubeconfig-${clusterName}.yaml`
+    args['kubeconfig-file'] || `operations/k3s/.work/kubeconfig-${clusterName}.yaml`
 );
 const portForwardProcesses = [];
 const authTokensByBaseUrl = new Map();
@@ -157,6 +167,24 @@ return {
     dryRun,
     participantCount,
     cleanup: cleanupPortForwards,
+    deploymentSnapshot: () => ({
+        target: 'k3d', environment, clusterName, namespace, computeNodes,
+        kubeconfigFile, endpoints: {gateway: gatewayUrl, platform: platformUrl, support: supportUrl},
+        credentialRefs: {environmentFile: resolve(repoRoot, '.env'), kubernetesSecretsFile: k3sDevSecretsFile},
+        images: [...(applicationImages?.values() ?? []), ...(resolvedRuntimeEngineImage ? [resolvedRuntimeEngineImage] : [])]
+            .map(({source, reference, id}) => ({source, reference, id})),
+        nodes: JSON.parse(runCapture('kubectl', ['get', 'nodes', '-o', 'json'], kubeEnv())).items
+            .map(node => ({name: node.metadata.name, architecture: node.status.nodeInfo.architecture, ready: nodeReady(node)}))
+    }),
+    async waitDeploymentReady() {
+        for (const name of ['postgres', 'umadb', 'apisix', 'federation-learning-console',
+            'federation-learning-participant-console', 'federation-learning-support',
+            'federation-learning-platform', 'federation-learning-aggregation-runtime-engine']) {
+            if (selected(name) && (!deploymentInstances || deploymentInstances.find(item => item.service === name)?.replicas > 0)) await waitForDeployment(name);
+        }
+        if (running('apisix') && running('federation-learning-support')) await waitForHttp(`${supportUrl}/actuator/health`, 'support health');
+        if (running('apisix') && running('federation-learning-platform')) await waitForHttp(`${platformUrl}/actuator/health`, 'platform health');
+    },
     snapshot: () => ({participants: participants.map(({runtimeAgentId}) => ({runtimeAgentId})), trainingJobId: trainingSeed?.trainingJobId}),
     async prepareCluster() {
 if (rebuildAppImages) {
@@ -166,16 +194,26 @@ if (!skipCluster) {
     await ensureCluster();
 }
 ensureKubeconfigUsable();
+    await waitForKubernetesApi();
+    const nodes = JSON.parse(runCapture('kubectl', ['get', 'nodes', '-o', 'json'], kubeEnv())).items;
+    const workerCount = nodes.filter(node => !isControlPlaneNode(node)).length;
+    if (workerCount < computeNodes) {
+        fail(`Cluster requires ${computeNodes} worker nodes, but only ${workerCount} exist. Explicitly resize it; no automatic deletion is performed.`);
+    }
+    },
+    async validateConnection() {
+        if (!existsSync(kubeconfigFile)) fail(`Kubeconfig not found: ${kubeconfigFile}. Prepare the environment first.`);
+        await waitForKubernetesApi();
+        await waitForKubernetesNodesReady();
     },
     async prepareImages() {
-resolvedRuntimeEngineImage = ensureRuntimeEngineImageAvailable();
+resolvedRuntimeEngineImage = selected('federation-learning-aggregation-runtime-engine') ? ensureRuntimeEngineImageAvailable() : null;
 applicationImages = prepareApplicationImages();
     },
     async deploy() {
 if (!skipApply) {
     await waitForKubernetesApi();
     await waitForKubernetesNodesReady();
-    prepareRuntimeSchedulingNodes();
     ensureDevSecrets();
     runK3d('apply');
     refreshVerifiedImageDeployments(applicationImages);
@@ -368,12 +406,16 @@ async function waitForKubernetesNodesReady() {
 }
 
 function runK3d(command) {
+    const patchesFile = resolve(repoRoot, 'simulation/reports/deployment-selection.json');
+    if (selectionPatches) writeFileSync(patchesFile, JSON.stringify(selectionPatches), {mode: 0o600});
     run(k3dScript, [command], {
+        ...(selectionPatches ? {SIMULATION_PATCHES_FILE: patchesFile} : {}),
         FL_OPERATIONS_ENVIRONMENT: environment,
         ENVIRONMENT_OVERLAY: k3sDevEnvironmentDir,
         REGISTRY_OVERLAY: `${k3sDevEnvironmentDir}-registry`,
         SECRETS_FILE: k3sDevSecretsFile,
         CLUSTER_NAME: clusterName,
+        FL_K3D_AGENT_COUNT: String(computeNodes),
         NAMESPACE: namespace,
         KUBECONFIG_FILE: kubeconfigFile,
         KUBECONFIG: kubeconfigFile,
@@ -388,6 +430,8 @@ function runK3d(command) {
 }
 
 async function prepareParticipant(slot) {
+    // Validate the complete business allocation before creating participant records.
+    runtimeNodeForSlot(participantCount);
     const participantKey = participantKeyForSlot(slot);
     const participantRuntimeAgentUrl = configuredRuntimeAgentUrlForSlot(slot) ?? runtimeAgentUrlForSlot(slot);
     console.log(`[k3d-flow] prepare participant slot=${slot} key=${participantKey}`);
@@ -515,6 +559,7 @@ function prepareApplicationImages() {
     if (skipApply) return new Map();
     const images = new Map();
     for (const application of imageConfig.applications) {
+        if (!selected(application.name)) continue;
         const name = application.artifactName ?? application.name;
         let image = `${appImagePrefix}/${name}:${imageVersion}`;
         if (application.name === 'federation-learning-runtime-agent' && runtimeAgentImage) image = runtimeAgentImage;
@@ -536,10 +581,11 @@ function prepareApplicationImages() {
 
 function refreshVerifiedImageDeployments(images) {
     const engine = resolvedRuntimeEngineImage;
-    const resolvedImages = [...images.values(), engine];
+    const resolvedImages = [...images.values(), engine].filter(Boolean);
     const repository = (image) => String(image).split('@')[0].replace(/:[^/:]+$/, '');
     const deployments = JSON.parse(runCapture('kubectl', ['-n', namespace, 'get', 'deployments', '-o', 'json'], kubeEnv()));
     for (const deployment of deployments.items ?? []) {
+        if (!selected(deployment.metadata.name)) continue;
         const containers = deployment.spec.template.spec.containers
             .map((container) => ({container, image: resolvedImages.find((image) =>
                 image.applicationName === deployment.metadata.name && image.applicationName === container.name
@@ -798,7 +844,8 @@ function runtimeNodeForSlot(slot) {
     const runtimeNodes = nodes.items
         .filter((node) => !isControlPlaneNode(node))
         .map((node) => node.metadata?.name)
-        .filter(Boolean);
+        .filter(Boolean)
+        .sort((left, right) => left.localeCompare(right, 'en', {numeric: true}));
     if (runtimeNodes.length === 0) {
         fail('No k3d agent node was found for runtime scheduling.');
     }
@@ -807,14 +854,6 @@ function runtimeNodeForSlot(slot) {
         fail(`Participant ${slot} requires a k3d agent node, but only ${runtimeNodes.length} agent node(s) were found.`);
     }
     return nodeName;
-}
-
-function prepareRuntimeSchedulingNodes() {
-    const nodeNames = Array.from({length: participantCount}, (_, index) => runtimeNodeForSlot(index + 1));
-    for (const nodeName of nodeNames) {
-        run('kubectl', ['label', 'node', nodeName, 'medol.dev/node-role=runtime', '--overwrite'], kubeEnv());
-        run('kubectl', ['taint', 'node', nodeName, 'medol.dev/runtime-only=true:NoSchedule', '--overwrite'], kubeEnv());
-    }
 }
 
 async function labelRuntimeNode(runtimeInfrastructureId, slot) {
@@ -1476,6 +1515,7 @@ Options:
   --federation-mode <global|personalized>
                                      Select global-only or participant-personalized federation config.
   --participant-count <count>          Number of reference participants to seed and deploy. Default: 2.
+  --compute-nodes <count>              Independent cluster worker count. Default: FL_K3D_AGENT_COUNT or 2.
   --training-run-key <key>             Isolate a new training configuration/job while reusing participants.
   --wait-for-training                  Wait for completion and verify personalized model records.
   --skip-cluster                      Skip cluster create/kubeconfig.

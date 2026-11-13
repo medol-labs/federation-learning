@@ -1,0 +1,12 @@
+{
+  "environment": "local",
+  "target": "kubernetes",
+  "provisioner": "k3d",
+  "clusterName": "federation-learning-local",
+  "clusterConfig": "operations/k3s/cluster/k3d-dev.yaml",
+  "registryConfig": "operations/k3s/cluster/registries.yaml",
+  "workerNodes": 2,
+  "kubeconfigFile": "operations/k3s/.work/kubeconfig-federation-learning-local.yaml",
+  "output": "simulation/reports/environment-local.json",
+  "timeoutMs": 300000
+}

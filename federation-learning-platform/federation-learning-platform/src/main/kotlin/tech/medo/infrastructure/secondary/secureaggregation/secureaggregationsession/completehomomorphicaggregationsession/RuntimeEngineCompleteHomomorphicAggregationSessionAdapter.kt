@@ -2,6 +2,7 @@ package tech.medo.infrastructure.secondary.secureaggregation.secureaggregationse
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.infrastructure.secondary.persistence.trainingrunconfigurationcatalogreadmodel.SpringDataTrainingRunConfigurationCatalogReadModelRepository
 import tech.medo.secureaggregation.completehomomorphicaggregationsession.CompleteHomomorphicAggregationSessionInput
 import tech.medo.secureaggregation.completehomomorphicaggregationsession.CompleteHomomorphicAggregationSessionResult
 import tech.medo.secureaggregation.completehomomorphicaggregationsession.CompleteHomomorphicAggregationSessionService
@@ -12,7 +13,8 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapter(
     private val runtimeEngineClient: AggregationRuntimeEngineClient,
     private val fileUploadClient: AggregatedModelFileUploadClient,
     private val embeddedAggregationService: EmbeddedAggregationService,
-    private val properties: AggregationRuntimeProperties
+    private val properties: AggregationRuntimeProperties,
+    private val configurations: SpringDataTrainingRunConfigurationCatalogReadModelRepository
 ) : CompleteHomomorphicAggregationSessionService {
     private val log = LoggerFactory.getLogger(javaClass)
 
@@ -24,13 +26,19 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapter(
         require(input.encryptedUpdateArtifactRefs.isNotEmpty()) {
             "At least one managed model update artifact is required for aggregation."
         }
+        val configuration = configurations.findById(input.trainingRunConfigurationId).orElseThrow {
+            IllegalStateException("Training run configuration ${input.trainingRunConfigurationId} is not available for aggregation.")
+        }
+        val algorithm = requireNotNull(configuration.aggregationAlgorithm?.trim()?.takeIf { it.isNotEmpty() }) {
+            "Training run configuration ${input.trainingRunConfigurationId} has no aggregation algorithm."
+        }
         if (properties.usesEmbedded()) {
             val aggregated = embeddedAggregationService.aggregate(
                 aggregatedModelId = input.aggregatedModelId,
                 trainingJobId = input.trainingJobId,
                 roundNumber = input.roundNumber,
                 artifactRefs = input.encryptedUpdateArtifactRefs,
-                aggregationAlgorithm = properties.aggregationAlgorithm,
+                aggregationAlgorithm = algorithm,
                 secureAggregation = true
             )
             return CompleteHomomorphicAggregationSessionResult.Succeeded(
@@ -40,7 +48,7 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapter(
                 modelSourceType = "FEDERATED_TRAINING",
                 aggregatedModelArtifactUri = aggregated.artifactUri,
                 aggregatedModelRegistryRef = aggregated.registryRef,
-                modelFormat = modelFormat(properties.aggregationAlgorithm),
+                modelFormat = modelFormat(algorithm),
                 modelArtifactDigest = aggregated.digest,
                 aggregatedModelSignatureUri = null,
                 aggregatedModelSizeBytes = aggregated.sizeBytes
@@ -55,7 +63,7 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapter(
             operation = "aggregate",
             input = mapOf("updates" to input.encryptedUpdateArtifactRefs),
             modelParameter = mapOf(
-                "aggregationAlgorithm" to properties.aggregationAlgorithm,
+                "aggregationPlugin" to algorithm,
                 "engine" to "python"
             )
         )
@@ -66,7 +74,7 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapter(
             jobId,
             input.roundId,
             input.encryptedUpdateArtifactRefs.size,
-            properties.aggregationAlgorithm
+            algorithm
         )
         runtimeEngineClient.submit(runtimeEngineEndpoint, request)
         awaitCompletion(jobId, runtimeEngineEndpoint)

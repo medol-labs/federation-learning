@@ -1,0 +1,8 @@
+{
+  "target": "kubernetes",
+  "environment": "local",
+  "platform": "linux/arm64",
+  "adapter": "simulation/extensions/adapters/deployment.mjs",
+  "instances": [],
+  "externalServices": []
+}

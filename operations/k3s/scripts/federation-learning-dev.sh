@@ -194,6 +194,21 @@ patches:
   - path: "runtime-agent-disabled.yaml"
   - path: "runtime-scheduler-images.yaml"
   - path: "aggregation-runtime-engine-image.yaml"
+  - path: "support-file-access.yaml"
+YAML
+    cat > "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/support-file-access.yaml" <<YAML
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: federation-learning-support
+spec:
+  template:
+    spec:
+      containers:
+        - name: federation-learning-support
+          env:
+            - name: FILE_UPLOAD_PUBLIC_BASE_URL
+              value: "${FILE_UPLOAD_PUBLIC_BASE_URL:-http://federation-learning-support:8080}"
 YAML
     cat > "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/aggregation-runtime-engine-image.yaml" <<YAML
 apiVersion: "apps/v1"
@@ -255,6 +270,7 @@ YAML
 }
 
 prepare_federation_learning_k3d_config() {
+    [[ "${FL_K3D_AGENT_COUNT:-2}" =~ ^[1-9][0-9]*$ ]] || { echo "Invalid FL_K3D_AGENT_COUNT" >&2; exit 1; }
     mkdir -p "${WORK_DIR}" "${DATASETS_HOST_ROOT}" "${RUNTIME_ENGINE_HOST_ROOT}"
     cat > "${FEDERATION_LEARNING_K3D_CONFIG}" <<YAML
 apiVersion: "k3d.io/v1alpha5"
@@ -263,7 +279,7 @@ metadata:
   name: "${CLUSTER_NAME}"
 image: "rancher/k3s:v1.33.5-k3s1"
 servers: 1
-agents: 2
+agents: ${FL_K3D_AGENT_COUNT:-2}
 kubeAPI:
   hostIP: "127.0.0.1"
   hostPort: "6550"
