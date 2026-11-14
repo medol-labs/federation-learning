@@ -6,6 +6,7 @@ import {spawnSync} from 'node:child_process';
 import {writeArchiveManifest, verifyArchiveManifest, verifyLoadedImages} from './image-archive-runtime.mjs';
 import {pathToFileURL} from 'node:url';
 import {prepareRelease, defaultImageVersion} from './release-runtime.mjs';
+import {createPlatformCache} from './image-platform-runtime.mjs';
 
 const defaultImageName = 'federation-learning-runtime-engine';
 const defaultTar = 'federation-learning-runtime-engine-images.tar';
@@ -35,12 +36,13 @@ const imageName = String(args.image ?? process.env.IMAGE_NAME ?? defaultImageNam
 const fullImageName = `${imagePrefix}/${imageName}:${imageVersion}`;
 const tarFile = resolve(root, args.output ?? args.file ?? process.env.IMAGE_TAR ?? defaultTar);
 const dockerfile = String(args.dockerfile ?? process.env.RUNTIME_ENGINE_DOCKERFILE ?? defaultDockerfile);
+const dryRun = Boolean(args['dry-run']);
+const platformCache = createPlatformCache({dryRun});
 const platform = String(firstNonEmpty(
     args.platform,
     process.env.RUNTIME_ENGINE_IMAGE_PLATFORM,
     process.env.DOCKER_DEFAULT_PLATFORM
-) ?? hostDockerPlatform());
-const dryRun = Boolean(args['dry-run']);
+) ?? (['build', 'all', 'export', 'push', 'select', 'list'].includes(command) ? platformCache.nativePlatform() : ''));
 const release = ['build', 'all', 'export', 'push'].includes(command) ? prepareRelease({
     root, version: baseImageVersion, target: 'operations', generationRoot: resolve(root, '..'),
     operation: command === 'all' ? 'build' : command,
@@ -67,6 +69,9 @@ switch (command) {
     case 'list':
         printPlan();
         break;
+    case 'select':
+        platformCache.activate([fullImageName], platform);
+        break;
     default:
         printUsage();
         process.exit(command === 'help' || command === '--help' || command === '-h' ? 0 : 1);
@@ -74,6 +79,7 @@ switch (command) {
 
 function buildImage() {
     ensureDockerfile();
+    platformCache.pin(fullImageName);
     release.embed(['medol-build.json']);
     run('docker', [
         'build',
@@ -90,30 +96,37 @@ function buildImage() {
         fullImageName,
         '.'
     ], {env: {...process.env, DOCKER_BUILDKIT: process.env.DOCKER_BUILDKIT ?? '1'}});
+    platformCache.pin(fullImageName);
     release.writeManifest('.medol/build-manifest.json', [fullImageName]);
 }
 
 async function exportImage() {
-    release.verifyImages([fullImageName]);
-    run('docker', ['save', fullImageName, '-o', tarFile]);
-    const manifest = release.writeManifest('.medol/build-manifest.json', [fullImageName]);
-    await writeArchiveManifest({archiveFile: tarFile, manifest, labels: release.labels, root, dryRun});
+    return platformCache.withImages([fullImageName], platform, async () => {
+        release.verifyImages([fullImageName]);
+        run('docker', ['save', fullImageName, '-o', tarFile]);
+        const manifest = release.writeManifest('.medol/build-manifest.json', [fullImageName]);
+        await writeArchiveManifest({archiveFile: tarFile, manifest, labels: release.labels, root, dryRun});
+    });
 }
 
 async function importImage() {
     const manifest = await verifyArchiveManifest({archiveFile: tarFile, imageVersion: args.version === undefined ? undefined : String(args.version), dryRun});
+    for (const image of manifest?.images ?? []) platformCache.pin(image.name);
     run('docker', ['load', '-i', tarFile]);
     verifyLoadedImages({manifest, root});
+    for (const image of manifest?.images ?? []) platformCache.pin(image.name);
 }
 
 function pushImage() {
-    release.verifyImages([fullImageName]);
-    release.claim();
-    const prefix = String(args['push-prefix'] ?? process.env.DOCKER_PUSH_IMAGE_PREFIX ?? sharedConfig?.pushPrefix ?? imagePrefix).replace(/\/+$/, '');
-    const target = prefix + fullImageName.slice(imagePrefix.length);
-    if (target !== fullImageName) run('docker', ['tag', fullImageName, target]);
-    run('docker', ['push', target]);
-    release.writeManifest('.medol/release-manifest.json', [target], {requireRepoDigests: true});
+    return platformCache.withImages([fullImageName], platform, () => {
+        release.verifyImages([fullImageName]);
+        release.claim();
+        const prefix = String(args['push-prefix'] ?? process.env.DOCKER_PUSH_IMAGE_PREFIX ?? sharedConfig?.pushPrefix ?? imagePrefix).replace(/\/+$/, '');
+        const target = prefix + fullImageName.slice(imagePrefix.length);
+        if (target !== fullImageName) run('docker', ['tag', fullImageName, target]);
+        run('docker', ['push', target]);
+        release.writeManifest('.medol/release-manifest.json', [target], {requireRepoDigests: true});
+    });
 }
 
 function printPlan() {
@@ -195,7 +208,7 @@ function run(commandName, commandArgs, options = {}) {
         shell: process.platform === 'win32'
     });
     if (result.status !== 0) {
-        process.exit(result.status ?? 1);
+        throw new Error(`${commandName} failed with exit code ${result.status ?? 1}`, {cause: result.error});
     }
 }
 
@@ -240,12 +253,6 @@ function flagEnabled(argValue, envValue) {
     return truthy(envValue);
 }
 
-function hostDockerPlatform() {
-    if (process.arch === 'arm64') return 'linux/arm64';
-    if (process.arch === 'x64') return 'linux/amd64';
-    return `linux/${process.arch}`;
-}
-
 function parseArgs(argv) {
     const result = {_: []};
     for (let index = 0; index < argv.length; index += 1) {
@@ -278,6 +285,7 @@ function printUsage() {
   node scripts/image-bundle.mjs push [options]
   node scripts/image-bundle.mjs all [options]
   node scripts/image-bundle.mjs list [options]
+  node scripts/image-bundle.mjs select [options]
 
 Wrappers:
   node scripts/build-images.mjs
@@ -289,7 +297,7 @@ Options:
   --image <name>             Docker image name. Defaults to IMAGE_NAME or ${defaultImageName}.
   --prefix <name>            Docker image prefix. Defaults to DOCKER_IMAGE_PREFIX or fl.
   --version <tag>            Base image tag. Defaults to IMAGE_VERSION or 0.0.1-SNAPSHOT; runtime-engine tags are prefixed with the plugin profile.
-  --platform <os/arch>       Target CPU architecture. Defaults to RUNTIME_ENGINE_IMAGE_PLATFORM, DOCKER_DEFAULT_PLATFORM, or host architecture.
+  --platform <os/arch>       Target CPU architecture. Defaults to RUNTIME_ENGINE_IMAGE_PLATFORM, DOCKER_DEFAULT_PLATFORM, or Docker Engine architecture.
   --dockerfile <file>        Dockerfile path. Defaults to ${defaultDockerfile}.
   --build-arg <key=value>    Forward a Docker build argument, for example BASE_IMAGE.
   --base-image <image>       Build arg BASE_IMAGE. Defaults to RUNTIME_ENGINE_BASE_IMAGE or BASE_IMAGE.
