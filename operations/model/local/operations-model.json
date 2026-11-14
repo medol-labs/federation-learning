@@ -821,6 +821,11 @@
         "umadb": {
           "exposePorts": true
         }
+      },
+      "observability": {
+        "mode": "managed",
+        "samplingProbability": 0.1,
+        "storageSize": "10Gi"
       }
     },
     {

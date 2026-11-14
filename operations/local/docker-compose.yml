@@ -1,5 +1,27 @@
 name: federation-learning-platform-host-local
 services:
+  medol-observability:
+    image: grafana/otel-lgtm:0.41.0
+    restart: unless-stopped
+    networks:
+      - medol-network
+    expose:
+      - "4318"
+      - "3000"
+    ports:
+      - 127.0.0.1:${MEDOL_GRAFANA_PORT:-3000}:3000
+      - 127.0.0.1:${MEDOL_OTLP_PORT:-4318}:4318
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+    volumes:
+      - medol_observability_data:/data
+    mem_limit: 2g
+    cpus: "2.0"
+    logging:
+      driver: json-file
+      options:
+        max-size: ${LOG_MAX_SIZE:-10m}
+        max-file: ${LOG_MAX_FILES:-5}
   postgres:
     image: ${POSTGRES_IMAGE:-postgres:16}
     restart: unless-stopped
@@ -81,6 +103,7 @@ networks:
   medol-network:
     driver: bridge
 volumes:
+  medol_observability_data: {}
   postgres_data: {}
   umadb_data: {}
   axon_server_data: {}

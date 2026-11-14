@@ -1,5 +1,26 @@
 name: "federation-learning-platform-platform-local"
 services:
+  medol-observability:
+    image: "grafana/otel-lgtm:0.41.0"
+    restart: "unless-stopped"
+    networks:
+      - "medol-network"
+    expose:
+      - "4318"
+      - "3000"
+    ports:
+      - "127.0.0.1:${MEDOL_GRAFANA_PORT:-3000}:3000"
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+    volumes:
+      - "medol_observability_data:/data"
+    mem_limit: "2g"
+    cpus: "2.0"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE:-10m}"
+        max-file: "${LOG_MAX_FILES:-5}"
   apisix:
     image: "${APISIX_IMAGE:-apache/apisix:3.13.0-debian}"
     restart: "unless-stopped"
@@ -70,6 +91,11 @@ services:
       FEDERATION_LEARNING_RUNTIME_AGENT_URL: "${FEDERATION_LEARNING_RUNTIME_AGENT_URL:?Set reachable remote service URL}"
       FEDERATION_LEARNING_SUPPORT_URL: "http://federation-learning-support:8080"
       MEDOL_AXON_EVENT_STORAGE: "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
+      MEDOL_AXON_LOG_PAYLOAD_ENABLED: "false"
+      MEDOL_OBSERVABILITY_ENABLED: "true"
+      MEDOL_OBSERVABILITY_ENVIRONMENT: "local"
+      MEDOL_TRACING_SAMPLE_PROBABILITY: "0.1"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://medol-observability:4318"
       SERVER_PORT: "8081"
       SPRING_DOCKER_COMPOSE_ENABLED: "false"
       UMADB_API_KEY: "${UMADB_API_KEY:-}"
@@ -125,6 +151,11 @@ services:
       FEDERATION_LEARNING_PLATFORM_URL: "http://federation-learning-platform:8081"
       FEDERATION_LEARNING_RUNTIME_AGENT_URL: "${FEDERATION_LEARNING_RUNTIME_AGENT_URL:?Set reachable remote service URL}"
       MEDOL_AXON_EVENT_STORAGE: "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
+      MEDOL_AXON_LOG_PAYLOAD_ENABLED: "false"
+      MEDOL_OBSERVABILITY_ENABLED: "true"
+      MEDOL_OBSERVABILITY_ENVIRONMENT: "local"
+      MEDOL_TRACING_SAMPLE_PROBABILITY: "0.1"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://medol-observability:4318"
       SERVER_PORT: "8080"
       SPRING_DOCKER_COMPOSE_ENABLED: "false"
       UMADB_API_KEY: "${UMADB_API_KEY:-}"
@@ -207,5 +238,6 @@ networks:
   medol-network:
     driver: "bridge"
 volumes:
+  medol_observability_data: {}
   postgres_data: {}
   umadb_data: {}

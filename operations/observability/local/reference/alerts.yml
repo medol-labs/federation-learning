@@ -1,0 +1,10 @@
+groups:
+  - name: "telemetry-reference"
+    rules:
+      - alert: "CollectorMetricsUnavailable"
+        expr: "up{job=\"otel-applications\"} == 0"
+        for: "2m"
+        labels:
+          severity: "warning"
+        annotations:
+          summary: "Prometheus cannot scrape the Collector metric endpoint"

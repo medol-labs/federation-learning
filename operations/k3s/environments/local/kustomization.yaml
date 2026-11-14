@@ -1,6 +1,7 @@
 resources:
   - "../../base"
   - "configmap.yaml"
+  - "observability.yaml"
 namespace: "federation-learning-platform"
 labels:
   - pairs:

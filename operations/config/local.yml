@@ -1,0 +1,7 @@
+# Reference monitoring stack for local tests only. Production uses external mode.
+environments:
+  local:
+    observability:
+      mode: managed
+      samplingProbability: 0.1
+      storageSize: 10Gi

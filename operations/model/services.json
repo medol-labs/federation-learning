@@ -39,6 +39,14 @@
       "name": "umadb",
       "source": "external-image",
       "kind": "umadb"
+    },
+    {
+      "name": "medol-observability",
+      "source": "external-image",
+      "kind": "observability",
+      "environments": [
+        "local"
+      ]
     }
   ]
 }

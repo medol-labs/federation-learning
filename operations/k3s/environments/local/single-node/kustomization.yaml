@@ -3,6 +3,7 @@ resources:
   - "infrastructure.yaml"
   - "applications.yaml"
   - "configmap.yaml"
+  - "observability.yaml"
   - "apisix-config.yaml"
   - "apisix.yaml"
 namespace: "federation-learning-platform"

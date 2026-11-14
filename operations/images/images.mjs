@@ -666,11 +666,15 @@ function serviceFilterValues(...keys) {
 }
 
 function infrastructureImages() {
+    const modelFile = join(imagesDir, '..', 'model', environment, 'operations-model.json');
+    const runtimeModel = JSON.parse(readFileSync(modelFile, 'utf8'));
+    const observability = {...runtimeModel.observability, ...runtimeModel.environments?.find(item => item.name === environment)?.observability};
     const selectedInfrastructure = selectedSite
         ? infrastructureComponents.filter((component) => selectedSite.infrastructure.includes(component.name))
         : infrastructureComponents;
     return unique([
         ...selectedInfrastructure.map((component) => component.image),
+        ...(observability.mode === 'managed' ? [observability.image ?? 'grafana/otel-lgtm:0.41.0'] : []),
         ...(!selectedSite || selectedSite.gateway ? [gatewayImage] : []),
         ...systemImages,
         ...extraDependencyImages()

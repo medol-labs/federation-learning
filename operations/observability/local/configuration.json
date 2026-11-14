@@ -1,0 +1,7 @@
+{
+  "mode": "managed",
+  "endpoint": "http://medol-observability:4318",
+  "samplingProbability": 0.1,
+  "image": "grafana/otel-lgtm:0.41.0",
+  "storageSize": "10Gi"
+}

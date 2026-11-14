@@ -1,0 +1,7 @@
+{
+  "collector": "otel/opentelemetry-collector-contrib:0.165.0",
+  "prometheus": "prom/prometheus:v3.16.0",
+  "loki": "grafana/loki:3.7.10",
+  "tempo": "grafana/tempo:3.1.1",
+  "grafana": "grafana/grafana:13.3.1"
+}
