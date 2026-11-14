@@ -5,6 +5,7 @@ import {dirname, resolve} from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 import {spawn, spawnSync} from 'node:child_process';
 import {createServer} from 'node:net';
+import {randomUUID} from 'node:crypto';
 import {verifyTrainingResult} from '../scenarios/verify-training.mjs';
 import {workloadPatches} from '../../src/runtime/deployment.mjs';
 
@@ -55,7 +56,7 @@ const runtimeAgentPortForwardPort = positiveInt(args['runtime-agent-port-forward
 let runtimeAgentUrl = trimSlash(configuredRuntimeAgentUrl ?? `http://127.0.0.1:${runtimeAgentPortForwardPort}`);
 const scenario = stringArg('scenario', 'FL_TRAINING_SCENARIO', 'densenet');
 const federationMode = normalizeFederationMode(args['federation-mode'] ?? process.env.FL_FEDERATION_MODE ?? 'global');
-const trainingRunKey = optionalString(args['training-run-key'] ?? process.env.FL_TRAINING_RUN_KEY) ?? `simulation-${process.env.MEDOL_PIPELINE_RUN_ID ?? Date.now()}`;
+let trainingRunKey = optionalString(args['training-run-key'] ?? process.env.FL_TRAINING_RUN_KEY) ?? `simulation-${process.env.MEDOL_PIPELINE_RUN_ID ?? Date.now()}`;
 const waitForTraining = Boolean(args['wait-for-training']);
 const k3sDevEnvironmentDir = resolve(repoRoot, 'operations/k3s/environments', environment);
 const k3sDevSecretsFile = resolve(k3sDevEnvironmentDir, `secrets.${environment}.yaml`);
@@ -186,6 +187,28 @@ return {
         if (running('apisix') && running('federation-learning-platform')) await waitForHttp(`${platformUrl}/actuator/health`, 'platform health');
     },
     snapshot: () => ({participants: participants.map(({runtimeAgentId}) => ({runtimeAgentId})), trainingJobId: trainingSeed?.trainingJobId}),
+    dataSnapshot: () => ({scenario, federationMode, trainingRunKey, participants: participants.map(({runtimeAgentUrl, ...identity}) => identity)}),
+    async restoreData(snapshot) {
+        if (snapshot.scenario !== scenario || snapshot.federationMode !== federationMode || snapshot.participants?.length !== participantCount) fail('Training fixture configuration does not match the selected scenario');
+        if (!snapshot.trainingRunKey) fail('Training fixture has no configuration key; prepare new data');
+        trainingRunKey = snapshot.trainingRunKey;
+        participants.length = 0;
+        for (const participant of snapshot.participants) {
+            const endpoint = await waitForRuntimeAgentEndpoint(participant.runtimeAgentId, participant.runtimeInfrastructureId);
+            if (endpoint.runtimeId !== participant.runtimeId) fail('Runtime identity has changed; prepare new training data');
+            const runtimeAgentUrl = await ensureManagedRuntimeAgentAccess(participant.runtimeAgentId, participant.slot);
+            await waitForHttp(`${runtimeAgentUrl}/actuator/health`, 'restored runtime agent');
+            if (!participant.datasetId || !participant.trainingRunConfigurationId) fail('Training fixture lacks dataset/configuration identifiers; prepare new data');
+            const capability = await getPage(runtimeAgentUrl, '/dataset/datasetcapability', {'datasetId.equals': participant.datasetId});
+            const ready = (capability.content || []).some(item => item.datasetId === participant.datasetId
+                && ['REPORTED', 'METADATAREPORTED'].includes(String(item.metadataStatus).replace(/[_ -]/g, '').toUpperCase())
+                && ['CONTRACTVALIDATIONCOMPLETED', 'VALIDATED', 'COMPLETED'].includes(String(item.contractStatus).replace(/[_ -]/g, '').toUpperCase()));
+            if (!ready) fail(`Dataset is not ready for runtime ${participant.runtimeId}; prepare or repair the fixture`);
+            const configurations = await getPage(platformUrl, '/trainingrunconfiguration/trainingrunconfigurationcatalog', {'trainingRunConfigurationId.equals': participant.trainingRunConfigurationId});
+            if (!(configurations.content || []).some(item => item.trainingRunConfigurationId === participant.trainingRunConfigurationId)) fail('Training run configuration no longer exists');
+            participants.push({...participant, runtimeAgentUrl});
+        }
+    },
     async prepareCluster() {
 if (rebuildAppImages) {
     rebuildApplicationImages();
@@ -252,11 +275,12 @@ if (!skipTrainingJob) {
         createJob: true,
         registerRuntimeInfrastructure: false,
         runtimeAgentUrl: participants[0]?.runtimeAgentUrl ?? runtimeAgentUrl,
-        participantKey: participantKeyForSlot(1),
+        participantKey: participants[0]?.participantKey ?? participantKeyForSlot(1),
     });
 }
     },
     async verifyTraining() {
+    if (skipTrainingJob || !waitForTraining || !trainingSeed?.trainingJobId) fail('Training verification requires a submitted job and wait-for-training');
     if (!skipTrainingJob && waitForTraining) {
         await verifyTrainingResult(trainingSeed.trainingJobId, participants, {
             getPage, platformUrl, supportUrl, waitForCondition, fail, federationMode, requestHeaders
@@ -514,6 +538,8 @@ async function prepareParticipant(slot) {
         runtimeInfrastructureId,
         runtimeAgentId,
         runtimeId: endpoint.runtimeId,
+        datasetId: platformSeed.datasetId,
+        trainingRunConfigurationId: platformSeed.trainingRunConfigurationId,
         runtimeAgentUrl: accessibleRuntimeAgentUrl,
     };
 }
@@ -723,6 +749,7 @@ async function runInitTraining(target, options) {
         '--federation-mode', federationMode,
         '--minimum-nodes-per-round', String(participantCount),
         ...(trainingRunKey ? ['--training-run-key', trainingRunKey] : []),
+        ...(options.createJob ? ['--training-job-key', randomUUID()] : []),
         ...(options.participantKey ? ['--participant-key', options.participantKey] : []),
         '--platform-url', platformUrl,
         '--support-url', supportUrl,

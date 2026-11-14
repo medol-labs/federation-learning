@@ -64,8 +64,7 @@ export function createEventObserver(options = {}) {
       if (strict) {
         throw new Error(message);
       }
-      log('EVENT observation skipped ' + event.name + ' (set STRICT_EVENTS=true or POST /events to enforce)');
-      return undefined;
+      throw new Error(message + ' (event verification is required; configure an observer)');
     }
   };
 }

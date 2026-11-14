@@ -91,6 +91,9 @@ if (trainingRunKey) {
     seed.trainingJob.configurationName = seed.trainingRunConfiguration.configurationName;
     seed.trainingJob.trainingJobId = stableUuid(`fl-dev:training-job:${trainingScenario}:${federationMode}:${trainingRunKey}`);
 }
+if (args['training-job-key']) {
+    seed.trainingJob.trainingJobId = stableUuid(`fl-dev:training-job:${trainingScenario}:${federationMode}:${args['training-job-key']}`);
+}
 const authTokensByBaseUrl = new Map();
 
 if (args['print-seed-json-only']) {

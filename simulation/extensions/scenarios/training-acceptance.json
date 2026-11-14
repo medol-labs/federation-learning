@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "cases": [{
+    "id": "participants-complete-training",
+    "title": "All prepared participants complete training and publish an accessible model",
+    "origin": "manual",
+    "status": "draft",
+    "prerequisites": ["An existing deployment and ready participant data manifest"],
+    "dataRequirements": [{"id": "participants", "description": "Use the participants recorded in the data manifest"}],
+    "steps": [
+      {"id": "submit", "type": "command", "command": "SubmitTraining"},
+      {"id": "verify", "type": "query", "query": "VerifyTraining"}
+    ],
+    "assertions": [
+      {"type": "query", "stepId": "submit", "path": "trainingJobId", "operator": "exists"},
+      {"type": "query", "stepId": "verify", "path": "verified", "operator": "equals", "expected": true}
+    ],
+    "timeoutMs": 7200000,
+    "cleanupPolicy": "retain",
+    "reviewIssues": ["Review participant count, training configuration and artifact assertions before approval"]
+  }]
+}

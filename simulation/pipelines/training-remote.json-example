@@ -1,0 +1,22 @@
+{
+  "hosts": {"worker": {"transport": "ssh", "target": "fl-test", "workDir": "/home/fl-simulation/test"}},
+  "existingEnvironment": {
+    "manifest": "simulation/instances/remote.json",
+    "remoteManifestPaths": {"worker": "/home/fl-simulation/test/simulation/instances/remote.json"}
+  },
+  "steps": [
+    {
+      "id": "review-cases", "phase": "case-design", "host": "worker",
+      "command": ["node", "simulation/src/cases.mjs", "check", "simulation/cases/approved-training.json"]
+    },
+    {
+      "id": "prepare-data", "phase": "data-preparation", "host": "worker", "timeoutMs": 7200000,
+      "command": ["node", "simulation/extensions/runtime/training-stages.mjs", "prepare", "simulation/instances/remote.json", "simulation/extensions/scenarios/two-participant-training.json", "simulation/data/participants.json"]
+    },
+    {
+      "id": "execute-cases", "phase": "test-execution", "host": "worker", "timeoutMs": 7200000,
+      "dependsOn": ["review-cases", "prepare-data"],
+      "command": ["node", "simulation/extensions/runtime/training-stages.mjs", "test", "simulation/instances/remote.json", "simulation/extensions/scenarios/two-participant-training.json", "simulation/data/participants.json", "simulation/cases/approved-training.json", "simulation/reports/training-cases.json"]
+    }
+  ]
+}
