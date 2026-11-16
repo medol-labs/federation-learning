@@ -1,0 +1,6 @@
+{
+  "hostRef": {"pipeline": "simulation/pipelines/full-remote.json", "host": "k3d"},
+  "inputs": ["operations/", "simulation/", "scripts/", "dictionary-init/"],
+  "artifacts": ["deployment.json", "baseline.json", "enrollment.json", "execution-plan.json", "data.json", "test.json", "deploy.failure.json", "select-cases.failure.json", "prepare-baseline.failure.json", "enroll-participants.failure.json", "prepare-case.failure.json", "test.failure.json"],
+  "required": ["deployment.json"]
+}

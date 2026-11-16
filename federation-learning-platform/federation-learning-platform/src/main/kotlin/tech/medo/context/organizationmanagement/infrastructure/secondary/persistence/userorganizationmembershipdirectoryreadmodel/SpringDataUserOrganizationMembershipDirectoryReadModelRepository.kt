@@ -8,4 +8,6 @@ import tech.medo.organizationmanagement.domain.states.UserOrganizationMembership
 
 interface SpringDataUserOrganizationMembershipDirectoryReadModelRepository : JpaRepository<UserOrganizationMembershipDirectoryReadModelEntity, UUID>, JpaSpecificationExecutor<UserOrganizationMembershipDirectoryReadModelEntity> {
 
+
+
 }

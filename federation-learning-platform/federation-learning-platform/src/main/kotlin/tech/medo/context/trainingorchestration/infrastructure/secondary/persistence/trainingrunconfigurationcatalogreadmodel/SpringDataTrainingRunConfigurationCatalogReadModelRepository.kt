@@ -9,4 +9,6 @@ import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationSta
 
 interface SpringDataTrainingRunConfigurationCatalogReadModelRepository : JpaRepository<TrainingRunConfigurationCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<TrainingRunConfigurationCatalogReadModelEntity> {
 
+
+
 }

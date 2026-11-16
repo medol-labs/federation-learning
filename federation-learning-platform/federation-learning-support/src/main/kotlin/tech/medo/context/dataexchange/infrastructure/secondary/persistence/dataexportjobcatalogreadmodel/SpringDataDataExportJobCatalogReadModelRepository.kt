@@ -10,4 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataDataExportJobCatalogReadModelRepository : JpaRepository<DataExportJobCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<DataExportJobCatalogReadModelEntity> {
 
+
+
 }

@@ -7,7 +7,10 @@
   "scripts": {
     "start": "node src/server.js",
     "simulate": "node src/cli.js",
+    "cases:draft": "node src/cases.mjs draft simulation-model.json",
     "seed": "node src/data-plan.mjs",
+    "data:baseline": "node src/prepare-data.mjs baseline",
+    "data:case": "node src/prepare-data.mjs case",
     "check": "node --check src/server.js && node --check src/cli.js && node --check src/runtime/business-client.js && node --check src/runtime/context.js && node --check src/runtime/data-generator.js && node --check src/runtime/event-observer.js && node --check src/runtime/model-loader.js && node --check src/runtime/runner.js"
   },
   "engines": {

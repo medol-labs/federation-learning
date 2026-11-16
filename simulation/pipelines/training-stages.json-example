@@ -1,17 +1,56 @@
 {
-  "existingEnvironment": {"manifest": "simulation/instances/local.json"},
+  "existingEnvironment": {
+    "manifest": "simulation/instances/local.json"
+  },
   "steps": [
     {
-      "id": "review-cases", "phase": "case-design",
-      "command": ["node", "simulation/src/cases.mjs", "check", "simulation/cases/approved-training.json"]
+      "id": "review-cases",
+      "phase": "case-design",
+      "command": [
+        "node",
+        "simulation/src/cases.mjs",
+        "check",
+        "simulation/cases/approved/training.json"
+      ]
     },
     {
-      "id": "prepare-data", "phase": "data-preparation",
-      "command": ["node", "simulation/extensions/runtime/training-stages.mjs", "prepare", "simulation/instances/local.json", "simulation/extensions/scenarios/two-participant-training.json", "simulation/data/participants.json"]
+      "id": "prepare-baseline",
+      "phase": "data-preparation",
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "prepare-baseline"
+      ],
+      "dependsOn": []
     },
     {
-      "id": "execute-cases", "phase": "test-execution", "dependsOn": ["review-cases", "prepare-data"],
-      "command": ["node", "simulation/extensions/runtime/training-stages.mjs", "test", "simulation/instances/local.json", "simulation/extensions/scenarios/two-participant-training.json", "simulation/data/participants.json", "simulation/cases/approved-training.json", "simulation/reports/training-cases.json"]
+      "id": "prepare-case",
+      "phase": "data-preparation",
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "prepare-case"
+      ],
+      "dependsOn": [
+        "prepare-baseline",
+        "review-cases"
+      ]
+    },
+    {
+      "id": "execute-cases",
+      "phase": "test-execution",
+      "dependsOn": [
+        "review-cases",
+        "prepare-case"
+      ],
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "test"
+      ]
     }
   ]
 }

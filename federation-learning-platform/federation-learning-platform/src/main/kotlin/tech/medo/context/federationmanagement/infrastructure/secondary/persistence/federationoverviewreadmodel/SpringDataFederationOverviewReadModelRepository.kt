@@ -8,4 +8,6 @@ import tech.medo.federationmanagement.domain.states.FederationStateEnum;
 
 interface SpringDataFederationOverviewReadModelRepository : JpaRepository<FederationOverviewReadModelEntity, UUID>, JpaSpecificationExecutor<FederationOverviewReadModelEntity> {
 
+
+
 }

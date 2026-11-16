@@ -8,4 +8,6 @@ import java.math.BigDecimal;
 
 interface SpringDataTrainingParticipantEligibilityReadModelRepository : JpaRepository<TrainingParticipantEligibilityReadModelEntity, UUID>, JpaSpecificationExecutor<TrainingParticipantEligibilityReadModelEntity> {
 
+
+
 }

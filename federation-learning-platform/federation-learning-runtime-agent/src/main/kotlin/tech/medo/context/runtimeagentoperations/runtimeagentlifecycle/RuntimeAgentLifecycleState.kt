@@ -48,7 +48,6 @@ class RuntimeAgentLifecycleState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentBootstrapConfigurationLoadFailedEvent): RuntimeAgentLifecycleState = apply {
-        currentState = RuntimeAgentLifecycleStateEnum.BootstrapLoaded
         bootstrapRequestId = event.bootstrapRequestId
         failureReason = event.failureReason
     }

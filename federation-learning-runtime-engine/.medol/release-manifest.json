@@ -1,45 +1,46 @@
 {
   "schemaVersion": 1,
-  "builtAt": "2026-11-12T07:43:31.558Z",
-  "imageVersion": "0.0.1-SNAPSHOT",
-  "buildIdentity": "d0a22eba8f4fee877206f59edc55db75cd1812518b41282ec583e7b50ffcfdc4",
-  "codeSha256": "0e338e1bb1d13ac199ac705fb33c4bb499c3d7d08f7617d8876915ddf8de0f13",
-  "buildOptionsSha256": "d243a52358a09a432776109583c6b997eb9733b2cd8e295189ff66953ad9fed9",
+  "builtAt": "2026-11-16T07:11:13.666Z",
+  "imageVersion": "simulation-20261116",
+  "buildIdentity": "f79c6d11b8f5a95a5a9b7cfe87e128c4ccae349424ac9416133943b4825a0df7",
+  "codeSha256": "4f94e5db3effa1ac1e00a370142259c2562e9295cf45181a9f7ead0e808a891c",
+  "buildOptionsSha256": "7f1ecd835f791a220502b603e7ffcc4d27bd6436ca836409034608345b4c56b7",
   "variant": "sklearn",
   "git": {
-    "revision": "4ba683bceb558e79699d733f0ee85daccbb1374d",
+    "revision": "1531721555679fad72f0c7c663c428aa601c913a",
     "dirty": true
   },
   "generation": {
     "schemaVersion": 1,
     "target": "operations",
-    "scope": "partial",
+    "scope": "application",
     "selection": {
-      "environment": "test"
+      "generatorType": "all",
+      "environment": "local"
     },
-    "generatedAt": "2026-11-11T08:42:47.271Z",
+    "generatedAt": "2026-11-16T06:30:41.568Z",
     "generator": {
       "name": "medol-codegen",
       "version": "1.0.0",
-      "sha256": "b41ef6d82da5d0eea6fe28f2b30e5ce7a4937cdc5b99ee30c6b5c639ab6d577b"
+      "sha256": "c4a839f6ce41b58b84a089ca7c0c146cbe70ed4228b026b9671a651db937b7fd"
     },
     "model": {
-      "sha256": "9c884e066c967a4e3ad07bad910226b5e33b2d787e7703a7136316de5c73ff03",
+      "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038",
       "metadata": {
         "schemaVersion": 1,
         "medolVersion": "0.1.0",
         "source": {
-          "sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
+          "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
         }
       }
     },
     "config": {
-      "sha256": "014a3b61dda3edbfd151fdb2066bd0469bd0951b97bc04e2e76394bf240f2ea6"
+      "sha256": "8c69a10f1b327556a31096d5f19c3ab0e6fd799faa5d5eaa054a2ac59e36f211"
     },
     "inputs": [
       {
         "path": ".medol/codegen-model.json",
-        "sha256": "9c884e066c967a4e3ad07bad910226b5e33b2d787e7703a7136316de5c73ff03"
+        "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038"
       },
       {
         "path": ".medol/medol.yml",
@@ -47,7 +48,7 @@
       },
       {
         "path": ".medol/source.medol",
-        "sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
+        "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
       },
       {
         "path": "dictionary-init/dictionaries.json",
@@ -57,10 +58,10 @@
   },
   "images": [
     {
-      "name": "192.168.50.2:5000/fl/federation-learning-runtime-engine:sklearn-0.0.1-SNAPSHOT",
-      "id": "sha256:9c3a2d91df8ddecce1342a17d3cb79e9c4d90782c0e062a6be8e8e6779c3b036",
+      "name": "192.168.50.2:5000/fl/federation-learning-runtime-engine:sklearn-simulation-20261116",
+      "id": "sha256:ff1f74d3080bf0943398b5e1d8f7292c0172de293d954fabcd2e4d1a98e043c8",
       "repoDigests": [
-        "192.168.50.2:5000/fl/federation-learning-runtime-engine@sha256:b922dd22c508ca337222e1dac57b391e84afae741dfa447facf06a136484f060"
+        "192.168.50.2:5000/fl/federation-learning-runtime-engine@sha256:2aa555e5ad615c391536cbafec0cf7ce2692311d27ae54b7ff8b4a545e5ff62e"
       ]
     }
   ]

@@ -153,6 +153,19 @@ console.log(JSON.stringify(seedSummary(seed), null, 2));
 printNextSteps();
 
 function seedSummary(seedValue) {
+    if (initTarget === 'participant-registration') {
+        return {
+            participantKey,
+            organizationId: seedValue.organization.organizationId,
+            organizationName: seedValue.organization.organizationName,
+            federationId: seedValue.federation.federationId,
+            runtimeInfrastructurePackageId: seedValue.runtimeInfrastructurePackage.runtimeInfrastructurePackageId,
+            runtimeInstallationPlanId: seedValue.runtimeInstallationPlan.runtimeInstallationPlanId,
+            runtimeInfrastructureId: seedValue.runtime.runtimeInfrastructureId,
+            runtimeAgentId: seedValue.runtime.runtimeAgentId,
+            runtimeName: seedValue.runtime.runtimeName
+        };
+    }
     return {
         participantKey,
         organizationId: seedValue.organization.organizationId,
@@ -293,6 +306,11 @@ async function ensurePlatformData() {
             'federationId.equals': seed.federation.federationId,
             'organizationId.equals': seed.organization.organizationId
         }, 'joined participant', isJoinedMembership);
+    }
+
+    if (initTarget === 'participant-registration') {
+        await ensureRuntimeProvisioningData();
+        return;
     }
 
     const featureSchema = await ensureOne({
@@ -1814,13 +1832,14 @@ function normalizeFederationMode(value) {
 
 function normalizeInitTarget(value) {
     const normalized = String(value ?? '').trim().toLowerCase().replace(/[_\s]/g, '-');
+    if (normalized === 'participant-registration') return normalized;
     if (['all', 'full'].includes(normalized)) return 'all';
     if (['platform', 'platform-only'].includes(normalized)) return 'platform';
     if (['runtime-agent', 'runtime', 'agent', 'participant', 'participant-runtime'].includes(normalized)) {
         return 'runtime-agent';
     }
     if (['training-job', 'job', 'submit-job'].includes(normalized)) return 'training-job';
-    fail(`Unsupported init target: ${value}. Supported targets: all, platform, runtime-agent, training-job`);
+    fail(`Unsupported init target: ${value}. Supported targets: all, platform, participant-registration, runtime-agent, training-job`);
 }
 
 function normalizeParticipantKey(value) {
@@ -1835,7 +1854,7 @@ function normalizeParticipantKey(value) {
 }
 
 function shouldRunPlatformData(target) {
-    return target === 'all' || target === 'platform';
+    return target === 'all' || target === 'platform' || target === 'participant-registration';
 }
 
 function shouldRunRuntimeAgentData(target) {

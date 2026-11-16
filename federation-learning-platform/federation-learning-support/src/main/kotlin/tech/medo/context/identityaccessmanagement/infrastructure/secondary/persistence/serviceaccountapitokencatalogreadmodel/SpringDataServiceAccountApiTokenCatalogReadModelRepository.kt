@@ -7,4 +7,6 @@ import java.util.UUID;
 
 interface SpringDataServiceAccountApiTokenCatalogReadModelRepository : JpaRepository<ServiceAccountApiTokenCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<ServiceAccountApiTokenCatalogReadModelEntity> {
 
+
+
 }

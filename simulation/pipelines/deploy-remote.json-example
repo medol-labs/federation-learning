@@ -1,8 +1,51 @@
 {
-  "hosts": {"k3d": {"transport": "ssh", "target": "fl-test", "workDir": "/home/fl-simulation/test"}},
+  "hosts": {
+    "k3d": {
+      "transport": "ssh",
+      "target": "fl-test",
+      "workDir": "/home/fl-simulation/test"
+    }
+  },
   "steps": [
-    {"id": "prepare-infrastructure", "phase": "environment", "host": "k3d", "timeoutMs": 600000, "command": ["node", "simulation/src/prepare-environment.mjs", "simulation/pipelines/environment-k3d.json-example"]},
-    {"id": "prepare-test-environment", "phase": "deployment", "dependsOn": ["prepare-infrastructure"], "host": "k3d", "command": ["node", "simulation/extensions/runtime/prepare-test-environment.mjs", "--auto-test"]},
-    {"id": "deploy-and-check", "phase": "deployment", "dependsOn": ["prepare-infrastructure", "prepare-test-environment"], "host": "k3d", "timeoutMs": 1800000, "command": ["node", "simulation/extensions/runtime/deploy.mjs", "simulation/pipelines/deployment.json-example"]}
+    {
+      "id": "prepare-infrastructure",
+      "phase": "environment",
+      "host": "k3d",
+      "timeoutMs": 600000,
+      "command": [
+        "node",
+        "simulation/src/prepare-environment.mjs",
+        "simulation/pipelines/environment-k3d.json-example"
+      ]
+    },
+    {
+      "id": "prepare-test-environment",
+      "phase": "deployment",
+      "dependsOn": [
+        "prepare-infrastructure"
+      ],
+      "host": "k3d",
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "secrets"
+      ]
+    },
+    {
+      "id": "deploy-and-check",
+      "phase": "deployment",
+      "dependsOn": [
+        "prepare-infrastructure",
+        "prepare-test-environment"
+      ],
+      "host": "k3d",
+      "timeoutMs": 1800000,
+      "command": [
+        "node",
+        "simulation/extensions/runtime/deploy.mjs",
+        "simulation/pipelines/deployment.json-example"
+      ]
+    }
   ]
 }

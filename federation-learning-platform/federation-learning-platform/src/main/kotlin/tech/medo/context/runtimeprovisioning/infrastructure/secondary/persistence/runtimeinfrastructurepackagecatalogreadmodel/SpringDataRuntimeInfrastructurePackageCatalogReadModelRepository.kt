@@ -8,4 +8,6 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageS
 
 interface SpringDataRuntimeInfrastructurePackageCatalogReadModelRepository : JpaRepository<RuntimeInfrastructurePackageCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<RuntimeInfrastructurePackageCatalogReadModelEntity> {
 
+
+
 }

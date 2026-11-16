@@ -9,4 +9,6 @@ import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum;
 
 interface SpringDataOrganizationDirectoryReadModelRepository : JpaRepository<OrganizationDirectoryReadModelEntity, UUID>, JpaSpecificationExecutor<OrganizationDirectoryReadModelEntity> {
 
+
+
 }

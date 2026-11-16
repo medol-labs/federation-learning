@@ -1,22 +1,73 @@
 {
-  "hosts": {"worker": {"transport": "ssh", "target": "fl-test", "workDir": "/home/fl-simulation/test"}},
+  "hosts": {
+    "worker": {
+      "transport": "ssh",
+      "target": "fl-test",
+      "workDir": "/home/fl-simulation/test"
+    }
+  },
   "existingEnvironment": {
     "manifest": "simulation/instances/remote.json",
-    "remoteManifestPaths": {"worker": "/home/fl-simulation/test/simulation/instances/remote.json"}
+    "remoteManifestPaths": {
+      "worker": "/home/fl-simulation/test/simulation/instances/remote.json"
+    }
   },
   "steps": [
     {
-      "id": "review-cases", "phase": "case-design", "host": "worker",
-      "command": ["node", "simulation/src/cases.mjs", "check", "simulation/cases/approved-training.json"]
+      "id": "review-cases",
+      "phase": "case-design",
+      "host": "worker",
+      "command": [
+        "node",
+        "simulation/src/cases.mjs",
+        "check",
+        "simulation/cases/approved/training.json"
+      ]
     },
     {
-      "id": "prepare-data", "phase": "data-preparation", "host": "worker", "timeoutMs": 7200000,
-      "command": ["node", "simulation/extensions/runtime/training-stages.mjs", "prepare", "simulation/instances/remote.json", "simulation/extensions/scenarios/two-participant-training.json", "simulation/data/participants.json"]
+      "id": "prepare-baseline",
+      "phase": "data-preparation",
+      "host": "worker",
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "prepare-baseline"
+      ],
+      "dependsOn": []
     },
     {
-      "id": "execute-cases", "phase": "test-execution", "host": "worker", "timeoutMs": 7200000,
-      "dependsOn": ["review-cases", "prepare-data"],
-      "command": ["node", "simulation/extensions/runtime/training-stages.mjs", "test", "simulation/instances/remote.json", "simulation/extensions/scenarios/two-participant-training.json", "simulation/data/participants.json", "simulation/cases/approved-training.json", "simulation/reports/training-cases.json"]
+      "id": "prepare-case",
+      "phase": "data-preparation",
+      "host": "worker",
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "prepare-case"
+      ],
+      "dependsOn": [
+        "prepare-baseline",
+        "review-cases"
+      ]
+    },
+    {
+      "id": "execute-cases",
+      "phase": "test-execution",
+      "host": "worker",
+      "timeoutMs": 7200000,
+      "dependsOn": [
+        "review-cases",
+        "prepare-case"
+      ],
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "test"
+      ]
     }
   ]
 }

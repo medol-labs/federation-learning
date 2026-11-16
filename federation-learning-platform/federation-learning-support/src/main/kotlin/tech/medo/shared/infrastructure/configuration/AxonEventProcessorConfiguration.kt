@@ -7,10 +7,6 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class AxonEventProcessorConfiguration {
     @Bean
-    fun auditTrailEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("audit-trail").notCustomized()
-
-    @Bean
     fun automationFederationLearningSupportDataExchangeExecuteDataExportEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("automation-federation-learning-support-data-exchange-execute-data-export").notCustomized()
 

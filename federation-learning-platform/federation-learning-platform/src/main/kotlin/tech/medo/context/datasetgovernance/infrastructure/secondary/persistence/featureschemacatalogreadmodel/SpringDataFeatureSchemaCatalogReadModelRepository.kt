@@ -9,4 +9,6 @@ import tech.medo.datasetgovernance.domain.types.LabelDefinition;
 
 interface SpringDataFeatureSchemaCatalogReadModelRepository : JpaRepository<FeatureSchemaCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<FeatureSchemaCatalogReadModelEntity> {
 
+
+
 }

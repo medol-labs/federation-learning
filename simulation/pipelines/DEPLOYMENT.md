@@ -47,7 +47,7 @@ Sync the worker with the existing sync-worker command and matching SSH host conf
 then run the deployment-only pipeline. Its host and workDir must match the sync config.
 
 ```bash
-node simulation/extensions/runtime/sync-worker.mjs simulation/pipelines/remote.json
+node simulation/src/worker.mjs sync simulation/pipelines/worker.json
 node simulation/src/run.mjs --mode remote --pipeline simulation/pipelines/deploy-remote.json-example --plan
 node simulation/src/run.mjs --mode remote --pipeline simulation/pipelines/deploy-remote.json-example
 ```

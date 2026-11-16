@@ -9,4 +9,6 @@ import java.math.BigDecimal;
 
 interface SpringDataTrainingJobDashboardReadModelRepository : JpaRepository<TrainingJobDashboardReadModelEntity, UUID>, JpaSpecificationExecutor<TrainingJobDashboardReadModelEntity> {
 
+
+
 }

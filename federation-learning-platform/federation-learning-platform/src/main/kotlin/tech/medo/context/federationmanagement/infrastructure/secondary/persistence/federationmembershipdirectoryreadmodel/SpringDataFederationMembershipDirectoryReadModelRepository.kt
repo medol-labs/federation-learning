@@ -9,4 +9,6 @@ import tech.medo.federationmanagement.federationmembershipdirectory.FederationMe
 interface SpringDataFederationMembershipDirectoryReadModelRepository : JpaRepository<FederationMembershipDirectoryReadModelEntity, FederationMembershipDirectoryReadModelKey>, JpaSpecificationExecutor<FederationMembershipDirectoryReadModelEntity> {
     fun findAllByFederationId(federationId: UUID): List<FederationMembershipDirectoryReadModelEntity>
     fun findAllByOrganizationId(organizationId: UUID): List<FederationMembershipDirectoryReadModelEntity>
+
+
 }

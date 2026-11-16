@@ -10,4 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataAgentRuntimeNodeResourceLatestReadModelRepository : JpaRepository<AgentRuntimeNodeResourceLatestReadModelEntity, UUID>, JpaSpecificationExecutor<AgentRuntimeNodeResourceLatestReadModelEntity> {
 
+
+
 }

@@ -1,4 +1,26 @@
 {
+  "fixtures": [{
+    "id": "training-dataset",
+    "source": "simulation/extensions/fixtures/test.csv",
+    "sha256": "b1c3c46512ce01f2c3b8ba7f614c642e6a33546168d309914a6ff77d1b93736e",
+    "localPath": "volumes/datasets/test.csv",
+    "destinations": [{
+      "transport": "k3d-node-file",
+      "nodeSelector": "!node-role.kubernetes.io/control-plane,!node-role.kubernetes.io/master",
+      "path": "/workspace/datasets/test.csv"
+    }]
+  }],
+  "dataRequirements": {
+    "participants": ["prepare-participants", "check-participants"],
+    "csv": ["prepare-participants", "check-participants"]
+  },
+  "dataPlan": {
+    "steps": [
+      {"id": "prepare-participants", "kind": "command", "operation": "PrepareParticipants"},
+      {"id": "check-participants", "kind": "wait", "operation": "CheckParticipantData", "expect": {"path": "ready", "equals": true}}
+    ],
+    "exports": {"$ref": "steps.check-participants.response.snapshot"}
+  },
   "arguments": ["--environment", "local", "--scenario", "csv", "--participant-count", "2", "--federation-mode", "global", "--recreate", "false", "--rebuild-app-images", "false", "--sync-default-kubeconfig", "false", "--wait-for-training", "--timeout", "600000"],
   "steps": [
     {"id": "cluster", "action": "prepareCluster"},

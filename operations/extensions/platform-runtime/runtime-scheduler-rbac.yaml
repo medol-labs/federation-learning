@@ -1,0 +1,108 @@
+apiVersion: "v1"
+kind: "ServiceAccount"
+metadata:
+  name: "federation-learning-platform-runtime-agent-scheduler"
+  labels:
+    "app.kubernetes.io/name": "federation-learning-platform-runtime-agent-scheduler"
+    "app.kubernetes.io/component": "runtime-agent-scheduler"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
+---
+apiVersion: "rbac.authorization.k8s.io/v1"
+kind: "Role"
+metadata:
+  name: "federation-learning-platform-runtime-agent-scheduler"
+  labels:
+    "app.kubernetes.io/name": "federation-learning-platform-runtime-agent-scheduler"
+    "app.kubernetes.io/component": "runtime-agent-scheduler"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
+rules:
+  - apiGroups:
+      - "apps"
+    resources:
+      - "deployments"
+    verbs:
+      - "get"
+      - "list"
+      - "watch"
+      - "create"
+      - "patch"
+      - "update"
+      - "delete"
+  - apiGroups:
+      - ""
+    resources:
+      - "services"
+      - "pods"
+      - "configmaps"
+      - "persistentvolumeclaims"
+    verbs:
+      - "get"
+      - "list"
+      - "watch"
+      - "create"
+      - "patch"
+      - "update"
+      - "delete"
+  - apiGroups:
+      - "networking.k8s.io"
+    resources:
+      - "ingresses"
+    verbs:
+      - "get"
+      - "list"
+      - "watch"
+      - "create"
+      - "patch"
+      - "update"
+      - "delete"
+---
+apiVersion: "rbac.authorization.k8s.io/v1"
+kind: "RoleBinding"
+metadata:
+  name: "federation-learning-platform-runtime-agent-scheduler"
+  labels:
+    "app.kubernetes.io/name": "federation-learning-platform-runtime-agent-scheduler"
+    "app.kubernetes.io/component": "runtime-agent-scheduler"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
+subjects:
+  - kind: "ServiceAccount"
+    name: "federation-learning-platform-runtime-agent-scheduler"
+roleRef:
+  apiGroup: "rbac.authorization.k8s.io"
+  kind: "Role"
+  name: "federation-learning-platform-runtime-agent-scheduler"
+---
+apiVersion: "rbac.authorization.k8s.io/v1"
+kind: "ClusterRole"
+metadata:
+  name: "federation-learning-platform-runtime-node-reader"
+  labels:
+    "app.kubernetes.io/name": "federation-learning-platform-runtime-node-reader"
+    "app.kubernetes.io/component": "runtime-infrastructure-verifier"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - "nodes"
+    verbs:
+      - "get"
+      - "list"
+      - "watch"
+---
+apiVersion: "rbac.authorization.k8s.io/v1"
+kind: "ClusterRoleBinding"
+metadata:
+  name: "federation-learning-platform-runtime-node-reader"
+  labels:
+    "app.kubernetes.io/name": "federation-learning-platform-runtime-node-reader"
+    "app.kubernetes.io/component": "runtime-infrastructure-verifier"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
+subjects:
+  - kind: "ServiceAccount"
+    name: "federation-learning-platform-runtime-agent-scheduler"
+    namespace: "federation-learning-platform"
+roleRef:
+  apiGroup: "rbac.authorization.k8s.io"
+  kind: "ClusterRole"
+  name: "federation-learning-platform-runtime-node-reader"

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "builtAt": "2026-11-16T06:35:44.156Z",
+  "imageVersion": "simulation-20261116",
+  "buildIdentity": "8253ae97c36882fb992757cc4756ff24713c0289bf58b9d9458e12364892371c",
+  "codeSha256": "183928ab0adadb2700b2d0981579b0294e3301e25b0fddacb097d5e4471adcb8",
+  "buildOptionsSha256": "75f598b834313256bead025d89babbe8672a627bbc6c58498fc6902dd3bdc61b",
+  "git": {
+    "revision": "1531721555679fad72f0c7c663c428aa601c913a",
+    "dirty": true
+  },
+  "generation": {
+    "schemaVersion": 1,
+    "target": "refine",
+    "scope": "application",
+    "selection": {
+      "generatorType": "all",
+      "frontendApp": "FederationLearningConsole",
+      "allCommands": true
+    },
+    "generatedAt": "2026-11-16T06:30:47.882Z",
+    "generator": {
+      "name": "medol-codegen",
+      "version": "1.0.0",
+      "sha256": "c4a839f6ce41b58b84a089ca7c0c146cbe70ed4228b026b9671a651db937b7fd"
+    },
+    "model": {
+      "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038",
+      "metadata": {
+        "schemaVersion": 1,
+        "medolVersion": "0.1.0",
+        "source": {
+          "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
+        }
+      }
+    },
+    "config": {
+      "sha256": "ed41b56bb6c4d7fd390f091f90c990414845e2a846349fd48295d9cfdd6e817b"
+    },
+    "inputs": [
+      {
+        "path": "../.medol/codegen-model.json",
+        "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038"
+      },
+      {
+        "path": "../.medol/medol.yml",
+        "sha256": "f3f72759925093d87a4a6841a1a58fbd9d91a6d07660e72443e3bff369aa864e"
+      },
+      {
+        "path": "../.medol/source.medol",
+        "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
+      },
+      {
+        "path": "../dictionary-init/dictionaries.json",
+        "sha256": "efb7481cb7be3b7145a33032af8647729c3400e92725a6add352b30aee4428bc"
+      }
+    ]
+  },
+  "images": [
+    {
+      "name": "fl/federation-learning-console:simulation-20261116",
+      "id": "sha256:4c6fd18789b655153792ca4adaea26c2e3d5814173036ed3e2cbb709cc45a313",
+      "repoDigests": []
+    }
+  ]
+}

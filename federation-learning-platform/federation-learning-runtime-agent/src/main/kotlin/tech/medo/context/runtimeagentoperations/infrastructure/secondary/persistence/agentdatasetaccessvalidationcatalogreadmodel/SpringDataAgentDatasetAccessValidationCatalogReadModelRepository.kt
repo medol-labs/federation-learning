@@ -10,4 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataAgentDatasetAccessValidationCatalogReadModelRepository : JpaRepository<AgentDatasetAccessValidationCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<AgentDatasetAccessValidationCatalogReadModelEntity> {
 
+
+
 }

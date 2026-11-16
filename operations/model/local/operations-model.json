@@ -4,7 +4,7 @@
     "schemaVersion": 1,
     "medolVersion": "0.1.0",
     "source": {
-      "sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
+      "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
     }
   },
   "name": "federation-learning-platform",
@@ -822,6 +822,13 @@
           "exposePorts": true
         }
       },
+      "browserOrigins": [
+        "http://192.168.50.2:31080",
+        "http://localhost:31080",
+        "http://127.0.0.1:31080",
+        "http://192.168.50.2:31081",
+        "http://192.168.50.2:31082"
+      ],
       "observability": {
         "mode": "managed",
         "samplingProbability": 0.1,

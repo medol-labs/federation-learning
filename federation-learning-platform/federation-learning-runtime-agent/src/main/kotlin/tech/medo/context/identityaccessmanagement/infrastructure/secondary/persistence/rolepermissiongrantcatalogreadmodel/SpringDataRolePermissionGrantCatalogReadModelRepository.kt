@@ -9,4 +9,6 @@ import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.RolePermiss
 interface SpringDataRolePermissionGrantCatalogReadModelRepository : JpaRepository<RolePermissionGrantCatalogReadModelEntity, RolePermissionGrantCatalogReadModelKey>, JpaSpecificationExecutor<RolePermissionGrantCatalogReadModelEntity> {
     fun findAllByRoleCode(roleCode: String): List<RolePermissionGrantCatalogReadModelEntity>
     fun findAllByPermissionCode(permissionCode: String): List<RolePermissionGrantCatalogReadModelEntity>
+
+
 }

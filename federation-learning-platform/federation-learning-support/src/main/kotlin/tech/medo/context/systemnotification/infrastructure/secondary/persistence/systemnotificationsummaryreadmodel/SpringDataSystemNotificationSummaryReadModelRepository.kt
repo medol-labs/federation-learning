@@ -12,4 +12,6 @@ import tech.medo.systemnotification.domain.types.NotificationToastPolicy;
 
 interface SpringDataSystemNotificationSummaryReadModelRepository : JpaRepository<SystemNotificationSummaryReadModelEntity, String>, JpaSpecificationExecutor<SystemNotificationSummaryReadModelEntity> {
 
+
+
 }

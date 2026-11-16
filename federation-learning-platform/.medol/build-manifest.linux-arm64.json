@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "builtAt": "2026-11-16T06:31:12.495Z",
+  "imageVersion": "simulation-20261116",
+  "buildIdentity": "fee4a2f10640fadddad5a7353eb50edb9b8631928fd8fa1517e6173961f58c38",
+  "codeSha256": "3bc1a7a4e8652aa42e5b86f0ce524de676b478670df4faa85e27bca2ec004baa",
+  "buildOptionsSha256": "b177f7b27e3fac344f7f7de866c4270e035501f757ed461775637cd6f4049b82",
+  "git": {
+    "revision": "1531721555679fad72f0c7c663c428aa601c913a",
+    "dirty": true
+  },
+  "generation": {
+    "schemaVersion": 1,
+    "target": "axon5",
+    "scope": "application",
+    "selection": {
+      "generatorType": "all"
+    },
+    "generatedAt": "2026-11-16T06:30:18.050Z",
+    "generator": {
+      "name": "medol-codegen",
+      "version": "1.0.0",
+      "sha256": "c4a839f6ce41b58b84a089ca7c0c146cbe70ed4228b026b9671a651db937b7fd"
+    },
+    "model": {
+      "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038",
+      "metadata": {
+        "schemaVersion": 1,
+        "medolVersion": "0.1.0",
+        "source": {
+          "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
+        }
+      }
+    },
+    "config": {
+      "sha256": "cf5c8d58eae7bc3f419dcd628efb1844076064b789b1af1fbc20cc311bbba89b"
+    },
+    "inputs": [
+      {
+        "path": "../.medol/codegen-model.json",
+        "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038"
+      },
+      {
+        "path": "../.medol/medol.yml",
+        "sha256": "f3f72759925093d87a4a6841a1a58fbd9d91a6d07660e72443e3bff369aa864e"
+      },
+      {
+        "path": "../.medol/source.medol",
+        "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
+      },
+      {
+        "path": "../dictionary-init/dictionaries.json",
+        "sha256": "efb7481cb7be3b7145a33032af8647729c3400e92725a6add352b30aee4428bc"
+      }
+    ]
+  },
+  "images": [
+    {
+      "name": "fl/federation-learning-platform:simulation-20261116",
+      "id": "sha256:bb38263e92519441d3f11180b6614fa827b51bad39397d801510bfa5fc743482",
+      "repoDigests": []
+    },
+    {
+      "name": "fl/federation-learning-runtime-agent:simulation-20261116",
+      "id": "sha256:6f5632b7cfe8795d2b34b7137b79372d83063e4efa76aff27130c76624205ef2",
+      "repoDigests": []
+    },
+    {
+      "name": "fl/federation-learning-support:simulation-20261116",
+      "id": "sha256:48be67dda2bd831534242e2908e13e78b40e7dea7ab164c2717cc23a7b087084",
+      "repoDigests": []
+    }
+  ]
+}

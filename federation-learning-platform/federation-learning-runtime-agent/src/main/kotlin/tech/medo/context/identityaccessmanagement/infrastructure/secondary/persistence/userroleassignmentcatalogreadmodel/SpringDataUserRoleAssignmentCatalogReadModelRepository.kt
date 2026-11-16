@@ -9,4 +9,6 @@ import tech.medo.identityaccessmanagement.userroleassignmentcatalog.UserRoleAssi
 interface SpringDataUserRoleAssignmentCatalogReadModelRepository : JpaRepository<UserRoleAssignmentCatalogReadModelEntity, UserRoleAssignmentCatalogReadModelKey>, JpaSpecificationExecutor<UserRoleAssignmentCatalogReadModelEntity> {
     fun findAllByUserAccountId(userAccountId: UUID): List<UserRoleAssignmentCatalogReadModelEntity>
     fun findAllByRoleCode(roleCode: String): List<UserRoleAssignmentCatalogReadModelEntity>
+
+
 }

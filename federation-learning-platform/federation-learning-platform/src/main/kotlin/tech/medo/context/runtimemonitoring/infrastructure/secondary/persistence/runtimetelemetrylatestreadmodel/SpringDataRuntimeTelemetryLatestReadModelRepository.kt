@@ -11,4 +11,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataRuntimeTelemetryLatestReadModelRepository : JpaRepository<RuntimeTelemetryLatestReadModelEntity, UUID>, JpaSpecificationExecutor<RuntimeTelemetryLatestReadModelEntity> {
 
+
+
 }

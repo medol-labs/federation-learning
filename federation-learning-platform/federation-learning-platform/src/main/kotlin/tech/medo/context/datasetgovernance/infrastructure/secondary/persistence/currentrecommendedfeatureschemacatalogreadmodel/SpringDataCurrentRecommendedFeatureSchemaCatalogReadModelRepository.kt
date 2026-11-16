@@ -10,4 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataCurrentRecommendedFeatureSchemaCatalogReadModelRepository : JpaRepository<CurrentRecommendedFeatureSchemaCatalogReadModelEntity, String>, JpaSpecificationExecutor<CurrentRecommendedFeatureSchemaCatalogReadModelEntity> {
 
+
+
 }

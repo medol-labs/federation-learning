@@ -142,7 +142,6 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRoundParticipantSelectionFailedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.Failed
         trainingJobId = event.trainingJobId
         federationId = event.federationId
         federationName = event.federationName
@@ -215,7 +214,6 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRoundStartFailedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.Failed
         trainingJobId = event.trainingJobId
         federationId = event.federationId
         federationName = event.federationName
@@ -338,7 +336,6 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ModelUpdateSubmissionRejectedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.EvaluatingGlobalModel
         modelUpdateSubmissionId = event.modelUpdateSubmissionId
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
@@ -376,7 +373,6 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: PlainModelAggregationFailedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.Failed
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         trainingJobObjective = event.trainingJobObjective
@@ -446,7 +442,6 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: GlobalModelEvaluationSubmittedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.EvaluatingGlobalModel
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         trainingJobObjective = event.trainingJobObjective

@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "servicePorts": {
+    "federation-learning-platform": 8081,
+    "federation-learning-support": 8080,
+    "federation-learning-runtime-agent": 8082
+  },
+  "namespace": "federation-learning-platform",
+  "workspace": "operations/k3s/.work/simulation-platform-{{environment}}",
+  "bindings": {},
+  "resources": [
+    "operations/k3s/environments/{{environment}}"
+  ],
+  "secrets": [
+    "operations/k3s/environments/{{environment}}/secrets.{{environment}}.yaml"
+  ],
+  "endpoints": {
+    "gateway": "{{gatewayUrl}}",
+    "platform": "{{gatewayUrl}}/api/federation-learning-platform",
+    "support": "{{gatewayUrl}}/api/federation-learning-support"
+  },
+  "health": [
+    {
+      "services": [
+        "apisix",
+        "federation-learning-platform"
+      ],
+      "url": "{{gatewayUrl}}/api/federation-learning-platform/actuator/health"
+    },
+    {
+      "services": [
+        "apisix",
+        "federation-learning-support"
+      ],
+      "url": "{{gatewayUrl}}/api/federation-learning-support/actuator/health"
+    }
+  ],
+  "files": {
+    "runtime-scheduler-rbac.yaml": {
+      "source": "operations/extensions/platform-runtime/runtime-scheduler-rbac.yaml"
+    },
+    "runtime-engine-scheduler-rbac.yaml": {
+      "source": "operations/extensions/platform-runtime/runtime-engine-scheduler-rbac.yaml"
+    },
+    "platform-aggregation-runtime-engine.yaml": {
+      "source": "operations/extensions/platform-runtime/platform-aggregation-runtime-engine.yaml"
+    },
+    "platform-runtime-scheduler.yaml": {
+      "source": "operations/extensions/platform-runtime/platform-runtime-scheduler.yaml"
+    },
+    "runtime-agent-engine-scheduler.yaml": {
+      "source": "operations/extensions/platform-runtime/runtime-agent-engine-scheduler.yaml"
+    },
+    "runtime-scheduler-config.yaml": {
+      "source": "operations/extensions/platform-runtime/runtime-scheduler-config.yaml"
+    }
+  },
+  "component": {
+    "apiVersion": "kustomize.config.k8s.io/v1alpha1",
+    "kind": "Component",
+    "resources": [
+      "../runtime-scheduler-rbac.yaml",
+      "../runtime-engine-scheduler-rbac.yaml",
+      "../platform-aggregation-runtime-engine.yaml"
+    ],
+    "patches": [
+      {
+        "path": "../platform-runtime-scheduler.yaml"
+      },
+      {
+        "path": "../runtime-agent-engine-scheduler.yaml"
+      },
+      {
+        "path": "../runtime-scheduler-config.yaml"
+      }
+    ]
+  },
+  "images": [
+    {
+      "service": "federation-learning-platform",
+      "alias": "fl/federation-learning-platform",
+      "reference": "{{imagePrefix}}/federation-learning-platform:{{imageVersion}}",
+      "always": false
+    },
+    {
+      "service": "federation-learning-support",
+      "alias": "fl/federation-learning-support",
+      "reference": "{{imagePrefix}}/federation-learning-support:{{imageVersion}}",
+      "always": false
+    },
+    {
+      "service": "federation-learning-console",
+      "alias": "fl/federation-learning-console",
+      "reference": "{{imagePrefix}}/federation-learning-console:{{imageVersion}}",
+      "always": false
+    },
+    {
+      "service": "federation-learning-runtime-agent",
+      "alias": "fl/federation-learning-runtime-agent",
+      "reference": "{{imagePrefix}}/federation-learning-runtime-agent:{{imageVersion}}",
+      "always": true
+    },
+    {
+      "service": "federation-learning-participant-console",
+      "alias": "fl/federation-learning-participant-console",
+      "reference": "{{imagePrefix}}/federation-learning-participant-console:{{imageVersion}}",
+      "always": true
+    },
+    {
+      "service": "federation-learning-aggregation-runtime-engine",
+      "alias": "fl/federation-learning-runtime-engine",
+      "reference": "{{imagePrefix}}/federation-learning-runtime-engine:pytorch-vision-{{imageVersion}}"
+    },
+    {
+      "service": "postgres",
+      "alias": "postgres",
+      "reference": "postgres:16"
+    },
+    {
+      "service": "umadb",
+      "alias": "umadb/umadb",
+      "reference": "umadb/umadb:0.7.8"
+    },
+    {
+      "service": "apisix",
+      "alias": "apache/apisix",
+      "reference": "apache/apisix:3.13.0-debian"
+    },
+    {
+      "service": "medol-observability",
+      "alias": "grafana/otel-lgtm",
+      "reference": "grafana/otel-lgtm:0.41.0"
+    }
+  ],
+  "patches": [
+    {
+      "patch": {
+        "apiVersion": "v1",
+        "kind": "ConfigMap",
+        "metadata": {
+          "name": "federation-learning-platform-{{environment}}-config"
+        },
+        "data": {
+          "PLATFORM_RUNTIME_K3S_AGENT_SECURITY_SECRET_NAME": "federation-learning-runtime-agent-{{environment}}-secret"
+        }
+      }
+    },
+    {
+      "patch": {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "metadata": {
+          "name": "federation-learning-support"
+        },
+        "spec": {
+          "template": {
+            "spec": {
+              "containers": [
+                {
+                  "name": "federation-learning-support",
+                  "env": [
+                    {
+                      "name": "FILE_UPLOAD_PUBLIC_BASE_URL",
+                      "value": "http://federation-learning-support:8080"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "patch": {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "metadata": {
+          "name": "postgres"
+        },
+        "spec": {
+          "strategy": {
+            "type": "Recreate",
+            "rollingUpdate": null
+          },
+          "template": {
+            "spec": {
+              "tolerations": [
+                {
+                  "key": "medol.dev/runtime-only",
+                  "operator": "Equal",
+                  "value": "true",
+                  "effect": "NoSchedule"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "patch": {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "metadata": {
+          "name": "umadb"
+        },
+        "spec": {
+          "strategy": {
+            "type": "Recreate",
+            "rollingUpdate": null
+          },
+          "template": {
+            "spec": {
+              "tolerations": [
+                {
+                  "key": "medol.dev/runtime-only",
+                  "operator": "Equal",
+                  "value": "true",
+                  "effect": "NoSchedule"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "imageTargets": [
+    {
+      "service": "federation-learning-runtime-agent",
+      "configMap": "federation-learning-platform-{{environment}}-config",
+      "key": "PLATFORM_RUNTIME_K3S_AGENT_IMAGE"
+    },
+    {
+      "service": "federation-learning-participant-console",
+      "configMap": "federation-learning-platform-{{environment}}-config",
+      "key": "PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_IMAGE"
+    },
+    {
+      "service": "federation-learning-aggregation-runtime-engine",
+      "configMap": "federation-learning-platform-{{environment}}-config",
+      "key": "PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE"
+    },
+    {
+      "service": "federation-learning-aggregation-runtime-engine",
+      "configMap": "federation-learning-runtime-agent-{{environment}}-config",
+      "key": "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE"
+    }
+  ]
+}

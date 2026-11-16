@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "namespaceTemplate": "{{parentNamespace}}-p{{slot}}",
+  "service": "federation-learning-runtime-agent",
+  "endpointTemplate": "http://federation-learning-runtime-agent.{{namespace}}.svc.cluster.local:8082",
+  "workspace": "operations/k3s/.work/participant-slots",
+  "resources": [
+    "operations/k3s/environments/{{environment}}/sites/participant/infrastructure.yaml",
+    "operations/k3s/environments/{{environment}}/sites/participant/applications.yaml",
+    "operations/k3s/environments/{{environment}}/sites/participant/configmap.yaml",
+    "operations/k3s/environments/{{environment}}/sites/participant/apisix-config.yaml",
+    "operations/k3s/environments/{{environment}}/sites/participant/apisix.yaml",
+    "operations/k3s/components/runtime-scheduling/runtime-engine-scheduler-rbac.yaml"
+  ],
+  "images": [
+    {
+      "name": "federation-learning-runtime-agent",
+      "source": "fl/federation-learning-runtime-agent"
+    },
+    {
+      "name": "federation-learning-participant-console",
+      "source": "fl/federation-learning-participant-console"
+    }
+  ],
+  "patches": [
+    {
+      "patch": {
+        "apiVersion": "v1",
+        "kind": "ConfigMap",
+        "metadata": {
+          "name": "apisix-config"
+        },
+        "data": {
+          "apisix.yaml": "{\"routes\":[{\"id\":\"console\",\"uri\":\"/*\",\"upstream\":{\"type\":\"roundrobin\",\"nodes\":{\"federation-learning-participant-console:80\":1}}},{\"id\":\"federation-learning-runtime-agent\",\"uri\":\"/api/federation-learning-runtime-agent/*\",\"priority\":10,\"upstream\":{\"type\":\"roundrobin\",\"nodes\":{\"federation-learning-runtime-agent:8082\":1}},\"plugins\":{\"proxy-rewrite\":{\"regex_uri\":[\"^/api/federation-learning-runtime-agent/(.*)\",\"/$1\"]}}},{\"id\":\"federation-learning-support\",\"uri\":\"/api/federation-learning-support/*\",\"priority\":10,\"upstream\":{\"type\":\"roundrobin\",\"nodes\":{\"federation-learning-support.{{parentNamespace}}.svc.cluster.local:8080\":1}},\"plugins\":{\"proxy-rewrite\":{\"regex_uri\":[\"^/api/federation-learning-support/(.*)\",\"/$1\"]}}},{\"id\":\"federation-learning-platform\",\"uri\":\"/api/federation-learning-platform/*\",\"priority\":10,\"upstream\":{\"type\":\"roundrobin\",\"nodes\":{\"federation-learning-platform.{{parentNamespace}}.svc.cluster.local:8081\":1}},\"plugins\":{\"proxy-rewrite\":{\"regex_uri\":[\"^/api/federation-learning-platform/(.*)\",\"/$1\"]}}}]}\n#END\n"
+        }
+      }
+    },
+    {
+      "path": "operations/k3s/environments/{{environment}}/sites/participant/patches/federation-learning-runtime-agent-envfrom.yaml"
+    },
+    {
+      "path": "operations/k3s/environments/{{environment}}/sites/participant/patches/federation-learning-participant-console-envfrom.yaml"
+    },
+    {
+      "path": "operations/k3s/components/runtime-scheduling/patches/runtime-agent-engine-scheduler.yaml"
+    },
+    {
+      "patch": {
+        "apiVersion": "v1",
+        "kind": "ConfigMap",
+        "metadata": {
+          "name": "federation-learning-runtime-agent-{{environment}}-config"
+        },
+        "data": {
+          "FEDERATION_LEARNING_PLATFORM_URL": "http://federation-learning-platform.{{parentNamespace}}.svc.cluster.local:8081",
+          "FEDERATION_LEARNING_SUPPORT_URL": "http://federation-learning-support.{{parentNamespace}}.svc.cluster.local:8080",
+          "MEDOL_SYNC_SOURCE_BASE_URL": "http://federation-learning-platform.{{parentNamespace}}.svc.cluster.local:8081",
+          "MEDOL_SYNC_SOURCE_BASE_URLS_DICTIONARYMAINTENANCE": "http://federation-learning-support.{{parentNamespace}}.svc.cluster.local:8080",
+          "RUNTIME_AGENT_ENDPOINT": "http://federation-learning-runtime-agent.{{namespace}}.svc.cluster.local:8082",
+          "RUNTIME_AGENT_ENDPOINT_SCOPE": "CLUSTER",
+          "RUNTIME_AGENT_INSTALL_MODE": "MANUAL_GUIDED",
+          "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODE": "kubernetes",
+          "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_NAMESPACE": "{{namespace}}",
+          "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_SERVICE_ACCOUNT_NAME": "federation-learning-platform-runtime-engine-scheduler",
+          "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT_HOST_ROOT": "/workspace/tmp/runtime-engine",
+          "MEDOL_OBSERVABILITY_ENABLED": "false"
+        }
+      }
+    },
+    {
+      "patch": {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "metadata": {
+          "name": "federation-learning-runtime-agent"
+        },
+        "spec": {
+          "template": {
+            "spec": {
+              "containers": [
+                {
+                  "name": "federation-learning-runtime-agent",
+                  "envFrom": [
+                    {
+                      "configMapRef": {
+                        "name": "federation-learning-runtime-agent-{{environment}}-config"
+                      }
+                    },
+                    {
+                      "secretRef": {
+                        "name": "federation-learning-runtime-agent-{{environment}}-secret"
+                      }
+                    },
+                    {
+                      "configMapRef": {
+                        "name": "participant-enrollment",
+                        "optional": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "patch": {
+        "apiVersion": "v1",
+        "kind": "ConfigMap",
+        "metadata": {
+          "name": "federation-learning-participant-console-{{environment}}-config"
+        },
+        "data": {
+          "VITE_AUTH_API_URL": "/api/federation-learning-support",
+          "VITE_FEDERATION_LEARNING_SUPPORT_API_URL": "/api/federation-learning-support"
+        }
+      }
+    },
+    {
+      "patch": {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "metadata": {
+          "name": "postgres"
+        },
+        "spec": {
+          "strategy": {
+            "type": "Recreate",
+            "rollingUpdate": null
+          },
+          "template": {
+            "spec": {
+              "tolerations": [
+                {
+                  "key": "medol.dev/runtime-only",
+                  "operator": "Equal",
+                  "value": "true",
+                  "effect": "NoSchedule"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "patch": {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "metadata": {
+          "name": "umadb"
+        },
+        "spec": {
+          "strategy": {
+            "type": "Recreate",
+            "rollingUpdate": null
+          },
+          "template": {
+            "spec": {
+              "tolerations": [
+                {
+                  "key": "medol.dev/runtime-only",
+                  "operator": "Equal",
+                  "value": "true",
+                  "effect": "NoSchedule"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "privatePatches": [
+    {
+      "target": {
+        "kind": "Service",
+        "name": "apisix"
+      },
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/spec/type",
+          "value": "ClusterIP"
+        },
+        {
+          "op": "remove",
+          "path": "/spec/ports/0/nodePort"
+        }
+      ]
+    }
+  ],
+  "publicPatches": [
+    {
+      "target": {
+        "kind": "Service",
+        "name": "apisix"
+      },
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/spec/type",
+          "value": "NodePort"
+        },
+        {
+          "op": "replace",
+          "path": "/spec/ports/0/nodePort",
+          "value": "{{nodePort}}"
+        }
+      ]
+    },
+    {
+      "patch": {
+        "apiVersion": "v1",
+        "kind": "ConfigMap",
+        "metadata": {
+          "name": "federation-learning-runtime-agent-{{environment}}-config"
+        },
+        "data": {
+          "MEDOL_SECURITY_ALLOWED_ORIGINS": "{{consoleUrl}}"
+        }
+      }
+    }
+  ],
+  "secrets": [
+    "postgres-secret",
+    "federation-learning-runtime-agent-{{environment}}-secret"
+  ],
+  "readiness": [
+    "postgres",
+    "umadb",
+    "federation-learning-runtime-agent",
+    "federation-learning-participant-console",
+    "apisix"
+  ],
+  "enrollment": {
+    "configMap": "participant-enrollment",
+    "immutableKeys": [
+      "RUNTIME_AGENT_ID",
+      "RUNTIME_INFRASTRUCTURE_ID"
+    ],
+    "deployment": "federation-learning-runtime-agent",
+    "podSpec": {
+      "nodeSelector": {
+        "kubernetes.io/hostname": "{{nodeName}}"
+      },
+      "tolerations": [
+        {
+          "key": "medol.dev/runtime-only",
+          "operator": "Equal",
+          "value": "true",
+          "effect": "NoSchedule"
+        }
+      ]
+    }
+  }
+}

@@ -11,4 +11,6 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 
 interface SpringDataRuntimeInfrastructureAccessViewReadModelRepository : JpaRepository<RuntimeInfrastructureAccessViewReadModelEntity, UUID>, JpaSpecificationExecutor<RuntimeInfrastructureAccessViewReadModelEntity> {
 
+
+
 }

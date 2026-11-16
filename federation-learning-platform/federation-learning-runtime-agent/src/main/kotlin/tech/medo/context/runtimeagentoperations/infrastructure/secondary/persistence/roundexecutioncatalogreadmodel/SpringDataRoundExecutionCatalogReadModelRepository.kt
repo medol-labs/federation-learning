@@ -12,4 +12,6 @@ import java.math.BigDecimal;
 
 interface SpringDataRoundExecutionCatalogReadModelRepository : JpaRepository<RoundExecutionCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<RoundExecutionCatalogReadModelEntity> {
 
+
+
 }

@@ -48,13 +48,17 @@ export async function runScenario(model, options = {}) {
       };
     }
 
+    for (const step of scenario.steps.filter(step => step.execution !== 'AUTOMATIC')) {
+      for (const input of step.inputs || []) {
+        if (!['Constant', 'PreviousStep', 'PreviousEvent', 'Generated'].includes(input.source?.kind)) {
+          throw new Error('Explicit input source required: ' + step.id + '.' + input.name);
+        }
+      }
+    }
     for (let index = 0; index < scenario.steps.length; index += 1) {
       const step = scenario.steps[index];
       log(logs, '');
       log(logs, '[' + (index + 1) + '/' + scenario.steps.length + '] ' + step.title);
-
-      const payload = resolvePayload(step, context, data);
-      context.put(step.id + '.command', payload);
 
       if (step.execution === 'AUTOMATIC') {
         log(logs, 'AUTO waiting for ' + expectedEventNames(step).join(', '));
@@ -62,6 +66,9 @@ export async function runScenario(model, options = {}) {
         log(logs, 'PASS');
         continue;
       }
+
+      const payload = resolvePayload(step, context, data);
+      context.put(step.id + '.command', payload);
 
       if (step.expectedRejection) {
         await expectRejection(step, payload, client, context, logs);
@@ -123,24 +130,25 @@ function resolvePayload(step, context, data) {
 }
 
 function resolveInput(step, input, context, data) {
-  const source = input.source || { kind: 'Generated' };
+  const source = input.source || { kind: 'Unresolved' };
   if (source.kind === 'Constant') {
     return source.value;
   }
   if (source.kind === 'PreviousStep') {
-    const value = context.get(source.stepId + '.' + source.field) ?? context.findValue(source.field);
+    const value = context.get(source.stepId + '.' + source.field);
     if (value === undefined) {
       throw new Error('Cannot resolve previous step input: ' + step.id + '.' + input.name);
     }
     return value;
   }
   if (source.kind === 'PreviousEvent') {
-    const value = context.eventValue(source.event, source.field) ?? context.findValue(source.field);
+    const value = context.eventValue(source.event, source.field);
     if (value === undefined) {
       throw new Error('Cannot resolve previous event input: ' + source.event + '.' + source.field);
     }
     return value;
   }
+  if (source.kind !== 'Generated') throw new Error('Explicit input source required: ' + step.id + '.' + input.name);
   return data.value(input, step.id + '.' + input.name);
 }
 

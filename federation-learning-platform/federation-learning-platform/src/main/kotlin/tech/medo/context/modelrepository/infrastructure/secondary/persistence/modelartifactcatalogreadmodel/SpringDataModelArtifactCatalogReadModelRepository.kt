@@ -11,4 +11,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataModelArtifactCatalogReadModelRepository : JpaRepository<ModelArtifactCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<ModelArtifactCatalogReadModelEntity> {
 
+
+
 }

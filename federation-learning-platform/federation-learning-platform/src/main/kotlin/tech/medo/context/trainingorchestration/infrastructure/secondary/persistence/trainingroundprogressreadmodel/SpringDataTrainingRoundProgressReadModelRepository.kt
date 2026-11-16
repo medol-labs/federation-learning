@@ -15,4 +15,6 @@ import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgre
 interface SpringDataTrainingRoundProgressReadModelRepository : JpaRepository<TrainingRoundProgressReadModelEntity, TrainingRoundProgressReadModelKey>, JpaSpecificationExecutor<TrainingRoundProgressReadModelEntity> {
     fun findAllByTrainingJobId(trainingJobId: UUID): List<TrainingRoundProgressReadModelEntity>
     fun findAllByRoundId(roundId: UUID): List<TrainingRoundProgressReadModelEntity>
+
+
 }

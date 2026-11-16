@@ -1,0 +1,139 @@
+{
+  "hosts": {
+    "k3d": {
+      "transport": "ssh",
+      "target": "fl-test",
+      "workDir": "/home/fl-simulation/test"
+    }
+  },
+  "steps": [
+    {
+      "id": "sync",
+      "phase": "environment",
+      "command": [
+        "node",
+        "simulation/src/worker.mjs",
+        "sync",
+        "simulation/pipelines/worker.json"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "environment",
+      "phase": "environment",
+      "host": "k3d",
+      "dependsOn": [
+        "sync"
+      ],
+      "timeoutMs": 600000,
+      "command": [
+        "node",
+        "simulation/src/prepare-environment.mjs",
+        "simulation/pipelines/environment-isolated.json"
+      ]
+    },
+    {
+      "id": "secrets",
+      "phase": "deployment",
+      "host": "k3d",
+      "dependsOn": [
+        "environment"
+      ],
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "secrets"
+      ]
+    },
+    {
+      "id": "deploy",
+      "phase": "deployment",
+      "host": "k3d",
+      "dependsOn": [
+        "secrets"
+      ],
+      "timeoutMs": 1800000,
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "deploy"
+      ]
+    },
+    {
+      "id": "review-cases",
+      "phase": "case-design",
+      "host": "k3d",
+      "dependsOn": [
+        "sync"
+      ],
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "select-cases"
+      ]
+    },
+    {
+      "id": "prepare-baseline",
+      "phase": "data-preparation",
+      "host": "k3d",
+      "dependsOn": [
+        "deploy"
+      ],
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "prepare-baseline"
+      ]
+    },
+    {
+      "id": "prepare-case",
+      "phase": "data-preparation",
+      "host": "k3d",
+      "dependsOn": [
+        "prepare-baseline",
+        "review-cases"
+      ],
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "prepare-case"
+      ]
+    },
+    {
+      "id": "execute-cases",
+      "phase": "test-execution",
+      "host": "k3d",
+      "dependsOn": [
+        "prepare-case",
+        "review-cases"
+      ],
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "test"
+      ]
+    },
+    {
+      "id": "collect",
+      "phase": "reporting",
+      "dependsOn": [
+        "execute-cases"
+      ],
+      "command": [
+        "node",
+        "simulation/src/worker.mjs",
+        "collect",
+        "simulation/pipelines/worker.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "mode": "case",
+  "requiresBaseline": true,
+  "seed": 1001,
+  "caseIds": [],
+  "fulfillments": {},
+  "steps": [],
+  "exports": {}
+}

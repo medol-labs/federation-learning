@@ -120,7 +120,6 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructureVerificationFailedEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.VerificationFailed
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         organizationId = event.organizationId
@@ -157,7 +156,6 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentInstallationFailedEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.RuntimeAgentFailed
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         runtimeAgentId = event.runtimeAgentId
@@ -194,7 +192,6 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructureVerificationRetryFailedEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.VerificationFailed
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         organizationId = event.organizationId
@@ -232,7 +229,6 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentDeploymentRetryFailedEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.RuntimeAgentFailed
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         runtimeAgentId = event.runtimeAgentId

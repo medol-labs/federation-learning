@@ -11,4 +11,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataRuntimeDatasetMetadataCatalogReadModelRepository : JpaRepository<RuntimeDatasetMetadataCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<RuntimeDatasetMetadataCatalogReadModelEntity> {
 
+
+
 }

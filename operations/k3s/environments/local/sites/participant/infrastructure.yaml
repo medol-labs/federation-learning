@@ -34,6 +34,8 @@ metadata:
     "app.kubernetes.io/managed-by": "medol-operations-generator"
 spec:
   replicas: 1
+  strategy:
+    type: "Recreate"
   selector:
     matchLabels:
       app: "postgres"
@@ -116,6 +118,8 @@ metadata:
     "app.kubernetes.io/managed-by": "medol-operations-generator"
 spec:
   replicas: 1
+  strategy:
+    type: "Recreate"
   selector:
     matchLabels:
       app: "umadb"

@@ -9,4 +9,6 @@ import tech.medo.trainingorchestration.domain.states.PersonalizedModelResultStat
 
 interface SpringDataPersonalizedModelCatalogReadModelRepository : JpaRepository<PersonalizedModelCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<PersonalizedModelCatalogReadModelEntity> {
 
+
+
 }

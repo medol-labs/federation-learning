@@ -2,10 +2,24 @@
   "target": "kubernetes",
   "environment": "local",
   "clusterName": "federation-learning-local",
+  "gatewayUrl": "http://localhost:31080",
   "kubeconfigFile": "operations/k3s/.work/kubeconfig-federation-learning-local.yaml",
   "platform": "linux/arm64",
   "imagePrefix": "192.168.50.2:5000/fl",
+  "imageVersion": "simulation-20261116",
+  "images": {
+    "postgres": "192.168.50.2:5000/library/postgres:16",
+    "umadb": "192.168.50.2:5000/umadb/umadb:0.7.8",
+    "apisix": "192.168.50.2:5000/apache/apisix:3.13.0-debian"
+  },
   "timeoutMs": 600000,
+  "participantSlots": 2,
+  "participantAccess": {
+    "publicUrl": "http://192.168.50.2",
+    "hostPortStart": 31081,
+    "nodePortStart": 30081,
+    "capacity": 20
+  },
   "instances": [
     {"service": "postgres", "replicas": 1},
     {"service": "umadb", "replicas": 1},
@@ -13,7 +27,6 @@
     {"service": "federation-learning-platform", "replicas": 1},
     {"service": "federation-learning-support", "replicas": 1},
     {"service": "federation-learning-console", "replicas": 1},
-    {"service": "federation-learning-participant-console", "replicas": 1},
     {"service": "federation-learning-aggregation-runtime-engine", "replicas": 1}
   ]
 }

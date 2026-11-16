@@ -11,4 +11,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataSecureAggregationSessionCatalogReadModelRepository : JpaRepository<SecureAggregationSessionCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<SecureAggregationSessionCatalogReadModelEntity> {
 
+
+
 }

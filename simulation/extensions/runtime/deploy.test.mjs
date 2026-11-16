@@ -6,10 +6,9 @@ const config = {target: 'kubernetes', clusterName: 'test', kubeconfigFile: '/tmp
 test('deployment only executes infrastructure actions and forwards capacity', async () => {
     const calls = [];
     const result = await executeDeployment(config, async args => {
-        assert.equal(args[args.indexOf('--kubeconfig-file') + 1], '/tmp/test-kubeconfig');
-        assert.equal(args.includes('--compute-nodes'), false);
-        assert.equal(args.includes('--skip-cluster'), true);
-        assert.equal(args.includes('--participant-count'), false);
+        assert.equal(args.kubeconfigFile, '/tmp/test-kubeconfig');
+        assert.equal(args.instances, config.instances);
+        assert.equal(Object.keys(args).some(key => key.startsWith('skip-')), false);
         return Object.fromEntries([
             ...deploymentPlan(config).map(name => [name, async () => calls.push(name)]),
             ['cleanup', async () => calls.push('cleanup')],
@@ -22,6 +21,11 @@ test('deployment only executes infrastructure actions and forwards capacity', as
 test('rejects unsupported targets and invalid capacity before execution', () => {
     assert.throws(() => deploymentPlan({...config, target: 'compose'}));
     assert.throws(() => deploymentPlan({...config, kubeconfigFile: ''}));
+});
+test('platform-only deployment rejects an orphan participant console', () => {
+    const console = {service: 'federation-learning-participant-console', replicas: 1};
+    assert.throws(() => deploymentPlan({...config, instances: [console]}), /requires active service/);
+    assert.throws(() => deploymentPlan({...config, instances: [console, {service: 'federation-learning-runtime-agent', replicas: 0}]}), /requires active service/);
 });
 test('architecture mismatch aborts before deploying and cleans up', async () => {
     let cleaned = false;

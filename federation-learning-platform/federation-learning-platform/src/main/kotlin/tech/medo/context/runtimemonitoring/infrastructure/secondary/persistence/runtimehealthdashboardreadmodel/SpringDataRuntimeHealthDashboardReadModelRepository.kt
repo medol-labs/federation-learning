@@ -11,4 +11,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataRuntimeHealthDashboardReadModelRepository : JpaRepository<RuntimeHealthDashboardReadModelEntity, UUID>, JpaSpecificationExecutor<RuntimeHealthDashboardReadModelEntity> {
 
+
+
 }

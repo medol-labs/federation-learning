@@ -39,6 +39,7 @@ class ExecuteDataExportProcessor(
             fileName = event.fileName
         )
         try {
+            lifecyclePort.markProcessing(event.dataExportJobId)
             val result = registry.executor(event.resourceName).execute(task)
             lifecyclePort.complete(event.dataExportJobId, result.fileName, result.filePath, result.rowCount)
         } catch (ex: Exception) {

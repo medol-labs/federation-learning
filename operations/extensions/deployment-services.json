@@ -1,0 +1,16 @@
+{
+  "services": [
+    {
+      "name": "apisix",
+      "source": "external-image"
+    },
+    {
+      "name": "federation-learning-aggregation-runtime-engine",
+      "source": "external-image"
+    },
+    {
+      "name": "federation-learning-participant-console",
+      "requires": ["federation-learning-runtime-agent"]
+    }
+  ]
+}

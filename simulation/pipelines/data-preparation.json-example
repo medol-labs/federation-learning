@@ -1,0 +1,52 @@
+{
+  "steps": [
+    {
+      "id": "prepare-baseline",
+      "phase": "data-preparation",
+      "command": [
+        "node",
+        "simulation/src/prepare-data.mjs",
+        "baseline",
+        "--plan",
+        "simulation/data/baseline.plan.json",
+        "--environment",
+        "simulation/instances/deployment.json",
+        "--output",
+        "simulation/data/results/baseline.json"
+      ]
+    },
+    {
+      "id": "review-cases",
+      "phase": "case-design",
+      "command": [
+        "node",
+        "simulation/src/cases.mjs",
+        "check",
+        "simulation/cases/approved/cases.json"
+      ]
+    },
+    {
+      "id": "prepare-case",
+      "phase": "data-preparation",
+      "dependsOn": [
+        "prepare-baseline",
+        "review-cases"
+      ],
+      "command": [
+        "node",
+        "simulation/src/prepare-data.mjs",
+        "case",
+        "--plan",
+        "simulation/data/case.plan.json",
+        "--environment",
+        "simulation/instances/deployment.json",
+        "--baseline",
+        "simulation/data/results/baseline.json",
+        "--cases",
+        "simulation/cases/approved/cases.json",
+        "--output",
+        "simulation/data/results/case.json"
+      ]
+    }
+  ]
+}

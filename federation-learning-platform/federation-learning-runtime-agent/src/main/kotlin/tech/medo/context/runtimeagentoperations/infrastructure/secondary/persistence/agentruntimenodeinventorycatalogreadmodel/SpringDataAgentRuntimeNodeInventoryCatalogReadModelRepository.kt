@@ -10,4 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataAgentRuntimeNodeInventoryCatalogReadModelRepository : JpaRepository<AgentRuntimeNodeInventoryCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<AgentRuntimeNodeInventoryCatalogReadModelEntity> {
 
+
+
 }

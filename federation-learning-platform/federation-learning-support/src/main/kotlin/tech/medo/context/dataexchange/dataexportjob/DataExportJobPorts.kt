@@ -1,5 +1,9 @@
 package tech.medo.dataexchange.dataexportjob
 
+import tech.medo.dataexchange.dataexportjob.RequestDataExportCommand
+import tech.medo.dataexchange.dataexportjob.MarkDataExportProcessingCommand
+import tech.medo.dataexchange.dataexportjob.CompleteDataExportCommand
+import tech.medo.dataexchange.dataexportjob.FailDataExportCommand
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.core.Metadata
 import org.springframework.stereotype.Component

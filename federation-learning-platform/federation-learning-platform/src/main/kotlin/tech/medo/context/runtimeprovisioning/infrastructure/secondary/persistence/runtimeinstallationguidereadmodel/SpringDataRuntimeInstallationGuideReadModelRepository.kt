@@ -8,4 +8,6 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 
 interface SpringDataRuntimeInstallationGuideReadModelRepository : JpaRepository<RuntimeInstallationGuideReadModelEntity, UUID>, JpaSpecificationExecutor<RuntimeInstallationGuideReadModelEntity> {
 
+
+
 }

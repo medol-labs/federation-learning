@@ -7,4 +7,6 @@ import java.util.UUID;
 
 interface SpringDataUserAccountCatalogReadModelRepository : JpaRepository<UserAccountCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<UserAccountCatalogReadModelEntity> {
 
+
+
 }

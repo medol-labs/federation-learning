@@ -3,7 +3,7 @@
     "k3d": {
       "transport": "ssh",
       "target": "fl-test",
-      "workDir": "/opt/federation-learning-test"
+      "workDir": "/home/fl-simulation/test"
     }
   },
   "steps": [
@@ -36,8 +36,9 @@
       "phase": "deploy",
       "command": [
         "node",
-        "simulation/extensions/runtime/sync-worker.mjs",
-        "simulation/pipelines/remote.json"
+        "simulation/src/worker.mjs",
+        "sync",
+        "simulation/pipelines/worker.json"
       ]
     },
     {
@@ -46,8 +47,9 @@
       "host": "k3d",
       "command": [
         "node",
-        "simulation/extensions/runtime/prepare-test-environment.mjs",
-        "--auto-test"
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "secrets"
       ]
     },
     {

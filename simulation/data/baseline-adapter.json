@@ -1,0 +1,18 @@
+{
+  "envFile": ".env",
+  "auth": {
+    "endpoint": "support",
+    "setupPath": "/api/auth/setup-admin",
+    "loginPath": "/api/auth/login",
+    "usernameEnv": "FL_K3D_ADMIN_USERNAME",
+    "passwordEnv": "FL_K3D_ADMIN_PASSWORD",
+    "setupTokenEnv": "FL_K3D_ADMIN_SETUP_TOKEN"
+  },
+  "dictionary": {
+    "endpoint": "support",
+    "script": "dictionary-init/init-dictionaries.mjs",
+    "dataFile": "dictionary-init/dictionaries.json",
+    "catalogPath": "/dictionary/dictionarycatalog",
+    "valuesPath": "/dictionaryvalue/dictionaryvaluecatalog"
+  }
+}

@@ -4,16 +4,17 @@ import jakarta.servlet.http.HttpServletRequest
 import org.axonframework.messaging.core.Metadata
 import java.util.UUID
 
-
+import tech.medo.shared.security.CurrentUser
+import org.springframework.security.core.context.SecurityContextHolder
 
 object MetadataFactory {
     const val DEFAULT_USER_ID = "anonymous"
 
     fun from(request: HttpServletRequest): Metadata {
-        val correlationId = header(request, MetadataHeaders.CORRELATION_ID) ?: UUID.randomUUID().toString()
+        val correlationId = header(request, MetadataHeaders.CORRELATION_ID) ?: request.getAttribute("medol.audit.correlationId")?.toString() ?: UUID.randomUUID().toString()
         val values = linkedMapOf<String, String?>()
 
-        put(values, MetadataKeys.USER_ID, header(request, MetadataHeaders.USER_ID) ?: request.userPrincipal?.name ?: DEFAULT_USER_ID)
+        put(values, MetadataKeys.USER_ID, (SecurityContextHolder.getContext().authentication?.principal as? CurrentUser)?.id?.toString() ?: request.userPrincipal?.name ?: DEFAULT_USER_ID)
         put(values, MetadataKeys.SESSION_ID, header(request, MetadataHeaders.SESSION_ID) ?: request.requestedSessionId ?: request.getSession(false)?.id ?: UUID.randomUUID().toString())
         put(values, MetadataKeys.CORRELATION_ID, correlationId)
         put(values, MetadataKeys.CAUSATION_ID, header(request, MetadataHeaders.CAUSATION_ID) ?: correlationId)

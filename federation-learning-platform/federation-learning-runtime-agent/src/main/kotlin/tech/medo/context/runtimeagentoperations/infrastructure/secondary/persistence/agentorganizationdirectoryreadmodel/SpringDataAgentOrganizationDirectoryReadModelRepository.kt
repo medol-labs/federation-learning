@@ -10,4 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataAgentOrganizationDirectoryReadModelRepository : JpaRepository<AgentOrganizationDirectoryReadModelEntity, UUID>, JpaSpecificationExecutor<AgentOrganizationDirectoryReadModelEntity> {
 
+
+
 }

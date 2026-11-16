@@ -1,0 +1,14 @@
+{
+  "mode": "baseline",
+  "steps": [
+    {"id": "support-health", "kind": "wait", "endpoint": "support", "path": "/actuator/health", "timeoutMs": 120000, "expect": {"path": "status", "equals": "UP"}},
+    {"id": "platform-health", "kind": "wait", "endpoint": "platform", "path": "/actuator/health", "timeoutMs": 120000, "expect": {"path": "status", "equals": "UP"}},
+    {"id": "administrator", "kind": "command", "operation": "InitializeAdministrator", "timeoutMs": 30000},
+    {"id": "dictionaries", "kind": "command", "operation": "InitializeDictionaries", "timeoutMs": 600000},
+    {"id": "dictionary-readiness", "kind": "wait", "operation": "CheckDictionaries", "timeoutMs": 120000, "expect": {"path": "ready", "equals": true}}
+  ],
+  "exports": {
+    "authentication": {"$ref": "steps.administrator.response.status"},
+    "dictionaries": {"$ref": "steps.dictionary-readiness.response"}
+  }
+}

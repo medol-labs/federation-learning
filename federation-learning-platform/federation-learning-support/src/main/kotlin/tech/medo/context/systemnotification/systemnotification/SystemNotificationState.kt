@@ -71,7 +71,6 @@ class SystemNotificationState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AllSystemNotificationsReadEvent): SystemNotificationState = apply {
-        currentState = SystemNotificationStateEnum.Read
         recipientUserId = event.recipientUserId
         readAt = event.readAt
     }

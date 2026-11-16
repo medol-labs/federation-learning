@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "participants-complete-training",
+      "title": "Two CSV participants complete one round and publish a digest-verified model",
+      "origin": "manual",
+      "status": "approved",
+      "prerequisites": [
+        "An existing deployment and ready participant data manifest with exactly two distinct runtime identities",
+        "Both MANUAL_GUIDED agents have reported reachable endpoints",
+        "CSV dataset capability and platform metadata are ready for both participants",
+        "Training configuration uses linear.LogisticRegression, maxRounds=1 and minimumNodesPerRound=2",
+        "Required sklearn training and aggregation images are available; artifact endpoints are reachable from the test worker"
+      ],
+      "dataRequirements": [
+        {
+          "id": "participants",
+          "description": "Two distinct organizations, runtime identities and dataset bindings from the data manifest"
+        },
+        {
+          "id": "csv",
+          "description": "Synthetic test.csv: 32 rows, id plus three numeric features and binary readmission_risk; accessible in both worker nodes at /workspace/datasets/test.csv"
+        }
+      ],
+      "steps": [
+        {
+          "id": "submit",
+          "type": "command",
+          "command": "SubmitTraining"
+        },
+        {
+          "id": "verify",
+          "type": "query",
+          "query": "VerifyTraining"
+        }
+      ],
+      "assertions": [
+        {
+          "type": "query",
+          "stepId": "submit",
+          "path": "trainingJobId",
+          "operator": "exists"
+        },
+        {
+          "type": "query",
+          "stepId": "submit",
+          "path": "participants.length",
+          "operator": "equals",
+          "expected": 2
+        },
+        {
+          "type": "query",
+          "stepId": "verify",
+          "path": "verified",
+          "operator": "equals",
+          "expected": true
+        }
+      ],
+      "timeoutMs": 7200000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [],
+      "approval": {
+        "reviewer": "codex-reviewed-two-participant-csv",
+        "fingerprint": "025d77b34417e20255189c6816f392928b16f45aaddce54a8bbdabe9e7d535a7"
+      }
+    }
+  ]
+}

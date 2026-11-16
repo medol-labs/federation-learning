@@ -13,4 +13,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataDatasetCapabilityReadModelRepository : JpaRepository<DatasetCapabilityReadModelEntity, UUID>, JpaSpecificationExecutor<DatasetCapabilityReadModelEntity> {
 
+
+
 }

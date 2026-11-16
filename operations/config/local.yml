@@ -1,6 +1,12 @@
 # Reference monitoring stack for local tests only. Production uses external mode.
 environments:
   local:
+    browserOrigins:
+      - http://192.168.50.2:31080
+      - http://localhost:31080
+      - http://127.0.0.1:31080
+      - http://192.168.50.2:31081
+      - http://192.168.50.2:31082
     observability:
       mode: managed
       samplingProbability: 0.1

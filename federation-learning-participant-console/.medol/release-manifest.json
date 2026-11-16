@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "builtAt": "2026-11-12T08:11:15.435Z",
-  "imageVersion": "0.0.1-SNAPSHOT",
-  "buildIdentity": "72235496360409966b445c366a0443af6fb7874eeeb74c39ddbdd6e34190d5f1",
-  "codeSha256": "326dc5c88924cd0cdde689f50f9a25409be9a101cd22a9b94ab3a91987b06324",
+  "builtAt": "2026-11-16T06:43:19.512Z",
+  "imageVersion": "simulation-20261116",
+  "buildIdentity": "091e1b7128fd52a1f5d7ed952f13b705989c60e2b43712333c668df3a9c32d39",
+  "codeSha256": "d615c5bd148db3b7776cd8f75480065c6b76f630acc673d0dcdf49d0c74901f4",
   "buildOptionsSha256": "8a34e1b154bad09065da576787be32919f6e518e986849c975bdcff1bfdab06f",
   "git": {
-    "revision": "b64f86973a007f6860145917e86f3acbab9e01e8",
+    "revision": "1531721555679fad72f0c7c663c428aa601c913a",
     "dirty": true
   },
   "generation": {
@@ -16,117 +16,31 @@
     "selection": {
       "generatorType": "all",
       "frontendApp": "FederationLearningParticipantConsole",
-      "commands": [
-        "command-bdd9dc49",
-        "command-0e2c68c7",
-        "command-23f9926b",
-        "command-99cc0fef",
-        "command-90777aaa",
-        "command-bcdf1e10",
-        "command-f5e35ce0",
-        "command-229f58df",
-        "command-aa7dfd8d",
-        "command-24c0ae1d",
-        "command-478724df",
-        "command-8352654f",
-        "command-1c4afee6",
-        "command-79318a5e",
-        "command-520c2ebe",
-        "command-f6faba10",
-        "command-964f15aa",
-        "command-482cb0b6",
-        "command-e8b264a6",
-        "command-e1f5dd76",
-        "command-bc91bffa",
-        "command-b6718efc",
-        "command-ee7c4c14",
-        "command-124f6258",
-        "command-6be4ee0a",
-        "command-0fddcb7a",
-        "command-5b794a08",
-        "command-8365e522",
-        "command-a553f89e",
-        "command-8fd72c8e",
-        "command-e26ba12c",
-        "command-2cbd251a",
-        "command-fa945b96",
-        "command-abc68736",
-        "command-3f4cc432",
-        "command-f0348b4a",
-        "command-bbffe073",
-        "command-1dce3ca3",
-        "command-dd7cfdae",
-        "command-e6ef3846",
-        "command-955d5238",
-        "command-65c03858",
-        "command-01fcdf36",
-        "command-09732d38",
-        "command-cc9d4dda",
-        "command-ec1dfd06",
-        "command-c3afc769",
-        "command-428dcbcd",
-        "command-545f831f",
-        "command-ac6c6e57",
-        "command-b9f345c7",
-        "command-78d183e2",
-        "command-8568e8b1",
-        "command-8495b9b3",
-        "command-1f153a8b",
-        "command-9affbd63",
-        "command-2c329e29",
-        "command-48a4b749",
-        "command-4abdd87b",
-        "command-c3dfe846",
-        "command-7bfdf5a7",
-        "command-de6c6b0e",
-        "command-1ad3eddc",
-        "command-c293f32c",
-        "command-ab1f69fc",
-        "command-bd43a736",
-        "command-2864c526",
-        "command-60bb4715",
-        "command-a3478fed",
-        "command-c4a297d1",
-        "command-1ac9bcf9",
-        "command-703c1eed",
-        "command-cd31996d",
-        "command-f8a685e9",
-        "command-11ac738b",
-        "command-1f0b2f8b",
-        "command-33a73df6",
-        "command-e63f60d0",
-        "command-e3603d8c",
-        "command-0118ab42",
-        "command-4f06876a",
-        "command-6d4c655a",
-        "command-0d92bf52",
-        "command-c00913ea",
-        "command-54ee0de8"
-      ]
+      "allCommands": true
     },
-    "generatedAt": "2026-11-04T08:59:41.767Z",
+    "generatedAt": "2026-11-16T06:30:51.128Z",
     "generator": {
       "name": "medol-codegen",
       "version": "1.0.0",
-      "sha256": "c20a119ef4928e119b198c9f7bde4f8a91b1f56798b1a74aafac8a144b31b937"
+      "sha256": "c4a839f6ce41b58b84a089ca7c0c146cbe70ed4228b026b9671a651db937b7fd"
     },
     "model": {
-      "sha256": "9c884e066c967a4e3ad07bad910226b5e33b2d787e7703a7136316de5c73ff03",
+      "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038",
       "metadata": {
         "schemaVersion": 1,
         "medolVersion": "0.1.0",
         "source": {
-          "sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
+          "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
         }
       }
     },
     "config": {
-      "sha256": "a4c50186ae1626dbd20319398c7a7ac138b9619688273f3e2e9c941a94e20a7c"
+      "sha256": "772e88222e67b174435d339731278aa99bf08702c69e86ea41b778ce4e2ba013"
     },
     "inputs": [
       {
         "path": "../.medol/codegen-model.json",
-        "sha256": "9c884e066c967a4e3ad07bad910226b5e33b2d787e7703a7136316de5c73ff03"
+        "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038"
       },
       {
         "path": "../.medol/medol.yml",
@@ -134,7 +48,7 @@
       },
       {
         "path": "../.medol/source.medol",
-        "sha256": "45ce3c39729de070fe75656ab6a59dfdcd2fa8394e212463dce0be4bc9e8d191"
+        "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
       },
       {
         "path": "../dictionary-init/dictionaries.json",
@@ -144,10 +58,10 @@
   },
   "images": [
     {
-      "name": "192.168.50.2:5000/fl/federation-learning-participant-console:0.0.1-SNAPSHOT",
-      "id": "sha256:464619c76f3c49fe3e0c0c564049ed99025dc8ee6d60c33f5647030296cbc605",
+      "name": "192.168.50.2:5000/fl/federation-learning-participant-console:simulation-20261116",
+      "id": "sha256:db19cdd8efae080293a7ad571a987f9d3baacefc72a002c474c6e2dce79c045a",
       "repoDigests": [
-        "192.168.50.2:5000/fl/federation-learning-participant-console@sha256:9296f56b6a30e608fa6ad3998963fd63b8f58f2a9387f548588c163756a08d46"
+        "192.168.50.2:5000/fl/federation-learning-participant-console@sha256:7e5c23d38b191366123fada0a2a4d14c15f74bdf03804195cd2c56e7905bdba0"
       ]
     }
   ]

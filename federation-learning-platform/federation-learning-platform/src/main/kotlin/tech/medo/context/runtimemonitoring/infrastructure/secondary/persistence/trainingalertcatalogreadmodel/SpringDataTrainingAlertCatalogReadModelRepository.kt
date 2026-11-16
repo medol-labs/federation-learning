@@ -11,4 +11,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 interface SpringDataTrainingAlertCatalogReadModelRepository : JpaRepository<TrainingAlertCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<TrainingAlertCatalogReadModelEntity> {
 
+
+
 }

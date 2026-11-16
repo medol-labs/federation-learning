@@ -7,4 +7,6 @@ import java.util.UUID;
 
 interface SpringDataPermissionCatalogReadModelRepository : JpaRepository<PermissionCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<PermissionCatalogReadModelEntity> {
 
+
+
 }
