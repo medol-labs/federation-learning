@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import {createHash} from 'node:crypto';
-import {existsSync, readdirSync, readFileSync} from 'node:fs';
+import {existsSync, readdirSync, readFileSync, writeFileSync} from 'node:fs';
 import {basename, resolve} from 'node:path';
 
 if (typeof fetch !== 'function') {
@@ -150,6 +150,7 @@ if (shouldRunTrainingJob(initTarget)) {
 
 console.log('[init-training] ready');
 console.log(JSON.stringify(seedSummary(seed), null, 2));
+if (args['output-summary']) writeFileSync(resolve(args['output-summary']), JSON.stringify(seedSummary(seed), null, 2), {flag: 'wx', mode: 0o600});
 printNextSteps();
 
 function seedSummary(seedValue) {

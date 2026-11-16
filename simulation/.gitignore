@@ -1,2 +1,4 @@
 reports/
+instances/environments/
+instances/deployments/
 *.private.json

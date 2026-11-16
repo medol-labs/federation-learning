@@ -9,3 +9,14 @@ export function roundHasExpectedContributions(round, participants) {
         Number(round.acceptedModelUpdateCount ?? round.acceptedUpdateCount ?? 0) >= expected.size &&
         Boolean(round.aggregatedModelId);
 }
+
+export function participantHasAcceptedArtifact(execution, runtimeId, round) {
+    return execution?.runtimeId === runtimeId && Boolean(execution.updateArtifactId) &&
+        (round.artifactRefs || []).some(ref => {
+            try {
+                const url = new URL(ref);
+                return ['http:', 'https:'].includes(url.protocol) &&
+                    url.pathname === `/api/files/${encodeURIComponent(execution.updateArtifactId)}/content`;
+            } catch { return false; }
+        });
+}

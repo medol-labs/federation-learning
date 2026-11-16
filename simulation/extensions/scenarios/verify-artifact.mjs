@@ -1,7 +1,7 @@
 import {createHash} from 'node:crypto';
 
 export async function verifyArtifact(model, allowedBases, headersFor, fetcher = fetch) {
-    if (!model?.modelArtifactUri || !/^sha256:[a-f0-9]{64}$/i.test(model.modelArtifactDigest || '')) {
+    if (!model?.modelArtifactUri || !/^(sha256:)?[a-f0-9]{64}$/i.test(model.modelArtifactDigest || '')) {
         throw new Error('Aggregated model must expose an artifact URI and SHA-256 digest');
     }
     const url = new URL(model.modelArtifactUri);
@@ -19,6 +19,7 @@ export async function verifyArtifact(model, allowedBases, headersFor, fetcher = 
     let bytes = 0;
     for await (const chunk of response.body) { bytes += chunk.length; hash.update(chunk); }
     if (!bytes) throw new Error('Artifact is empty');
-    if (`sha256:${hash.digest('hex')}` !== model.modelArtifactDigest.toLowerCase()) throw new Error('Artifact digest mismatch');
-    return {modelId: model.modelId, bytes, digest: model.modelArtifactDigest};
+    const digest = `sha256:${model.modelArtifactDigest.replace(/^sha256:/i, '').toLowerCase()}`;
+    if (`sha256:${hash.digest('hex')}` !== digest) throw new Error('Artifact digest mismatch');
+    return {modelId: model.modelId, bytes, digest};
 }

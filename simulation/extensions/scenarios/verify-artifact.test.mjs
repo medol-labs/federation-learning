@@ -12,6 +12,12 @@ test('streams artifact and verifies content digest', async () => {
     assert.equal(result.bytes, 5);
 });
 
+test('accepts bare SHA-256 from file storage and normalizes evidence', async () => {
+    const result = await verifyArtifact({...model, modelArtifactDigest: model.modelArtifactDigest.slice(7)},
+        ['http://localhost:8080'], () => ({}), async () => new Response(data));
+    assert.equal(result.digest, model.modelArtifactDigest);
+});
+
 test('rejects unrelated endpoints before attaching credentials', async () => {
     let calls = 0;
     await assert.rejects(verifyArtifact({...model, modelArtifactUri: 'http://untrusted.test/model'},

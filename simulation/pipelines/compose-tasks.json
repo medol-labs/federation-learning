@@ -1,0 +1,105 @@
+{
+  "tasks": {
+    "secrets": {
+      "scope": "deployment",
+      "module": "simulation/extensions/adapters/compose-training.mjs",
+      "export": "secrets",
+      "inputs": {
+        "config": {
+          "path": "simulation/pipelines/compose-credentials.json"
+        }
+      },
+      "output": "credentials.json"
+    },
+    "deploy": {
+      "scope": "deployment",
+      "module": "simulation/extensions/adapters/compose-training.mjs",
+      "export": "deploy",
+      "inputs": {
+        "config": {
+          "path": "simulation/pipelines/compose-deployment.json",
+          "env": "MEDOL_DEPLOYMENT_CONFIG"
+        }
+      },
+      "output": "deployment.json"
+    },
+    "select-cases": {
+      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "export": "select",
+      "inputs": {
+        "library": {
+          "path": "simulation/cases/approved/training.json"
+        },
+        "selection": {
+          "path": "simulation/pipelines/case-selection.json",
+          "env": "MEDOL_CASE_SELECTION"
+        }
+      },
+      "successStatuses": [
+        "ready"
+      ],
+      "output": "execution-plan.json",
+      "scope": "execution"
+    },
+    "prepare-baseline": {
+      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "export": "baseline",
+      "inputs": {
+        "environment": {
+          "artifact": "deployment.json",
+          "env": "MEDOL_ENVIRONMENT_MANIFEST",
+          "status": "ready",
+          "binding": "deployment"
+        },
+        "plan": {
+          "path": "simulation/data/baseline-plan.json"
+        },
+        "config": {
+          "path": "simulation/data/compose-baseline-adapter.json"
+        }
+      },
+      "output": "baseline.json",
+      "scope": "execution"
+    },
+    "prepare-case": {
+      "scope": "execution",
+      "module": "simulation/extensions/adapters/compose-training.mjs",
+      "export": "prepare",
+      "inputs": {
+        "environment": {
+          "artifact": "deployment.json",
+          "binding": "deployment"
+        },
+        "baseline": {
+          "artifact": "baseline.json",
+          "binding": "baseline"
+        },
+        "cases": {
+          "artifact": "execution-plan.json",
+          "binding": "plan"
+        }
+      },
+      "output": "data.json"
+    },
+    "test": {
+      "scope": "execution",
+      "module": "simulation/extensions/adapters/compose-training.mjs",
+      "export": "test",
+      "inputs": {
+        "environment": {
+          "artifact": "deployment.json",
+          "binding": "deployment"
+        },
+        "data": {
+          "artifact": "data.json",
+          "binding": "data"
+        },
+        "cases": {
+          "artifact": "execution-plan.json",
+          "binding": "plan"
+        }
+      },
+      "output": "test.json"
+    }
+  }
+}

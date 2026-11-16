@@ -1,0 +1,6 @@
+{
+  "id": "fl-test-01",
+  "environmentId": "fl-test-k3d",
+  "namespace": "federation-learning-platform",
+  "configFile": "simulation/pipelines/deployment.json-example"
+}

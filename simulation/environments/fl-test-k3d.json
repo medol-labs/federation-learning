@@ -1,0 +1,12 @@
+{
+  "id": "fl-test-k3d",
+  "mode": "existing",
+  "environment": "local",
+  "target": "kubernetes",
+  "provisioner": "existing",
+  "clusterName": "federation-learning-local",
+  "kubeconfigFile": "operations/k3s/.work/kubeconfig-federation-learning-local.yaml",
+  "output": "simulation/reports/environment-fl-test-k3d.json",
+  "workerNodes": 2,
+  "timeoutMs": 300000
+}

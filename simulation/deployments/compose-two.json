@@ -1,0 +1,6 @@
+{
+  "id": "compose-two-20261116",
+  "environmentId": "compose-local-amd64",
+  "composeProject": "fl-simulation-compose-20261116",
+  "configFile": "simulation/pipelines/compose-deployment.json"
+}

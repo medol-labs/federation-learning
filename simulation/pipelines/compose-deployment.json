@@ -1,0 +1,90 @@
+{
+  "target": "docker-compose",
+  "environment": "local",
+  "platform": "linux/amd64",
+  "dockerContext": "orbstack",
+  "composeProject": "fl-simulation-compose-20261116",
+  "files": [
+    "operations/extensions/compose-training/docker-compose.yml"
+  ],
+  "envFile": "simulation/compose/.env",
+  "endpoints": {
+    "support": "http://192.168.1.4:28080",
+    "platform": "http://127.0.0.1:28081"
+  },
+  "healthUrls": [
+    "http://127.0.0.1:28080/actuator/health",
+    "http://127.0.0.1:28081/actuator/health",
+    "http://127.0.0.1:28082/actuator/health",
+    "http://127.0.0.1:28083/actuator/health"
+  ],
+  "instances": [
+    {
+      "service": "database",
+      "replicas": 1
+    },
+    {
+      "service": "database1",
+      "replicas": 1
+    },
+    {
+      "service": "database2",
+      "replicas": 1
+    },
+    {
+      "service": "events",
+      "replicas": 1
+    },
+    {
+      "service": "events1",
+      "replicas": 1
+    },
+    {
+      "service": "events2",
+      "replicas": 1
+    },
+    {
+      "service": "support",
+      "replicas": 1
+    },
+    {
+      "service": "platform",
+      "replicas": 1
+    },
+    {
+      "service": "agent1",
+      "replicas": 1
+    },
+    {
+      "service": "agent2",
+      "replicas": 1
+    },
+    {
+      "service": "engine1",
+      "replicas": 1
+    },
+    {
+      "service": "engine2",
+      "replicas": 1
+    },
+    {
+      "service": "aggregation-engine",
+      "replicas": 1
+    }
+  ],
+  "participantDeployments": [
+    {
+      "slot": 1,
+      "key": "compose-participant-1",
+      "service": "agent1",
+      "endpoint": "http://127.0.0.1:28082"
+    },
+    {
+      "slot": 2,
+      "key": "compose-participant-2",
+      "service": "agent2",
+      "endpoint": "http://127.0.0.1:28083"
+    }
+  ],
+  "runtimeEngineImage": "fl-local/federation-learning-runtime-engine:sklearn-compose-20261116"
+}

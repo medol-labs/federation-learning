@@ -1,0 +1,6 @@
+{
+  "hostRef": {"pipeline": "simulation/pipelines/registered-run-remote.json", "host": "worker"},
+  "inputs": ["operations/", "simulation/", "scripts/", "dictionary-init/"],
+  "artifacts": ["run.json", "execution-plan.json", "data.json", "test.json", "select-cases.binding.json", "prepare-case.binding.json", "test.binding.json", "select-cases.failure.json", "prepare-case.failure.json", "test.failure.json"],
+  "required": ["run.json"]
+}

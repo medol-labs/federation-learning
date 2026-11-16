@@ -1,0 +1,166 @@
+x-app-env: &app-env
+  MEDOL_SECURITY_JWT_SECRET: ${MEDOL_SECURITY_JWT_SECRET:?required}
+  MEDOL_SECURITY_INTERNAL_TOKEN: ${MEDOL_SECURITY_INTERNAL_TOKEN:?required}
+  MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED: "true"
+  MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN: ${MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN:?required}
+  MEDOL_SECURITY_ALLOWED_ORIGINS: http://localhost:*,http://127.0.0.1:*
+  SPRING_DOCKER_COMPOSE_ENABLED: "false"
+  AXON_SERVER_ENABLED: "false"
+  AXON_SERVER_EVENT_STORE_ENABLED: "false"
+  AXON_UPDATE_CHECK_DISABLED: "true"
+  MEDOL_AXON_EVENT_STORAGE: umadb
+  UMADB_PLAINTEXT: "true"
+  DB_USERNAME: medo
+  DB_PASSWORD: ${POSTGRES_PASSWORD:?required}
+  MEDOL_AXON_LOG_PAYLOAD_ENABLED: "false"
+  MEDOL_OBSERVABILITY_ENABLED: "false"
+  JAVA_TOOL_OPTIONS: -Xms128m -Xmx640m -XX:ActiveProcessorCount=2
+  FEDERATION_LEARNING_PLATFORM_URL: http://platform:8081
+  FEDERATION_LEARNING_SUPPORT_URL: http://support:8080
+  MEDOL_SYNC_SOURCE_BASE_URL: http://support:8080
+  MEDOL_SYNC_SOURCE_BASE_URLS_DICTIONARYMAINTENANCE: http://support:8080
+x-app: &app
+  restart: unless-stopped
+  mem_limit: 1100m
+  healthcheck:
+    test: [CMD-SHELL, "wget -qO- http://localhost:$${SERVER_PORT}/actuator/health >/dev/null"]
+    interval: 10s
+    timeout: 5s
+    retries: 30
+    start_period: 30s
+x-pg: &pg
+  image: fl-local/postgres:16-amd64
+  environment:
+    POSTGRES_USER: medo
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?required}
+    POSTGRES_DB: app
+  healthcheck:
+    test: [CMD-SHELL, pg_isready -U medo -d app]
+    interval: 3s
+    retries: 30
+x-engine: &engine
+  image: fl-local/federation-learning-runtime-engine:sklearn-compose-20261116
+  environment:
+    RUNTIME_ENGINE_HOST: 0.0.0.0
+    RUNTIME_ENGINE_PORT: "8080"
+    RUNTIME_ENGINE_ROOT: /workspace/tmp/runtime-engine
+    RUNTIME_ENGINE_PLUGIN_PROFILE: sklearn
+    RUNTIME_ENGINE_NODE_NAME: local-runtime
+    RUNTIME_ENGINE_FILE_ACCESS_BASE_URL: http://support:8080
+    MEDOL_SECURITY_INTERNAL_TOKEN: ${MEDOL_SECURITY_INTERNAL_TOKEN:?required}
+  healthcheck:
+    test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8080/healthz')"]
+    interval: 5s
+    retries: 24
+x-agent-env: &agent-env
+  <<: *app-env
+  MEDOL_SYNC_SOURCE_BASE_URLS_DATASETGOVERNANCE: http://platform:8081
+  MEDOL_SYNC_SOURCE_BASE_URLS_ORGANIZATIONMANAGEMENT: http://platform:8081
+  MEDOL_SYNC_SOURCE_BASE_URLS_RUNTIMEGOVERNANCE: http://platform:8081
+  SERVER_PORT: "8082"
+  RUNTIME_AGENT_BOOTSTRAP_ENABLED: "false"
+  RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODE: prestarted
+  RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_PRESTARTED_IMAGE: fl-local/federation-learning-runtime-engine:sklearn-compose-20261116
+  RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_HOST_ROOT: /workspace/datasets
+  RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_CONTAINER_ROOT: /workspace/datasets
+  RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT: /workspace/tmp/runtime-engine
+  RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT_HOST_ROOT: /workspace/tmp/runtime-engine
+  RUNTIME_AGENT_ENDPOINT_SCOPE: PRIVATE
+services:
+  database:
+    <<: *pg
+    volumes:
+      - database:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+  database1:
+    <<: *pg
+    volumes: [database1:/var/lib/postgresql/data]
+  database2:
+    <<: *pg
+    volumes: [database2:/var/lib/postgresql/data]
+  events:
+    image: fl-local/umadb:0.7.8-amd64
+    volumes: [events:/data]
+  events1:
+    image: fl-local/umadb:0.7.8-amd64
+    volumes: [events1:/data]
+  events2:
+    image: fl-local/umadb:0.7.8-amd64
+    volumes: [events2:/data]
+  support:
+    <<: *app
+    image: fl-local/federation-learning-support:compose-20261116
+    ports: ["28080:8080"]
+    environment:
+      <<: *app-env
+      SERVER_PORT: "8080"
+      DB_URL: jdbc:postgresql://database:5432/support
+      UMADB_TARGET: events:50051
+      FILE_UPLOAD_PUBLIC_BASE_URL: ${PUBLIC_SUPPORT_URL:?required}
+      FILE_UPLOAD_LOCAL_ROOT_DIRECTORY: /workspace/uploads
+    volumes: [uploads:/workspace/uploads]
+    depends_on:
+      database: {condition: service_healthy}
+  platform:
+    <<: *app
+    image: fl-local/federation-learning-platform:compose-20261116-fixed
+    ports: ["28081:8081"]
+    environment:
+      <<: *app-env
+      SERVER_PORT: "8081"
+      DB_URL: jdbc:postgresql://database:5432/app
+      UMADB_TARGET: events:50051
+      FL_AGGREGATION_MODE: runtime-engine
+      FL_AGGREGATION_RUNTIME_ENGINE_ENDPOINT: http://aggregation-engine:8080
+      FEDERATION_LEARNING_RUNTIME_AGENT_URL: http://agent1:8082
+    depends_on:
+      database: {condition: service_healthy}
+      aggregation-engine: {condition: service_healthy}
+  agent1:
+    <<: *app
+    image: fl-local/federation-learning-runtime-agent:compose-20261116
+    ports: ["28082:8082"]
+    environment:
+      <<: *agent-env
+      DB_URL: jdbc:postgresql://database1:5432/app
+      UMADB_TARGET: events1:50051
+      RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENDPOINT: http://engine1:8080
+      RUNTIME_AGENT_ENDPOINT: http://agent1:8082
+    volumes: ["../../../simulation/extensions/fixtures:/workspace/datasets:ro", "work1:/workspace/tmp/runtime-engine"]
+    depends_on:
+      database1: {condition: service_healthy}
+      engine1: {condition: service_healthy}
+  agent2:
+    <<: *app
+    image: fl-local/federation-learning-runtime-agent:compose-20261116
+    ports: ["28083:8082"]
+    environment:
+      <<: *agent-env
+      DB_URL: jdbc:postgresql://database2:5432/app
+      UMADB_TARGET: events2:50051
+      RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENDPOINT: http://engine2:8080
+      RUNTIME_AGENT_ENDPOINT: http://agent2:8082
+    volumes: ["../../../simulation/extensions/fixtures:/workspace/datasets:ro", "work2:/workspace/tmp/runtime-engine"]
+    depends_on:
+      database2: {condition: service_healthy}
+      engine2: {condition: service_healthy}
+  engine1:
+    <<: *engine
+    volumes: ["../../../simulation/extensions/fixtures:/workspace/datasets:ro", "work1:/workspace/tmp/runtime-engine"]
+  engine2:
+    <<: *engine
+    volumes: ["../../../simulation/extensions/fixtures:/workspace/datasets:ro", "work2:/workspace/tmp/runtime-engine"]
+  aggregation-engine:
+    <<: *engine
+    volumes: [aggregation:/workspace/tmp/runtime-engine]
+volumes:
+  database: {}
+  database1: {}
+  database2: {}
+  events: {}
+  events1: {}
+  events2: {}
+  uploads: {}
+  work1: {}
+  work2: {}
+  aggregation: {}

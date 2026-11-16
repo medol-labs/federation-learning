@@ -1,0 +1,25 @@
+{
+  "hosts": {
+    "worker": {"transport": "ssh", "target": "fl-test", "workDir": "/home/fl-simulation/test"}
+  },
+  "steps": [
+    {
+      "id": "select-cases", "phase": "case-design", "host": "worker",
+      "command": ["node", "simulation/src/task.mjs", "simulation/pipelines/tasks.json", "select-cases"]
+    },
+    {
+      "id": "prepare-case", "phase": "data-preparation", "host": "worker",
+      "dependsOn": ["select-cases"], "timeoutMs": 7200000,
+      "command": ["node", "simulation/src/task.mjs", "simulation/pipelines/tasks.json", "prepare-case"]
+    },
+    {
+      "id": "test", "phase": "test-execution", "host": "worker",
+      "dependsOn": ["prepare-case"], "timeoutMs": 7200000,
+      "command": ["node", "simulation/src/task.mjs", "simulation/pipelines/tasks.json", "test"]
+    },
+    {
+      "id": "collect", "phase": "reporting", "dependsOn": ["test"],
+      "command": ["node", "simulation/src/worker.mjs", "collect", "simulation/pipelines/registered-worker.json"]
+    }
+  ]
+}

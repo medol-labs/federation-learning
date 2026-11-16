@@ -1,0 +1,9 @@
+{
+  "id": "desktop-docker",
+  "mode": "existing",
+  "environment": "local",
+  "target": "docker-compose",
+  "provisioner": "existing",
+  "dockerContext": "default",
+  "output": "simulation/reports/environment-desktop-docker.json"
+}

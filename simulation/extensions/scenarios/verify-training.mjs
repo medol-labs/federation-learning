@@ -1,4 +1,4 @@
-import {roundHasExpectedContributions} from './training-assertions.mjs';
+import {roundHasExpectedContributions, participantHasAcceptedArtifact} from './training-assertions.mjs';
 import {verifyArtifact} from './verify-artifact.mjs';
 
 export async function verifyTrainingResult(trainingJobId, participants, {getPage, platformUrl, supportUrl, waitForCondition, fail, federationMode, requestHeaders}) {
@@ -42,9 +42,9 @@ export async function verifyTrainingResult(trainingJobId, participants, {getPage
         await waitForCondition(`runtime ${participant.runtimeId} update submission`, async () => {
             const page = await getPage(participant.runtimeAgentUrl, '/roundexecution/roundexecutioncatalog', {
                 ...query, 'roundId.equals': completedRound.roundId, 'runtimeId.equals': participant.runtimeId,
-                'submittedAt.specified': 'true', size: 100
+                'updateArtifactId.specified': 'true', size: 100
             });
-            return (page.content || []).some(item => item.runtimeId === participant.runtimeId && item.submittedAt && item.updateArtifactId);
+            return (page.content || []).some(item => participantHasAcceptedArtifact(item, participant.runtimeId, completedRound));
         });
     }
     const model = await waitForCondition('aggregated model catalog', async () => {
@@ -70,5 +70,5 @@ export async function verifyTrainingResult(trainingJobId, participants, {getPage
             ));
         });
     }
-    console.log(`[k3d-flow] verified completed training job ${trainingJobId}; federationMode=${federationMode}, participants=${participants.length}`);
+    console.log(`[training-verification] verified completed training job ${trainingJobId}; federationMode=${federationMode}, participants=${participants.length}`);
 }

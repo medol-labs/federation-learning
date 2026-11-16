@@ -1,18 +1,22 @@
 {
   "schemaVersion": 1,
   "target": "axon5",
-  "scope": "application",
+  "scope": "partial",
   "selection": {
-    "generatorType": "all"
+    "generatorType": "slices",
+    "sliceNames": [
+      "Complete Model Aggregation"
+    ],
+    "slices": "CompleteModelAggregation"
   },
-  "generatedAt": "2026-11-16T06:30:18.050Z",
+  "generatedAt": "2026-11-16T13:31:48.945Z",
   "generator": {
     "name": "medol-codegen",
     "version": "1.0.0",
-    "sha256": "c4a839f6ce41b58b84a089ca7c0c146cbe70ed4228b026b9671a651db937b7fd"
+    "sha256": "cf1b66e38cb2e314d16b710bce0df1d95441e655679c6a01003a05a7a20ab77b"
   },
   "model": {
-    "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038",
+    "sha256": "ef8bd8419f61a31b1e6a3b9dd699b6a27bf13b2a3125f6e22868b5fd530a4f65",
     "metadata": {
       "schemaVersion": 1,
       "medolVersion": "0.1.0",
@@ -22,12 +26,12 @@
     }
   },
   "config": {
-    "sha256": "cf5c8d58eae7bc3f419dcd628efb1844076064b789b1af1fbc20cc311bbba89b"
+    "sha256": "eae5fc354239979050ebc8269af7a4fe55afe25578a905e8a04ff33bfc6b352d"
   },
   "inputs": [
     {
       "path": "../.medol/codegen-model.json",
-      "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038"
+      "sha256": "ef8bd8419f61a31b1e6a3b9dd699b6a27bf13b2a3125f6e22868b5fd530a4f65"
     },
     {
       "path": "../.medol/medol.yml",

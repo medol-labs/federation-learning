@@ -1,0 +1,9 @@
+{
+  "id": "compose-local-amd64",
+  "mode": "existing",
+  "environment": "local",
+  "target": "docker-compose",
+  "provisioner": "existing",
+  "dockerContext": "orbstack",
+  "output": "simulation/reports/environment-compose-local.json"
+}

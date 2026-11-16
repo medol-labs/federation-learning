@@ -1,6 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {roundHasExpectedContributions} from './training-assertions.mjs';
+import {roundHasExpectedContributions, participantHasAcceptedArtifact} from './training-assertions.mjs';
+
+test('participant submission evidence must match a platform contribution, not an unassigned timestamp', () => {
+    const round = {artifactRefs: ['https://support/api/files/artifact/content']};
+    const execution = {runtimeId: 'a', updateArtifactId: 'artifact', artifactRef: '/workspace/local_update.json', submittedAt: null};
+    assert.equal(participantHasAcceptedArtifact(execution, 'a', round), true);
+    for (const patch of [{runtimeId: 'b'}, {updateArtifactId: null}, {updateArtifactId: 'other'}]) {
+        assert.equal(participantHasAcceptedArtifact({...execution, ...patch}, 'a', round), false);
+    }
+    assert.equal(participantHasAcceptedArtifact(execution, 'a', {artifactRefs: []}), false);
+    assert.equal(participantHasAcceptedArtifact(execution, 'a', {artifactRefs: ['/workspace/local_update.json']}), false);
+});
 
 test('requires exact participants, quorum, updates and aggregation', () => {
     const participants = [{runtimeId: 'a'}, {runtimeId: 'b'}];
