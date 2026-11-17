@@ -1,44 +1,49 @@
 {
   "schemaVersion": 1,
-  "builtAt": "2026-11-16T06:43:09.757Z",
-  "imageVersion": "simulation-20261116",
-  "buildIdentity": "fee4a2f10640fadddad5a7353eb50edb9b8631928fd8fa1517e6173961f58c38",
-  "codeSha256": "3bc1a7a4e8652aa42e5b86f0ce524de676b478670df4faa85e27bca2ec004baa",
+  "builtAt": "2026-11-17T09:41:04.930Z",
+  "imageVersion": "simulation-20261117-artifact-url",
+  "buildIdentity": "eb64a1d5220867496d93d05bb239a5764c512eeb24fd49a1584e69ae7713d02e",
+  "codeSha256": "02975ac9f67994fef7acdcc77ab63929a8d5bc36bc98d9222933e11cd0eb274b",
   "buildOptionsSha256": "b177f7b27e3fac344f7f7de866c4270e035501f757ed461775637cd6f4049b82",
   "git": {
-    "revision": "1531721555679fad72f0c7c663c428aa601c913a",
+    "revision": "837c2252c58e12357cb9f52048e668c1b8a40e85",
     "dirty": true
   },
   "generation": {
     "schemaVersion": 1,
     "target": "axon5",
-    "scope": "application",
+    "scope": "partial",
     "selection": {
-      "generatorType": "all"
+      "generatorType": "slices",
+      "sliceNames": [
+        "Schedule Next Training Round",
+        "Complete Training Round"
+      ],
+      "slices": "CompleteTrainingRound,ScheduleNextTrainingRound"
     },
-    "generatedAt": "2026-11-16T06:30:18.050Z",
+    "generatedAt": "2026-11-17T06:46:23.921Z",
     "generator": {
       "name": "medol-codegen",
       "version": "1.0.0",
-      "sha256": "c4a839f6ce41b58b84a089ca7c0c146cbe70ed4228b026b9671a651db937b7fd"
+      "sha256": "52e710326512724eeab1a7b282d132d00b784e37df00d024a180d1a96763ae80"
     },
     "model": {
-      "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038",
+      "sha256": "94a3bf1dc9a912bfac254249032426eb24593b438dcab96a3d99c6a0c9c959cc",
       "metadata": {
         "schemaVersion": 1,
         "medolVersion": "0.1.0",
         "source": {
-          "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
+          "sha256": "a2032e84c22147e05a033baf58d713e0e0bd1036feff9ccc589f21a5dcde6bd1"
         }
       }
     },
     "config": {
-      "sha256": "cf5c8d58eae7bc3f419dcd628efb1844076064b789b1af1fbc20cc311bbba89b"
+      "sha256": "84dc4875c27365a7c7f413a0c20c02664c8f56a5dedd1ea5e0fb968cbcb1af26"
     },
     "inputs": [
       {
         "path": "../.medol/codegen-model.json",
-        "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038"
+        "sha256": "94a3bf1dc9a912bfac254249032426eb24593b438dcab96a3d99c6a0c9c959cc"
       },
       {
         "path": "../.medol/medol.yml",
@@ -46,7 +51,7 @@
       },
       {
         "path": "../.medol/source.medol",
-        "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
+        "sha256": "a2032e84c22147e05a033baf58d713e0e0bd1036feff9ccc589f21a5dcde6bd1"
       },
       {
         "path": "../dictionary-init/dictionaries.json",
@@ -56,24 +61,10 @@
   },
   "images": [
     {
-      "name": "192.168.50.2:5000/fl/federation-learning-platform:simulation-20261116",
-      "id": "sha256:bb38263e92519441d3f11180b6614fa827b51bad39397d801510bfa5fc743482",
+      "name": "192.168.50.2:5000/fl/federation-learning-runtime-agent:simulation-20261117-artifact-url",
+      "id": "sha256:571cc4164ed1524dd1cb6724b70e7b0a4d5ecae95fcd859ee9e20c03c30dcd5c",
       "repoDigests": [
-        "192.168.50.2:5000/fl/federation-learning-platform@sha256:002d083304584fc213d391310b565e2d03249d2aa2707157bfb9f3325c31505b"
-      ]
-    },
-    {
-      "name": "192.168.50.2:5000/fl/federation-learning-runtime-agent:simulation-20261116",
-      "id": "sha256:6f5632b7cfe8795d2b34b7137b79372d83063e4efa76aff27130c76624205ef2",
-      "repoDigests": [
-        "192.168.50.2:5000/fl/federation-learning-runtime-agent@sha256:09f19304bc81d6fb73c848baba8edfa20c54ee4c11c300a461701758e37b7904"
-      ]
-    },
-    {
-      "name": "192.168.50.2:5000/fl/federation-learning-support:simulation-20261116",
-      "id": "sha256:48be67dda2bd831534242e2908e13e78b40e7dea7ab164c2717cc23a7b087084",
-      "repoDigests": [
-        "192.168.50.2:5000/fl/federation-learning-support@sha256:21bcf7d1fe45e94dc6718375178dd192adbd983578b5c30ababf7bb47c907928"
+        "192.168.50.2:5000/fl/federation-learning-runtime-agent@sha256:506f7d01eeb0ebafc87589aab3aebcbc7b61d594274ebb2983a7dd1c5a563019"
       ]
     }
   ]

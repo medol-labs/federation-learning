@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "builtAt": "2026-11-16T12:54:45.564Z",
+  "imageVersion": "compose-20261116",
+  "buildIdentity": "bfe15c7ca7e89b806de31980eccae3434ed4f03de24cdf865d8ea724a56a8c96",
+  "codeSha256": "4f94e5db3effa1ac1e00a370142259c2562e9295cf45181a9f7ead0e808a891c",
+  "buildOptionsSha256": "9dffd31321047f4fd4195ab9fa1a93dec15ecc2b22e13c65cec681ac7096f16b",
+  "variant": "sklearn",
+  "git": {
+    "revision": "866deb8c159c913e9eac8a3b7a7396c25b1a2f45",
+    "dirty": true
+  },
+  "generation": {
+    "schemaVersion": 1,
+    "target": "operations",
+    "scope": "application",
+    "selection": {
+      "generatorType": "all",
+      "environment": "local"
+    },
+    "generatedAt": "2026-11-16T07:13:24.236Z",
+    "generator": {
+      "name": "medol-codegen",
+      "version": "1.0.0",
+      "sha256": "5cb3ab71d7484d37b7142c089d77dd59de6335cfb3ff02b8b2a7639fcd9acef9"
+    },
+    "model": {
+      "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038",
+      "metadata": {
+        "schemaVersion": 1,
+        "medolVersion": "0.1.0",
+        "source": {
+          "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
+        }
+      }
+    },
+    "config": {
+      "sha256": "8c69a10f1b327556a31096d5f19c3ab0e6fd799faa5d5eaa054a2ac59e36f211"
+    },
+    "inputs": [
+      {
+        "path": ".medol/codegen-model.json",
+        "sha256": "62beacce90781b992d80f21331913daf0f323f157b18d248c3b9c5fc9c4aa038"
+      },
+      {
+        "path": ".medol/medol.yml",
+        "sha256": "f3f72759925093d87a4a6841a1a58fbd9d91a6d07660e72443e3bff369aa864e"
+      },
+      {
+        "path": ".medol/source.medol",
+        "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
+      },
+      {
+        "path": "dictionary-init/dictionaries.json",
+        "sha256": "efb7481cb7be3b7145a33032af8647729c3400e92725a6add352b30aee4428bc"
+      }
+    ]
+  },
+  "images": [
+    {
+      "name": "fl-local/federation-learning-runtime-engine:sklearn-compose-20261116",
+      "id": "sha256:45080783eb8e6c8ad799508c25c6f4d6bda8f9953d7f1cf54d0f37c3c1a13441",
+      "repoDigests": []
+    }
+  ]
+}

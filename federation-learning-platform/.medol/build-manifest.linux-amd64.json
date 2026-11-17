@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "builtAt": "2026-11-16T13:29:31.682Z",
+  "imageVersion": "compose-20261116-fixed",
+  "buildIdentity": "26e8b95ac1e937c19e6a0bf6c2c94411b7f6c6eb0680ee602f23e7303f9cf7ab",
+  "codeSha256": "6418487200d516690210fac93d8b92531b8e51524b06f382ce21eb8c8005156c",
+  "buildOptionsSha256": "77d2c0808e4188d81efb9481f0cc981e070f3bb27b3bf976f25eab716c7ee143",
+  "git": {
+    "revision": "866deb8c159c913e9eac8a3b7a7396c25b1a2f45",
+    "dirty": true
+  },
+  "generation": {
+    "schemaVersion": 1,
+    "target": "axon5",
+    "scope": "partial",
+    "selection": {
+      "generatorType": "slices",
+      "sliceNames": [
+        "Complete Model Aggregation"
+      ],
+      "slices": "CompleteModelAggregation"
+    },
+    "generatedAt": "2026-11-16T13:28:47.607Z",
+    "generator": {
+      "name": "medol-codegen",
+      "version": "1.0.0",
+      "sha256": "a77b1ba0652a673566a6731c658d97d18bf7a155543bc624cc4ee08ddc01ea7a"
+    },
+    "model": {
+      "sha256": "e11bcdd584b60ec4319a434f3ef74f1aea5b72f59b42d07804caf9f136c05c23",
+      "metadata": {
+        "schemaVersion": 1,
+        "medolVersion": "0.1.0",
+        "source": {
+          "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
+        }
+      }
+    },
+    "config": {
+      "sha256": "eae5fc354239979050ebc8269af7a4fe55afe25578a905e8a04ff33bfc6b352d"
+    },
+    "inputs": [
+      {
+        "path": "../.medol/codegen-model.json",
+        "sha256": "e11bcdd584b60ec4319a434f3ef74f1aea5b72f59b42d07804caf9f136c05c23"
+      },
+      {
+        "path": "../.medol/medol.yml",
+        "sha256": "f3f72759925093d87a4a6841a1a58fbd9d91a6d07660e72443e3bff369aa864e"
+      },
+      {
+        "path": "../.medol/source.medol",
+        "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
+      },
+      {
+        "path": "../dictionary-init/dictionaries.json",
+        "sha256": "efb7481cb7be3b7145a33032af8647729c3400e92725a6add352b30aee4428bc"
+      }
+    ]
+  },
+  "images": [
+    {
+      "name": "fl-local/federation-learning-platform:compose-20261116-fixed",
+      "id": "sha256:9695fcfe8705ecff710ee79c23c79353e074c2a64390ba3c1b0850638284e99c",
+      "repoDigests": []
+    }
+  ]
+}
