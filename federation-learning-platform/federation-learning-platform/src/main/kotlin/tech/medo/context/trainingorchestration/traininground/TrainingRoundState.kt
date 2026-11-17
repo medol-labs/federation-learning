@@ -465,6 +465,7 @@ class TrainingRoundState @EntityCreator constructor() {
     fun evolve(event: TrainingRoundCompletedEvent): TrainingRoundState = apply {
         currentState = TrainingRoundStateEnum.Completed
         trainingJobId = event.trainingJobId
+        federationId = event.federationId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         trainingJobObjective = event.trainingJobObjective
         featureSchemaId = event.featureSchemaId

@@ -103,7 +103,7 @@ export async function testTraining(environment, scenario, data, plan, record, cr
       }},
       ...(adapter.testOperations || {})
     };
-    return await executeCases(plan, environment, data, {
+    const report = await executeCases(plan, environment, data, {
       capabilities: {steps: ['command', 'query'], assertions: ['query']},
       validatePlan(plan) {
         for (const item of plan.cases) {
@@ -119,5 +119,6 @@ export async function testTraining(environment, scenario, data, plan, record, cr
         return operations[step.command || step.query].execute(step, context);
       }
     }, {record});
+    return {...report, ...adapter.snapshot?.()};
   } finally { await adapter.cleanup(); }
 }

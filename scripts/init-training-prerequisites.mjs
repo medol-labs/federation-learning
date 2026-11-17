@@ -20,6 +20,7 @@ const skipLifecycleActivation = booleanOption(
 const activateLifecycle = booleanOption(args.activate ?? process.env.FL_ACTIVATE_LIFECYCLE, !skipLifecycleActivation);
 const timeoutMs = positiveInt(args.timeout, 30000);
 const pollIntervalMs = positiveInt(args['poll-interval'], 800);
+const maxRounds = positiveInt(args['max-rounds'] ?? process.env.FL_MAX_ROUNDS, 1);
 const trainingScenario = normalizeScenario(args.scenario ?? args['training-scenario'] ?? process.env.FL_TRAINING_SCENARIO ?? 'densenet');
 const federationMode = normalizeFederationMode(args['federation-mode'] ?? process.env.FL_FEDERATION_MODE ?? 'global');
 const trainingRunKey = nullableString(args['training-run-key'] ?? process.env.FL_TRAINING_RUN_KEY);
@@ -1442,7 +1443,7 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
             runtimeEngineImageDigest: runtimeOptions.runtimeEngineImageDigest,
             strategyName: 'LOCAL_DEV_DENSENET',
             aggregationAlgorithm: 'FED_AVG_PYTORCH_STATE_DICT',
-            maxRounds: 1,
+            maxRounds,
             minimumNodesPerRound: 1,
             roundTimeoutSeconds: 600,
             nodeResponseTimeoutSeconds: 300,
@@ -1748,7 +1749,7 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
             runtimeEngineImageDigest: runtimeOptions.runtimeEngineImageDigest,
             strategyName: 'LOCAL_DEV',
             aggregationAlgorithm: 'FED_AVG_JSON',
-            maxRounds: 1,
+            maxRounds,
             minimumNodesPerRound: 1,
             roundTimeoutSeconds: 600,
             nodeResponseTimeoutSeconds: 300,

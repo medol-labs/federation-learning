@@ -18,6 +18,8 @@ test('platform deploy renders Operations assets without training or K3d scripts'
         const calls = []; let rendered;
         const config = {environment: 'local', namespace: 'federation-learning-platform', kubeconfigFile: 'kubeconfig',
             platform: 'linux/arm64', imagePrefix: 'registry.example/test', imageVersion: 'test', gatewayUrl: 'http://localhost:30080',
+            bindings: {artifactPublicBaseUrl: 'https://gateway.example/api/support'},
+            images: {'federation-learning-aggregation-runtime-engine': 'registry.example/test/engine:sklearn'},
             instances: ['postgres','umadb','apisix','federation-learning-platform','federation-learning-support','federation-learning-console','federation-learning-aggregation-runtime-engine'].map(service => ({service, replicas: 1}))};
         const execute = (command, args, input) => {
             calls.push([command, ...args]);
@@ -37,6 +39,8 @@ test('platform deploy renders Operations assets without training or K3d scripts'
         await adapter.validateConnection(); await adapter.prepareImages(); await adapter.deploy(); await adapter.waitDeploymentReady();
         assert.match(rendered, /registry.example\/test\/federation-learning-platform@sha256:/);
         assert.match(rendered, /federation-learning-platform-local-secret/);
+        assert.match(rendered, /https:\/\/gateway.example\/api\/support/);
+        assert.ok(calls.some(call => call[0] === 'docker' && call.includes('registry.example/test/engine:sklearn')));
         assert.doesNotMatch(rendered, /name: federation-learning-runtime-agent\n/);
         assert.ok(calls.every(call => ['docker', 'kubectl'].includes(call[0])));
         assert.ok(adapter.deploymentSnapshot().images.length > 0);

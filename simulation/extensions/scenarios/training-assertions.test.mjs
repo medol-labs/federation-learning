@@ -11,6 +11,9 @@ test('participant submission evidence must match a platform contribution, not an
     }
     assert.equal(participantHasAcceptedArtifact(execution, 'a', {artifactRefs: []}), false);
     assert.equal(participantHasAcceptedArtifact(execution, 'a', {artifactRefs: ['/workspace/local_update.json']}), false);
+    assert.equal(participantHasAcceptedArtifact(execution, 'a', {
+        artifactRefs: ['https://gateway/api/support/api/files/artifact/content']
+    }, 'https://gateway/api/support'), true);
 });
 
 test('requires exact participants, quorum, updates and aggregation', () => {

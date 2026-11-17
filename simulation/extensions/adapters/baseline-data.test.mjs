@@ -67,3 +67,30 @@ test('an initializer failure cannot produce a ready baseline', async () => {
         }), /initializer failed/);
     } finally { rmSync(input.root, {recursive: true, force: true}); }
 });
+
+test('participant administrators log in locally and queries use each local token', async () => {
+    const input = fixture();
+    input.config.participantAuth = {basePath: '/agent', probePath: '/catalog'};
+    input.environment.participantDeployments = [{consoleUrl: 'http://p1'}, {consoleUrl: 'http://p2'}];
+    const initialized = new Set(), queried = [];
+    const plan = {mode: 'baseline', steps: [{id: 'health', kind: 'wait', endpoint: 'auth', path: '/health', expect: {path: 'status', equals: 'UP'}}, {id: 'participants', kind: 'command', operation: 'InitializeParticipantAdministrators'}], exports: {}};
+    try {
+        const result = await prepareBaseline({...input, plan}, {root: input.root}, {
+            env: {TEST_USER: 'operator', TEST_PASSWORD: 'private-password', TEST_SETUP: 'private-setup'},
+            fetch: async (target, options) => {
+                const url = new URL(target);
+                if (url.pathname === '/api/health') return Response.json({status: 'UP'});
+                if (url.pathname === '/agent/login') return initialized.has(url.host)
+                    ? Response.json({accessToken: 'private-' + url.host}) : new Response('{}', {status: 401});
+                if (url.pathname === '/agent/setup') { initialized.add(url.host); return Response.json({}); }
+                assert.equal(url.pathname, '/agent/catalog');
+                assert.equal(options.headers.Authorization, 'Bearer private-' + url.host);
+                queried.push(url.host);
+                return Response.json({content: []});
+            }
+        });
+        assert.equal(result.status, 'ready');
+        assert.deepEqual(queried, ['p1', 'p2']);
+        assert(!JSON.stringify(result).includes('private-'));
+    } finally { rmSync(input.root, {recursive: true, force: true}); }
+});

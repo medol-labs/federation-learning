@@ -142,6 +142,26 @@
       },
       "output": "test.json",
       "scope": "execution"
+    },
+    "prepare-participant-auth": {
+      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "export": "baseline",
+      "inputs": {
+        "environment": {
+          "artifact": "deployment.json",
+          "env": "MEDOL_ENVIRONMENT_MANIFEST",
+          "status": "ready",
+          "binding": "deployment"
+        },
+        "plan": {
+          "path": "simulation/data/participant-auth-plan.json"
+        },
+        "config": {
+          "path": "simulation/data/baseline-adapter.json"
+        }
+      },
+      "output": "participant-auth.json",
+      "scope": "execution"
     }
   }
 }

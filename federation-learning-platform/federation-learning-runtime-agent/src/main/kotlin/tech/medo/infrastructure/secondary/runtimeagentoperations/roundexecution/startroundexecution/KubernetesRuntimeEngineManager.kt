@@ -17,27 +17,26 @@ import java.time.Instant
 class KubernetesRuntimeEngineManager(
     private val properties: LocalRuntimeEngineProperties,
     private val client: KubernetesClient,
-    @Value("\${runtime-agent.local-model-update-submission.support-url:http://localhost:8080}")
-    private val supportUrl: String = "http://localhost:8080",
     @Value("\${medol.security.internal-token:}")
     private val internalToken: String = ""
 ) : RuntimeEngineResourceManager {
-    override fun ensureStarted(jobId: String, image: String) {
-        val name = properties.kubernetesResourceName(jobId)
-        val labels = mapOf("app" to name, "medol.dev/runtime-engine-job-id" to jobId)
-        val container = ContainerBuilder()
+    internal fun engineContainer(image: String) = ContainerBuilder()
             .withName("runtime-engine")
             .withImage(image)
             .withImagePullPolicy(properties.kubernetesImagePullPolicy)
             .addNewPort().withName("http").withContainerPort(properties.kubernetesContainerPort).endPort()
             .addNewEnv().withName("RUNTIME_ENGINE_ROOT").withValue(properties.runtimeRoot).endEnv()
-            .addNewEnv().withName("RUNTIME_ENGINE_FILE_ACCESS_BASE_URL").withValue(supportUrl).endEnv()
             .addNewEnv().withName("MEDOL_SECURITY_INTERNAL_TOKEN").withValue(internalToken).endEnv()
             .addToVolumeMounts(
                 VolumeMountBuilder().withName("datasets").withMountPath(properties.datasetContainerRoot).withReadOnly(true).build(),
                 VolumeMountBuilder().withName("runtime-work").withMountPath(properties.runtimeRoot).build()
             )
             .build()
+
+    override fun ensureStarted(jobId: String, image: String) {
+        val name = properties.kubernetesResourceName(jobId)
+        val labels = mapOf("app" to name, "medol.dev/runtime-engine-job-id" to jobId)
+        val container = engineContainer(image)
         val podSpec = DeploymentBuilder()
             .withNewMetadata().withName(name).withNamespace(properties.kubernetesNamespace).addToLabels(labels).endMetadata()
             .withNewSpec()

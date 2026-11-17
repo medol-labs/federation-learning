@@ -1,0 +1,8 @@
+{
+  "mode": "baseline",
+  "steps": [
+    {"id": "support-health", "kind": "wait", "endpoint": "support", "path": "/actuator/health", "expect": {"path": "status", "equals": "UP"}},
+    {"id": "participant-administrators", "kind": "command", "operation": "InitializeParticipantAdministrators", "timeoutMs": 300000}
+  ],
+  "exports": {"authentication": {"$ref": "steps.participant-administrators.response"}}
+}

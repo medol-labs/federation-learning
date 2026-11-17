@@ -1,5 +1,9 @@
 {
   "envFile": "simulation/compose/.env",
+  "participantAuth": {
+    "endpointField": "endpoint",
+    "probePath": "/agentdictionaryvaluetranslationcatalog/agentdictionaryvaluetranslationcatalog?page=0&size=200&locale.in=zh-CN%2Czh"
+  },
   "auth": {
     "endpoint": "support",
     "setupPath": "/api/auth/setup-admin",

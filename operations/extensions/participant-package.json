@@ -60,6 +60,7 @@
           "RUNTIME_AGENT_ENDPOINT_SCOPE": "CLUSTER",
           "RUNTIME_AGENT_INSTALL_MODE": "MANUAL_GUIDED",
           "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODE": "kubernetes",
+          "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_HEALTH_TIMEOUT": "PT5M",
           "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_NAMESPACE": "{{namespace}}",
           "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_SERVICE_ACCOUNT_NAME": "federation-learning-platform-runtime-engine-scheduler",
           "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT_HOST_ROOT": "/workspace/tmp/runtime-engine",
@@ -113,7 +114,7 @@
           "name": "federation-learning-participant-console-{{environment}}-config"
         },
         "data": {
-          "VITE_AUTH_API_URL": "/api/federation-learning-support",
+          "VITE_AUTH_API_URL": "/api/federation-learning-runtime-agent",
           "VITE_FEDERATION_LEARNING_SUPPORT_API_URL": "/api/federation-learning-support"
         }
       }

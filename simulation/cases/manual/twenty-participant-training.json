@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "participants-complete-training",
+      "title": "Twenty CSV participants complete two linked rounds and publish digest-verified models",
+      "origin": "manual",
+      "status": "draft",
+      "prerequisites": [
+        "Twenty deployed and registered participants with distinct runtime identities",
+        "All 20 agents have accessible validated CSV bindings",
+        "maxRounds=2; minimumNodesPerRound=20; FED_AVG aggregation"
+      ],
+      "dataRequirements": [
+        {
+          "id": "participants",
+          "description": "Twenty distinct organizations, runtime identities and dataset bindings"
+        },
+        {
+          "id": "csv",
+          "description": "Synthetic 32-row CSV fixture per participant; functional capacity test, not clinical effectiveness evidence"
+        }
+      ],
+      "steps": [
+        {
+          "id": "submit",
+          "type": "command",
+          "command": "SubmitTraining"
+        },
+        {
+          "id": "verify",
+          "type": "query",
+          "query": "VerifyTraining"
+        }
+      ],
+      "assertions": [
+        {
+          "type": "query",
+          "stepId": "submit",
+          "path": "trainingJobId",
+          "operator": "exists"
+        },
+        {
+          "type": "query",
+          "stepId": "submit",
+          "path": "participants.length",
+          "operator": "equals",
+          "expected": 20
+        },
+        {
+          "type": "query",
+          "stepId": "verify",
+          "path": "verified",
+          "operator": "equals",
+          "expected": true
+        },
+        {
+          "type": "query",
+          "stepId": "verify",
+          "path": "verification.completedRoundCount",
+          "operator": "equals",
+          "expected": 2
+        },
+        {
+          "type": "query",
+          "stepId": "verify",
+          "path": "verification.acceptedExecutionCount",
+          "operator": "equals",
+          "expected": 40
+        }
+      ],
+      "timeoutMs": 7200000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": []
+    }
+  ]
+}

@@ -35,7 +35,6 @@ export async function prepareBaseline({environment, plan, config}, {root}, depen
     const authBase = endpoint(environment, config.auth?.endpoint);
     const dictionaryBase = endpoint(environment, config.dictionary?.endpoint);
     if (dictionaryBase !== authBase) throw new Error('Dictionary initialization requires the configured authentication endpoint');
-    const setupUrl = api(authBase, config.auth.setupPath), loginUrl = api(authBase, config.auth.loginPath);
     const catalog = api(dictionaryBase, config.dictionary.catalogPath), values = api(dictionaryBase, config.dictionary.valuesPath);
     const script = localFile(root, config.dictionary.script), dataFile = localFile(root, config.dictionary.dataFile);
     const dictionaries = JSON.parse(readFileSync(dataFile, 'utf8')).dictionaries;
@@ -46,15 +45,26 @@ export async function prepareBaseline({environment, plan, config}, {root}, depen
     const username = environmentValues[config.auth.usernameEnv], password = environmentValues[config.auth.passwordEnv], setupToken = environmentValues[config.auth.setupTokenEnv];
     if (!username || !password) throw new Error('Explicit baseline administrator credentials are required');
     let token;
-    const authenticate = async signal => {
-        const response = await request(loginUrl, {method: 'POST', redirect: 'error', signal,
+    const authenticate = async (base, signal) => {
+        const response = await request(api(base, config.auth.loginPath), {method: 'POST', redirect: 'error', signal,
             headers: {'content-type': 'application/json'}, body: JSON.stringify({username, password})});
         if (response.status === 401) return false;
         if (!response.ok) throw new Error('Baseline login failed with HTTP ' + response.status);
         const body = await response.json();
         if (!body.accessToken) throw new Error('Baseline login did not return a token');
-        token = body.accessToken;
-        return true;
+        return body.accessToken;
+    };
+    const initializeAdministrator = async (base, signal) => {
+        let accessToken = await authenticate(base, signal);
+        if (!accessToken) {
+            if (!setupToken) throw new Error('Administrator setup token is required for initialization');
+            const response = await request(api(base, config.auth.setupPath), {method: 'POST', redirect: 'error', signal,
+                headers: {'content-type': 'application/json'}, body: JSON.stringify({username, password, setupToken})});
+            if (!response.ok && response.status !== 409) throw new Error('Administrator setup failed with HTTP ' + response.status);
+            accessToken = await authenticate(base, signal);
+            if (!accessToken) throw new Error('Administrator authentication failed after setup');
+        }
+        return accessToken;
     };
     const page = async (url, signal) => {
         if (!token) throw new Error('Initialize administrator before dictionary verification');
@@ -68,14 +78,24 @@ export async function prepareBaseline({environment, plan, config}, {root}, depen
         },
         operations: {
             InitializeAdministrator: {kind: 'command', async execute(_step, {signal}) {
-                if (!await authenticate(signal)) {
-                    if (!setupToken) throw new Error('Administrator setup token is required for initialization');
-                    const response = await request(setupUrl, {method: 'POST', redirect: 'error', signal,
-                        headers: {'content-type': 'application/json'}, body: JSON.stringify({username, password, setupToken})});
-                    if (!response.ok && response.status !== 409) throw new Error('Administrator setup failed with HTTP ' + response.status);
-                    if (!await authenticate(signal)) throw new Error('Administrator authentication failed after setup');
-                }
+                token = await initializeAdministrator(authBase, signal);
                 return {status: 'initialized'};
+            }},
+            InitializeParticipantAdministrators: {kind: 'command', async execute(_step, {signal}) {
+                const participants = environment.participantDeployments || [];
+                if (!config.participantAuth) {
+                    if (participants.length) throw new Error('Participant authentication configuration is required');
+                    return {status: 'not-applicable', count: 0};
+                }
+                for (const participant of participants) {
+                    const address = endpoint({endpoints: {auth: participant[config.participantAuth.endpointField || 'consoleUrl']}}, 'auth');
+                    const base = config.participantAuth.basePath ? api(address, config.participantAuth.basePath) : address;
+                    const accessToken = await initializeAdministrator(base, signal);
+                    const response = await request(api(base, config.participantAuth.probePath), {redirect: 'error', signal,
+                        headers: {Authorization: 'Bearer ' + accessToken}});
+                    if (!response.ok) throw new Error('Participant authenticated query failed with HTTP ' + response.status);
+                }
+                return {status: 'initialized', count: participants.length};
             }},
             InitializeDictionaries: {kind: 'command', async execute(_step, {signal}) {
                 if (!token) throw new Error('Initialize administrator before dictionaries');

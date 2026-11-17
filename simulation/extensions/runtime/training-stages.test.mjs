@@ -84,6 +84,7 @@ test('tests reuse fixture without calling participant preparation', async () => 
     snapshot: () => ({trainingJobId: 'job'}), cleanup: () => calls.push('cleanup')
   }));
   assert.equal(report.status, 'passed');
+  assert.equal(report.trainingJobId, 'job');
   assert.deepEqual(calls, ['restore', 'submit', 'verify', 'cleanup']);
 });
 

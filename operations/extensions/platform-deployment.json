@@ -7,7 +7,7 @@
   },
   "namespace": "federation-learning-platform",
   "workspace": "operations/k3s/.work/simulation-platform-{{environment}}",
-  "bindings": {},
+  "bindings": {"artifactPublicBaseUrl": "http://federation-learning-support:8080"},
   "resources": [
     "operations/k3s/environments/{{environment}}"
   ],
@@ -161,7 +161,7 @@
                   "env": [
                     {
                       "name": "FILE_UPLOAD_PUBLIC_BASE_URL",
-                      "value": "http://federation-learning-support:8080"
+                      "value": "{{artifactPublicBaseUrl}}"
                     }
                   ]
                 }

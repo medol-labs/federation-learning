@@ -1,0 +1,6 @@
+{
+  "id": "fl-test-twenty-fixed-20261117",
+  "environmentId": "fl-test-twenty",
+  "namespace": "federation-learning-platform",
+  "configFile": "simulation/pipelines/deployment-twenty.json"
+}

@@ -70,6 +70,7 @@ const adminSetupToken = stringArg(
 const timeoutMs = positiveInt(args.timeout ?? process.env.FL_K3D_FLOW_TIMEOUT_MS, 240000);
 const pollIntervalMs = positiveInt(args['poll-interval'] ?? process.env.FL_K3D_FLOW_POLL_INTERVAL_MS, 3000);
 const participantCount = positiveInt(args['participant-count'] ?? process.env.FL_K3D_PARTICIPANT_COUNT, 2);
+const expectedRounds = positiveInt(args['max-rounds'] ?? process.env.FL_MAX_ROUNDS, 1);
 const computeNodes = positiveInt(args['compute-nodes'] ?? process.env.FL_K3D_AGENT_COUNT, 2);
 const preparedNodeCount = positiveInt(args['prepared-node-count'] ?? process.env.FL_K3D_PREPARED_NODE_COUNT, 1);
 const imageConfig = resolveImageConfig(imageDirectory, {
@@ -156,6 +157,7 @@ const participantSlots = createParticipantSlots({root: repoRoot, environment, na
     access: args['participant-access'] ? JSON.parse(args['participant-access']) : undefined,
     count: Number(args['participant-slots'] ?? 0), imagePrefix: appImagePrefix, imageVersion, timeoutMs});
 let trainingSeed = null;
+let verification = null;
 return {
     dryRun,
     participantCount,
@@ -180,7 +182,7 @@ return {
         if (running('apisix') && running('federation-learning-support')) await waitForHttp(`${supportUrl}/actuator/health`, 'support health');
         if (running('apisix') && running('federation-learning-platform')) await waitForHttp(`${platformUrl}/actuator/health`, 'platform health');
     },
-    snapshot: () => ({participants: participants.map(({runtimeAgentId}) => ({runtimeAgentId})), trainingJobId: trainingSeed?.trainingJobId}),
+    snapshot: () => ({participants: participants.map(({runtimeAgentId}) => ({runtimeAgentId})), trainingJobId: trainingSeed?.trainingJobId, ...(verification ? {verification} : {})}),
     dataSnapshot: () => ({scenario, federationMode, trainingRunKey, participants: participants.map(({runtimeAgentUrl, ...identity}) => identity)}),
     async restoreData(snapshot) {
         if (snapshot.scenario !== scenario || snapshot.federationMode !== federationMode || snapshot.participants?.length !== participantCount) fail('Training fixture configuration does not match the selected scenario');
@@ -289,8 +291,8 @@ if (!skipTrainingJob) {
     async verifyTraining() {
     if (skipTrainingJob || !waitForTraining || !trainingSeed?.trainingJobId) fail('Training verification requires a submitted job and wait-for-training');
     if (!skipTrainingJob && waitForTraining) {
-        await verifyTrainingResult(trainingSeed.trainingJobId, participants, {
-            getPage, platformUrl, supportUrl, waitForCondition, fail, federationMode, requestHeaders
+        verification = await verifyTrainingResult(trainingSeed.trainingJobId, participants, {
+            getPage, platformUrl, supportUrl, waitForCondition, fail, federationMode, requestHeaders, expectedRounds
         });
     }
     }
@@ -733,6 +735,7 @@ async function runInitTraining(target, options) {
         '--scenario', scenario,
         '--federation-mode', federationMode,
         '--minimum-nodes-per-round', String(participantCount),
+        '--max-rounds', String(expectedRounds),
         ...(trainingRunKey ? ['--training-run-key', trainingRunKey] : []),
         ...(options.createJob ? ['--training-job-key', randomUUID()] : []),
         ...(options.participantKey ? ['--participant-key', options.participantKey] : []),

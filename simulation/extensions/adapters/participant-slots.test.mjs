@@ -21,6 +21,8 @@ test('participant gateways have independent bounded public ports', () => {
     assert.deepEqual(servicePatch.map(p => p.value), ['NodePort', 30082]);
     const config = overlay.patches.filter(p => !p.target && p.patch).map(p => JSON.parse(p.patch)).find(p => p.data?.MEDOL_SECURITY_ALLOWED_ORIGINS);
     assert.equal(config.data.MEDOL_SECURITY_ALLOWED_ORIGINS, two.consoleUrl);
+    const consoleConfig = overlay.patches.filter(p => !p.target && p.patch).map(p => JSON.parse(p.patch)).find(p => p.data?.VITE_AUTH_API_URL);
+    assert.equal(consoleConfig.data.VITE_AUTH_API_URL, '/api/federation-learning-runtime-agent');
 });
 test('slots have distinct storage namespaces and stable endpoints before registration', () => {
     assert.notEqual(participantSlot('fl', 1).namespace, participantSlot('fl', 2).namespace);

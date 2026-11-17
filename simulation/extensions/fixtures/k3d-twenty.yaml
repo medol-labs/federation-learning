@@ -1,0 +1,25 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: federation-learning-twenty
+image: rancher/k3s:v1.33.5-k3s1
+servers: 1
+agents: 20
+kubeAPI:
+  hostIP: 127.0.0.1
+  hostPort: '6551'
+ports:
+  - port: '31080:30080'
+    nodeFilters: ['server:0']
+  - port: '31081-31100:30081-30100'
+    nodeFilters: ['server:0']
+options:
+  k3d:
+    wait: true
+    timeout: 600s
+  k3s:
+    extraArgs:
+      - arg: --disable=traefik
+        nodeFilters: ['server:*']
+      - arg: --disable-default-registry-endpoint
+        nodeFilters: ['server:*', 'agent:*']

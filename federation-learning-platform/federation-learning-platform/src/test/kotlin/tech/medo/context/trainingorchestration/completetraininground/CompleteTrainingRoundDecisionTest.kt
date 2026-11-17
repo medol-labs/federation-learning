@@ -4,16 +4,48 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.trainingorchestration.completetraininground.CompleteTrainingRoundCommand
+import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent
 import tech.medo.trainingorchestration.events.GlobalModelEvaluationSubmittedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundCompletedEvent
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
 import java.util.UUID
 import java.math.BigDecimal
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 
 class CompleteTrainingRoundDecisionTest {
     @Test
     fun CompleteRoundAfterGlobalEvaluation() {
         val state = TrainingRoundState()
+        state.evolve(
+            TrainingRoundParticipantsSelectedEvent(
+            trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            federationId = UUID.nameUUIDFromBytes("federation-1".toByteArray()),
+            federationName = null,
+            trainingRunConfigurationId = java.util.UUID.randomUUID(),
+            configurationName = null,
+            featureSchemaId = java.util.UUID.randomUUID(),
+            featureDomain = null,
+            featureSchemaVersion = null,
+            trainingJobObjective = "",
+            roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
+            roundNumber = 0,
+            maxRounds = 0,
+            minimumAccuracy = java.math.BigDecimal.ZERO,
+            aggregationAlgorithm = "",
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            minimumNodesPerRound = 0,
+            secureAggregationRequired = false,
+            selectedOrganizationIds = emptyList(),
+            selectedRuntimeIds = emptyList(),
+            selectedParticipants = emptyList(),
+            selectedOrganizationCount = 0,
+            selectedRuntimeCount = 0
+            )
+        )
         state.evolve(
             GlobalModelEvaluationSubmittedEvent(
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),

@@ -16,7 +16,7 @@
   },
   "dataPlan": {
     "steps": [
-      {"id": "prepare-participants", "kind": "command", "operation": "PrepareParticipants"},
+      {"id": "prepare-participants", "kind": "command", "operation": "PrepareParticipants", "timeoutMs": 1200000},
       {"id": "check-participants", "kind": "wait", "operation": "CheckParticipantData", "expect": {"path": "ready", "equals": true}}
     ],
     "exports": {"$ref": "steps.check-participants.response.snapshot"}

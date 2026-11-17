@@ -1,0 +1,167 @@
+{
+  "tasks": {
+    "select-cases": {
+      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "export": "select",
+      "inputs": {
+        "library": {
+          "path": "simulation/cases/approved/twenty-participant-training.json"
+        },
+        "selection": {
+          "path": "simulation/pipelines/case-selection.json",
+          "env": "MEDOL_CASE_SELECTION"
+        }
+      },
+      "successStatuses": [
+        "ready"
+      ],
+      "output": "execution-plan.json",
+      "scope": "execution"
+    },
+    "secrets": {
+      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "export": "configureTestEnvironment",
+      "inputs": {
+        "config": {
+          "path": "operations/extensions/test-credentials.json"
+        }
+      },
+      "output": "test-configuration.json",
+      "scope": "deployment"
+    },
+    "deploy": {
+      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "export": "deploy",
+      "inputs": {
+        "config": {
+          "path": "simulation/pipelines/deployment-twenty.json",
+          "env": "MEDOL_DEPLOYMENT_CONFIG"
+        },
+        "catalog": {
+          "path": "operations/model/services.json"
+        }
+      },
+      "output": "deployment.json",
+      "scope": "deployment"
+    },
+    "prepare-baseline": {
+      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "export": "baseline",
+      "inputs": {
+        "environment": {
+          "artifact": "deployment.json",
+          "env": "MEDOL_ENVIRONMENT_MANIFEST",
+          "status": "ready",
+          "binding": "deployment"
+        },
+        "plan": {
+          "path": "simulation/data/baseline-plan.json"
+        },
+        "config": {
+          "path": "simulation/data/baseline-adapter.json"
+        }
+      },
+      "output": "baseline.json",
+      "scope": "execution"
+    },
+    "enroll-participants": {
+      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "export": "enroll",
+      "inputs": {
+        "environment": {
+          "artifact": "deployment.json",
+          "env": "MEDOL_ENVIRONMENT_MANIFEST",
+          "status": "ready",
+          "binding": "deployment"
+        },
+        "baseline": {
+          "artifact": "baseline.json",
+          "env": "MEDOL_BASELINE_DATA_MANIFEST",
+          "status": "ready",
+          "binding": "baseline"
+        },
+        "scenario": {
+          "path": "simulation/extensions/scenarios/twenty-participant-training.json"
+        }
+      },
+      "output": "enrollment.json",
+      "scope": "execution"
+    },
+    "prepare-case": {
+      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "export": "prepare",
+      "inputs": {
+        "environment": {
+          "artifact": "deployment.json",
+          "env": "MEDOL_ENVIRONMENT_MANIFEST",
+          "status": "ready",
+          "binding": "deployment"
+        },
+        "baseline": {
+          "artifact": "baseline.json",
+          "env": "MEDOL_BASELINE_DATA_MANIFEST",
+          "status": "ready",
+          "binding": "baseline"
+        },
+        "scenario": {
+          "path": "simulation/extensions/scenarios/twenty-participant-training.json"
+        },
+        "cases": {
+          "artifact": "execution-plan.json",
+          "env": "MEDOL_EXECUTION_PLAN",
+          "binding": "plan"
+        }
+      },
+      "output": "data.json",
+      "scope": "execution"
+    },
+    "test": {
+      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "export": "test",
+      "inputs": {
+        "environment": {
+          "artifact": "deployment.json",
+          "env": "MEDOL_ENVIRONMENT_MANIFEST",
+          "status": "ready",
+          "binding": "deployment"
+        },
+        "scenario": {
+          "path": "simulation/extensions/scenarios/twenty-participant-training.json"
+        },
+        "data": {
+          "artifact": "data.json",
+          "env": "MEDOL_DATA_MANIFEST",
+          "status": "ready",
+          "binding": "data"
+        },
+        "cases": {
+          "artifact": "execution-plan.json",
+          "env": "MEDOL_EXECUTION_PLAN",
+          "binding": "plan"
+        }
+      },
+      "output": "test.json",
+      "scope": "execution"
+    },
+    "prepare-participant-auth": {
+      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "export": "baseline",
+      "inputs": {
+        "environment": {
+          "artifact": "deployment.json",
+          "env": "MEDOL_ENVIRONMENT_MANIFEST",
+          "status": "ready",
+          "binding": "deployment"
+        },
+        "plan": {
+          "path": "simulation/data/participant-auth-plan.json"
+        },
+        "config": {
+          "path": "simulation/data/baseline-adapter.json"
+        }
+      },
+      "output": "participant-auth.json",
+      "scope": "execution"
+    }
+  }
+}

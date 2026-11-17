@@ -5,33 +5,34 @@
   "selection": {
     "generatorType": "slices",
     "sliceNames": [
-      "Complete Model Aggregation"
+      "Schedule Next Training Round",
+      "Complete Training Round"
     ],
-    "slices": "CompleteModelAggregation"
+    "slices": "CompleteTrainingRound,ScheduleNextTrainingRound"
   },
-  "generatedAt": "2026-11-16T13:31:48.945Z",
+  "generatedAt": "2026-11-17T06:46:23.921Z",
   "generator": {
     "name": "medol-codegen",
     "version": "1.0.0",
-    "sha256": "cf1b66e38cb2e314d16b710bce0df1d95441e655679c6a01003a05a7a20ab77b"
+    "sha256": "52e710326512724eeab1a7b282d132d00b784e37df00d024a180d1a96763ae80"
   },
   "model": {
-    "sha256": "ef8bd8419f61a31b1e6a3b9dd699b6a27bf13b2a3125f6e22868b5fd530a4f65",
+    "sha256": "94a3bf1dc9a912bfac254249032426eb24593b438dcab96a3d99c6a0c9c959cc",
     "metadata": {
       "schemaVersion": 1,
       "medolVersion": "0.1.0",
       "source": {
-        "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
+        "sha256": "a2032e84c22147e05a033baf58d713e0e0bd1036feff9ccc589f21a5dcde6bd1"
       }
     }
   },
   "config": {
-    "sha256": "eae5fc354239979050ebc8269af7a4fe55afe25578a905e8a04ff33bfc6b352d"
+    "sha256": "84dc4875c27365a7c7f413a0c20c02664c8f56a5dedd1ea5e0fb968cbcb1af26"
   },
   "inputs": [
     {
       "path": "../.medol/codegen-model.json",
-      "sha256": "ef8bd8419f61a31b1e6a3b9dd699b6a27bf13b2a3125f6e22868b5fd530a4f65"
+      "sha256": "94a3bf1dc9a912bfac254249032426eb24593b438dcab96a3d99c6a0c9c959cc"
     },
     {
       "path": "../.medol/medol.yml",
@@ -39,7 +40,7 @@
     },
     {
       "path": "../.medol/source.medol",
-      "sha256": "1ae1a6e903a6676221858415e7a470e3e52d249b9127ad08214fc8a04d96b3df"
+      "sha256": "a2032e84c22147e05a033baf58d713e0e0bd1036feff9ccc589f21a5dcde6bd1"
     },
     {
       "path": "../dictionary-init/dictionaries.json",
