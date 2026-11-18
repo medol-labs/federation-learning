@@ -1,0 +1,513 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "origin": "manual",
+      "status": "draft",
+      "prerequisites": [
+        "Ready deployment; credentials provided through environment"
+      ],
+      "dataRequirements": [],
+      "assertions": [],
+      "timeoutMs": 1800000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [],
+      "id": "baseline-catalog",
+      "title": "Initialize administrator and dictionary catalog",
+      "steps": [
+        {
+          "id": "login-existing",
+          "type": "command",
+          "command": "Login",
+          "request": {
+            "endpoint": "support-user",
+            "path": "/api/auth/login",
+            "bodyEnv": {
+              "username": "FL_K3D_ADMIN_USERNAME",
+              "password": "FL_K3D_ADMIN_PASSWORD"
+            },
+            "acceptStatuses": [
+              200,
+              401
+            ]
+          }
+        },
+        {
+          "id": "setup",
+          "type": "command",
+          "command": "SetupAdministrator",
+          "when": {
+            "value": {
+              "$ref": "steps.login-existing.httpStatus"
+            },
+            "operator": "equals",
+            "expected": 401
+          },
+          "request": {
+            "endpoint": "support-user",
+            "path": "/api/auth/setup-admin",
+            "bodyEnv": {
+              "username": "FL_K3D_ADMIN_USERNAME",
+              "password": "FL_K3D_ADMIN_PASSWORD",
+              "setupToken": "FL_K3D_ADMIN_SETUP_TOKEN"
+            },
+            "acceptStatuses": [
+              200,
+              201,
+              204,
+              409
+            ]
+          }
+        },
+        {
+          "id": "login",
+          "type": "command",
+          "command": "Login",
+          "request": {
+            "endpoint": "support-user",
+            "path": "/api/auth/login",
+            "bodyEnv": {
+              "username": "FL_K3D_ADMIN_USERNAME",
+              "password": "FL_K3D_ADMIN_PASSWORD"
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "accessToken",
+              "operator": "exists"
+            }
+          ]
+        },
+        {
+          "id": "dictionaries",
+          "type": "foreach",
+          "items": {
+            "$ref": "data.inputs.dictionaries"
+          },
+          "as": "dictionary",
+          "steps": [
+            {
+              "id": "dictionary-existing",
+              "type": "query",
+              "query": "dictionary-existing",
+              "request": {
+                "endpoint": "support-user",
+                "bearerToken": {
+                  "$ref": "steps.login.body.accessToken"
+                },
+                "path": "/dictionary/dictionarycatalog",
+                "query": {
+                  "dictionaryCode.equals": {
+                    "$ref": "dictionary.dictionaryCode"
+                  },
+                  "size": 2
+                }
+              }
+            },
+            {
+              "id": "dictionary-create",
+              "type": "command",
+              "command": "RegisterDictionary",
+              "when": {
+                "value": {
+                  "$ref": "steps.dictionary-existing.body.page.totalElements"
+                },
+                "operator": "equals",
+                "expected": 0
+              },
+              "request": {
+                "endpoint": "support-user",
+                "bearerToken": {
+                  "$ref": "steps.login.body.accessToken"
+                },
+                "path": "/dictionary/registerdictionary",
+                "body": {
+                  "dictionaryId": {
+                    "$uuid": true
+                  },
+                  "dictionaryCode": {
+                    "$ref": "dictionary.dictionaryCode"
+                  },
+                  "dictionaryName": {
+                    "$ref": "dictionary.dictionaryName"
+                  },
+                  "ownerContext": {
+                    "$coalesce": [
+                      {
+                        "$get": [
+                          {
+                            "$ref": "dictionary"
+                          },
+                          "ownerContext"
+                        ]
+                      },
+                      "DictionaryMaintenance"
+                    ]
+                  },
+                  "description": {
+                    "$coalesce": [
+                      {
+                        "$get": [
+                          {
+                            "$ref": "dictionary"
+                          },
+                          "description"
+                        ]
+                      },
+                      null
+                    ]
+                  },
+                  "multiTenant": {
+                    "$coalesce": [
+                      {
+                        "$get": [
+                          {
+                            "$ref": "dictionary"
+                          },
+                          "multiTenant"
+                        ]
+                      },
+                      false
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "dictionary-ready",
+              "type": "query",
+              "query": "dictionary-ready",
+              "request": {
+                "endpoint": "support-user",
+                "bearerToken": {
+                  "$ref": "steps.login.body.accessToken"
+                },
+                "path": "/dictionary/dictionarycatalog",
+                "query": {
+                  "dictionaryCode.equals": {
+                    "$ref": "dictionary.dictionaryCode"
+                  },
+                  "size": 2
+                },
+                "expect": {
+                  "page.totalElements": 1
+                },
+                "timeoutMs": 120000
+              }
+            },
+            {
+              "id": "values",
+              "type": "foreach",
+              "as": "value",
+              "items": {
+                "$ref": "dictionary.values"
+              },
+              "allowEmpty": true,
+              "steps": [
+                {
+                  "id": "value-existing",
+                  "type": "query",
+                  "query": "value-existing",
+                  "request": {
+                    "endpoint": "support-user",
+                    "bearerToken": {
+                      "$ref": "steps.login.body.accessToken"
+                    },
+                    "path": "/dictionaryvalue/dictionaryvaluecatalog",
+                    "query": {
+                      "dictionaryId.equals": {
+                        "$ref": "steps.dictionary-ready.body.content.0.dictionaryId"
+                      },
+                      "valueCode.equals": {
+                        "$ref": "value.valueCode"
+                      },
+                      "size": 2
+                    }
+                  }
+                },
+                {
+                  "id": "value-create",
+                  "type": "command",
+                  "command": "AddDictionaryValue",
+                  "when": {
+                    "value": {
+                      "$ref": "steps.value-existing.body.page.totalElements"
+                    },
+                    "operator": "equals",
+                    "expected": 0
+                  },
+                  "request": {
+                    "endpoint": "support-user",
+                    "bearerToken": {
+                      "$ref": "steps.login.body.accessToken"
+                    },
+                    "path": "/dictionaryvalue/adddictionaryvalue",
+                    "body": {
+                      "dictionaryValueId": {
+                        "$uuid": true
+                      },
+                      "dictionaryId": {
+                        "$ref": "steps.dictionary-ready.body.content.0.dictionaryId"
+                      },
+                      "dictionaryCode": {
+                        "$ref": "dictionary.dictionaryCode"
+                      },
+                      "valueCode": {
+                        "$ref": "value.valueCode"
+                      },
+                      "defaultDisplayName": {
+                        "$coalesce": [
+                          {
+                            "$get": [
+                              {
+                                "$ref": "value"
+                              },
+                              "defaultDisplayName"
+                            ]
+                          },
+                          {
+                            "$get": [
+                              {
+                                "$ref": "value"
+                              },
+                              "displayNameEn"
+                            ]
+                          },
+                          {
+                            "$ref": "value.valueCode"
+                          }
+                        ]
+                      },
+                      "displayOrder": {
+                        "$coalesce": [
+                          {
+                            "$get": [
+                              {
+                                "$ref": "value"
+                              },
+                              "displayOrder"
+                            ]
+                          },
+                          0
+                        ]
+                      },
+                      "description": {
+                        "$coalesce": [
+                          {
+                            "$get": [
+                              {
+                                "$ref": "value"
+                              },
+                              "description"
+                            ]
+                          },
+                          null
+                        ]
+                      },
+                      "active": {
+                        "$coalesce": [
+                          {
+                            "$get": [
+                              {
+                                "$ref": "value"
+                              },
+                              "active"
+                            ]
+                          },
+                          true
+                        ]
+                      },
+                      "effectiveFrom": {
+                        "$coalesce": [
+                          {
+                            "$get": [
+                              {
+                                "$ref": "value"
+                              },
+                              "effectiveFrom"
+                            ]
+                          },
+                          null
+                        ]
+                      },
+                      "effectiveUntil": {
+                        "$coalesce": [
+                          {
+                            "$get": [
+                              {
+                                "$ref": "value"
+                              },
+                              "effectiveUntil"
+                            ]
+                          },
+                          null
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "value-ready",
+                  "type": "query",
+                  "query": "value-ready",
+                  "request": {
+                    "endpoint": "support-user",
+                    "bearerToken": {
+                      "$ref": "steps.login.body.accessToken"
+                    },
+                    "path": "/dictionaryvalue/dictionaryvaluecatalog",
+                    "query": {
+                      "dictionaryId.equals": {
+                        "$ref": "steps.dictionary-ready.body.content.0.dictionaryId"
+                      },
+                      "valueCode.equals": {
+                        "$ref": "value.valueCode"
+                      },
+                      "size": 2
+                    },
+                    "expect": {
+                      "page.totalElements": 1
+                    },
+                    "timeoutMs": 120000
+                  }
+                },
+                {
+                  "id": "translation-existing",
+                  "type": "query",
+                  "query": "DictionaryValueTranslationCatalog",
+                  "request": {
+                    "endpoint": "support-user",
+                    "bearerToken": {
+                      "$ref": "steps.login.body.accessToken"
+                    },
+                    "path": "/dictionaryvaluetranslation/dictionaryvaluetranslationcatalog",
+                    "query": {
+                      "dictionaryValueId.equals": {
+                        "$ref": "steps.value-ready.body.content.0.dictionaryValueId"
+                      },
+                      "locale.equals": "zh-CN",
+                      "size": 2
+                    }
+                  }
+                },
+                {
+                  "id": "translation-create",
+                  "type": "command",
+                  "command": "SetDictionaryValueTranslation",
+                  "when": {
+                    "value": {
+                      "$ref": "steps.translation-existing.body.page.totalElements"
+                    },
+                    "operator": "equals",
+                    "expected": 0
+                  },
+                  "request": {
+                    "endpoint": "support-user",
+                    "bearerToken": {
+                      "$ref": "steps.login.body.accessToken"
+                    },
+                    "path": "/dictionaryvaluetranslation/setdictionaryvaluetranslation",
+                    "body": {
+                      "dictionaryValueTranslationId": {
+                        "$uuid": true
+                      },
+                      "dictionaryValueId": {
+                        "$ref": "steps.value-ready.body.content.0.dictionaryValueId"
+                      },
+                      "dictionaryCode": {
+                        "$ref": "dictionary.dictionaryCode"
+                      },
+                      "valueCode": {
+                        "$ref": "value.valueCode"
+                      },
+                      "locale": "zh-CN",
+                      "displayName": {
+                        "$coalesce": [
+                          {
+                            "$get": [
+                              {
+                                "$ref": "value"
+                              },
+                              "displayName"
+                            ]
+                          },
+                          {
+                            "$ref": "value.valueCode"
+                          }
+                        ]
+                      },
+                      "description": {
+                        "$coalesce": [
+                          {
+                            "$get": [
+                              {
+                                "$ref": "value"
+                              },
+                              "description"
+                            ]
+                          },
+                          null
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "translation-ready",
+                  "type": "query",
+                  "query": "DictionaryValueTranslationCatalog",
+                  "request": {
+                    "endpoint": "support-user",
+                    "bearerToken": {
+                      "$ref": "steps.login.body.accessToken"
+                    },
+                    "path": "/dictionaryvaluetranslation/dictionaryvaluetranslationcatalog",
+                    "query": {
+                      "dictionaryValueId.equals": {
+                        "$ref": "steps.value-ready.body.content.0.dictionaryValueId"
+                      },
+                      "locale.equals": "zh-CN",
+                      "size": 2
+                    },
+                    "expect": {
+                      "page.totalElements": 1
+                    },
+                    "timeoutMs": 120000
+                  }
+                }
+              ],
+              "exports": {
+                "dictionaryValueId": {
+                  "$ref": "steps.value-ready.body.content.0.dictionaryValueId"
+                }
+              }
+            }
+          ],
+          "exports": {
+            "dictionaryId": {
+              "$ref": "steps.dictionary-ready.body.content.0.dictionaryId"
+            },
+            "values": {
+              "$ref": "steps.values.body.items"
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "items.length",
+              "operator": "gt",
+              "expected": 0
+            }
+          ]
+        }
+      ],
+      "exports": {
+        "authentication": "initialized",
+        "dictionaries": {
+          "$ref": "steps.dictionaries.body.items"
+        }
+      }
+    }
+  ]
+}

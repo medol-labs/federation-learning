@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "dataset-access-validation",
+      "title": "dataset-access-validation",
+      "origin": "manual",
+      "status": "draft",
+      "prerequisites": [],
+      "dataRequirements": [],
+      "reviewIssues": [],
+      "cleanupPolicy": "retain",
+      "timeoutMs": 1800000,
+      "assertions": [],
+      "steps": [
+        {
+          "id": "history",
+          "type": "query",
+          "query": "history",
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/agentdatasetaccessvalidation/agentdatasetaccessvalidationcatalog",
+            "query": {
+              "runtimeDatasetBindingId.equals": {
+                "$ref": "data.inputs.binding.runtimeDatasetBindingId"
+              },
+              "size": 50,
+              "datasetId.equals": {
+                "$ref": "data.inputs.binding.datasetId"
+              }
+            }
+          }
+        },
+        {
+          "id": "attempt",
+          "type": "assert",
+          "value": {
+            "id": {
+              "$if": [
+                {
+                  "$some": [
+                    {
+                      "$get": [
+                        {
+                          "$ref": "steps.history.body"
+                        },
+                        "content"
+                      ]
+                    },
+                    [
+                      {
+                        "path": "validationStatus",
+                        "operator": "enumIn",
+                        "expected": [
+                          "Failed",
+                          "Rejected",
+                          "Unavailable"
+                        ]
+                      },
+                      {
+                        "path": "failureReason.length",
+                        "operator": "gt",
+                        "expected": 0
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "$uuid": true
+                },
+                {
+                  "$ref": "data.inputs.accessValidation.datasetAccessValidationId"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "ValidateAgentDatasetAccess",
+          "type": "command",
+          "command": "ValidateAgentDatasetAccess",
+          "when": {
+            "value": {
+              "$some": [
+                {
+                  "$get": [
+                    {
+                      "$ref": "steps.history.body"
+                    },
+                    "content"
+                  ]
+                },
+                [
+                  {
+                    "path": "validationStatus",
+                    "operator": "enumIn",
+                    "expected": [
+                      "Checked",
+                      "Validated",
+                      "AccessValidated"
+                    ]
+                  }
+                ]
+              ]
+            },
+            "operator": "equals",
+            "expected": false
+          },
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/agentdatasetaccessvalidation/validateagentdatasetaccess",
+            "body": {
+              "$merge": [
+                {
+                  "$ref": "data.inputs.accessValidation"
+                },
+                {
+                  "datasetAccessValidationId": {
+                    "$ref": "steps.attempt.body.id"
+                  }
+                }
+              ]
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "validated",
+          "type": "query",
+          "query": "validated",
+          "when": {
+            "value": {
+              "$some": [
+                {
+                  "$get": [
+                    {
+                      "$ref": "steps.history.body"
+                    },
+                    "content"
+                  ]
+                },
+                [
+                  {
+                    "path": "validationStatus",
+                    "operator": "enumIn",
+                    "expected": [
+                      "Checked",
+                      "Validated",
+                      "AccessValidated"
+                    ]
+                  }
+                ]
+              ]
+            },
+            "operator": "equals",
+            "expected": false
+          },
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/agentdatasetaccessvalidation/agentdatasetaccessvalidationcatalog",
+            "query": {
+              "datasetAccessValidationId.equals": {
+                "$ref": "steps.attempt.body.id"
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "anyChecks": [
+              {
+                "path": "content.0.validationStatus",
+                "operator": "enumIn",
+                "expected": [
+                  "Checked",
+                  "Validated",
+                  "AccessValidated"
+                ]
+              }
+            ],
+            "failWhen": [
+              {
+                "path": "content.0.validationStatus",
+                "operator": "enumIn",
+                "expected": [
+                  "Failed",
+                  "Rejected",
+                  "Unavailable"
+                ]
+              },
+              {
+                "path": "content.0.failureReason.length",
+                "operator": "gt",
+                "expected": 0
+              }
+            ]
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "gt",
+              "expected": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

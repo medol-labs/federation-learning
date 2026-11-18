@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "origin": "manual",
+      "status": "draft",
+      "prerequisites": [
+        "Ready deployment; credentials provided through environment"
+      ],
+      "dataRequirements": [],
+      "assertions": [],
+      "timeoutMs": 1800000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [],
+      "id": "participant-auth",
+      "title": "Initialize participant administrators",
+      "steps": [
+        {
+          "id": "participants",
+          "type": "foreach",
+          "as": "participant",
+          "items": {
+            "$ref": "environment.participantDeployments"
+          },
+          "steps": [
+            {
+              "id": "login-existing",
+              "type": "command",
+              "command": "Login",
+              "request": {
+                "endpoint": "participant-user",
+                "target": {
+                  "$ref": "participant.slot"
+                },
+                "path": "/api/auth/login",
+                "bodyEnv": {
+                  "username": "FL_K3D_ADMIN_USERNAME",
+                  "password": "FL_K3D_ADMIN_PASSWORD"
+                },
+                "acceptStatuses": [
+                  200,
+                  401
+                ]
+              }
+            },
+            {
+              "id": "setup",
+              "type": "command",
+              "command": "SetupAdministrator",
+              "when": {
+                "value": {
+                  "$ref": "steps.login-existing.httpStatus"
+                },
+                "operator": "equals",
+                "expected": 401
+              },
+              "request": {
+                "endpoint": "participant-user",
+                "target": {
+                  "$ref": "participant.slot"
+                },
+                "path": "/api/auth/setup-admin",
+                "bodyEnv": {
+                  "username": "FL_K3D_ADMIN_USERNAME",
+                  "password": "FL_K3D_ADMIN_PASSWORD",
+                  "setupToken": "FL_K3D_ADMIN_SETUP_TOKEN"
+                },
+                "acceptStatuses": [
+                  200,
+                  201,
+                  204,
+                  409
+                ]
+              }
+            },
+            {
+              "id": "login",
+              "type": "command",
+              "command": "Login",
+              "request": {
+                "endpoint": "participant-user",
+                "target": {
+                  "$ref": "participant.slot"
+                },
+                "path": "/api/auth/login",
+                "bodyEnv": {
+                  "username": "FL_K3D_ADMIN_USERNAME",
+                  "password": "FL_K3D_ADMIN_PASSWORD"
+                }
+              },
+              "assertions": [
+                {
+                  "type": "query",
+                  "path": "accessToken",
+                  "operator": "exists"
+                }
+              ]
+            },
+            {
+              "id": "authenticated-query",
+              "type": "query",
+              "query": "Translations",
+              "request": {
+                "endpoint": "participant-user",
+                "target": {
+                  "$ref": "participant.slot"
+                },
+                "bearerToken": {
+                  "$ref": "steps.login.body.accessToken"
+                },
+                "path": "/agentdictionaryvaluetranslationcatalog/agentdictionaryvaluetranslationcatalog",
+                "query": {
+                  "page": 0,
+                  "size": 1
+                }
+              },
+              "assertions": [
+                {
+                  "type": "query",
+                  "path": "content",
+                  "operator": "exists"
+                }
+              ]
+            }
+          ],
+          "exports": {
+            "slot": {
+              "$ref": "participant.slot"
+            },
+            "authenticated": true
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "items.length",
+              "operator": "gt",
+              "expected": 0
+            }
+          ]
+        }
+      ],
+      "exports": {
+        "authentication": {
+          "$ref": "steps.participants.body.items"
+        }
+      }
+    }
+  ]
+}

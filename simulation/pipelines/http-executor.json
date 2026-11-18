@@ -1,0 +1,12 @@
+{
+  "envFile": ".env",
+  "endpoints": {
+    "platform": {"headersEnv": {"X-MEDOL-INTERNAL-TOKEN": "MEDOL_SECURITY_INTERNAL_TOKEN"}},
+    "support": {"headersEnv": {"X-MEDOL-INTERNAL-TOKEN": "MEDOL_SECURITY_INTERNAL_TOKEN"}},
+    "participant": {"collection": "participantDeployments", "key": "slot", "urlField": "consoleUrl", "suffix": "/api/federation-learning-runtime-agent", "headersEnv": {"X-MEDOL-INTERNAL-TOKEN": "MEDOL_SECURITY_INTERNAL_TOKEN"}}
+  },
+  "probes": [
+    {"endpoint": "platform", "path": "/actuator/health"},
+    {"endpoint": "support", "path": "/actuator/health"}
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "participant-bootstrap",
+      "title": "Connect participant and wait for platform endpoint",
+      "status": "draft",
+      "origin": "manual",
+      "reviewIssues": [],
+      "prerequisites": [],
+      "dataRequirements": [],
+      "cleanupPolicy": "retain",
+      "assertions": [],
+      "timeoutMs": 1800000,
+      "steps": [
+        {
+          "id": "existing",
+          "type": "query",
+          "query": "RuntimeAgentEndpointCatalog",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructure/runtimeagentendpointcatalog",
+            "query": {
+              "runtimeAgentId.equals": {
+                "$ref": "data.inputs.runtimeAgentId"
+              },
+              "runtimeInfrastructureId.equals": {
+                "$ref": "data.inputs.runtimeInfrastructureId"
+              }
+            }
+          }
+        },
+        {
+          "id": "bootstrap",
+          "type": "command",
+          "command": "LoadRuntimeAgentBootstrapConfiguration",
+          "when": {
+            "value": {
+              "$matches": [
+                {
+                  "$ref": "steps.existing.body"
+                },
+                [
+                  {
+                    "path": "content.0.runtimeAgentEndpoint.length",
+                    "operator": "gt",
+                    "expected": 0
+                  }
+                ]
+              ]
+            },
+            "operator": "equals",
+            "expected": false
+          },
+          "request": {
+            "endpoint": "participant",
+            "path": "/runtimeagentlifecycle/loadruntimeagentbootstrapconfiguration",
+            "body": {},
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "connected",
+          "type": "query",
+          "query": "RuntimeAgentEndpointCatalog",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructure/runtimeagentendpointcatalog",
+            "query": {
+              "runtimeAgentId.equals": {
+                "$ref": "data.inputs.runtimeAgentId"
+              },
+              "runtimeInfrastructureId.equals": {
+                "$ref": "data.inputs.runtimeInfrastructureId"
+              }
+            },
+            "checks": [
+              {
+                "path": "content.0.runtimeAgentEndpoint.length",
+                "operator": "gt",
+                "expected": 0
+              },
+              {
+                "path": "content.0.runtimeId.length",
+                "operator": "gt",
+                "expected": 0
+              }
+            ],
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "equals",
+              "expected": 1
+            }
+          ]
+        }
+      ],
+      "exports": {
+        "endpoint": {
+          "$ref": "steps.connected.body.content.0"
+        }
+      }
+    }
+  ]
+}

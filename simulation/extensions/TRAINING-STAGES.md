@@ -17,9 +17,7 @@ create schemas, datasets, models, training configurations or training jobs.
 It outputs enrollment.json with mode=enrollment, not a ready training-data manifest.
 Use a new run ID with manifest overrides on a subsequent attempt; outputs are create-only.
 
-The local pipeline now uses independent data preparation and approved case
-execution. The old run-training.mjs remains a legacy full-lifecycle entry point;
-remote.json has not been migrated and must not be assumed to use these stages.
+Local and remote pipelines select approved cases and execute them through the same workflow task.
 
 1. Prepare infrastructure and deploy services separately. Place a real ready
    deployment manifest at simulation/instances/local.json, including deploymentId,
@@ -65,12 +63,7 @@ configuration. It does not deploy new Agents or submit a training job. Existing 
 capacity and images must already be available. The current adapter remains
 Kubernetes-specific, while the generic case executor is infrastructure-neutral.
 
-Participant fixtures omit temporary localhost port-forward URLs. On test execution
-the adapter checks runtime identity and recreates access tunnels. Credentials are
-loaded at execution time through the existing project authentication configuration.
-Do not put tokens or passwords in manifests. Tests submit a new training job;
-they do not regenerate participants. Result assertions reuse verify-training.mjs
-for contributions, completed job, submitted updates and model artifact verification.
+Participant fixtures omit temporary localhost port-forward URLs. The HTTP executor resolves participant addresses from the deployment manifest. Both deployment adapters run the approved participant-bootstrap case. The selected training case defines submission, round assertions and artifact verification. Keep credentials out of manifests.
 
 For an existing remote deployment use pipelines/training-remote.json-example.
 It runs only case review, data preparation and testing over SSH; it does not build,

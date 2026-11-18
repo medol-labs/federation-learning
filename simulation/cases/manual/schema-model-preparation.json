@@ -1,0 +1,316 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "schema-model-preparation",
+      "title": "Prepare schema and initial model",
+      "status": "draft",
+      "origin": "manual",
+      "prerequisites": [],
+      "dataRequirements": [],
+      "reviewIssues": [],
+      "assertions": [],
+      "cleanupPolicy": "retain",
+      "timeoutMs": 1800000,
+      "steps": [
+        {
+          "id": "featureSchema",
+          "type": "query",
+          "query": "/featureschema/featureschemacatalog",
+          "request": {
+            "endpoint": "platform",
+            "path": "/featureschema/featureschemacatalog",
+            "query": {
+              "featureSchemaId.equals": {
+                "$ref": "data.inputs.featureSchema.featureSchemaId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "create-featureSchema",
+          "type": "command",
+          "command": "/featureschema/definefeatureschema",
+          "when": {
+            "value": {
+              "$ref": "steps.featureSchema.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/featureschema/definefeatureschema",
+            "body": {
+              "$ref": "data.inputs.featureSchema"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "featureSchema-ready",
+          "type": "query",
+          "query": "/featureschema/featureschemacatalog",
+          "request": {
+            "endpoint": "platform",
+            "path": "/featureschema/featureschemacatalog",
+            "query": {
+              "featureSchemaId.equals": {
+                "$ref": "data.inputs.featureSchema.featureSchemaId"
+              },
+              "size": 2
+            },
+            "expect": {
+              "content.0.featureSchemaId": {
+                "$ref": "data.inputs.featureSchema.featureSchemaId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "equals",
+              "expected": 1
+            }
+          ]
+        },
+        {
+          "id": "features",
+          "type": "foreach",
+          "items": {
+            "$map": {
+              "from": {
+                "$ref": "data.inputs.featureSchema.features"
+              },
+              "path": "featureName"
+            }
+          },
+          "allowEmpty": true,
+          "steps": [
+            {
+              "id": "feature-present",
+              "type": "assert",
+              "value": {
+                "names": {
+                  "$map": {
+                    "from": {
+                      "$ref": "steps.featureSchema-ready.body.content.0.features"
+                    },
+                    "path": "featureName"
+                  }
+                }
+              },
+              "assertions": [
+                {
+                  "type": "query",
+                  "path": "names",
+                  "operator": "contains",
+                  "expected": {
+                    "$ref": "item"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "labels",
+          "type": "assert",
+          "value": {
+            "names": {
+              "$map": {
+                "from": {
+                  "$ref": "steps.featureSchema-ready.body.content.0.labels"
+                },
+                "path": "labelName"
+              }
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "names",
+              "operator": "setEquals",
+              "expected": {
+                "$map": {
+                  "from": {
+                    "$ref": "data.inputs.featureSchema.labels"
+                  },
+                  "path": "labelName"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "publish",
+          "type": "command",
+          "command": "PublishFeatureSchema",
+          "when": {
+            "value": {
+              "$matches": [
+                {
+                  "$ref": "steps.featureSchema-ready.body"
+                },
+                [
+                  {
+                    "path": "content.0.schemaStatus",
+                    "operator": "enumIn",
+                    "expected": [
+                      "Published"
+                    ]
+                  },
+                  {
+                    "path": "content.0.state",
+                    "operator": "enumIn",
+                    "expected": [
+                      "Published"
+                    ]
+                  }
+                ]
+              ]
+            },
+            "operator": "equals",
+            "expected": false
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/featureschema/publishfeatureschema",
+            "ignoreResponseBody": true,
+            "body": {
+              "featureSchemaId": {
+                "$ref": "data.inputs.featureSchema.featureSchemaId"
+              },
+              "featureDomain": {
+                "$ref": "data.inputs.featureSchema.featureDomain"
+              },
+              "version": {
+                "$ref": "data.inputs.featureSchema.version"
+              },
+              "publishNote": "Development bootstrap"
+            }
+          }
+        },
+        {
+          "id": "published",
+          "type": "query",
+          "query": "/featureschema/featureschemacatalog",
+          "request": {
+            "endpoint": "platform",
+            "path": "/featureschema/featureschemacatalog",
+            "query": {
+              "featureSchemaId.equals": {
+                "$ref": "data.inputs.featureSchema.featureSchemaId"
+              },
+              "size": 2
+            },
+            "expect": {
+              "content.0.featureSchemaId": {
+                "$ref": "data.inputs.featureSchema.featureSchemaId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "anyChecks": [
+              {
+                "path": "content.0.schemaStatus",
+                "operator": "enumIn",
+                "expected": [
+                  "Published"
+                ]
+              },
+              {
+                "path": "content.0.state",
+                "operator": "enumIn",
+                "expected": [
+                  "Published"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "model",
+          "type": "query",
+          "query": "/modelartifact/modelartifactcatalog",
+          "request": {
+            "endpoint": "platform",
+            "path": "/modelartifact/modelartifactcatalog",
+            "query": {
+              "modelId.equals": {
+                "$ref": "data.inputs.model.modelId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "create-model",
+          "type": "command",
+          "command": "/modelartifact/registermodelartifact",
+          "when": {
+            "value": {
+              "$ref": "steps.model.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/modelartifact/registermodelartifact",
+            "body": {
+              "$ref": "data.inputs.model"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "model-ready",
+          "type": "query",
+          "query": "/modelartifact/modelartifactcatalog",
+          "request": {
+            "endpoint": "platform",
+            "path": "/modelartifact/modelartifactcatalog",
+            "query": {
+              "modelId.equals": {
+                "$ref": "data.inputs.model.modelId"
+              },
+              "size": 2
+            },
+            "expect": {
+              "content.0.modelId": {
+                "$ref": "data.inputs.model.modelId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "equals",
+              "expected": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

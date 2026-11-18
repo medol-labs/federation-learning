@@ -1,0 +1,507 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "runtime-inventory-dataset-preparation",
+      "title": "Prepare node inventory, telemetry and dataset declaration",
+      "origin": "manual",
+      "status": "draft",
+      "reviewIssues": [],
+      "prerequisites": [],
+      "dataRequirements": [],
+      "assertions": [],
+      "timeoutMs": 1800000,
+      "cleanupPolicy": "retain",
+      "steps": [
+        {
+          "id": "runtime-node-inventory",
+          "type": "query",
+          "query": "runtime node inventory",
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/agentruntimenodeinventory/agentruntimenodeinventorycatalog",
+            "query": {
+              "runtimeNodeInventoryReportId.equals": {
+                "$ref": "data.inputs.node.runtimeNodeInventoryReportId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "runtime-node-inventory-create",
+          "type": "command",
+          "command": "reportagentruntimenodeinventory",
+          "when": {
+            "value": {
+              "$ref": "steps.runtime-node-inventory.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/agentruntimenodeinventory/reportagentruntimenodeinventory",
+            "ignoreResponseBody": true,
+            "body": {
+              "$ref": "data.inputs.node"
+            }
+          }
+        },
+        {
+          "id": "runtime-node-inventory-ready",
+          "type": "query",
+          "query": "runtime node inventory",
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/agentruntimenodeinventory/agentruntimenodeinventorycatalog",
+            "query": {
+              "runtimeNodeInventoryReportId.equals": {
+                "$ref": "data.inputs.node.runtimeNodeInventoryReportId"
+              },
+              "size": 2
+            },
+            "expect": {
+              "content.0.runtimeNodeInventoryReportId": {
+                "$ref": "data.inputs.node.runtimeNodeInventoryReportId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "equals",
+              "expected": 1
+            }
+          ]
+        },
+        {
+          "id": "platform-runtime-node-inventory",
+          "type": "query",
+          "query": "platform runtime node inventory",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimenodeinventory/runtimenodeinventoryview",
+            "query": {
+              "nodeId.equals": {
+                "$ref": "data.inputs.node.nodeId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "platform-runtime-node-inventory-create",
+          "type": "command",
+          "command": "recordruntimenodeinventory",
+          "when": {
+            "value": {
+              "$ref": "steps.platform-runtime-node-inventory.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimenodeinventory/recordruntimenodeinventory",
+            "ignoreResponseBody": true,
+            "body": {
+              "$ref": "data.inputs.node"
+            }
+          }
+        },
+        {
+          "id": "platform-runtime-node-inventory-ready",
+          "type": "query",
+          "query": "platform runtime node inventory",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimenodeinventory/runtimenodeinventoryview",
+            "query": {
+              "nodeId.equals": {
+                "$ref": "data.inputs.node.nodeId"
+              },
+              "size": 2
+            },
+            "expect": {
+              "content.0.nodeId": {
+                "$ref": "data.inputs.node.nodeId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "equals",
+              "expected": 1
+            }
+          ]
+        },
+        {
+          "id": "agent-runtime-telemetry",
+          "type": "query",
+          "query": "agent runtime telemetry",
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/agentruntimetelemetry/agentruntimetelemetrylatest",
+            "query": {
+              "nodeId.equals": {
+                "$ref": "data.inputs.telemetry.nodeId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "agent-runtime-telemetry-create",
+          "type": "command",
+          "command": "reportagentruntimetelemetry",
+          "when": {
+            "value": {
+              "$ref": "steps.agent-runtime-telemetry.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/agentruntimetelemetry/reportagentruntimetelemetry",
+            "ignoreResponseBody": true,
+            "body": {
+              "$ref": "data.inputs.agentTelemetry"
+            }
+          }
+        },
+        {
+          "id": "agent-runtime-telemetry-ready",
+          "type": "query",
+          "query": "agent runtime telemetry",
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/agentruntimetelemetry/agentruntimetelemetrylatest",
+            "query": {
+              "nodeId.equals": {
+                "$ref": "data.inputs.telemetry.nodeId"
+              },
+              "size": 2
+            },
+            "expect": {
+              "content.0.nodeId": {
+                "$ref": "data.inputs.telemetry.nodeId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "equals",
+              "expected": 1
+            }
+          ]
+        },
+        {
+          "id": "agent-runtime-node-resource-telemetry",
+          "type": "query",
+          "query": "agent runtime node resource telemetry",
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/agentruntimenoderesourcetelemetry/agentruntimenoderesourcelatest",
+            "query": {
+              "nodeId.equals": {
+                "$ref": "data.inputs.nodeResource.nodeId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "agent-runtime-node-resource-telemetry-create",
+          "type": "command",
+          "command": "reportagentruntimenoderesourcetelemetry",
+          "when": {
+            "value": {
+              "$ref": "steps.agent-runtime-node-resource-telemetry.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/agentruntimenoderesourcetelemetry/reportagentruntimenoderesourcetelemetry",
+            "ignoreResponseBody": true,
+            "body": {
+              "$ref": "data.inputs.nodeResource"
+            }
+          }
+        },
+        {
+          "id": "agent-runtime-node-resource-telemetry-ready",
+          "type": "query",
+          "query": "agent runtime node resource telemetry",
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/agentruntimenoderesourcetelemetry/agentruntimenoderesourcelatest",
+            "query": {
+              "nodeId.equals": {
+                "$ref": "data.inputs.nodeResource.nodeId"
+              },
+              "size": 2
+            },
+            "expect": {
+              "content.0.nodeId": {
+                "$ref": "data.inputs.nodeResource.nodeId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "equals",
+              "expected": 1
+            }
+          ]
+        },
+        {
+          "id": "platform-runtime-telemetry",
+          "type": "query",
+          "query": "platform runtime telemetry",
+          "request": {
+            "endpoint": "platform",
+            "path": "/noderuntimehealth/runtimetelemetrylatest",
+            "query": {
+              "nodeId.equals": {
+                "$ref": "data.inputs.telemetry.nodeId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "platform-runtime-telemetry-create",
+          "type": "command",
+          "command": "recordruntimetelemetry",
+          "when": {
+            "value": {
+              "$ref": "steps.platform-runtime-telemetry.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/noderuntimehealth/recordruntimetelemetry",
+            "ignoreResponseBody": true,
+            "body": {
+              "$ref": "data.inputs.telemetry"
+            }
+          }
+        },
+        {
+          "id": "platform-runtime-telemetry-ready",
+          "type": "query",
+          "query": "platform runtime telemetry",
+          "request": {
+            "endpoint": "platform",
+            "path": "/noderuntimehealth/runtimetelemetrylatest",
+            "query": {
+              "nodeId.equals": {
+                "$ref": "data.inputs.telemetry.nodeId"
+              },
+              "size": 2
+            },
+            "expect": {
+              "content.0.nodeId": {
+                "$ref": "data.inputs.telemetry.nodeId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "equals",
+              "expected": 1
+            }
+          ]
+        },
+        {
+          "id": "platform-runtime-node-resource-telemetry",
+          "type": "query",
+          "query": "platform runtime node resource telemetry",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimenoderesourcetelemetry/runtimenoderesourcelatest",
+            "query": {
+              "nodeId.equals": {
+                "$ref": "data.inputs.nodeResource.nodeId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "platform-runtime-node-resource-telemetry-create",
+          "type": "command",
+          "command": "recordruntimenoderesourcetelemetry",
+          "when": {
+            "value": {
+              "$ref": "steps.platform-runtime-node-resource-telemetry.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimenoderesourcetelemetry/recordruntimenoderesourcetelemetry",
+            "ignoreResponseBody": true,
+            "body": {
+              "$ref": "data.inputs.nodeResource"
+            }
+          }
+        },
+        {
+          "id": "platform-runtime-node-resource-telemetry-ready",
+          "type": "query",
+          "query": "platform runtime node resource telemetry",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimenoderesourcetelemetry/runtimenoderesourcelatest",
+            "query": {
+              "nodeId.equals": {
+                "$ref": "data.inputs.nodeResource.nodeId"
+              },
+              "size": 2
+            },
+            "expect": {
+              "content.0.nodeId": {
+                "$ref": "data.inputs.nodeResource.nodeId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "equals",
+              "expected": 1
+            }
+          ]
+        },
+        {
+          "id": "dataset-declaration",
+          "type": "query",
+          "query": "dataset declaration",
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/dataset/datasetcapability",
+            "query": {
+              "datasetId.equals": {
+                "$ref": "data.inputs.dataset.datasetId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "dataset-declaration-create",
+          "type": "command",
+          "command": "declaredataset",
+          "when": {
+            "value": {
+              "$ref": "steps.dataset-declaration.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/dataset/declaredataset",
+            "ignoreResponseBody": true,
+            "body": {
+              "$ref": "data.inputs.dataset"
+            }
+          }
+        },
+        {
+          "id": "dataset-declaration-ready",
+          "type": "query",
+          "query": "dataset declaration",
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/dataset/datasetcapability",
+            "query": {
+              "datasetId.equals": {
+                "$ref": "data.inputs.dataset.datasetId"
+              },
+              "size": 2
+            },
+            "expect": {
+              "content.0.datasetId": {
+                "$ref": "data.inputs.dataset.datasetId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "equals",
+              "expected": 1
+            }
+          ]
+        }
+      ],
+      "exports": {
+        "datasetCapability": {
+          "$ref": "steps.dataset-declaration-ready.body.content.0"
+        }
+      }
+    }
+  ]
+}

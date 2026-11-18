@@ -1,0 +1,12 @@
+{
+  "mode": "case",
+  "requiresBaseline": false,
+  "seed": 1001,
+  "caseIds": ["system-notification-publish-and-read", "system-notification-filter-and-pagination", "system-notification-mark-all-recipient-scope"],
+  "fulfillments": {},
+  "steps": [
+    {"id": "catalog-ready", "kind": "wait", "endpoint": "support", "path": "/systemnotification/systemnotificationcatalog?page=0&size=1", "expect": {"path": "size", "equals": 1}, "timeoutMs": 30000},
+    {"id": "summary-ready", "kind": "wait", "endpoint": "support", "path": "/systemnotification/systemnotificationsummary?page=0&size=1", "expect": {"path": "size", "equals": 1}, "timeoutMs": 30000}
+  ],
+  "exports": {"notificationQueriesReady": true}
+}

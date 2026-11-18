@@ -1,0 +1,5 @@
+{
+  "endpoints": {"support": {"bearerTokenEnv": "FL_API_TOKEN"}},
+  "probes": [{"endpoint": "support", "path": "/systemnotification/systemnotificationcatalog", "query": {"page": 0, "size": 1}}],
+  "dataExpect": {"records.0.notificationQueriesReady": true}
+}

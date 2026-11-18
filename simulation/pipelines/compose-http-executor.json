@@ -1,0 +1,33 @@
+{
+  "envFile": "simulation/compose/.env",
+  "endpoints": {
+    "platform": {
+      "headersEnv": {
+        "X-MEDOL-INTERNAL-TOKEN": "MEDOL_SECURITY_INTERNAL_TOKEN"
+      }
+    },
+    "support": {
+      "headersEnv": {
+        "X-MEDOL-INTERNAL-TOKEN": "MEDOL_SECURITY_INTERNAL_TOKEN"
+      }
+    },
+    "participant": {
+      "collection": "participantDeployments",
+      "key": "slot",
+      "urlField": "endpoint",
+      "headersEnv": {
+        "X-MEDOL-INTERNAL-TOKEN": "MEDOL_SECURITY_INTERNAL_TOKEN"
+      }
+    }
+  },
+  "probes": [
+    {
+      "endpoint": "platform",
+      "path": "/actuator/health"
+    },
+    {
+      "endpoint": "support",
+      "path": "/actuator/health"
+    }
+  ]
+}

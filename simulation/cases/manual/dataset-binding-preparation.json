@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 2,
+  "cases": [{
+    "id": "prepare-dataset-binding", "title": "Bind the declared dataset to the runtime and verify its source",
+    "origin": "manual", "status": "draft", "reviewIssues": [], "prerequisites": ["Dataset declared on the selected runtime"],
+    "dataRequirements": [], "timeoutMs": 1800000, "cleanupPolicy": "retain", "assertions": [],
+    "variables": {"key": {"runtimeId.equals":{"$ref":"data.inputs.binding.runtimeId"},"datasetId.equals":{"$ref":"data.inputs.binding.datasetId"},"size":2}},
+    "steps": [
+      {"id":"existing","type":"query","query":"RuntimeDatasetBindingCatalog","request":{"endpoint":"runtime-agent","path":"/runtimedatasetbinding/runtimedatasetbindingcatalog","query":{"$ref":"variables.key"}}},
+      {"id":"bind","type":"command","command":"ConfigureRuntimeDatasetBinding","when":{"value":{"$ref":"steps.existing.body.content.length"},"operator":"equals","expected":0},"request":{"endpoint":"runtime-agent","path":"/runtimedatasetbinding/configureruntimedatasetbinding","body":{"$ref":"data.inputs.binding"},"ignoreResponseBody":true}},
+      {"id":"binding-ready","type":"query","query":"RuntimeDatasetBindingCatalog","request":{"endpoint":"runtime-agent","path":"/runtimedatasetbinding/runtimedatasetbindingcatalog","query":{"$ref":"variables.key"},"checks":[{"path":"content.length","operator":"gt","expected":0}],"timeoutMs":{"$ref":"data.inputs.timeoutMs"},"pollIntervalMs":{"$ref":"data.inputs.pollIntervalMs"}},"assertions":[{"type":"query","path":"content.length","operator":"equals","expected":1},{"type":"query","path":"content.0.filePath","operator":"equals","expected":{"$ref":"data.inputs.binding.filePath"}}]}
+    ]
+  }]
+}

@@ -28,6 +28,8 @@ must also exist locally. Deployment uses `--pull never`, not implicit downloads.
 
 ```bash
 export MEDOL_PIPELINE_RUN_ID=compose-provision-20261116
+# Set this once to a Support origin reachable from both host and containers.
+export PUBLIC_SUPPORT_URL="http://$(ipconfig getifaddr en0):28080" # macOS LAN example
 node simulation/src/task.mjs simulation/pipelines/compose-tasks.json secrets
 node simulation/src/prepare-environment.mjs simulation/environments/compose-local.json
 node simulation/src/instance-registry.mjs register-environment simulation/environments/compose-local.json simulation/reports/environment-compose-local.json

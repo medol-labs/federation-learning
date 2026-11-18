@@ -1,8 +1,6 @@
-import {createHash} from 'node:crypto';
 import {checkCases, checkApproval} from '../../src/cases.mjs';
 import {validateBaselineManifest, validateDataPlan} from '../../src/data-plan.mjs';
 import {createTrainingEnvironment} from '../adapters/training-environment.mjs';
-import {executeCases, validateDataManifest} from '../../src/execute-cases.mjs';
 import {prepareData} from '../../src/prepare-data.mjs';
 
 export function trainingArguments(environment, scenario, requireParticipants = true) {
@@ -87,38 +85,4 @@ export async function prepareCaseData(environment, scenario, baseline, plan, cre
   } finally { await adapter.cleanup(); }
 }
 
-export async function testTraining(environment, scenario, data, plan, record, create = createTrainingEnvironment) {
-  validateDataManifest(data, environment);
-  if (data.mode !== 'case' || data.casePlanFingerprint !== createHash('sha256').update(JSON.stringify(plan)).digest('hex')) throw new Error('Case data must match the approved test plan');
-  const adapter = await create([...trainingArguments(environment, scenario), '--skip-admin-setup', 'true', '--skip-dictionary', 'true']);
-  try {
-    const operations = {
-      SubmitTraining: {type: 'command', async execute() {
-        await adapter.submitTraining();
-        return {status: 'ok', body: adapter.snapshot()};
-      }},
-      VerifyTraining: {type: 'query', async execute() {
-        await adapter.verifyTraining();
-        return {status: 'ok', body: {verified: true, ...adapter.snapshot()}};
-      }},
-      ...(adapter.testOperations || {})
-    };
-    const report = await executeCases(plan, environment, data, {
-      capabilities: {steps: ['command', 'query'], assertions: ['query']},
-      validatePlan(plan) {
-        for (const item of plan.cases) {
-          for (const step of item.steps) {
-            const operation = operations[step.command || step.query];
-            if (!operation || operation.type !== step.type) throw new Error('Unsupported project training action');
-          }
-        }
-      },
-      async validateEnvironment() { await adapter.validateConnection(); await adapter.waitReady(); },
-      async validateData() { await adapter.restoreData(data.records[0]); },
-      async execute(step, context) {
-        return operations[step.command || step.query].execute(step, context);
-      }
-    }, {record});
-    return {...report, ...adapter.snapshot?.()};
-  } finally { await adapter.cleanup(); }
-}
+

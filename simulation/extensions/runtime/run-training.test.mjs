@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { executeSteps } from './run-training.mjs';
+import { executeSteps } from '../../src/runtime/stages.mjs';
 
 test('simulation owns ordered stages and repeats independent participants', async () => {
   const calls = [];

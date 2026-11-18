@@ -23,9 +23,10 @@ test('current pipelines use generic task/transfer entries and consistent worker 
     const worker = read('simulation/pipelines/worker.json');
     const full = read('simulation/pipelines/full-remote.json');
     assert.deepEqual(full.hosts.k3d, validateTransfer(worker, root));
-    for (const file of ['full-remote.json', 'pipeline.json', 'training-remote.json-example', 'training-stages.json-example']) {
+    for (const file of ['remote.json-example', 'full-remote.json', 'pipeline.json', 'training-remote.json-example', 'training-stages.json-example']) {
         const pipeline = read(`simulation/pipelines/${file}`);
         for (const step of pipeline.steps) {
+            assert(!step.command.includes('simulation/extensions/runtime/run-training.mjs'));
             assert(!step.command.includes('simulation/extensions/runtime/workflow-stage.mjs'));
             assert(!step.command.includes('simulation/extensions/runtime/sync-worker.mjs'));
             assert(!step.command.includes('simulation/extensions/runtime/training-stages.mjs'));

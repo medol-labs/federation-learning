@@ -1,0 +1,634 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "participant-enrollment",
+      "title": "participant-enrollment",
+      "origin": "manual",
+      "status": "draft",
+      "prerequisites": [],
+      "dataRequirements": [],
+      "reviewIssues": [],
+      "cleanupPolicy": "retain",
+      "timeoutMs": 1800000,
+      "assertions": [],
+      "steps": [
+        {
+          "id": "organization-existing",
+          "type": "query",
+          "query": "organization-existing",
+          "request": {
+            "endpoint": "platform",
+            "path": "/organization/organizationdirectory",
+            "query": {
+              "organizationId.equals": {
+                "$ref": "data.inputs.organization.organizationId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "registerorganization",
+          "type": "command",
+          "command": "registerorganization",
+          "when": {
+            "value": {
+              "$get": [
+                {
+                  "$ref": "steps.organization-existing.body"
+                },
+                "content.length"
+              ]
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/organization/registerorganization",
+            "body": {
+              "$ref": "data.inputs.organization"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "organization-ready",
+          "type": "query",
+          "query": "organization-ready",
+          "request": {
+            "endpoint": "platform",
+            "path": "/organization/organizationdirectory",
+            "query": {
+              "organizationId.equals": {
+                "$ref": "data.inputs.organization.organizationId"
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "checks": [
+              {
+                "path": "content.length",
+                "operator": "gt",
+                "expected": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": "activateorganization",
+          "type": "command",
+          "command": "activateorganization",
+          "when": {
+            "value": {
+              "$if": [
+                {
+                  "$ref": "data.inputs.activateLifecycle"
+                },
+                {
+                  "$matches": [
+                    {
+                      "$get": [
+                        {
+                          "$ref": "steps.organization-ready.body"
+                        },
+                        "content.0"
+                      ]
+                    },
+                    [
+                      {
+                        "path": "state",
+                        "operator": "enumIn",
+                        "expected": [
+                          "Registered"
+                        ]
+                      }
+                    ]
+                  ]
+                },
+                false
+              ]
+            },
+            "operator": "equals",
+            "expected": true
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/organization/activateorganization",
+            "body": {
+              "organizationId": {
+                "$ref": "data.inputs.organization.organizationId"
+              },
+              "organizationName": {
+                "$ref": "data.inputs.organization.organizationName"
+              },
+              "activationNote": "Development bootstrap"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "reactivateorganization",
+          "type": "command",
+          "command": "reactivateorganization",
+          "when": {
+            "value": {
+              "$if": [
+                {
+                  "$ref": "data.inputs.activateLifecycle"
+                },
+                {
+                  "$matches": [
+                    {
+                      "$get": [
+                        {
+                          "$ref": "steps.organization-ready.body"
+                        },
+                        "content.0"
+                      ]
+                    },
+                    [
+                      {
+                        "path": "state",
+                        "operator": "enumIn",
+                        "expected": [
+                          "Deactivated"
+                        ]
+                      }
+                    ]
+                  ]
+                },
+                false
+              ]
+            },
+            "operator": "equals",
+            "expected": true
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/organization/reactivateorganization",
+            "body": {
+              "organizationId": {
+                "$ref": "data.inputs.organization.organizationId"
+              },
+              "organizationName": {
+                "$ref": "data.inputs.organization.organizationName"
+              },
+              "reactivationReason": "Development bootstrap"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "organization-active",
+          "type": "query",
+          "query": "organization-active",
+          "when": {
+            "value": {
+              "$ref": "data.inputs.activateLifecycle"
+            },
+            "operator": "equals",
+            "expected": true
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/organization/organizationdirectory",
+            "query": {
+              "organizationId.equals": {
+                "$ref": "data.inputs.organization.organizationId"
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "anyChecks": [
+              {
+                "path": "content.0.state",
+                "operator": "enumIn",
+                "expected": [
+                  "Active"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "federation-existing",
+          "type": "query",
+          "query": "federation-existing",
+          "request": {
+            "endpoint": "platform",
+            "path": "/federation/federationoverview",
+            "query": {
+              "federationId.equals": {
+                "$ref": "data.inputs.federation.federationId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "createfederation",
+          "type": "command",
+          "command": "createfederation",
+          "when": {
+            "value": {
+              "$get": [
+                {
+                  "$ref": "steps.federation-existing.body"
+                },
+                "content.length"
+              ]
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/federation/createfederation",
+            "body": {
+              "$ref": "data.inputs.federation"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "federation-ready",
+          "type": "query",
+          "query": "federation-ready",
+          "request": {
+            "endpoint": "platform",
+            "path": "/federation/federationoverview",
+            "query": {
+              "federationId.equals": {
+                "$ref": "data.inputs.federation.federationId"
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "checks": [
+              {
+                "path": "content.length",
+                "operator": "gt",
+                "expected": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": "activatefederation",
+          "type": "command",
+          "command": "activatefederation",
+          "when": {
+            "value": {
+              "$if": [
+                {
+                  "$ref": "data.inputs.activateLifecycle"
+                },
+                {
+                  "$matches": [
+                    {
+                      "$get": [
+                        {
+                          "$ref": "steps.federation-ready.body"
+                        },
+                        "content.0"
+                      ]
+                    },
+                    [
+                      {
+                        "path": "state",
+                        "operator": "enumIn",
+                        "expected": [
+                          "Draft"
+                        ]
+                      }
+                    ]
+                  ]
+                },
+                false
+              ]
+            },
+            "operator": "equals",
+            "expected": true
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/federation/activatefederation",
+            "body": {
+              "federationId": {
+                "$ref": "data.inputs.federation.federationId"
+              },
+              "federationName": {
+                "$ref": "data.inputs.federation.federationName"
+              },
+              "activationNote": "Development bootstrap"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "reactivatefederation",
+          "type": "command",
+          "command": "reactivatefederation",
+          "when": {
+            "value": {
+              "$if": [
+                {
+                  "$ref": "data.inputs.activateLifecycle"
+                },
+                {
+                  "$matches": [
+                    {
+                      "$get": [
+                        {
+                          "$ref": "steps.federation-ready.body"
+                        },
+                        "content.0"
+                      ]
+                    },
+                    [
+                      {
+                        "path": "state",
+                        "operator": "enumIn",
+                        "expected": [
+                          "Suspended"
+                        ]
+                      }
+                    ]
+                  ]
+                },
+                false
+              ]
+            },
+            "operator": "equals",
+            "expected": true
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/federation/reactivatefederation",
+            "body": {
+              "federationId": {
+                "$ref": "data.inputs.federation.federationId"
+              },
+              "federationName": {
+                "$ref": "data.inputs.federation.federationName"
+              },
+              "reactivationReason": "Development bootstrap"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "federation-active",
+          "type": "query",
+          "query": "federation-active",
+          "when": {
+            "value": {
+              "$ref": "data.inputs.activateLifecycle"
+            },
+            "operator": "equals",
+            "expected": true
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/federation/federationoverview",
+            "query": {
+              "federationId.equals": {
+                "$ref": "data.inputs.federation.federationId"
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "anyChecks": [
+              {
+                "path": "content.0.state",
+                "operator": "enumIn",
+                "expected": [
+                  "Active"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "membership",
+          "type": "query",
+          "query": "membership",
+          "request": {
+            "endpoint": "platform",
+            "path": "/federationmembership/federationmembershipdirectory",
+            "query": {
+              "federationId.equals": {
+                "$ref": "data.inputs.federation.federationId"
+              },
+              "size": 2,
+              "organizationId.equals": {
+                "$ref": "data.inputs.organization.organizationId"
+              }
+            }
+          }
+        },
+        {
+          "id": "InviteParticipant",
+          "type": "command",
+          "command": "InviteParticipant",
+          "when": {
+            "value": {
+              "$get": [
+                {
+                  "$ref": "steps.membership.body"
+                },
+                "content.length"
+              ]
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/federationmembership/inviteparticipant",
+            "body": {
+              "federationId": {
+                "$ref": "data.inputs.federation.federationId"
+              },
+              "organizationId": {
+                "$ref": "data.inputs.organization.organizationId"
+              },
+              "invitationNote": "Development bootstrap"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "invited",
+          "type": "query",
+          "query": "invited",
+          "request": {
+            "endpoint": "platform",
+            "path": "/federationmembership/federationmembershipdirectory",
+            "query": {
+              "federationId.equals": {
+                "$ref": "data.inputs.federation.federationId"
+              },
+              "size": 2,
+              "organizationId.equals": {
+                "$ref": "data.inputs.organization.organizationId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "checks": [
+              {
+                "path": "content.length",
+                "operator": "gt",
+                "expected": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": "ApproveParticipant",
+          "type": "command",
+          "command": "ApproveParticipant",
+          "when": {
+            "value": {
+              "$matches": [
+                {
+                  "$get": [
+                    {
+                      "$ref": "steps.invited.body"
+                    },
+                    "content.0"
+                  ]
+                },
+                [
+                  {
+                    "path": "membershipStatus",
+                    "operator": "enumIn",
+                    "expected": [
+                      "Joined",
+                      "Approved",
+                      "Active"
+                    ]
+                  },
+                  {
+                    "path": "state",
+                    "operator": "enumIn",
+                    "expected": [
+                      "Joined",
+                      "Approved",
+                      "Active"
+                    ]
+                  },
+                  {
+                    "path": "approvalNote.length",
+                    "operator": "gt",
+                    "expected": 0
+                  }
+                ]
+              ]
+            },
+            "operator": "equals",
+            "expected": false
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/federationmembership/approveparticipant",
+            "body": {
+              "federationId": {
+                "$ref": "data.inputs.federation.federationId"
+              },
+              "organizationId": {
+                "$ref": "data.inputs.organization.organizationId"
+              },
+              "approvalNote": "Development bootstrap"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "joined",
+          "type": "query",
+          "query": "joined",
+          "request": {
+            "endpoint": "platform",
+            "path": "/federationmembership/federationmembershipdirectory",
+            "query": {
+              "federationId.equals": {
+                "$ref": "data.inputs.federation.federationId"
+              },
+              "size": 2,
+              "organizationId.equals": {
+                "$ref": "data.inputs.organization.organizationId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "anyChecks": [
+              {
+                "path": "content.0.membershipStatus",
+                "operator": "enumIn",
+                "expected": [
+                  "Joined",
+                  "Approved",
+                  "Active"
+                ]
+              },
+              {
+                "path": "content.0.state",
+                "operator": "enumIn",
+                "expected": [
+                  "Joined",
+                  "Approved",
+                  "Active"
+                ]
+              },
+              {
+                "path": "content.0.approvalNote.length",
+                "operator": "gt",
+                "expected": 0
+              }
+            ]
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "gt",
+              "expected": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

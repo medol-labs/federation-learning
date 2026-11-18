@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "dataset-approval-metadata",
+      "title": "dataset-approval-metadata",
+      "origin": "manual",
+      "status": "draft",
+      "reviewIssues": [],
+      "prerequisites": [],
+      "dataRequirements": [],
+      "assertions": [],
+      "cleanupPolicy": "retain",
+      "timeoutMs": 1800000,
+      "steps": [
+        {
+          "id": "capability",
+          "type": "query",
+          "query": "capability",
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/dataset/datasetcapability",
+            "query": {
+              "datasetId.equals": {
+                "$ref": "data.inputs.dataset.datasetId"
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "checks": [
+              {
+                "path": "content.0.datasetId",
+                "operator": "exists"
+              }
+            ]
+          }
+        },
+        {
+          "id": "ready",
+          "type": "query",
+          "query": "ready",
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/dataset/datasetcapability",
+            "query": {
+              "datasetId.equals": {
+                "$ref": "data.inputs.dataset.datasetId"
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "checks": [
+              {
+                "path": "content.0.metadataStatus",
+                "operator": "enumIn",
+                "expected": [
+                  "Reported",
+                  "MetadataReported"
+                ]
+              },
+              {
+                "path": "content.0.contractStatus",
+                "operator": "enumIn",
+                "expected": [
+                  "ContractValidationCompleted",
+                  "Validated",
+                  "Completed"
+                ]
+              }
+            ],
+            "failWhen": [
+              {
+                "path": "content.0.metadataStatus",
+                "operator": "enumIn",
+                "expected": [
+                  "Failed",
+                  "Rejected",
+                  "Unavailable"
+                ]
+              },
+              {
+                "path": "content.0.contractStatus",
+                "operator": "enumIn",
+                "expected": [
+                  "Failed",
+                  "Rejected",
+                  "Unavailable"
+                ]
+              }
+            ]
+          },
+          "when": {
+            "value": {
+              "$ref": "data.inputs.requireReady"
+            },
+            "operator": "equals",
+            "expected": true
+          }
+        },
+        {
+          "id": "approval",
+          "type": "query",
+          "query": "approval",
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/dataset/datasetcapability",
+            "query": {
+              "datasetId.equals": {
+                "$ref": "data.inputs.dataset.datasetId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "ApproveDatasetForTraining",
+          "type": "command",
+          "command": "ApproveDatasetForTraining",
+          "when": {
+            "value": {
+              "$matches": [
+                {
+                  "$ref": "steps.approval.body"
+                },
+                [
+                  {
+                    "path": "content.0.approvalStatus",
+                    "operator": "enumIn",
+                    "expected": [
+                      "Approved",
+                      "TrainingApproved"
+                    ]
+                  },
+                  {
+                    "path": "content.0.approved",
+                    "operator": "equals",
+                    "expected": true
+                  }
+                ]
+              ]
+            },
+            "operator": "equals",
+            "expected": false
+          },
+          "request": {
+            "endpoint": "runtime-agent",
+            "path": "/dataset/approvedatasetfortraining",
+            "body": {
+              "datasetId": {
+                "$ref": "data.inputs.dataset.datasetId"
+              },
+              "organizationId": {
+                "$ref": "data.inputs.dataset.organizationId"
+              },
+              "featureSchemaId": {
+                "$ref": "data.inputs.dataset.featureSchemaId"
+              },
+              "datasetName": {
+                "$ref": "data.inputs.dataset.datasetName"
+              }
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "metadata",
+          "type": "query",
+          "query": "metadata",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimedatasetmetadata/runtimedatasetmetadatacatalog",
+            "query": {
+              "runtimeDatasetBindingId.equals": {
+                "$ref": "data.inputs.metadata.runtimeDatasetBindingId"
+              },
+              "size": 2,
+              "schemaCompatible.equals": true,
+              "labelCompatible.equals": true
+            }
+          }
+        },
+        {
+          "id": "RecordRuntimeDatasetMetadata",
+          "type": "command",
+          "command": "RecordRuntimeDatasetMetadata",
+          "when": {
+            "value": {
+              "$ref": "steps.metadata.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimedatasetmetadata/recordruntimedatasetmetadata",
+            "body": {
+              "$ref": "data.inputs.metadata"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "metadata-ready",
+          "type": "query",
+          "query": "metadata-ready",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimedatasetmetadata/runtimedatasetmetadatacatalog",
+            "query": {
+              "runtimeDatasetBindingId.equals": {
+                "$ref": "data.inputs.metadata.runtimeDatasetBindingId"
+              },
+              "size": 2,
+              "schemaCompatible.equals": true,
+              "labelCompatible.equals": true
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "expect": {
+              "content.0.runtimeDatasetBindingId": {
+                "$ref": "data.inputs.metadata.runtimeDatasetBindingId"
+              }
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.0.runtimeDatasetBindingId",
+              "operator": "exists"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

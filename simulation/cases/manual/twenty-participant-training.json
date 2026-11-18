@@ -3,70 +3,600 @@
   "cases": [
     {
       "id": "participants-complete-training",
-      "title": "Twenty CSV participants complete two linked rounds and publish digest-verified models",
+      "title": "20 participants complete 2 linked rounds with verified model artifacts",
       "origin": "manual",
       "status": "draft",
+      "tags": [
+        "training",
+        "federation"
+      ],
+      "suites": [
+        "training"
+      ],
       "prerequisites": [
-        "Twenty deployed and registered participants with distinct runtime identities",
-        "All 20 agents have accessible validated CSV bindings",
-        "maxRounds=2; minimumNodesPerRound=20; FED_AVG aggregation"
+        "Ready registered deployment and prepared participant data from the same instance",
+        "Fresh Draft training configuration; model and dataset capabilities available",
+        "Executor credential environment variables configured"
       ],
       "dataRequirements": [
         {
           "id": "participants",
-          "description": "Twenty distinct organizations, runtime identities and dataset bindings"
+          "description": "20 distinct prepared participants"
         },
         {
           "id": "csv",
-          "description": "Synthetic 32-row CSV fixture per participant; functional capacity test, not clinical effectiveness evidence"
+          "description": "Validated accessible CSV fixture per participant"
         }
       ],
+      "variables": {
+        "jobId": {
+          "$uuid": true
+        }
+      },
       "steps": [
+        {
+          "id": "fixture",
+          "type": "assert",
+          "value": {
+            "count": {
+              "$length": {
+                "$ref": "data.records.0.participants"
+              }
+            },
+            "runtimeIds": {
+              "$map": {
+                "from": {
+                  "$ref": "data.records.0.participants"
+                },
+                "path": "runtimeId"
+              }
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "count",
+              "operator": "equals",
+              "expected": 20
+            },
+            {
+              "type": "query",
+              "path": "runtimeIds",
+              "operator": "unique"
+            }
+          ]
+        },
+        {
+          "id": "configuration",
+          "type": "query",
+          "query": "TrainingRunConfigurationCatalog",
+          "request": {
+            "endpoint": "platform",
+            "path": "/trainingrunconfiguration/trainingrunconfigurationcatalog",
+            "query": {
+              "trainingRunConfigurationId.equals": {
+                "$ref": "data.records.0.participants.0.trainingRunConfigurationId"
+              }
+            },
+            "expect": {
+              "page.totalElements": 1,
+              "content.0.state": "Draft"
+            },
+            "timeoutMs": 1800000
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.0.maxRounds",
+              "operator": "equals",
+              "expected": 2
+            },
+            {
+              "type": "query",
+              "path": "content.0.minimumNodesPerRound",
+              "operator": "equals",
+              "expected": 20
+            }
+          ]
+        },
+        {
+          "id": "validate-participants",
+          "type": "foreach",
+          "items": {
+            "$ref": "data.records.0.participants"
+          },
+          "as": "participant",
+          "steps": [
+            {
+              "id": "endpoint",
+              "type": "query",
+              "query": "RuntimeAgentEndpointCatalog",
+              "request": {
+                "endpoint": "platform",
+                "path": "/runtimeinfrastructure/runtimeagentendpointcatalog",
+                "query": {
+                  "runtimeAgentId.equals": {
+                    "$ref": "participant.runtimeAgentId"
+                  }
+                },
+                "expect": {
+                  "page.totalElements": 1
+                },
+                "timeoutMs": 1800000
+              },
+              "assertions": [
+                {
+                  "type": "query",
+                  "path": "content.0.runtimeId",
+                  "operator": "equals",
+                  "expected": {
+                    "$ref": "participant.runtimeId"
+                  }
+                },
+                {
+                  "type": "query",
+                  "path": "content.0.runtimeAgentEndpoint",
+                  "operator": "exists"
+                }
+              ]
+            },
+            {
+              "id": "capability",
+              "type": "query",
+              "query": "DatasetCapability",
+              "request": {
+                "endpoint": "participant",
+                "path": "/dataset/datasetcapability",
+                "query": {
+                  "datasetId.equals": {
+                    "$ref": "participant.datasetId"
+                  }
+                },
+                "expect": {
+                  "page.totalElements": 1,
+                  "content.0.schemaCompatible": true,
+                  "content.0.labelCompatible": true
+                },
+                "timeoutMs": 1800000,
+                "target": {
+                  "$ref": "participant.slot"
+                }
+              },
+              "assertions": []
+            }
+          ]
+        },
+        {
+          "id": "create",
+          "type": "command",
+          "command": "CreateTrainingJob",
+          "request": {
+            "endpoint": "platform",
+            "path": "/trainingjob/createtrainingjob",
+            "body": {
+              "trainingJobId": {
+                "$ref": "variables.jobId"
+              },
+              "federationId": {
+                "$ref": "steps.configuration.body.content.0.federationId"
+              },
+              "trainingRunConfigurationId": {
+                "$ref": "data.records.0.participants.0.trainingRunConfigurationId"
+              },
+              "objective": "Simulation federated training verification"
+            }
+          }
+        },
+        {
+          "id": "created",
+          "type": "query",
+          "query": "TrainingJobDashboard",
+          "request": {
+            "endpoint": "platform",
+            "path": "/trainingjob/trainingjobdashboard",
+            "query": {
+              "trainingJobId.equals": {
+                "$ref": "variables.jobId"
+              }
+            },
+            "expect": {
+              "page.totalElements": 1
+            },
+            "timeoutMs": 1800000
+          },
+          "assertions": []
+        },
         {
           "id": "submit",
           "type": "command",
-          "command": "SubmitTraining"
+          "command": "SubmitTrainingJob",
+          "request": {
+            "endpoint": "platform",
+            "path": "/trainingjob/submittrainingjob",
+            "body": {
+              "trainingJobId": {
+                "$ref": "variables.jobId"
+              }
+            }
+          }
         },
         {
-          "id": "verify",
+          "id": "completed-job",
           "type": "query",
-          "query": "VerifyTraining"
+          "query": "TrainingJobDashboard",
+          "request": {
+            "endpoint": "platform",
+            "path": "/trainingjob/trainingjobdashboard",
+            "query": {
+              "trainingJobId.equals": {
+                "$ref": "variables.jobId"
+              }
+            },
+            "expect": {
+              "page.totalElements": 1,
+              "content.0.state": "Completed"
+            },
+            "timeoutMs": 1800000,
+            "failWhen": [
+              {
+                "path": "content.0.state",
+                "operator": "equals",
+                "expected": "Failed"
+              },
+              {
+                "path": "content.0.state",
+                "operator": "equals",
+                "expected": "Canceled"
+              }
+            ]
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.0.trainingJobId",
+              "operator": "equals",
+              "expected": {
+                "$ref": "variables.jobId"
+              }
+            }
+          ]
+        },
+        {
+          "id": "completed-rounds",
+          "type": "query",
+          "query": "TrainingRoundProgress",
+          "request": {
+            "endpoint": "platform",
+            "path": "/traininground/trainingroundprogress",
+            "query": {
+              "trainingJobId.equals": {
+                "$ref": "variables.jobId"
+              },
+              "sort": "roundNumber,asc",
+              "size": 100
+            },
+            "expect": {
+              "page.totalElements": 2
+            },
+            "timeoutMs": 1800000
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "equals",
+              "expected": 2
+            }
+          ]
+        },
+        {
+          "id": "rounds",
+          "type": "foreach",
+          "items": {
+            "$ref": "steps.completed-rounds.body.content"
+          },
+          "as": "round",
+          "indexAs": "roundIndex",
+          "steps": [
+            {
+              "id": "round-counts",
+              "type": "assert",
+              "value": {
+                "minimum": {
+                  "$ref": "round.minimumNodesPerRound"
+                },
+                "accepted": {
+                  "$ref": "round.acceptedModelUpdateCount"
+                },
+                "selected": {
+                  "$map": {
+                    "from": {
+                      "$ref": "round.selectedParticipants"
+                    },
+                    "path": "runtimeId"
+                  }
+                }
+              },
+              "assertions": [
+                {
+                  "type": "query",
+                  "path": "minimum",
+                  "operator": "equals",
+                  "expected": 20
+                },
+                {
+                  "type": "query",
+                  "path": "accepted",
+                  "operator": "gte",
+                  "expected": 20
+                },
+                {
+                  "type": "query",
+                  "path": "selected",
+                  "operator": "setEquals",
+                  "expected": {
+                    "$map": {
+                      "from": {
+                        "$ref": "data.records.0.participants"
+                      },
+                      "path": "runtimeId"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "executions",
+              "type": "foreach",
+              "items": {
+                "$ref": "data.records.0.participants"
+              },
+              "as": "participant",
+              "steps": [
+                {
+                  "id": "execution",
+                  "type": "query",
+                  "query": "RoundExecutionCatalog",
+                  "request": {
+                    "endpoint": "participant",
+                    "path": "/roundexecution/roundexecutioncatalog",
+                    "query": {
+                      "trainingJobId.equals": {
+                        "$ref": "variables.jobId"
+                      },
+                      "roundId.equals": {
+                        "$ref": "round.roundId"
+                      },
+                      "runtimeId.equals": {
+                        "$ref": "participant.runtimeId"
+                      },
+                      "updateArtifactId.specified": true,
+                      "size": 100
+                    },
+                    "expect": {
+                      "page.totalElements": 1
+                    },
+                    "timeoutMs": 1800000,
+                    "target": {
+                      "$ref": "participant.slot"
+                    }
+                  },
+                  "assertions": [
+                    {
+                      "type": "query",
+                      "path": "content.0.updateArtifactId",
+                      "operator": "exists"
+                    }
+                  ]
+                },
+                {
+                  "id": "contribution",
+                  "type": "assert",
+                  "value": {
+                    "refs": {
+                      "$urlPath": {
+                        "$ref": "round.artifactRefs"
+                      }
+                    }
+                  },
+                  "assertions": [
+                    {
+                      "type": "query",
+                      "path": "refs",
+                      "operator": "contains",
+                      "expected": {
+                        "$urlPath": {
+                          "$concat": [
+                            {
+                              "$ref": "environment.endpoints.support"
+                            },
+                            "/api/files/",
+                            {
+                              "$ref": "steps.execution.body.content.0.updateArtifactId"
+                            },
+                            "/content"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "previous-model",
+                  "type": "assert",
+                  "when": {
+                    "value": {
+                      "$ref": "roundIndex"
+                    },
+                    "operator": "gt",
+                    "expected": 0
+                  },
+                  "value": {
+                    "modelId": {
+                      "$ref": "steps.execution.body.content.0.baseModelId"
+                    }
+                  },
+                  "assertions": [
+                    {
+                      "type": "query",
+                      "path": "modelId",
+                      "operator": "equals",
+                      "expected": {
+                        "$get": [
+                          {
+                            "$at": [
+                              {
+                                "$ref": "steps.completed-rounds.body.content"
+                              },
+                              {
+                                "$subtract": [
+                                  {
+                                    "$ref": "roundIndex"
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          "aggregatedModelId"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              "exports": {
+                "executionId": {
+                  "$ref": "steps.execution.body.content.0.roundExecutionId"
+                },
+                "artifactId": {
+                  "$ref": "steps.execution.body.content.0.updateArtifactId"
+                }
+              }
+            },
+            {
+              "id": "distinct-updates",
+              "type": "assert",
+              "value": {
+                "executionIds": {
+                  "$map": {
+                    "from": {
+                      "$ref": "steps.executions.body.items"
+                    },
+                    "path": "executionId"
+                  }
+                },
+                "artifactIds": {
+                  "$map": {
+                    "from": {
+                      "$ref": "steps.executions.body.items"
+                    },
+                    "path": "artifactId"
+                  }
+                }
+              },
+              "assertions": [
+                {
+                  "type": "query",
+                  "path": "executionIds",
+                  "operator": "unique"
+                },
+                {
+                  "type": "query",
+                  "path": "artifactIds",
+                  "operator": "unique"
+                }
+              ]
+            },
+            {
+              "id": "model",
+              "type": "query",
+              "query": "ModelArtifactCatalog",
+              "request": {
+                "endpoint": "platform",
+                "path": "/modelartifact/modelartifactcatalog",
+                "query": {
+                  "modelId.equals": {
+                    "$ref": "round.aggregatedModelId"
+                  }
+                },
+                "expect": {
+                  "page.totalElements": 1
+                },
+                "timeoutMs": 1800000
+              },
+              "assertions": [
+                {
+                  "type": "query",
+                  "path": "content.0.modelArtifactUri",
+                  "operator": "exists"
+                },
+                {
+                  "type": "query",
+                  "path": "content.0.modelArtifactDigest",
+                  "operator": "exists"
+                }
+              ]
+            },
+            {
+              "id": "artifact",
+              "type": "query",
+              "query": "VerifyArtifactDigest",
+              "request": {
+                "endpoint": "support",
+                "path": "/",
+                "download": {
+                  "url": {
+                    "$ref": "steps.model.body.content.0.modelArtifactUri"
+                  },
+                  "digest": {
+                    "$ref": "steps.model.body.content.0.modelArtifactDigest"
+                  }
+                },
+                "timeoutMs": 120000
+              },
+              "assertions": [
+                {
+                  "type": "query",
+                  "path": "verified",
+                  "operator": "equals",
+                  "expected": true
+                },
+                {
+                  "type": "query",
+                  "path": "bytes",
+                  "operator": "gt",
+                  "expected": 0
+                }
+              ]
+            }
+          ],
+          "exports": {
+            "roundId": {
+              "$ref": "round.roundId"
+            },
+            "modelId": {
+              "$ref": "round.aggregatedModelId"
+            },
+            "artifact": {
+              "$ref": "steps.artifact.body"
+            },
+            "executions": {
+              "$ref": "steps.executions.body.items"
+            }
+          },
+          "evidence": {
+            "$ref": "steps.rounds.body"
+          }
         }
       ],
       "assertions": [
         {
           "type": "query",
-          "stepId": "submit",
-          "path": "trainingJobId",
-          "operator": "exists"
-        },
-        {
-          "type": "query",
-          "stepId": "submit",
-          "path": "participants.length",
+          "path": "items.length",
           "operator": "equals",
-          "expected": 20
-        },
-        {
-          "type": "query",
-          "stepId": "verify",
-          "path": "verified",
-          "operator": "equals",
-          "expected": true
-        },
-        {
-          "type": "query",
-          "stepId": "verify",
-          "path": "verification.completedRoundCount",
-          "operator": "equals",
-          "expected": 2
-        },
-        {
-          "type": "query",
-          "stepId": "verify",
-          "path": "verification.acceptedExecutionCount",
-          "operator": "equals",
-          "expected": 40
+          "expected": 2,
+          "stepId": "rounds"
         }
       ],
       "timeoutMs": 7200000,

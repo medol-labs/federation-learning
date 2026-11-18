@@ -1,11 +1,11 @@
 {
   "tasks": {
     "select-cases": {
-      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "module": "simulation/src/workflow-tasks.mjs",
       "export": "select",
       "inputs": {
         "library": {
-          "path": "simulation/cases/approved/twenty-participant-training.json"
+          "path": "simulation/cases/approved/twenty-participant-training-workflow-v2.json"
         },
         "selection": {
           "path": "simulation/pipelines/case-selection.json",
@@ -45,8 +45,8 @@
       "scope": "deployment"
     },
     "prepare-baseline": {
-      "module": "simulation/extensions/adapters/workflow-operations.mjs",
-      "export": "baseline",
+      "module": "simulation/src/workflow-tasks.mjs",
+      "export": "prepareWorkflow",
       "inputs": {
         "environment": {
           "artifact": "deployment.json",
@@ -54,11 +54,14 @@
           "status": "ready",
           "binding": "deployment"
         },
-        "plan": {
-          "path": "simulation/data/baseline-plan.json"
+        "workflow": {
+          "path": "simulation/cases/approved/baseline-workflow-v2.json"
+        },
+        "inputs": {
+          "path": "dictionary-init/dictionaries.json"
         },
         "config": {
-          "path": "simulation/data/baseline-adapter.json"
+          "path": "simulation/pipelines/preparation-http-executor.json"
         }
       },
       "output": "baseline.json",
@@ -116,7 +119,7 @@
       "scope": "execution"
     },
     "test": {
-      "module": "simulation/extensions/adapters/workflow-operations.mjs",
+      "module": "simulation/src/workflow-tasks.mjs",
       "export": "test",
       "inputs": {
         "environment": {
@@ -124,9 +127,6 @@
           "env": "MEDOL_ENVIRONMENT_MANIFEST",
           "status": "ready",
           "binding": "deployment"
-        },
-        "scenario": {
-          "path": "simulation/extensions/scenarios/twenty-participant-training.json"
         },
         "data": {
           "artifact": "data.json",
@@ -138,14 +138,17 @@
           "artifact": "execution-plan.json",
           "env": "MEDOL_EXECUTION_PLAN",
           "binding": "plan"
+        },
+        "config": {
+          "path": "simulation/pipelines/http-executor.json"
         }
       },
       "output": "test.json",
       "scope": "execution"
     },
     "prepare-participant-auth": {
-      "module": "simulation/extensions/adapters/workflow-operations.mjs",
-      "export": "baseline",
+      "module": "simulation/src/workflow-tasks.mjs",
+      "export": "prepareWorkflow",
       "inputs": {
         "environment": {
           "artifact": "deployment.json",
@@ -153,11 +156,11 @@
           "status": "ready",
           "binding": "deployment"
         },
-        "plan": {
-          "path": "simulation/data/participant-auth-plan.json"
+        "workflow": {
+          "path": "simulation/cases/approved/participant-auth-workflow-v2.json"
         },
         "config": {
-          "path": "simulation/data/baseline-adapter.json"
+          "path": "simulation/pipelines/preparation-http-executor.json"
         }
       },
       "output": "participant-auth.json",

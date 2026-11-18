@@ -8,32 +8,8 @@
   },
   "steps": [
     {
-      "id": "build-local-images",
-      "phase": "build",
-      "timeoutMs": 7200000,
-      "command": [
-        "node",
-        "operations/images/images.mjs",
-        "build",
-        "--environment",
-        "local"
-      ]
-    },
-    {
-      "id": "publish-local-images",
-      "phase": "publish",
-      "timeoutMs": 7200000,
-      "command": [
-        "node",
-        "operations/images/images.mjs",
-        "push",
-        "--environment",
-        "local"
-      ]
-    },
-    {
-      "id": "sync-worker",
-      "phase": "deploy",
+      "id": "sync",
+      "phase": "environment",
       "command": [
         "node",
         "simulation/src/worker.mjs",
@@ -42,9 +18,152 @@
       ]
     },
     {
-      "id": "prepare-remote-test-configuration",
-      "phase": "ready",
+      "id": "environment",
+      "phase": "environment",
       "host": "k3d",
+      "dependsOn": [
+        "sync"
+      ],
+      "timeoutMs": 600000,
+      "command": [
+        "node",
+        "simulation/src/prepare-environment.mjs",
+        "simulation/pipelines/environment-isolated.json"
+      ]
+    },
+    {
+      "id": "build",
+      "phase": "build",
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "operations/images/images.mjs",
+        "build",
+        "--environment",
+        "local",
+        "--platform",
+        "linux/arm64",
+        "--version",
+        "simulation-20261116"
+      ]
+    },
+    {
+      "id": "publish",
+      "phase": "publish",
+      "dependsOn": [
+        "build"
+      ],
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "operations/images/images.mjs",
+        "push",
+        "--environment",
+        "local",
+        "--platform",
+        "linux/arm64",
+        "--version",
+        "simulation-20261116",
+        "--push-prefix",
+        "192.168.50.2:5000/fl"
+      ]
+    },
+    {
+      "id": "build-engine",
+      "phase": "build",
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "federation-learning-runtime-engine/scripts/image-bundle.mjs",
+        "build",
+        "--root",
+        "federation-learning-runtime-engine",
+        "--platform",
+        "linux/arm64",
+        "--version",
+        "simulation-20261116",
+        "--plugin-profile",
+        "pytorch-vision",
+        "--base-image",
+        "public.ecr.aws/docker/library/python:3.11-slim"
+      ]
+    },
+    {
+      "id": "publish-engine",
+      "phase": "publish",
+      "dependsOn": [
+        "build-engine"
+      ],
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "federation-learning-runtime-engine/scripts/image-bundle.mjs",
+        "push",
+        "--root",
+        "federation-learning-runtime-engine",
+        "--platform",
+        "linux/arm64",
+        "--version",
+        "simulation-20261116",
+        "--plugin-profile",
+        "pytorch-vision",
+        "--push-prefix",
+        "192.168.50.2:5000/fl"
+      ]
+    },
+    {
+      "id": "build-engine-sklearn",
+      "phase": "build",
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "federation-learning-runtime-engine/scripts/image-bundle.mjs",
+        "build",
+        "--root",
+        "federation-learning-runtime-engine",
+        "--platform",
+        "linux/arm64",
+        "--version",
+        "simulation-20261116",
+        "--plugin-profile",
+        "sklearn",
+        "--base-image",
+        "public.ecr.aws/docker/library/python:3.11-slim"
+      ]
+    },
+    {
+      "id": "publish-engine-sklearn",
+      "phase": "publish",
+      "dependsOn": [
+        "build-engine-sklearn"
+      ],
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "federation-learning-runtime-engine/scripts/image-bundle.mjs",
+        "push",
+        "--root",
+        "federation-learning-runtime-engine",
+        "--platform",
+        "linux/arm64",
+        "--version",
+        "simulation-20261116",
+        "--plugin-profile",
+        "sklearn",
+        "--push-prefix",
+        "192.168.50.2:5000/fl"
+      ]
+    },
+    {
+      "id": "secrets",
+      "phase": "deployment",
+      "host": "k3d",
+      "dependsOn": [
+        "environment",
+        "publish",
+        "publish-engine",
+        "publish-engine-sklearn"
+      ],
       "command": [
         "node",
         "simulation/src/task.mjs",
@@ -53,23 +172,92 @@
       ]
     },
     {
-      "id": "check-remote-scenario",
-      "phase": "ready",
+      "id": "deploy",
+      "phase": "deployment",
       "host": "k3d",
+      "dependsOn": [
+        "secrets"
+      ],
+      "timeoutMs": 1800000,
       "command": [
         "node",
-        "simulation/extensions/runtime/run-training.mjs",
-        "--plan"
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "deploy"
       ]
     },
     {
-      "id": "remote-training",
-      "phase": "verify",
+      "id": "review-cases",
+      "phase": "case-design",
       "host": "k3d",
+      "dependsOn": [
+        "sync"
+      ],
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "select-cases"
+      ]
+    },
+    {
+      "id": "prepare-baseline",
+      "phase": "data-preparation",
+      "host": "k3d",
+      "dependsOn": [
+        "deploy"
+      ],
       "timeoutMs": 7200000,
       "command": [
         "node",
-        "simulation/extensions/runtime/run-training.mjs"
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "prepare-baseline"
+      ]
+    },
+    {
+      "id": "prepare-case",
+      "phase": "data-preparation",
+      "host": "k3d",
+      "dependsOn": [
+        "prepare-baseline",
+        "review-cases"
+      ],
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "prepare-case"
+      ]
+    },
+    {
+      "id": "execute-cases",
+      "phase": "test-execution",
+      "host": "k3d",
+      "dependsOn": [
+        "prepare-case",
+        "review-cases"
+      ],
+      "timeoutMs": 7200000,
+      "command": [
+        "node",
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "test"
+      ]
+    },
+    {
+      "id": "collect",
+      "phase": "reporting",
+      "dependsOn": [
+        "execute-cases"
+      ],
+      "command": [
+        "node",
+        "simulation/src/worker.mjs",
+        "collect",
+        "simulation/pipelines/worker.json"
       ]
     }
   ]

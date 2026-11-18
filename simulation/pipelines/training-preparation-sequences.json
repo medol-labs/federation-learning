@@ -1,0 +1,111 @@
+{
+  "targets": {
+    "all": ["platform", "dataset", "training-job"],
+    "participant-registration": ["platform"],
+    "platform": ["platform"],
+    "runtime-agent": ["dataset"],
+    "training-job": ["training-job"]
+  },
+  "authentication": {"platform": "support", "dataset": "runtime-agent"},
+  "platform": [
+    {
+      "case": "participant-enrollment",
+      "endpoint": "platform",
+      "inputs": {
+        "organization": {
+          "$ref": "seed.organization"
+        },
+        "federation": {
+          "$ref": "seed.federation"
+        },
+        "activateLifecycle": {
+          "$ref": "options.activateLifecycle"
+        }
+      }
+    },
+    {
+      "case": "schema-model-preparation",
+      "endpoint": "platform",
+      "when": {
+        "$ref": "options.full"
+      },
+      "inputs": {
+        "featureSchema": {
+          "$ref": "seed.featureSchema"
+        },
+        "model": {
+          "$ref": "seed.model"
+        }
+      }
+    },
+    {
+      "case": "infrastructure-registration",
+      "onResult": "infrastructureSeed",
+      "endpoint": "platform",
+      "inputs": {
+        "runtimeInfrastructurePackage": {
+          "$ref": "seed.runtimeInfrastructurePackage"
+        },
+        "runtimeInstallationPlan": {
+          "$ref": "seed.runtimeInstallationPlan"
+        },
+        "runtime": {
+          "$ref": "seed.runtime"
+        },
+        "organization": {
+          "$ref": "seed.organization"
+        },
+        "register": {
+          "$ref": "options.register"
+        }
+      }
+    },
+    {
+      "case": "training-configuration-preparation",
+      "endpoint": "platform",
+      "when": {
+        "$ref": "options.full"
+      },
+      "inputs": {
+        "runtimeEngineProfile": {
+          "$ref": "seed.runtimeEngineProfile"
+        },
+        "trainingRunConfiguration": {
+          "$ref": "seed.trainingRunConfiguration"
+        }
+      }
+    }
+  ],
+  "dataset": [
+    {"case":"runtime-identity-registration","endpoint":"platform","onResult":"identitySeed","inputs":{"runtime":{"$ref":"seed.runtime"},"organization":{"$ref":"seed.organization"},"installMode":{"$ref":"seed.runtimeInstallationPlan.agentInstallMode"},"endpoint":{"$ref":"options.runtimeAgentUrl"},"scope":{"$ref":"seed.runtimeEndpointScope"}}},
+    {"case":"runtime-inventory-dataset-preparation","endpoint":"runtime-agent","onResult":"verifySeedSchema","inputs":{"node":{"$ref":"seed.node"},"telemetry":{"$ref":"seed.telemetry"},"agentTelemetry":{"$ref":"seed.agentTelemetry"},"nodeResource":{"$ref":"seed.nodeResource"},"dataset":{"$ref":"seed.dataset"}}},
+    {
+      "case": "dataset-binding-preparation",
+      "endpoint": "runtime-agent",
+      "inputs": {
+        "binding": {
+          "$ref": "seed.binding"
+        }
+      }
+    },
+    {
+      "case": "dataset-access-validation",
+      "endpoint": "runtime-agent",
+      "when": {
+        "$ref": "seed.requiresRuntimeAgentDatasetAccessValidation"
+      },
+      "inputs": {
+        "binding": {
+          "$ref": "seed.binding"
+        },
+        "accessValidation": {
+          "$ref": "seed.accessValidation"
+        }
+      }
+    },
+    {"case":"dataset-approval-metadata","endpoint":"runtime-agent","inputs":{"dataset":{"$ref":"seed.dataset"},"requireReady":{"$ref":"seed.requiresRuntimeAgentDatasetCapabilityReadiness"},"metadata":{"$ref":"seed.platformMetadata"}}}
+  ],
+  "training-job": [
+    {"case":"training-job-submission","endpoint":"platform","when":{"$ref":"options.createJob"},"inputs":{"job":{"$ref":"seed.trainingJob"}}}
+  ]
+}

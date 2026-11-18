@@ -3,6 +3,10 @@
 import {createHash} from 'node:crypto';
 import {existsSync, readdirSync, readFileSync, writeFileSync} from 'node:fs';
 import {basename, resolve} from 'node:path';
+import {runCaseSequence} from '../simulation/src/case-sequence.mjs';
+import {executeCases} from '../simulation/src/execute-cases.mjs';
+import {createHttpExecutor} from '../simulation/src/http-case-executor.mjs';
+import {checkApproval} from '../simulation/src/cases.mjs';
 
 if (typeof fetch !== 'function') {
     fail('This script requires Node.js 18 or newer because it uses global fetch.');
@@ -133,20 +137,12 @@ if (shouldRunRuntimeAgentData(initTarget)) {
     warnIfRuntimeAgentConfigurationLikelyMismatches(trainingScenario);
 }
 
-if (shouldRunPlatformData(initTarget)) {
-    if (!skipAdminSetup) {
-        await ensureAdminUser(supportUrl, 'support');
-    }
-    await ensurePlatformData();
-}
-if (shouldRunRuntimeAgentData(initTarget)) {
-    if (!skipAdminSetup) {
-        await ensureAdminUser(runtimeAgentUrl, 'runtime-agent');
-    }
-    await ensureRuntimeAgentData();
-}
-if (shouldRunTrainingJob(initTarget)) {
-    await ensureTrainingJob();
+const sequences = JSON.parse(readFileSync(new URL('../simulation/pipelines/training-preparation-sequences.json', import.meta.url), 'utf8'));
+const authEndpoints = {support: supportUrl, 'runtime-agent': runtimeAgentUrl};
+for (const group of sequences.targets[initTarget]) {
+    const auth = sequences.authentication[group];
+    if (auth && !skipAdminSetup) await ensureAdminUser(authEndpoints[auth], auth);
+    await runSequence(group);
 }
 
 console.log('[init-training] ready');
@@ -192,576 +188,41 @@ function seedSummary(seedValue) {
     };
 }
 
-async function ensurePlatformData() {
-    const organization = await ensureOne({
-        label: 'organization',
-        baseUrl: platformUrl,
-        queryPath: '/organization/organizationdirectory',
-        query: {'organizationId.equals': seed.organization.organizationId},
-        createPath: '/organization/registerorganization',
-        createPayload: seed.organization
-    });
-
-    const organizationState = dryRun && organization && organization.state == null ? 'Registered' : organization?.state;
-    if (activateLifecycle && isRegistered(organizationState)) {
-        await postActivationCommand(platformUrl, '/organization/activateorganization', {
-            organizationId: seed.organization.organizationId,
-            organizationName: seed.organization.organizationName,
-            activationNote: 'Development bootstrap'
-        }, 'activate organization', '/organization/organizationdirectory', {
-            'organizationId.equals': seed.organization.organizationId
+async function runSequence(group) {
+    const endpoints = {platform: platformUrl, 'runtime-agent': runtimeAgentUrl};
+    return runCaseSequence(sequences[group], {seed, options: {activateLifecycle, createJob, runtimeAgentUrl, full: initTarget !== 'participant-registration', register: registerRuntimeInfrastructure}},
+        (name, endpoint, inputs) => {
+            if (!Object.hasOwn(endpoints, endpoint)) throw new Error(`Unknown preparation endpoint: ${endpoint}`);
+            return runPreparation(name, endpoint, endpoints[endpoint], inputs);
+        }, {
+            infrastructureSeed: result => applyRuntimeInfrastructureId(result.runtimeInfrastructureId),
+            identitySeed: result => applyRuntimeIdentity(result.runtimeId),
+            verifySeedSchema: result => assertSchemaSnapshotMatchesSeed(result.datasetCapability, seed.featureSchema, 'dataset capability')
         });
-        await waitForOne(platformUrl, '/organization/organizationdirectory', {
-            'organizationId.equals': seed.organization.organizationId,
-            'state.equals': 'Active'
-        }, 'active organization');
-    } else if (activateLifecycle && isDeactivated(organizationState)) {
-        await postActivationCommand(platformUrl, '/organization/reactivateorganization', {
-            organizationId: seed.organization.organizationId,
-            organizationName: seed.organization.organizationName,
-            reactivationReason: 'Development bootstrap'
-        }, 'reactivate organization', '/organization/organizationdirectory', {
-            'organizationId.equals': seed.organization.organizationId
-        });
-        await waitForOne(platformUrl, '/organization/organizationdirectory', {
-            'organizationId.equals': seed.organization.organizationId,
-            'state.equals': 'Active'
-        }, 'active organization');
-    } else if (activateLifecycle && !isActive(organizationState)) {
-        fail(
-            `Organization is ${organizationState ?? 'unknown'} and cannot be activated by the bootstrap script. ` +
-            'Expected Registered, Deactivated, or Active.'
-        );
-    } else if (!isActive(organizationState)) {
-        console.log('[init-training] skip organization activation; platform selections may be ineligible');
-    }
-
-    const federation = await ensureOne({
-        label: 'federation',
-        baseUrl: platformUrl,
-        queryPath: '/federation/federationoverview',
-        query: {'federationId.equals': seed.federation.federationId},
-        createPath: '/federation/createfederation',
-        createPayload: seed.federation
-    });
-
-    const federationState = dryRun && federation && federation.state == null ? 'Draft' : federation?.state;
-    if (activateLifecycle && isDraft(federationState)) {
-        await postActivationCommand(platformUrl, '/federation/activatefederation', {
-            federationId: seed.federation.federationId,
-            federationName: seed.federation.federationName,
-            activationNote: 'Development bootstrap'
-        }, 'activate federation', '/federation/federationoverview', {
-            'federationId.equals': seed.federation.federationId
-        });
-        await waitForOne(platformUrl, '/federation/federationoverview', {
-            'federationId.equals': seed.federation.federationId,
-            'state.equals': 'Active'
-        }, 'active federation');
-    } else if (activateLifecycle && isSuspended(federationState)) {
-        await postActivationCommand(platformUrl, '/federation/reactivatefederation', {
-            federationId: seed.federation.federationId,
-            federationName: seed.federation.federationName,
-            reactivationReason: 'Development bootstrap'
-        }, 'reactivate federation', '/federation/federationoverview', {
-            'federationId.equals': seed.federation.federationId
-        });
-        await waitForOne(platformUrl, '/federation/federationoverview', {
-            'federationId.equals': seed.federation.federationId,
-            'state.equals': 'Active'
-        }, 'active federation');
-    } else if (activateLifecycle && !isActive(federationState)) {
-        fail(
-            `Federation is ${federationState ?? 'unknown'} and cannot be activated by the bootstrap script. ` +
-            'Expected Draft, Suspended, or Active.'
-        );
-    } else if (!isActive(federationState)) {
-        console.log('[init-training] skip federation activation; training configuration selection may be ineligible');
-    }
-
-    const membership = await findOne(platformUrl, '/federationmembership/federationmembershipdirectory', {
-        'federationId.equals': seed.federation.federationId,
-        'organizationId.equals': seed.organization.organizationId
-    });
-    if (!membership) {
-        await postCommand(platformUrl, '/federationmembership/inviteparticipant', {
-            federationId: seed.federation.federationId,
-            organizationId: seed.organization.organizationId,
-            invitationNote: 'Development bootstrap'
-        }, 'invite participant');
-        await waitForOne(platformUrl, '/federationmembership/federationmembershipdirectory', {
-            'federationId.equals': seed.federation.federationId,
-            'organizationId.equals': seed.organization.organizationId
-        }, 'invited participant');
-    }
-    const joinedMembership = await findOne(platformUrl, '/federationmembership/federationmembershipdirectory', {
-        'federationId.equals': seed.federation.federationId,
-        'organizationId.equals': seed.organization.organizationId
-    });
-    if (!isJoinedMembership(joinedMembership)) {
-        await postCommand(platformUrl, '/federationmembership/approveparticipant', {
-            federationId: seed.federation.federationId,
-            organizationId: seed.organization.organizationId,
-            approvalNote: 'Development bootstrap'
-        }, 'approve participant');
-        await waitForOne(platformUrl, '/federationmembership/federationmembershipdirectory', {
-            'federationId.equals': seed.federation.federationId,
-            'organizationId.equals': seed.organization.organizationId
-        }, 'joined participant', isJoinedMembership);
-    }
-
-    if (initTarget === 'participant-registration') {
-        await ensureRuntimeProvisioningData();
-        return;
-    }
-
-    const featureSchema = await ensureOne({
-        label: 'feature schema',
-        baseUrl: platformUrl,
-        queryPath: '/featureschema/featureschemacatalog',
-        query: {'featureSchemaId.equals': seed.featureSchema.featureSchemaId},
-        createPath: '/featureschema/definefeatureschema',
-        createPayload: seed.featureSchema
-    });
-    assertSchemaSnapshotMatchesSeed(featureSchema, seed.featureSchema, 'feature schema');
-    if (!isPublished(featureSchema?.schemaStatus ?? featureSchema?.state)) {
-        await postCommand(platformUrl, '/featureschema/publishfeatureschema', {
-            featureSchemaId: seed.featureSchema.featureSchemaId,
-            featureDomain: seed.featureSchema.featureDomain,
-            version: seed.featureSchema.version,
-            publishNote: 'Development bootstrap'
-        }, 'publish feature schema');
-        await waitForOne(platformUrl, '/featureschema/featureschemacatalog', {
-            'featureSchemaId.equals': seed.featureSchema.featureSchemaId
-        }, 'published feature schema', (item) => isPublished(item.schemaStatus ?? item.state));
-    }
-
-    await ensureOne({
-        label: 'model artifact',
-        baseUrl: platformUrl,
-        queryPath: '/modelartifact/modelartifactcatalog',
-        query: {'modelId.equals': seed.model.modelId},
-        createPath: '/modelartifact/registermodelartifact',
-        createPayload: seed.model
-    });
-
-    await ensureRuntimeProvisioningData();
-
-    await ensureOne({
-        label: 'runtime engine profile',
-        baseUrl: platformUrl,
-        queryPath: '/runtimeengineprofile/runtimeengineprofilecatalog',
-        query: {'runtimeEngineProfileId.equals': seed.runtimeEngineProfile.runtimeEngineProfileId},
-        createPath: '/runtimeengineprofile/registerruntimeengineprofile',
-        createPayload: seed.runtimeEngineProfile
-    });
-
-    await ensureOne({
-        label: 'training run configuration',
-        baseUrl: platformUrl,
-        queryPath: '/trainingrunconfiguration/trainingrunconfigurationcatalog',
-        query: {'trainingRunConfigurationId.equals': seed.trainingRunConfiguration.trainingRunConfigurationId},
-        createPath: '/trainingrunconfiguration/definetrainingrunconfiguration',
-        createPayload: seed.trainingRunConfiguration
-    });
-
 }
 
-async function ensureTrainingJob() {
-    if (!createJob) return;
 
-    const trainingRunConfiguration = await findOne(platformUrl, '/trainingrunconfiguration/trainingrunconfigurationcatalog', {
-        'trainingRunConfigurationId.equals': seed.trainingRunConfiguration.trainingRunConfigurationId
-    });
-    if (!trainingRunConfiguration) {
-        fail('Training run configuration does not exist. Run platform initialization before creating the training job.');
-    }
-    if (!isDraft(trainingRunConfiguration.state)) {
-        fail(
-            `Training run configuration is ${trainingRunConfiguration.state ?? 'unknown'}, but CreateTrainingJob requires Draft. ` +
-            'Create a new configuration or reset dev data before creating the training job.'
-        );
-    }
-
-    const trainingJob = await ensureOne({
-        label: 'training job',
-        baseUrl: platformUrl,
-        queryPath: '/trainingjob/trainingjobdashboard',
-        query: {'trainingJobId.equals': seed.trainingJob.trainingJobId},
-        createPath: '/trainingjob/createtrainingjob',
-        createPayload: seed.trainingJob
-    });
-
-    if (isTrainingJobSubmittedOrBeyond(trainingJob?.state)) {
-        console.log('[init-training] exists submitted training job');
-        return;
-    }
-
-    await postCommand(platformUrl, '/trainingjob/submittrainingjob', {
-        trainingJobId: seed.trainingJob.trainingJobId
-    }, 'submit training job');
-    await waitForOne(platformUrl, '/trainingjob/trainingjobdashboard', {
-        'trainingJobId.equals': seed.trainingJob.trainingJobId
-    }, 'submitted training job', (item) => isTrainingJobSubmittedOrBeyond(item.state));
-}
-
-async function ensureRuntimeProvisioningData() {
-    const runtimePackage = await ensureOne({
-        label: 'runtime infrastructure package catalog',
-        baseUrl: platformUrl,
-        queryPath: '/runtimeinfrastructurepackage/runtimeinfrastructurepackagecatalog',
-        query: {'runtimeInfrastructurePackageId.equals': seed.runtimeInfrastructurePackage.runtimeInfrastructurePackageId},
-        createPath: '/runtimeinfrastructurepackage/registerruntimeinfrastructurepackage',
-        createPayload: seed.runtimeInfrastructurePackage
-    });
-    const runtimeInfrastructurePackageId = runtimePackage?.runtimeInfrastructurePackageId ??
-        seed.runtimeInfrastructurePackage.runtimeInfrastructurePackageId;
-    seed.runtimeInfrastructurePackage.runtimeInfrastructurePackageId = runtimeInfrastructurePackageId;
-    seed.runtimeInstallationPlan.runtimeInfrastructurePackageId = runtimeInfrastructurePackageId;
-
-    const runtimeInstallationPlan = await ensureOne({
-        label: 'runtime installation plan',
-        baseUrl: platformUrl,
-        queryPath: '/runtimeinstallationplan/runtimeinstallationplancatalog',
-        query: {'runtimeInstallationPlanId.equals': seed.runtimeInstallationPlan.runtimeInstallationPlanId},
-        createPath: '/runtimeinstallationplan/createruntimeinstallationplan',
-        createPayload: seed.runtimeInstallationPlan
-    });
-    const runtimeInstallationPlanId = runtimeInstallationPlan?.runtimeInstallationPlanId ??
-        seed.runtimeInstallationPlan.runtimeInstallationPlanId;
-    const runtimeInfrastructureId = runtimeInstallationPlan?.runtimeInfrastructureId ??
-        seed.runtime.runtimeInfrastructureId;
-    seed.runtimeInstallationPlan.runtimeInstallationPlanId = runtimeInstallationPlanId;
-    applyRuntimeInfrastructureId(runtimeInfrastructureId);
-
-    await ensureRuntimeInfrastructurePlanned(runtimeInfrastructureId, runtimeInstallationPlanId);
-    if (registerRuntimeInfrastructure) {
-        await ensureRuntimeInfrastructureRegistered(runtimeInfrastructureId, runtimeInstallationPlanId);
-    }
-}
-
-async function ensureRuntimeInfrastructurePlanned(runtimeInfrastructureId, runtimeInstallationPlanId) {
-    const existing = await findOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
-        'runtimeInfrastructureId.equals': runtimeInfrastructureId
-    });
-    if (isRuntimeInfrastructurePlannedOrBeyond(existing?.state)) {
-        console.log('[init-training] exists runtime infrastructure plan');
-        return existing;
-    }
-
-    await postCommand(platformUrl, '/runtimeinfrastructure/planruntimeinfrastructure', {
-        runtimeInfrastructureId,
-        runtimeInstallationPlanId,
-        organizationId: seed.organization.organizationId,
-        organizationName: seed.organization.organizationName,
-        runtimeInfrastructurePackageId: seed.runtimeInfrastructurePackage.runtimeInfrastructurePackageId,
-        runtimeInfrastructurePackageName: seed.runtimeInfrastructurePackage.packageName,
-        runtimeInfrastructurePackageVersion: seed.runtimeInfrastructurePackage.packageVersion,
-        runtimeEnvironmentType: seed.runtimeInfrastructurePackage.runtimeEnvironmentType,
-        runtimeName: seed.runtime.runtimeName,
-        agentInstallMode: seed.runtimeInstallationPlan.agentInstallMode,
-        expectedNodeCount: seed.runtimeInstallationPlan.expectedNodeCount
-    }, 'runtime infrastructure plan');
-    return waitForOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
-        'runtimeInfrastructureId.equals': runtimeInfrastructureId
-    }, 'planned runtime infrastructure', (item) => isRuntimeInfrastructurePlannedOrBeyond(item.state));
-}
-
-async function ensureRuntimeInfrastructureRegistered(runtimeInfrastructureId, runtimeInstallationPlanId) {
-    const existing = await findOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
-        'runtimeInfrastructureId.equals': runtimeInfrastructureId
-    });
-    if (isRuntimeInfrastructureRegisteredOrBeyond(existing?.state)) {
-        console.log('[init-training] exists runtime infrastructure registration');
-        return existing;
-    }
-
-    await postCommand(platformUrl, '/runtimeinfrastructure/registerruntimeinfrastructure', {
-        runtimeInfrastructureId,
-        runtimeInstallationPlanId: existing?.runtimeInstallationPlanId ?? seed.runtimeInstallationPlan.runtimeInstallationPlanId,
-        organizationId: existing?.organizationId ?? seed.organization.organizationId,
-        organizationName: existing?.organizationName ?? seed.organization.organizationName,
-        runtimeInfrastructurePackageId:
-            existing?.runtimeInfrastructurePackageId ?? seed.runtimeInfrastructurePackage.runtimeInfrastructurePackageId,
-        runtimeInfrastructurePackageName:
-            existing?.runtimeInfrastructurePackageName ?? seed.runtimeInfrastructurePackage.packageName,
-        runtimeInfrastructurePackageVersion:
-            existing?.runtimeInfrastructurePackageVersion ?? seed.runtimeInfrastructurePackage.packageVersion,
-        runtimeEnvironmentType: existing?.runtimeEnvironmentType ?? seed.runtimeInfrastructurePackage.runtimeEnvironmentType,
-        runtimeName: existing?.runtimeName ?? seed.runtime.runtimeName,
-        agentInstallMode: existing?.agentInstallMode ?? seed.runtimeInstallationPlan.agentInstallMode,
-        expectedNodeCount: existing?.expectedNodeCount ?? seed.runtimeInstallationPlan.expectedNodeCount,
-        runtimeAgentId: seed.runtime.runtimeAgentId
-    }, 'runtime infrastructure registration');
-    return waitForOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
-        'runtimeInfrastructureId.equals': runtimeInfrastructureId
-    }, 'registered runtime infrastructure', (item) => isRuntimeInfrastructureRegisteredOrBeyond(item.state));
-}
-
-async function ensureRuntimeAgentData() {
-    await ensureRuntimeAgentPlatformRegistration();
-
-    await ensureOne({
-        label: 'runtime node inventory',
-        baseUrl: runtimeAgentUrl,
-        queryPath: '/agentruntimenodeinventory/agentruntimenodeinventorycatalog',
-        query: {'runtimeNodeInventoryReportId.equals': seed.node.runtimeNodeInventoryReportId},
-        createPath: '/agentruntimenodeinventory/reportagentruntimenodeinventory',
-        createPayload: seed.node
-    });
-
-    await ensureOne({
-        label: 'platform runtime node inventory',
-        baseUrl: platformUrl,
-        queryPath: '/runtimenodeinventory/runtimenodeinventoryview',
-        query: {'nodeId.equals': seed.node.nodeId},
-        createPath: '/runtimenodeinventory/recordruntimenodeinventory',
-        createPayload: seed.node
-    });
-
-    await ensureOne({
-        label: 'agent runtime telemetry',
-        baseUrl: runtimeAgentUrl,
-        queryPath: '/agentruntimetelemetry/agentruntimetelemetrylatest',
-        query: {'nodeId.equals': seed.telemetry.nodeId},
-        createPath: '/agentruntimetelemetry/reportagentruntimetelemetry',
-        createPayload: seed.agentTelemetry
-    });
-
-    await ensureOne({
-        label: 'agent runtime node resource telemetry',
-        baseUrl: runtimeAgentUrl,
-        queryPath: '/agentruntimenoderesourcetelemetry/agentruntimenoderesourcelatest',
-        query: {'nodeId.equals': seed.nodeResource.nodeId},
-        createPath: '/agentruntimenoderesourcetelemetry/reportagentruntimenoderesourcetelemetry',
-        createPayload: seed.nodeResource
-    });
-
-    await ensureOne({
-        label: 'platform runtime telemetry',
-        baseUrl: platformUrl,
-        queryPath: '/noderuntimehealth/runtimetelemetrylatest',
-        query: {'nodeId.equals': seed.telemetry.nodeId},
-        createPath: '/noderuntimehealth/recordruntimetelemetry',
-        createPayload: seed.telemetry
-    });
-
-    await ensureOne({
-        label: 'platform runtime node resource telemetry',
-        baseUrl: platformUrl,
-        queryPath: '/runtimenoderesourcetelemetry/runtimenoderesourcelatest',
-        query: {'nodeId.equals': seed.nodeResource.nodeId},
-        createPath: '/runtimenoderesourcetelemetry/recordruntimenoderesourcetelemetry',
-        createPayload: seed.nodeResource
-    });
-
-    const datasetCapability = await ensureOne({
-        label: 'dataset declaration',
-        baseUrl: runtimeAgentUrl,
-        queryPath: '/dataset/datasetcapability',
-        query: {'datasetId.equals': seed.dataset.datasetId},
-        createPath: '/dataset/declaredataset',
-        createPayload: seed.dataset
-    });
-    assertSchemaSnapshotMatchesSeed(datasetCapability, seed.featureSchema, 'dataset capability');
-
-    const existingBinding = await findOne(runtimeAgentUrl, '/runtimedatasetbinding/runtimedatasetbindingcatalog', {
-        'runtimeId.equals': seed.binding.runtimeId,
-        'datasetId.equals': seed.binding.datasetId
-    });
-    if (existingBinding) {
-        console.log('[init-training] exists runtime dataset binding');
-        if (existingBinding.filePath && existingBinding.filePath !== seed.binding.filePath) {
-            console.warn(
-                `[init-training] runtime dataset binding uses filePath=${existingBinding.filePath}; ` +
-                `expected ${seed.binding.filePath}. Clear dev data or reconfigure the binding before testing container deployment.`
-            );
-        }
-    } else {
-        await postCommand(runtimeAgentUrl, '/runtimedatasetbinding/configureruntimedatasetbinding', seed.binding, 'runtime dataset binding');
-        await waitForOne(runtimeAgentUrl, '/runtimedatasetbinding/runtimedatasetbindingcatalog', {
-            'runtimeId.equals': seed.binding.runtimeId,
-            'datasetId.equals': seed.binding.datasetId
-        }, 'runtime dataset binding');
-    }
-
-    let capability = datasetCapability;
-    if (seed.requiresRuntimeAgentDatasetAccessValidation) {
-        const accessValidation = await ensureAgentDatasetAccessValidation();
-        if (!isAccessValidated(accessValidation?.validationStatus)) {
-            fail(
-                `Agent dataset access validation failed: ${accessValidation?.failureReason ?? accessValidation?.validationStatus ?? 'unknown failure'}. ` +
-                `runtimeDatasetPath=${seed.binding.filePath}`
-            );
-        }
-    }
-
-    if (seed.requiresRuntimeAgentDatasetCapabilityReadiness) {
-        capability = await waitForOne(runtimeAgentUrl, '/dataset/datasetcapability', {
-            'datasetId.equals': seed.dataset.datasetId
-        }, 'reported dataset capability', isDatasetCapabilityReadyOrFailed);
-        if (!dryRun && !isDatasetCapabilityReady(capability)) {
-            fail(`Dataset capability was not ready: ${JSON.stringify(capability)}`);
-        }
-    } else {
-        console.log(
-            `[init-training] skip runtime-agent dataset profile/contract readiness wait for ${seed.trainingScenario}; ` +
-            'platform runtime dataset metadata is seeded separately.'
-        );
-    }
-
-    if (!isApproved(capability?.approvalStatus) && capability?.approved !== true) {
-        try {
-            await postCommand(runtimeAgentUrl, '/dataset/approvedatasetfortraining', {
-                datasetId: seed.dataset.datasetId,
-                organizationId: seed.organization.organizationId,
-                featureSchemaId: seed.featureSchema.featureSchemaId,
-                datasetName: seed.dataset.datasetName
-            }, 'approve dataset for training');
-            console.log('[init-training] dataset approval command posted; approval projection is currently non-blocking');
-        } catch (error) {
-            console.warn(`[init-training] dataset approval skipped: ${errorSummary(error)}`);
-        }
-    }
-
-    await ensureOne({
-        label: 'selectable platform runtime dataset metadata',
-        baseUrl: platformUrl,
-        queryPath: '/runtimedatasetmetadata/runtimedatasetmetadatacatalog',
-        query: {
-            'runtimeDatasetBindingId.equals': seed.binding.runtimeDatasetBindingId,
-            'schemaCompatible.equals': 'true',
-            'labelCompatible.equals': 'true'
-        },
-        createPath: '/runtimedatasetmetadata/recordruntimedatasetmetadata',
-        createPayload: seed.platformMetadata
-    });
-}
-
-async function ensureRuntimeAgentPlatformRegistration() {
-    const runtimeIdentity = await ensureOne({
-        label: 'runtime identity',
-        baseUrl: platformUrl,
-        queryPath: '/runtimeidentity/runtimeidentitycatalog',
-        query: {
-            'runtimeAgentId.equals': seed.runtime.runtimeAgentId,
-            'runtimeInfrastructureId.equals': seed.runtime.runtimeInfrastructureId
-        },
-        createPath: '/runtimeidentity/activateruntimeidentity',
-        createPayload: seed.runtime
-    });
-    if (runtimeIdentity?.runtimeId) {
-        applyRuntimeIdentity(runtimeIdentity.runtimeId);
-    }
-
-    await ensureOne({
-        label: 'runtime agent endpoint',
-        baseUrl: platformUrl,
-        queryPath: '/runtimeinfrastructure/runtimeagentendpointcatalog',
-        query: {
-            'runtimeAgentId.equals': seed.runtime.runtimeAgentId,
-            'runtimeInfrastructureId.equals': seed.runtime.runtimeInfrastructureId
-        },
-        createPath: '/runtimeinfrastructure/recordruntimeconnectionestablished',
-        createPayload: {
-            runtimeInfrastructureId: seed.runtime.runtimeInfrastructureId,
-            runtimeAgentId: seed.runtime.runtimeAgentId,
-            agentInstallMode: seed.runtimeInstallationPlan.agentInstallMode,
-            organizationId: seed.organization.organizationId,
-            organizationName: seed.organization.organizationName,
-            runtimeName: seed.runtime.runtimeName,
-            runtimeAgentEndpoint: runtimeAgentUrl,
-            endpointScope: seed.runtimeEndpointScope
-        }
-    });
-}
-
-async function ensureAgentDatasetAccessValidation() {
+async function runPreparation(name, endpoint, baseUrl, inputs) {
+    const plan = JSON.parse(readFileSync(new URL(`../simulation/cases/approved/${name}.json`, import.meta.url), 'utf8'));
+    checkApproval(plan);
+    const endpoints = {platform: platformUrl, 'runtime-agent': runtimeAgentUrl};
+    const environment = {environment: 'init-training', deploymentId: baseUrl, status: 'ready', endpoints};
+    const data = {schemaVersion: 1, environment: environment.environment, deploymentId: baseUrl, status: 'ready', records: [], inputs: {...inputs, timeoutMs, pollIntervalMs}};
     if (dryRun) {
-        await postCommand(
-            runtimeAgentUrl,
-            '/agentdatasetaccessvalidation/validateagentdatasetaccess',
-            seed.accessValidation,
-            'agent dataset access validation'
-        );
-        return {...seed.accessValidation, validationStatus: 'Checked'};
-    }
-
-    const existingQuery = {
-        'runtimeDatasetBindingId.equals': seed.binding.runtimeDatasetBindingId,
-        'datasetId.equals': seed.dataset.datasetId
-    };
-    const existingPage = await getPage(runtimeAgentUrl, '/agentdatasetaccessvalidation/agentdatasetaccessvalidationcatalog', {
-        ...existingQuery,
-        size: '50'
-    });
-    const existingItems = existingPage.content ?? [];
-    const validated = existingItems.find((item) => isAccessValidated(item.validationStatus));
-    if (validated) {
-        console.log('[init-training] exists agent dataset access validation');
-        return validated;
-    }
-
-    const failed = existingItems.find((item) => isFailed(item.validationStatus) || item.failureReason);
-    const attempt = failed
-        ? {
-            ...seed.accessValidation,
-            datasetAccessValidationId: stableUuid(
-                `fl-dev:dataset-access-validation:${seed.binding.runtimeDatasetBindingId}:${Date.now()}`
-            )
+        for (const item of plan.cases) for (const step of item.steps.filter(s => s.type === 'command')) {
+            console.log(`[init-training] DRY conditional POST ${step.command} -> ${endpoints[step.request.endpoint]}${step.request.path}`);
         }
-        : seed.accessValidation;
-
-    if (failed) {
-        console.warn(
-            `[init-training] retry agent dataset access validation after previous failure: ` +
-            `${failed.failureReason ?? failed.validationStatus}`
-        );
+        return;
     }
-
-    await postCommand(
-        runtimeAgentUrl,
-        '/agentdatasetaccessvalidation/validateagentdatasetaccess',
-        attempt,
-        'agent dataset access validation'
-    );
-    return waitForOne(
-        runtimeAgentUrl,
-        '/agentdatasetaccessvalidation/agentdatasetaccessvalidationcatalog',
-        {'datasetAccessValidationId.equals': attempt.datasetAccessValidationId},
-        'agent dataset access validation',
-        isAccessValidationFinished
-    );
-}
-
-async function ensureOne({label, baseUrl, queryPath, query, createPath, createPayload}) {
-    const existing = await findOne(baseUrl, queryPath, query);
-    if (existing) {
-        console.log(`[init-training] exists ${label}`);
-        return existing;
+    const executor = createHttpExecutor({endpoints: Object.fromEntries(Object.keys(endpoints).map(key => [key, {anonymous: true}])), probes: [{endpoint, path: '/actuator/health'}]}, {
+        fetchImpl: (url, options) => fetch(url, {...options, headers: requestHeaders(options.headers, url.href)})
+    });
+    const report = await executeCases(plan, environment, data, executor);
+    if (report.status !== 'passed') {
+        const failed = report.cases.find(c => c.status === 'failed');
+        throw new Error(`${name}/${failed?.steps.find(s => s.status === 'failed')?.id ?? 'validation'}: ${report.error ?? failed?.error}`);
     }
-    await postCommand(baseUrl, createPath, createPayload, label);
-    if (dryRun) return createPayload;
-    return waitForOne(baseUrl, queryPath, query, label);
-}
-
-async function findOne(baseUrl, path, query) {
-    const page = await getPage(baseUrl, path, {...query, size: '20'});
-    return (page.content ?? [])[0] ?? null;
-}
-
-async function waitForOne(baseUrl, path, query, label, predicate = () => true) {
-    if (dryRun) return null;
-    const startedAt = Date.now();
-    let lastItem = null;
-    while (Date.now() - startedAt <= timeoutMs) {
-        const page = await getPage(baseUrl, path, {...query, size: '20'});
-        const item = (page.content ?? []).find(predicate);
-        if (item) return item;
-        lastItem = (page.content ?? [])[0] ?? lastItem;
-        await sleep(pollIntervalMs);
-    }
-    fail(`Timed out waiting for ${label}. Last item: ${JSON.stringify(lastItem)}`);
+    return report.cases[0].exports;
 }
 
 async function ensureAdminUser(baseUrl, label) {
@@ -822,63 +283,6 @@ async function loginAdmin(baseUrl, label) {
     return payload.accessToken;
 }
 
-async function getPage(baseUrl, path, query) {
-    const url = `${baseUrl}${path}?${new URLSearchParams(query).toString()}`;
-    if (dryRun) return {content: []};
-    const response = await fetch(url, {
-        headers: requestHeaders({}, url)
-    });
-    const body = await response.text();
-    if (!response.ok) {
-        const authHint = response.status === 401 && (args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN)
-            ? ' Internal token was sent; inspect the target service logs for authentication rejection or a downstream exception masked by error dispatch.'
-            : '';
-        fail(`GET ${url} failed: ${response.status} ${compact(body)}${authHint}`);
-    }
-    return body ? JSON.parse(body) : {content: []};
-}
-
-async function postCommand(baseUrl, path, payload, label) {
-    const url = `${baseUrl}${path}`;
-    if (dryRun) {
-        console.log(`[init-training] DRY POST ${label} -> ${url}`);
-        console.log(JSON.stringify(payload, null, 2));
-        return;
-    }
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: requestHeaders({'content-type': 'application/json'}, url),
-        body: JSON.stringify(payload)
-    });
-    const body = await response.text();
-    if (!response.ok) {
-        const authHint = response.status === 401
-            ? ` authMode=${authMode()} target=${baseUrl}; check the target service logs for the original failure, including downstream calls and error dispatch.`
-            : '';
-        const message = `POST ${label} failed: ${response.status} ${compact(body)}${authHint} payload=${compact(JSON.stringify(payload))}`;
-        if (strict) fail(message);
-        throw new Error(message);
-    }
-    console.log(`[init-training] posted ${label}`);
-}
-
-async function postActivationCommand(baseUrl, path, payload, label, queryPath, query) {
-    try {
-        await postCommand(baseUrl, path, payload, label);
-        return;
-    } catch (error) {
-        const current = await findOne(baseUrl, queryPath, query);
-        if (isActive(current?.state)) {
-            console.log(`[init-training] ${label} already reflected as Active`);
-            return;
-        }
-        error.message =
-            `${error.message}; projection state is ${current?.state ?? 'unknown'}. ` +
-            'If this local environment was initialized before lifecycle event tags were generated, ' +
-            'reset the development event/projection data and rerun the bootstrap script.';
-        throw error;
-    }
-}
 
 function applyRuntimeInfrastructureId(runtimeInfrastructureId) {
     seed.runtime.runtimeInfrastructureId = runtimeInfrastructureId;
@@ -1855,17 +1259,11 @@ function normalizeParticipantKey(value) {
     return normalized.replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || 'participant-1';
 }
 
-function shouldRunPlatformData(target) {
-    return target === 'all' || target === 'platform' || target === 'participant-registration';
-}
 
 function shouldRunRuntimeAgentData(target) {
     return target === 'all' || target === 'runtime-agent';
 }
 
-function shouldRunTrainingJob(target) {
-    return target === 'all' || target === 'training-job';
-}
 
 function defaultDatasetPathForScenario(scenario, root) {
     if (scenario === 'csv') {
@@ -1998,96 +1396,24 @@ function stableNameUuid(value) {
     ].join('-');
 }
 
-function isActive(value) {
-    return normalize(value) === 'ACTIVE';
-}
 
-function isRegistered(value) {
-    return normalize(value) === 'REGISTERED';
-}
 
-function isDeactivated(value) {
-    return normalize(value) === 'DEACTIVATED';
-}
 
-function isSuspended(value) {
-    return normalize(value) === 'SUSPENDED';
-}
 
-function isTrainingJobSubmittedOrBeyond(value) {
-    return ['SUBMITTED', 'RUNNING', 'PAUSED', 'CANCELED', 'COMPLETED'].includes(normalize(value));
-}
 
-function isJoined(value) {
-    return ['JOINED', 'APPROVED', 'ACTIVE'].includes(normalize(value));
-}
 
-function isJoinedMembership(item) {
-    return Boolean(item) && (isJoined(item.membershipStatus ?? item.state) || Boolean(item.approvalNote));
-}
 
-function isPublished(value) {
-    return normalize(value) === 'PUBLISHED';
-}
 
-function isDraft(value) {
-    return normalize(value) === 'DRAFT';
-}
 
-function isReported(value) {
-    return ['REPORTED', 'METADATAREPORTED'].includes(normalize(value));
-}
 
-function isContractValidated(value) {
-    return ['CONTRACTVALIDATIONCOMPLETED', 'VALIDATED', 'COMPLETED'].includes(normalize(value));
-}
 
-function isApproved(value) {
-    return ['APPROVED', 'TRAININGAPPROVED'].includes(normalize(value));
-}
 
-function isAccessValidationFinished(item) {
-    return Boolean(item) && (isAccessValidated(item.validationStatus) || isFailed(item.validationStatus) || Boolean(item.failureReason));
-}
 
-function isAccessValidated(value) {
-    return ['CHECKED', 'VALIDATED', 'ACCESSVALIDATED'].includes(normalize(value));
-}
 
-function isDatasetCapabilityReadyOrFailed(item) {
-    return isDatasetCapabilityReady(item) || isFailed(item?.metadataStatus) || isFailed(item?.contractStatus);
-}
 
-function isDatasetCapabilityReady(item) {
-    return Boolean(item) && isReported(item.metadataStatus) && isContractValidated(item.contractStatus);
-}
 
-function isRuntimeInfrastructurePlannedOrBeyond(value) {
-    return [
-        'PLANNED',
-        'REGISTERED',
-        'VERIFIED',
-        'AGENTREADY',
-        'CONNECTED',
-        'VERIFICATIONFAILED',
-        'RUNTIMEAGENTFAILED'
-    ].includes(normalize(value));
-}
 
-function isRuntimeInfrastructureRegisteredOrBeyond(value) {
-    return [
-        'REGISTERED',
-        'VERIFIED',
-        'AGENTREADY',
-        'CONNECTED',
-        'VERIFICATIONFAILED',
-        'RUNTIMEAGENTFAILED'
-    ].includes(normalize(value));
-}
 
-function isFailed(value) {
-    return ['FAILED', 'REJECTED', 'UNAVAILABLE'].includes(normalize(value));
-}
 
 function normalize(value) {
     return String(value ?? '').replace(/[_\s-]/g, '').toUpperCase();
@@ -2184,9 +1510,6 @@ function errorSummary(error) {
     return error?.message ?? String(error);
 }
 
-function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 function fail(message) {
     console.error(`[init-training] ${message}`);

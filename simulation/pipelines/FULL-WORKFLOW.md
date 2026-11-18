@@ -199,13 +199,10 @@ prerequisites, command payloads, assertions and supported executor actions.
 node simulation/src/cases.mjs validate simulation/extensions/scenarios/training-acceptance.json
 # Only after reviewing and resolving draft issues:
 node simulation/src/cases.mjs approve simulation/cases/manual/training.json simulation/cases/approved/training-v2.json reviewer-name
-node simulation/src/cases.mjs check simulation/cases/approved/training.json
+node simulation/src/cases.mjs check simulation/cases/approved/training-workflow-v2.json
 ```
 
-The current training executor supports a SubmitTraining command followed by a
-VerifyTraining query. Arbitrary generated cases need corresponding executor
-support. The pipeline validates an already approved file; it does not author,
-repair or approve cases automatically. Case design can happen before deployment.
+Training uses the generic HTTP executor. Commands, queries, loops and artifact assertions are defined in approved cases. The pipeline selects reviewed cases; it does not author or approve them automatically. Case design can happen before deployment.
 
 ### 5. Register And Prepare Business Data
 

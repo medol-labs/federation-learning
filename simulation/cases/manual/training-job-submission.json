@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "training-job-submission",
+      "title": "training-job-submission",
+      "origin": "manual",
+      "status": "draft",
+      "reviewIssues": [],
+      "prerequisites": [],
+      "dataRequirements": [],
+      "assertions": [],
+      "cleanupPolicy": "retain",
+      "timeoutMs": 1800000,
+      "steps": [
+        {
+          "id": "job",
+          "type": "query",
+          "query": "job",
+          "request": {
+            "endpoint": "platform",
+            "path": "/trainingjob/trainingjobdashboard",
+            "query": {
+              "trainingJobId.equals": {
+                "$ref": "data.inputs.job.trainingJobId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "configuration",
+          "type": "query",
+          "query": "configuration",
+          "request": {
+            "endpoint": "platform",
+            "path": "/trainingrunconfiguration/trainingrunconfigurationcatalog",
+            "query": {
+              "trainingRunConfigurationId.equals": {
+                "$ref": "data.inputs.job.trainingRunConfigurationId"
+              },
+              "size": 2
+            }
+          },
+          "when": {
+            "value": {
+              "$ref": "steps.job.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          }
+        },
+        {
+          "id": "draft",
+          "type": "assert",
+          "when": {
+            "value": {
+              "$ref": "steps.job.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "value": {
+            "valid": {
+              "$matches": [
+                {
+                  "$ref": "steps.configuration.body"
+                },
+                [
+                  {
+                    "path": "content.0.state",
+                    "operator": "enumIn",
+                    "expected": [
+                      "Draft"
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "valid",
+              "operator": "equals",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "id": "CreateTrainingJob",
+          "type": "command",
+          "command": "CreateTrainingJob",
+          "when": {
+            "value": {
+              "$ref": "steps.job.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/trainingjob/createtrainingjob",
+            "body": {
+              "$ref": "data.inputs.job"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "created",
+          "type": "query",
+          "query": "created",
+          "request": {
+            "endpoint": "platform",
+            "path": "/trainingjob/trainingjobdashboard",
+            "query": {
+              "trainingJobId.equals": {
+                "$ref": "data.inputs.job.trainingJobId"
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "expect": {
+              "content.0.trainingJobId": {
+                "$ref": "data.inputs.job.trainingJobId"
+              }
+            }
+          }
+        },
+        {
+          "id": "SubmitTrainingJob",
+          "type": "command",
+          "command": "SubmitTrainingJob",
+          "when": {
+            "value": {
+              "$matches": [
+                {
+                  "$ref": "steps.created.body"
+                },
+                [
+                  {
+                    "path": "content.0.state",
+                    "operator": "enumIn",
+                    "expected": [
+                      "Submitted",
+                      "Running",
+                      "Paused",
+                      "Canceled",
+                      "Completed"
+                    ]
+                  }
+                ]
+              ]
+            },
+            "operator": "equals",
+            "expected": false
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/trainingjob/submittrainingjob",
+            "body": {
+              "trainingJobId": {
+                "$ref": "data.inputs.job.trainingJobId"
+              }
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "submitted",
+          "type": "query",
+          "query": "submitted",
+          "request": {
+            "endpoint": "platform",
+            "path": "/trainingjob/trainingjobdashboard",
+            "query": {
+              "trainingJobId.equals": {
+                "$ref": "data.inputs.job.trainingJobId"
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "anyChecks": [
+              {
+                "path": "content.0.state",
+                "operator": "enumIn",
+                "expected": [
+                  "Submitted",
+                  "Running",
+                  "Paused",
+                  "Canceled",
+                  "Completed"
+                ]
+              }
+            ]
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.0.trainingJobId",
+              "operator": "exists"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

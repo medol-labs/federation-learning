@@ -1,0 +1,35 @@
+{
+  "envFile": "simulation/compose/.env",
+  "endpoints": {
+    "support-user": {
+      "environmentEndpoint": "support",
+      "anonymous": true
+    },
+    "platform-user": {
+      "environmentEndpoint": "platform",
+      "anonymous": true
+    },
+    "participant-user": {
+      "collection": "participantDeployments",
+      "key": "slot",
+      "urlField": "endpoint",
+      "anonymous": true
+    }
+  },
+  "probes": [
+    {
+      "endpoint": "support-user",
+      "path": "/actuator/health",
+      "expect": {
+        "status": "UP"
+      }
+    },
+    {
+      "endpoint": "platform-user",
+      "path": "/actuator/health",
+      "expect": {
+        "status": "UP"
+      }
+    }
+  ]
+}

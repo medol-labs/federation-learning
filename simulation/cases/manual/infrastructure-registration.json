@@ -1,0 +1,617 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "infrastructure-registration",
+      "title": "infrastructure-registration",
+      "origin": "manual",
+      "status": "draft",
+      "prerequisites": [],
+      "dataRequirements": [],
+      "reviewIssues": [],
+      "cleanupPolicy": "retain",
+      "timeoutMs": 1800000,
+      "assertions": [],
+      "steps": [
+        {
+          "id": "package",
+          "type": "query",
+          "query": "package",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructurepackage/runtimeinfrastructurepackagecatalog",
+            "query": {
+              "runtimeInfrastructurePackageId.equals": {
+                "$ref": "data.inputs.runtimeInfrastructurePackage.runtimeInfrastructurePackageId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "registerruntimeinfrastructurepackage",
+          "type": "command",
+          "command": "registerruntimeinfrastructurepackage",
+          "when": {
+            "value": {
+              "$get": [
+                {
+                  "$ref": "steps.package.body"
+                },
+                "content.length"
+              ]
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructurepackage/registerruntimeinfrastructurepackage",
+            "body": {
+              "$ref": "data.inputs.runtimeInfrastructurePackage"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "package-ready",
+          "type": "query",
+          "query": "package-ready",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructurepackage/runtimeinfrastructurepackagecatalog",
+            "query": {
+              "runtimeInfrastructurePackageId.equals": {
+                "$ref": "data.inputs.runtimeInfrastructurePackage.runtimeInfrastructurePackageId"
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "checks": [
+              {
+                "path": "content.length",
+                "operator": "gt",
+                "expected": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": "plan",
+          "type": "query",
+          "query": "plan",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinstallationplan/runtimeinstallationplancatalog",
+            "query": {
+              "runtimeInstallationPlanId.equals": {
+                "$ref": "data.inputs.runtimeInstallationPlan.runtimeInstallationPlanId"
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "createruntimeinstallationplan",
+          "type": "command",
+          "command": "createruntimeinstallationplan",
+          "when": {
+            "value": {
+              "$get": [
+                {
+                  "$ref": "steps.plan.body"
+                },
+                "content.length"
+              ]
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinstallationplan/createruntimeinstallationplan",
+            "body": {
+              "$ref": "data.inputs.runtimeInstallationPlan"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "plan-ready",
+          "type": "query",
+          "query": "plan-ready",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinstallationplan/runtimeinstallationplancatalog",
+            "query": {
+              "runtimeInstallationPlanId.equals": {
+                "$ref": "data.inputs.runtimeInstallationPlan.runtimeInstallationPlanId"
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "checks": [
+              {
+                "path": "content.length",
+                "operator": "gt",
+                "expected": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": "current",
+          "type": "query",
+          "query": "current",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructure/runtimeinfrastructureaccessview",
+            "query": {
+              "runtimeInfrastructureId.equals": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.plan-ready.body"
+                      },
+                      "content.0.runtimeInfrastructureId"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.runtime.runtimeInfrastructureId"
+                  }
+                ]
+              },
+              "size": 2
+            }
+          }
+        },
+        {
+          "id": "PlanRuntimeInfrastructure",
+          "type": "command",
+          "command": "PlanRuntimeInfrastructure",
+          "when": {
+            "value": {
+              "$matches": [
+                {
+                  "$ref": "steps.current.body"
+                },
+                [
+                  {
+                    "path": "content.0.state",
+                    "operator": "enumIn",
+                    "expected": [
+                      "Planned",
+                      "Registered",
+                      "Verified",
+                      "AgentReady",
+                      "Connected",
+                      "VerificationFailed",
+                      "RuntimeAgentFailed"
+                    ]
+                  }
+                ]
+              ]
+            },
+            "operator": "equals",
+            "expected": false
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructure/planruntimeinfrastructure",
+            "body": {
+              "runtimeInfrastructureId": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.plan-ready.body"
+                      },
+                      "content.0.runtimeInfrastructureId"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.runtime.runtimeInfrastructureId"
+                  }
+                ]
+              },
+              "runtimeInstallationPlanId": {
+                "$ref": "data.inputs.runtimeInstallationPlan.runtimeInstallationPlanId"
+              },
+              "organizationId": {
+                "$ref": "data.inputs.organization.organizationId"
+              },
+              "organizationName": {
+                "$ref": "data.inputs.organization.organizationName"
+              },
+              "runtimeInfrastructurePackageId": {
+                "$ref": "data.inputs.runtimeInfrastructurePackage.runtimeInfrastructurePackageId"
+              },
+              "runtimeInfrastructurePackageName": {
+                "$ref": "data.inputs.runtimeInfrastructurePackage.packageName"
+              },
+              "runtimeInfrastructurePackageVersion": {
+                "$ref": "data.inputs.runtimeInfrastructurePackage.packageVersion"
+              },
+              "runtimeEnvironmentType": {
+                "$ref": "data.inputs.runtimeInfrastructurePackage.runtimeEnvironmentType"
+              },
+              "runtimeName": {
+                "$ref": "data.inputs.runtime.runtimeName"
+              },
+              "agentInstallMode": {
+                "$ref": "data.inputs.runtimeInstallationPlan.agentInstallMode"
+              },
+              "expectedNodeCount": {
+                "$ref": "data.inputs.runtimeInstallationPlan.expectedNodeCount"
+              }
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "planned",
+          "type": "query",
+          "query": "planned",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructure/runtimeinfrastructureaccessview",
+            "query": {
+              "runtimeInfrastructureId.equals": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.plan-ready.body"
+                      },
+                      "content.0.runtimeInfrastructureId"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.runtime.runtimeInfrastructureId"
+                  }
+                ]
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "anyChecks": [
+              {
+                "path": "content.0.state",
+                "operator": "enumIn",
+                "expected": [
+                  "Planned",
+                  "Registered",
+                  "Verified",
+                  "AgentReady",
+                  "Connected",
+                  "VerificationFailed",
+                  "RuntimeAgentFailed"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "RegisterRuntimeInfrastructure",
+          "type": "command",
+          "command": "RegisterRuntimeInfrastructure",
+          "when": {
+            "value": {
+              "$if": [
+                {
+                  "$ref": "data.inputs.register"
+                },
+                {
+                  "$matches": [
+                    {
+                      "$ref": "steps.planned.body"
+                    },
+                    [
+                      {
+                        "path": "content.0.state",
+                        "operator": "enumIn",
+                        "expected": [
+                          "Registered",
+                          "Verified",
+                          "AgentReady",
+                          "Connected",
+                          "VerificationFailed",
+                          "RuntimeAgentFailed"
+                        ]
+                      }
+                    ]
+                  ]
+                },
+                true
+              ]
+            },
+            "operator": "equals",
+            "expected": false
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructure/registerruntimeinfrastructure",
+            "body": {
+              "runtimeInfrastructureId": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.planned.body"
+                      },
+                      "content.0.runtimeInfrastructureId"
+                    ]
+                  },
+                  {
+                    "$coalesce": [
+                      {
+                        "$get": [
+                          {
+                            "$ref": "steps.plan-ready.body"
+                          },
+                          "content.0.runtimeInfrastructureId"
+                        ]
+                      },
+                      {
+                        "$ref": "data.inputs.runtime.runtimeInfrastructureId"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "runtimeInstallationPlanId": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.planned.body"
+                      },
+                      "content.0.runtimeInstallationPlanId"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.runtimeInstallationPlan.runtimeInstallationPlanId"
+                  }
+                ]
+              },
+              "organizationId": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.planned.body"
+                      },
+                      "content.0.organizationId"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.organization.organizationId"
+                  }
+                ]
+              },
+              "organizationName": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.planned.body"
+                      },
+                      "content.0.organizationName"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.organization.organizationName"
+                  }
+                ]
+              },
+              "runtimeInfrastructurePackageId": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.planned.body"
+                      },
+                      "content.0.runtimeInfrastructurePackageId"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.runtimeInfrastructurePackage.runtimeInfrastructurePackageId"
+                  }
+                ]
+              },
+              "runtimeInfrastructurePackageName": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.planned.body"
+                      },
+                      "content.0.runtimeInfrastructurePackageName"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.runtimeInfrastructurePackage.packageName"
+                  }
+                ]
+              },
+              "runtimeInfrastructurePackageVersion": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.planned.body"
+                      },
+                      "content.0.runtimeInfrastructurePackageVersion"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.runtimeInfrastructurePackage.packageVersion"
+                  }
+                ]
+              },
+              "runtimeEnvironmentType": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.planned.body"
+                      },
+                      "content.0.runtimeEnvironmentType"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.runtimeInfrastructurePackage.runtimeEnvironmentType"
+                  }
+                ]
+              },
+              "runtimeName": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.planned.body"
+                      },
+                      "content.0.runtimeName"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.runtime.runtimeName"
+                  }
+                ]
+              },
+              "agentInstallMode": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.planned.body"
+                      },
+                      "content.0.agentInstallMode"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.runtimeInstallationPlan.agentInstallMode"
+                  }
+                ]
+              },
+              "expectedNodeCount": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.planned.body"
+                      },
+                      "content.0.expectedNodeCount"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.runtimeInstallationPlan.expectedNodeCount"
+                  }
+                ]
+              },
+              "runtimeAgentId": {
+                "$ref": "data.inputs.runtime.runtimeAgentId"
+              }
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "registered",
+          "type": "query",
+          "query": "registered",
+          "when": {
+            "value": {
+              "$ref": "data.inputs.register"
+            },
+            "operator": "equals",
+            "expected": true
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructure/runtimeinfrastructureaccessview",
+            "query": {
+              "runtimeInfrastructureId.equals": {
+                "$coalesce": [
+                  {
+                    "$get": [
+                      {
+                        "$ref": "steps.plan-ready.body"
+                      },
+                      "content.0.runtimeInfrastructureId"
+                    ]
+                  },
+                  {
+                    "$ref": "data.inputs.runtime.runtimeInfrastructureId"
+                  }
+                ]
+              },
+              "size": 2
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "anyChecks": [
+              {
+                "path": "content.0.state",
+                "operator": "enumIn",
+                "expected": [
+                  "Registered",
+                  "Verified",
+                  "AgentReady",
+                  "Connected",
+                  "VerificationFailed",
+                  "RuntimeAgentFailed"
+                ]
+              }
+            ]
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.length",
+              "operator": "gt",
+              "expected": 0
+            }
+          ]
+        }
+      ],
+      "exports": {
+        "runtimeInfrastructureId": {
+          "$coalesce": [
+            {
+              "$get": [
+                {
+                  "$ref": "steps.plan-ready.body"
+                },
+                "content.0.runtimeInfrastructureId"
+              ]
+            },
+            {
+              "$ref": "data.inputs.runtime.runtimeInfrastructureId"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

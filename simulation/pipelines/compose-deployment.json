@@ -9,9 +9,9 @@
   ],
   "envFile": "simulation/compose/.env",
   "endpoints": {
-    "support": "http://192.168.1.4:28080",
     "platform": "http://127.0.0.1:28081"
   },
+  "endpointEnv": {"support": "PUBLIC_SUPPORT_URL"},
   "healthUrls": [
     "http://127.0.0.1:28080/actuator/health",
     "http://127.0.0.1:28081/actuator/health",

@@ -1,7 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {prepareCaseData, enrollParticipants, testTraining, trainingArguments} from './training-stages.mjs';
-import {createHash} from 'node:crypto';
+import {prepareCaseData, enrollParticipants, trainingArguments} from './training-stages.mjs';
 import {approveCases} from '../../src/cases.mjs';
 import {readFileSync} from 'node:fs';
 const scenario = JSON.parse(readFileSync(new URL('../scenarios/two-participant-training.json', import.meta.url)));
@@ -31,7 +30,6 @@ test('case preparation rejects missing or foreign baselines and unapproved cases
   await assert.rejects(prepareCaseData(environment, {}, {...baseline, deploymentId: 'other'}, approved, create), /different/);
   const draft = structuredClone(approved); draft.cases[0].status = 'draft';
   await assert.rejects(prepareCaseData(environment, {}, baseline, draft, create), /approval/);
-  await assert.rejects(testTraining(environment, {}, baseline, approved, undefined, create), /Case data/);
 });
 test('data preparation never invokes infrastructure creation or deployment', async () => {
   const calls = [];
@@ -72,35 +70,6 @@ test('incomplete prepared fixtures fail and still clean up tunnels', async () =>
   })), /incomplete/);
   assert.equal(cleaned, true);
 });
-test('tests reuse fixture without calling participant preparation', async () => {
-  const plan = {schemaVersion: 2, cases: [{id: 'test', title: 'Test', origin: 'manual', status: 'approved', reviewIssues: [], prerequisites: [], dataRequirements: [], timeoutMs: 1000, cleanupPolicy: 'retain',
-    steps: [{id: 'submit', type: 'command', command: 'SubmitTraining'}, {id: 'verify', type: 'query', query: 'VerifyTraining'}],
-    assertions: [{type: 'query', stepId: 'verify', path: 'verified', operator: 'equals', expected: true}]}]};
-  const calls = [];
-  const reviewed = approveCases(plan, 'test');
-  const report = await testTraining(environment, {}, {...environment, schemaVersion: 1, mode: 'case', casePlanFingerprint: createHash('sha256').update(JSON.stringify(reviewed)).digest('hex'), records: [{participants: []}]}, reviewed, undefined, async () => ({
-    validateConnection: async () => {}, waitReady: async () => {}, restoreData: async () => calls.push('restore'),
-    submitTraining: async () => calls.push('submit'), verifyTraining: async () => calls.push('verify'),
-    snapshot: () => ({trainingJobId: 'job'}), cleanup: () => calls.push('cleanup')
-  }));
-  assert.equal(report.status, 'passed');
-  assert.equal(report.trainingJobId, 'job');
-  assert.deepEqual(calls, ['restore', 'submit', 'verify', 'cleanup']);
-});
-
-test('case execution accepts registered query-only cases without submitting training', async () => {
-  const plan = approveCases({schemaVersion: 2, cases: [{id: 'inspect', title: 'Inspect', origin: 'manual', status: 'review',
-    reviewIssues: [], prerequisites: [], dataRequirements: [], timeoutMs: 1000, cleanupPolicy: 'retain',
-    steps: [{id: 'inspect', type: 'query', query: 'InspectStatus'}],
-    assertions: [{type: 'query', stepId: 'inspect', path: 'ready', operator: 'equals', expected: true}]}]}, 'test');
-  const report = await testTraining(environment, {}, {...environment, schemaVersion: 1, mode: 'case',
-    casePlanFingerprint: createHash('sha256').update(JSON.stringify(plan)).digest('hex'), records: [{}]}, plan, undefined,
-    async () => ({validateConnection: async () => {}, waitReady: async () => {}, restoreData: async () => {},
-      cleanup: async () => {}, submitTraining: () => assert.fail('must not submit'),
-      testOperations: {InspectStatus: {type: 'query', execute: async () => ({status: 'ok', body: {ready: true}})}}}));
-  assert.equal(report.status, 'passed');
-});
-
 test('unmapped data requirements are rejected before creating adapters', async () => {
   await assert.rejects(prepareCaseData(environment, {...scenario, dataRequirements: {}}, baseline, approved,
     () => assert.fail('must not create adapter')), /Unmapped/);

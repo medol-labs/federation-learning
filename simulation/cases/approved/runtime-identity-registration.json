@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "runtime-identity-registration",
+      "title": "runtime-identity-registration",
+      "origin": "manual",
+      "status": "approved",
+      "reviewIssues": [],
+      "prerequisites": [],
+      "dataRequirements": [],
+      "assertions": [],
+      "cleanupPolicy": "retain",
+      "timeoutMs": 1800000,
+      "steps": [
+        {
+          "id": "identity",
+          "type": "query",
+          "query": "identity",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeidentity/runtimeidentitycatalog",
+            "query": {
+              "runtimeAgentId.equals": {
+                "$ref": "data.inputs.runtime.runtimeAgentId"
+              },
+              "size": 2,
+              "runtimeInfrastructureId.equals": {
+                "$ref": "data.inputs.runtime.runtimeInfrastructureId"
+              }
+            }
+          }
+        },
+        {
+          "id": "ActivateRuntimeIdentity",
+          "type": "command",
+          "command": "ActivateRuntimeIdentity",
+          "when": {
+            "value": {
+              "$ref": "steps.identity.body.content.length"
+            },
+            "operator": "equals",
+            "expected": 0
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeidentity/activateruntimeidentity",
+            "body": {
+              "$ref": "data.inputs.runtime"
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "identity-ready",
+          "type": "query",
+          "query": "identity-ready",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeidentity/runtimeidentitycatalog",
+            "query": {
+              "runtimeAgentId.equals": {
+                "$ref": "data.inputs.runtime.runtimeAgentId"
+              },
+              "size": 2,
+              "runtimeInfrastructureId.equals": {
+                "$ref": "data.inputs.runtime.runtimeInfrastructureId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "checks": [
+              {
+                "path": "content.0.runtimeId",
+                "operator": "exists"
+              }
+            ]
+          },
+          "assertions": [
+            {
+              "type": "query",
+              "path": "content.0.runtimeId",
+              "operator": "exists"
+            }
+          ]
+        },
+        {
+          "id": "endpoint",
+          "type": "query",
+          "query": "endpoint",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructure/runtimeagentendpointcatalog",
+            "query": {
+              "runtimeAgentId.equals": {
+                "$ref": "data.inputs.runtime.runtimeAgentId"
+              },
+              "size": 2,
+              "runtimeInfrastructureId.equals": {
+                "$ref": "data.inputs.runtime.runtimeInfrastructureId"
+              }
+            }
+          }
+        },
+        {
+          "id": "RecordRuntimeConnectionEstablished",
+          "type": "command",
+          "command": "RecordRuntimeConnectionEstablished",
+          "when": {
+            "value": {
+              "$matches": [
+                {
+                  "$ref": "steps.endpoint.body"
+                },
+                [
+                  {
+                    "path": "content.0.runtimeAgentEndpoint.length",
+                    "operator": "gt",
+                    "expected": 0
+                  }
+                ]
+              ]
+            },
+            "operator": "equals",
+            "expected": false
+          },
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructure/recordruntimeconnectionestablished",
+            "body": {
+              "runtimeInfrastructureId": {
+                "$ref": "data.inputs.runtime.runtimeInfrastructureId"
+              },
+              "runtimeAgentId": {
+                "$ref": "data.inputs.runtime.runtimeAgentId"
+              },
+              "agentInstallMode": {
+                "$ref": "data.inputs.installMode"
+              },
+              "organizationId": {
+                "$ref": "data.inputs.organization.organizationId"
+              },
+              "organizationName": {
+                "$ref": "data.inputs.organization.organizationName"
+              },
+              "runtimeName": {
+                "$ref": "data.inputs.runtime.runtimeName"
+              },
+              "runtimeAgentEndpoint": {
+                "$ref": "data.inputs.endpoint"
+              },
+              "endpointScope": {
+                "$ref": "data.inputs.scope"
+              }
+            },
+            "ignoreResponseBody": true
+          }
+        },
+        {
+          "id": "endpoint-ready",
+          "type": "query",
+          "query": "endpoint-ready",
+          "request": {
+            "endpoint": "platform",
+            "path": "/runtimeinfrastructure/runtimeagentendpointcatalog",
+            "query": {
+              "runtimeAgentId.equals": {
+                "$ref": "data.inputs.runtime.runtimeAgentId"
+              },
+              "size": 2,
+              "runtimeInfrastructureId.equals": {
+                "$ref": "data.inputs.runtime.runtimeInfrastructureId"
+              }
+            },
+            "timeoutMs": {
+              "$ref": "data.inputs.timeoutMs"
+            },
+            "pollIntervalMs": {
+              "$ref": "data.inputs.pollIntervalMs"
+            },
+            "checks": [
+              {
+                "path": "content.0.runtimeAgentEndpoint.length",
+                "operator": "gt",
+                "expected": 0
+              }
+            ]
+          }
+        }
+      ],
+      "exports": {
+        "runtimeId": {
+          "$ref": "steps.identity-ready.body.content.0.runtimeId"
+        }
+      },
+      "approval": {
+        "reviewer": "codex-configuration-review",
+        "fingerprint": "8885486c66168c9b709c49ce8d54fa5a2e3d40ab2b651241f253b05820a1d7a1"
+      }
+    }
+  ]
+}

@@ -7,7 +7,7 @@ import {spawnSync} from 'node:child_process';
 import {waitUntil} from '../../src/runtime/readiness.mjs';
 import {createKubernetesAccess} from '../../src/runtime/kubernetes-access.mjs';
 import {randomUUID} from 'node:crypto';
-import {verifyTrainingResult} from '../scenarios/verify-training.mjs';
+import {bootstrapParticipant} from './participant-bootstrap.mjs';
 import {workloadPatches} from '../../src/runtime/deployment.mjs';
 import {createParticipantSlots} from './participant-slots.mjs';
 import {deploymentCatalog} from './service-catalog.mjs';
@@ -156,8 +156,6 @@ const participantNamespaces = new Map();
 const participantSlots = createParticipantSlots({root: repoRoot, environment, namespace, kubeconfigFile,
     access: args['participant-access'] ? JSON.parse(args['participant-access']) : undefined,
     count: Number(args['participant-slots'] ?? 0), imagePrefix: appImagePrefix, imageVersion, timeoutMs});
-let trainingSeed = null;
-let verification = null;
 return {
     dryRun,
     participantCount,
@@ -182,30 +180,7 @@ return {
         if (running('apisix') && running('federation-learning-support')) await waitForHttp(`${supportUrl}/actuator/health`, 'support health');
         if (running('apisix') && running('federation-learning-platform')) await waitForHttp(`${platformUrl}/actuator/health`, 'platform health');
     },
-    snapshot: () => ({participants: participants.map(({runtimeAgentId}) => ({runtimeAgentId})), trainingJobId: trainingSeed?.trainingJobId, ...(verification ? {verification} : {})}),
     dataSnapshot: () => ({scenario, federationMode, trainingRunKey, participants: participants.map(({runtimeAgentUrl, ...identity}) => identity)}),
-    async restoreData(snapshot) {
-        if (snapshot.scenario !== scenario || snapshot.federationMode !== federationMode || snapshot.participants?.length !== participantCount) fail('Training fixture configuration does not match the selected scenario');
-        if (!snapshot.trainingRunKey) fail('Training fixture has no configuration key; prepare new data');
-        trainingRunKey = snapshot.trainingRunKey;
-        participants.length = 0;
-        for (const participant of snapshot.participants) {
-            participantNamespaces.set(participant.runtimeAgentId, participantSlots.slots.find(item => item.slot === participant.slot)?.namespace);
-            const endpoint = await waitForRuntimeAgentEndpoint(participant.runtimeAgentId, participant.runtimeInfrastructureId);
-            if (endpoint.runtimeId !== participant.runtimeId) fail('Runtime identity has changed; prepare new training data');
-            const runtimeAgentUrl = await manualRuntimeAgentAccess(participant.slot);
-            await waitForHttp(`${runtimeAgentUrl}/actuator/health`, 'restored runtime agent');
-            if (!participant.datasetId || !participant.trainingRunConfigurationId) fail('Training fixture lacks dataset/configuration identifiers; prepare new data');
-            const capability = await getPage(runtimeAgentUrl, '/dataset/datasetcapability', {'datasetId.equals': participant.datasetId});
-            const ready = (capability.content || []).some(item => item.datasetId === participant.datasetId
-                && ['REPORTED', 'METADATAREPORTED'].includes(String(item.metadataStatus).replace(/[_ -]/g, '').toUpperCase())
-                && ['CONTRACTVALIDATIONCOMPLETED', 'VALIDATED', 'COMPLETED'].includes(String(item.contractStatus).replace(/[_ -]/g, '').toUpperCase()));
-            if (!ready) fail(`Dataset is not ready for runtime ${participant.runtimeId}; prepare or repair the fixture`);
-            const configurations = await getPage(platformUrl, '/trainingrunconfiguration/trainingrunconfigurationcatalog', {'trainingRunConfigurationId.equals': participant.trainingRunConfigurationId});
-            if (!(configurations.content || []).some(item => item.trainingRunConfigurationId === participant.trainingRunConfigurationId)) fail('Training run configuration no longer exists');
-            participants.push({...participant, runtimeAgentUrl});
-        }
-    },
     async prepareCluster() {
 if (rebuildAppImages) {
     rebuildApplicationImages();
@@ -277,25 +252,7 @@ if (!skipAdminSetup) {
     async enrollParticipant(slot) {
         participants.push(await prepareParticipant(slot, true));
     },
-    async submitTraining() {
-if (!skipTrainingJob) {
-    await waitForDeployment('federation-learning-aggregation-runtime-engine', 'aggregation runtime engine');
-    trainingSeed = await runInitTraining('training-job', {
-        createJob: true,
-        registerRuntimeInfrastructure: false,
-        runtimeAgentUrl: participants[0]?.runtimeAgentUrl ?? runtimeAgentUrl,
-        participantKey: participants[0]?.participantKey ?? participantKeyForSlot(1),
-    });
-}
-    },
-    async verifyTraining() {
-    if (skipTrainingJob || !waitForTraining || !trainingSeed?.trainingJobId) fail('Training verification requires a submitted job and wait-for-training');
-    if (!skipTrainingJob && waitForTraining) {
-        verification = await verifyTrainingResult(trainingSeed.trainingJobId, participants, {
-            getPage, platformUrl, supportUrl, waitForCondition, fail, federationMode, requestHeaders, expectedRounds
-        });
-    }
-    }
+
 };
 
 async function ensureCluster() {
@@ -499,10 +456,8 @@ async function prepareParticipant(slot, registrationOnly = false) {
     }, runtimeNodeForSlot(slot));
     const accessibleRuntimeAgentUrl = await manualRuntimeAgentAccess(slot);
     await waitForHttp(`${accessibleRuntimeAgentUrl}/actuator/health`, `participant ${slot} runtime-agent health`);
-    if (!await findRuntimeAgentEndpoint(runtimeAgentId, runtimeInfrastructureId)) {
-        await loadRuntimeAgentBootstrapConfiguration(accessibleRuntimeAgentUrl);
-    }
-    const endpoint = await waitForRuntimeAgentEndpoint(runtimeAgentId, runtimeInfrastructureId);
+    const endpoint = await bootstrapParticipant({platform:platformUrl, participant:accessibleRuntimeAgentUrl,
+        runtimeAgentId, runtimeInfrastructureId, timeoutMs}, requestHeaders);
     console.log(`[k3d-flow] participant ${slot} platform runtime agent endpoint=${endpoint.runtimeAgentEndpoint ?? endpoint.endpoint ?? ''}`);
 
     if (!registrationOnly && !skipRuntimeAgentData) {
@@ -888,44 +843,12 @@ async function labelRuntimeNode(runtimeInfrastructureId, slot) {
 }
 
 
-async function loadRuntimeAgentBootstrapConfiguration(targetRuntimeAgentUrl) {
-    await postCommand(
-        targetRuntimeAgentUrl,
-        '/runtimeagentlifecycle/loadruntimeagentbootstrapconfiguration',
-        {},
-        'runtime agent bootstrap configuration load'
-    );
-}
-
-
 async function waitForRuntimeInfrastructure(runtimeInfrastructureId, predicate, label = 'runtime infrastructure') {
     return waitForOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
         'runtimeInfrastructureId.equals': runtimeInfrastructureId,
         size: '20'
     }, label, predicate);
 }
-
-async function waitForRuntimeAgentEndpoint(runtimeAgentId, runtimeInfrastructureId) {
-    return waitForOne(platformUrl, '/runtimeinfrastructure/runtimeagentendpointcatalog', {
-        'runtimeAgentId.equals': runtimeAgentId,
-        'runtimeInfrastructureId.equals': runtimeInfrastructureId,
-        size: '20'
-    }, 'runtime agent endpoint', (item) => Boolean(item?.runtimeId && (item?.runtimeAgentEndpoint ?? item?.endpoint)), () =>
-        runtimeAgentDiagnostics(runtimeAgentId)
-    );
-}
-
-async function findRuntimeAgentEndpoint(runtimeAgentId, runtimeInfrastructureId) {
-    const page = await getPage(platformUrl, '/runtimeinfrastructure/runtimeagentendpointcatalog', {
-        'runtimeAgentId.equals': runtimeAgentId,
-        'runtimeInfrastructureId.equals': runtimeInfrastructureId,
-        size: '20'
-    });
-    return (page.content ?? []).find((item) => Boolean(item?.runtimeAgentEndpoint ?? item?.endpoint)) ?? null;
-}
-
-
-
 
 async function startPortForward(serviceName, localPort, remotePort, label, targetNamespace = namespace) {
     return access.forward({namespace: targetNamespace, service: serviceName, localPort, remotePort,

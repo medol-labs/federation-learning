@@ -8,9 +8,9 @@
       "phase": "case-design",
       "command": [
         "node",
-        "simulation/src/cases.mjs",
-        "check",
-        "simulation/cases/approved/training.json"
+        "simulation/src/task.mjs",
+        "simulation/pipelines/tasks.json",
+        "select-cases"
       ]
     },
     {

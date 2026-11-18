@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "cases": [{
+    "id": "prepare-training-configuration", "title": "Prepare the runtime engine profile and training run configuration",
+    "origin": "manual", "status": "draft", "reviewIssues": [], "prerequisites": ["Platform online; model, schema and infrastructure prepared"],
+    "dataRequirements": [], "timeoutMs": 1800000, "cleanupPolicy": "retain", "assertions": [],
+    "variables": {
+      "profileQuery": {"runtimeEngineProfileId.equals": {"$ref": "data.inputs.runtimeEngineProfile.runtimeEngineProfileId"}, "size": 2},
+      "configurationQuery": {"trainingRunConfigurationId.equals": {"$ref": "data.inputs.trainingRunConfiguration.trainingRunConfigurationId"}, "size": 2}
+    },
+    "steps": [
+      {"id":"profile-existing","type":"query","query":"RuntimeEngineProfileCatalog","request":{"endpoint":"platform","path":"/runtimeengineprofile/runtimeengineprofilecatalog","query":{"$ref":"variables.profileQuery"}}},
+      {"id":"register-profile","type":"command","command":"RegisterRuntimeEngineProfile","when":{"value":{"$ref":"steps.profile-existing.body.content.length"},"operator":"equals","expected":0},"request":{"endpoint":"platform","path":"/runtimeengineprofile/registerruntimeengineprofile","body":{"$ref":"data.inputs.runtimeEngineProfile"},"ignoreResponseBody":true}},
+      {"id":"profile-ready","type":"query","query":"RuntimeEngineProfileCatalog","request":{"endpoint":"platform","path":"/runtimeengineprofile/runtimeengineprofilecatalog","query":{"$ref":"variables.profileQuery"},"expect":{"content.0.runtimeEngineProfileId":{"$ref":"data.inputs.runtimeEngineProfile.runtimeEngineProfileId"}},"timeoutMs":{"$ref":"data.inputs.timeoutMs"},"pollIntervalMs":{"$ref":"data.inputs.pollIntervalMs"}}},
+      {"id":"configuration-existing","type":"query","query":"TrainingRunConfigurationCatalog","request":{"endpoint":"platform","path":"/trainingrunconfiguration/trainingrunconfigurationcatalog","query":{"$ref":"variables.configurationQuery"}}},
+      {"id":"define-configuration","type":"command","command":"DefineTrainingRunConfiguration","when":{"value":{"$ref":"steps.configuration-existing.body.content.length"},"operator":"equals","expected":0},"request":{"endpoint":"platform","path":"/trainingrunconfiguration/definetrainingrunconfiguration","body":{"$ref":"data.inputs.trainingRunConfiguration"},"ignoreResponseBody":true}},
+      {"id":"configuration-ready","type":"query","query":"TrainingRunConfigurationCatalog","request":{"endpoint":"platform","path":"/trainingrunconfiguration/trainingrunconfigurationcatalog","query":{"$ref":"variables.configurationQuery"},"expect":{"content.0.trainingRunConfigurationId":{"$ref":"data.inputs.trainingRunConfiguration.trainingRunConfigurationId"}},"timeoutMs":{"$ref":"data.inputs.timeoutMs"},"pollIntervalMs":{"$ref":"data.inputs.pollIntervalMs"}},"assertions":[{"type":"query","path":"content.length","operator":"equals","expected":1}]}
+    ]
+  }]
+}

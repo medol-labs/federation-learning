@@ -5,7 +5,7 @@ import {provisionFixtures} from '../../src/runtime/fixtures.mjs';
 import {checkCases, checkApproval, selectCases} from '../../src/cases.mjs';
 import {validateBaselineManifest} from '../../src/data-plan.mjs';
 import {createAdapter, deploymentPlan, runProjectDeployment} from '../runtime/deploy.mjs';
-import {prepareCaseData, enrollParticipants, testTraining, trainingDataPlan} from '../runtime/training-stages.mjs';
+import {prepareCaseData, enrollParticipants, trainingDataPlan} from '../runtime/training-stages.mjs';
 import {prepareBaseline} from './baseline-data.mjs';
 import {prepareTestEnvironment} from '../runtime/prepare-test-environment.mjs';
 
@@ -44,4 +44,3 @@ export async function prepare({environment, scenario, baseline, cases}, {root}) 
     const result = await prepareCaseData(environment, scenario, baseline, cases);
     return {...result, fixtures};
 }
-export const test = ({environment, scenario, data, cases}) => testTraining(environment, scenario, data, cases, () => {});
