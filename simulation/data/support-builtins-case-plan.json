@@ -1,0 +1,28 @@
+{
+  "mode": "case",
+  "requiresBaseline": false,
+  "seed": 1001,
+  "caseIds": [
+    "support-dictionary",
+    "support-iam",
+    "support-file",
+    "support-export",
+    "support-invalid-import"
+  ],
+  "fulfillments": {},
+  "steps": [
+    {
+      "id": "support-ready",
+      "kind": "wait",
+      "endpoint": "support",
+      "path": "/dictionary/dictionarycatalog?page=0&size=1",
+      "expect": {
+        "path": "page.size",
+        "equals": 1
+      }
+    }
+  ],
+  "exports": {
+    "supportReady": true
+  }
+}

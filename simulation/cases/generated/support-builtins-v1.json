@@ -1,0 +1,1274 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "register-dictionary-to-archive-dictionary",
+      "title": "Register Dictionary To Archive Dictionary",
+      "status": "draft",
+      "origin": "model",
+      "prerequisites": [],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "registerDictionary",
+          "title": "Register Dictionary",
+          "slice": "Register Dictionary",
+          "context": "DictionaryMaintenance",
+          "command": "RegisterDictionary",
+          "commandTitle": "Register Dictionary",
+          "commandClassName": "RegisterDictionaryCommand",
+          "commandFqcn": "tech.medo.dictionarymaintenance.registerdictionary.RegisterDictionaryCommand",
+          "http": {
+            "method": "POST",
+            "path": "/dictionary/registerdictionary",
+            "conceptRoute": "dictionary",
+            "commandRoute": "registerdictionary"
+          },
+          "execution": "COMMAND",
+          "inputs": [
+            {
+              "name": "dictionaryId",
+              "label": "Dictionary Id",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": true,
+              "kotlinType": "java.util.UUID",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.util.UUID",
+                "baseType": "UUID",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Generated",
+                "previewValue": "d82e4efa-d0db-4427-9fda-6d368de27a6d"
+              }
+            },
+            {
+              "name": "dictionaryCode",
+              "label": "Dictionary Code",
+              "type": "DictionaryCode",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "tech.medo.dictionarymaintenance.domain.types.DictionaryCode",
+              "typeInfo": {
+                "kind": "value-scalar",
+                "kotlinType": "tech.medo.dictionarymaintenance.domain.types.DictionaryCode",
+                "typeName": "DictionaryCode",
+                "fqcn": "tech.medo.dictionarymaintenance.domain.types.DictionaryCode",
+                "base": {
+                  "kind": "scalar",
+                  "kotlinType": "String",
+                  "baseType": "String"
+                },
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "dictionary-code-921"
+              }
+            },
+            {
+              "name": "dictionaryName",
+              "label": "Dictionary Name",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "dictionary-name-376"
+              }
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "description-744"
+              }
+            }
+          ],
+          "expectedEvents": [
+            {
+              "name": "DictionaryRegistered",
+              "title": "Dictionary Registered",
+              "className": "DictionaryRegisteredEvent",
+              "fqcn": "tech.medo.dictionarymaintenance.events.DictionaryRegisteredEvent",
+              "fields": [
+                {
+                  "name": "dictionaryId",
+                  "type": "UUID"
+                },
+                {
+                  "name": "dictionaryCode",
+                  "type": "DictionaryCode"
+                },
+                {
+                  "name": "dictionaryName",
+                  "type": "String"
+                },
+                {
+                  "name": "description",
+                  "type": "Text"
+                }
+              ]
+            }
+          ],
+          "type": "command"
+        },
+        {
+          "id": "archiveDictionary",
+          "title": "Archive Dictionary",
+          "slice": "Archive Dictionary",
+          "context": "DictionaryMaintenance",
+          "command": "ArchiveDictionary",
+          "commandTitle": "Archive Dictionary",
+          "commandClassName": "ArchiveDictionaryCommand",
+          "commandFqcn": "tech.medo.dictionarymaintenance.archivedictionary.ArchiveDictionaryCommand",
+          "http": {
+            "method": "POST",
+            "path": "/dictionary/archivedictionary",
+            "conceptRoute": "dictionary",
+            "commandRoute": "archivedictionary"
+          },
+          "execution": "COMMAND",
+          "triggeredBy": {
+            "event": "DictionaryRegistered",
+            "eventTitle": "Dictionary Registered",
+            "reaction": "Dictionary Registered To Archive Dictionary",
+            "reactionType": "FLOW"
+          },
+          "inputs": [
+            {
+              "name": "dictionaryId",
+              "label": "Dictionary Id",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "kotlinType": "java.util.UUID",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.util.UUID",
+                "baseType": "UUID",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "aaa85c79-b214-458e-8f13-ead33116f7fc"
+              }
+            },
+            {
+              "name": "archiveReason",
+              "label": "Archive Reason",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "archive-reason-114"
+              }
+            }
+          ],
+          "expectedEvents": [
+            {
+              "name": "DictionaryArchived",
+              "title": "Dictionary Archived",
+              "className": "DictionaryArchivedEvent",
+              "fqcn": "tech.medo.dictionarymaintenance.events.DictionaryArchivedEvent",
+              "fields": [
+                {
+                  "name": "dictionaryId",
+                  "type": "UUID"
+                },
+                {
+                  "name": "archiveReason",
+                  "type": "String"
+                }
+              ]
+            }
+          ],
+          "type": "command"
+        }
+      ],
+      "assertions": [
+        {
+          "type": "event",
+          "stepId": "registerDictionary",
+          "event": {
+            "name": "DictionaryRegistered",
+            "title": "Dictionary Registered",
+            "className": "DictionaryRegisteredEvent",
+            "fqcn": "tech.medo.dictionarymaintenance.events.DictionaryRegisteredEvent",
+            "fields": [
+              {
+                "name": "dictionaryId",
+                "type": "UUID"
+              },
+              {
+                "name": "dictionaryCode",
+                "type": "DictionaryCode"
+              },
+              {
+                "name": "dictionaryName",
+                "type": "String"
+              },
+              {
+                "name": "description",
+                "type": "Text"
+              }
+            ]
+          },
+          "basis": "flow-candidate"
+        },
+        {
+          "type": "event",
+          "stepId": "archiveDictionary",
+          "event": {
+            "name": "DictionaryArchived",
+            "title": "Dictionary Archived",
+            "className": "DictionaryArchivedEvent",
+            "fqcn": "tech.medo.dictionarymaintenance.events.DictionaryArchivedEvent",
+            "fields": [
+              {
+                "name": "dictionaryId",
+                "type": "UUID"
+              },
+              {
+                "name": "archiveReason",
+                "type": "String"
+              }
+            ]
+          },
+          "basis": "flow-candidate"
+        }
+      ],
+      "timeoutMs": 60000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [
+        "Explicit input source required: registerDictionary.dictionaryCode",
+        "Explicit input source required: registerDictionary.dictionaryName",
+        "Explicit input source required: registerDictionary.description",
+        "Explicit input source required: archiveDictionary.dictionaryId",
+        "Explicit input source required: archiveDictionary.archiveReason",
+        "Confirm prerequisites and executable assertions"
+      ],
+      "sourceScenarioId": "register-dictionary-to-archive-dictionary",
+      "sourceFingerprint": "9564a96f0b6a9a05d0cab06182161903cb95e5f47b31954dc5259e414cc8ef02"
+    },
+    {
+      "id": "register-role-to-grant-permission-to-role",
+      "title": "Register Role To Grant Permission To Role",
+      "status": "draft",
+      "origin": "model",
+      "prerequisites": [],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "registerRole",
+          "title": "Register Role",
+          "slice": "Register Role",
+          "context": "IdentityAccessManagement",
+          "command": "RegisterRole",
+          "commandTitle": "Register Role",
+          "commandClassName": "RegisterRoleCommand",
+          "commandFqcn": "tech.medo.identityaccessmanagement.registerrole.RegisterRoleCommand",
+          "http": {
+            "method": "POST",
+            "path": "/role/registerrole",
+            "conceptRoute": "role",
+            "commandRoute": "registerrole"
+          },
+          "execution": "COMMAND",
+          "inputs": [
+            {
+              "name": "roleId",
+              "label": "Role Id",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": true,
+              "kotlinType": "java.util.UUID",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.util.UUID",
+                "baseType": "UUID",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Generated",
+                "previewValue": "47c052ea-4fb7-4957-92b7-d26640beef9d"
+              }
+            },
+            {
+              "name": "roleCode",
+              "label": "Role Code",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "role-code-988"
+              }
+            },
+            {
+              "name": "roleName",
+              "label": "Role Name",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "role-name-701"
+              }
+            }
+          ],
+          "expectedEvents": [
+            {
+              "name": "RoleRegistered",
+              "title": "Role Registered",
+              "className": "RoleRegisteredEvent",
+              "fqcn": "tech.medo.identityaccessmanagement.events.RoleRegisteredEvent",
+              "fields": [
+                {
+                  "name": "roleId",
+                  "type": "UUID"
+                },
+                {
+                  "name": "roleCode",
+                  "type": "String"
+                },
+                {
+                  "name": "roleName",
+                  "type": "String"
+                }
+              ]
+            }
+          ],
+          "type": "command"
+        },
+        {
+          "id": "grantPermissionToRole",
+          "title": "Grant Permission To Role",
+          "slice": "Grant Permission To Role",
+          "context": "IdentityAccessManagement",
+          "command": "GrantPermissionToRole",
+          "commandTitle": "Grant Permission To Role",
+          "commandClassName": "GrantPermissionToRoleCommand",
+          "commandFqcn": "tech.medo.identityaccessmanagement.grantpermissiontorole.GrantPermissionToRoleCommand",
+          "http": {
+            "method": "POST",
+            "path": "/role/grantpermissiontorole",
+            "conceptRoute": "role",
+            "commandRoute": "grantpermissiontorole"
+          },
+          "execution": "COMMAND",
+          "triggeredBy": {
+            "event": "RoleRegistered",
+            "eventTitle": "Role Registered",
+            "reaction": "Role Registered To Grant Permission To Role",
+            "reactionType": "FLOW"
+          },
+          "inputs": [
+            {
+              "name": "roleId",
+              "label": "Role Id",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "kotlinType": "java.util.UUID",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.util.UUID",
+                "baseType": "UUID",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "PreviousEvent",
+                "event": "RoleCatalog",
+                "eventTitle": "RoleCatalog",
+                "field": "roleId"
+              }
+            },
+            {
+              "name": "roleCode",
+              "label": "Role Code",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "PreviousEvent",
+                "event": "RoleCatalog",
+                "eventTitle": "RoleCatalog",
+                "field": "roleCode"
+              }
+            },
+            {
+              "name": "permissionCodes",
+              "label": "Permission Codes",
+              "type": "String",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "List<String>",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "List<String>",
+                "baseType": "String",
+                "list": true,
+                "optional": false
+              },
+              "source": {
+                "kind": "PreviousEvent",
+                "event": "PermissionCatalog",
+                "eventTitle": "PermissionCatalog",
+                "field": "permissionCode"
+              }
+            }
+          ],
+          "expectedEvents": [
+            {
+              "name": "PermissionGrantedToRole",
+              "title": "Permission Granted To Role",
+              "className": "PermissionGrantedToRoleEvent",
+              "fqcn": "tech.medo.identityaccessmanagement.events.PermissionGrantedToRoleEvent",
+              "fields": [
+                {
+                  "name": "roleId",
+                  "type": "UUID"
+                },
+                {
+                  "name": "roleCode",
+                  "type": "String"
+                },
+                {
+                  "name": "permissionCode",
+                  "type": "String"
+                }
+              ]
+            }
+          ],
+          "type": "command"
+        }
+      ],
+      "assertions": [
+        {
+          "type": "event",
+          "stepId": "registerRole",
+          "event": {
+            "name": "RoleRegistered",
+            "title": "Role Registered",
+            "className": "RoleRegisteredEvent",
+            "fqcn": "tech.medo.identityaccessmanagement.events.RoleRegisteredEvent",
+            "fields": [
+              {
+                "name": "roleId",
+                "type": "UUID"
+              },
+              {
+                "name": "roleCode",
+                "type": "String"
+              },
+              {
+                "name": "roleName",
+                "type": "String"
+              }
+            ]
+          },
+          "basis": "flow-candidate"
+        },
+        {
+          "type": "event",
+          "stepId": "grantPermissionToRole",
+          "event": {
+            "name": "PermissionGrantedToRole",
+            "title": "Permission Granted To Role",
+            "className": "PermissionGrantedToRoleEvent",
+            "fqcn": "tech.medo.identityaccessmanagement.events.PermissionGrantedToRoleEvent",
+            "fields": [
+              {
+                "name": "roleId",
+                "type": "UUID"
+              },
+              {
+                "name": "roleCode",
+                "type": "String"
+              },
+              {
+                "name": "permissionCode",
+                "type": "String"
+              }
+            ]
+          },
+          "basis": "flow-candidate"
+        }
+      ],
+      "timeoutMs": 60000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [
+        "Explicit input source required: registerRole.roleCode",
+        "Explicit input source required: registerRole.roleName",
+        "Confirm prerequisites and executable assertions"
+      ],
+      "sourceScenarioId": "register-role-to-grant-permission-to-role",
+      "sourceFingerprint": "8f91117bc2253c206467c22172a3058d66541f3a826cae69e4e32550e0d09c9c"
+    },
+    {
+      "id": "upload-file-to-discard-file",
+      "title": "Upload File To Discard File",
+      "status": "draft",
+      "origin": "model",
+      "prerequisites": [],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "uploadFile",
+          "title": "Upload File",
+          "slice": "Upload File",
+          "context": "FileUpload",
+          "command": "UploadFile",
+          "commandTitle": "Upload File",
+          "commandClassName": "UploadFileCommand",
+          "commandFqcn": "tech.medo.fileupload.uploadfile.UploadFileCommand",
+          "http": {
+            "method": "POST",
+            "path": "/uploadedfile/uploadfile",
+            "conceptRoute": "uploadedfile",
+            "commandRoute": "uploadfile"
+          },
+          "execution": "COMMAND",
+          "inputs": [
+            {
+              "name": "fileId",
+              "label": "File Id",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": true,
+              "kotlinType": "java.util.UUID",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.util.UUID",
+                "baseType": "UUID",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Generated",
+                "previewValue": "c6edd156-ce6a-440b-836a-3cb271724989"
+              }
+            },
+            {
+              "name": "uploadedFile",
+              "label": "Uploaded File",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "uploaded-file-078"
+              }
+            },
+            {
+              "name": "originalFileName",
+              "label": "Original File Name",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "original-file-name-908"
+              }
+            },
+            {
+              "name": "contentType",
+              "label": "Content Type",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "content-type-777"
+              }
+            },
+            {
+              "name": "sizeBytes",
+              "label": "Size Bytes",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "Long?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "Long?",
+                "baseType": "Long",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": 101331
+              }
+            },
+            {
+              "name": "fileLocation",
+              "label": "File Location",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "file-location-452"
+              }
+            },
+            {
+              "name": "checksum",
+              "label": "Checksum",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "checksum-694"
+              }
+            },
+            {
+              "name": "expiresAt",
+              "label": "Expires At",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "java.time.LocalDateTime",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.time.LocalDateTime",
+                "baseType": "LocalDateTime",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "2026-01-24T10:35:00"
+              }
+            },
+            {
+              "name": "purpose",
+              "label": "Purpose",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "purpose-098"
+              }
+            }
+          ],
+          "expectedEvents": [
+            {
+              "name": "FileUploaded",
+              "title": "File Uploaded",
+              "className": "FileUploadedEvent",
+              "fqcn": "tech.medo.fileupload.events.FileUploadedEvent",
+              "fields": [
+                {
+                  "name": "fileId",
+                  "type": "UUID"
+                },
+                {
+                  "name": "originalFileName",
+                  "type": "String"
+                },
+                {
+                  "name": "contentType",
+                  "type": "String"
+                },
+                {
+                  "name": "sizeBytes",
+                  "type": "Long"
+                },
+                {
+                  "name": "purpose",
+                  "type": "String"
+                },
+                {
+                  "name": "fileLocation",
+                  "type": "String"
+                },
+                {
+                  "name": "checksum",
+                  "type": "String"
+                },
+                {
+                  "name": "expiresAt",
+                  "type": "DateTime"
+                }
+              ]
+            }
+          ],
+          "type": "command"
+        },
+        {
+          "id": "discardFile",
+          "title": "Discard File",
+          "slice": "Discard File",
+          "context": "FileUpload",
+          "command": "DiscardFile",
+          "commandTitle": "Discard File",
+          "commandClassName": "DiscardFileCommand",
+          "commandFqcn": "tech.medo.fileupload.discardfile.DiscardFileCommand",
+          "http": {
+            "method": "POST",
+            "path": "/uploadedfile/discardfile",
+            "conceptRoute": "uploadedfile",
+            "commandRoute": "discardfile"
+          },
+          "execution": "COMMAND",
+          "triggeredBy": {
+            "event": "FileUploaded",
+            "eventTitle": "File Uploaded",
+            "reaction": "File Uploaded To Discard File",
+            "reactionType": "FLOW"
+          },
+          "inputs": [
+            {
+              "name": "fileId",
+              "label": "File Id",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "kotlinType": "java.util.UUID",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.util.UUID",
+                "baseType": "UUID",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "51c0aa45-5942-49f2-8642-f88f08440438"
+              }
+            },
+            {
+              "name": "discardReason",
+              "label": "Discard Reason",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "discard-reason-914"
+              }
+            }
+          ],
+          "expectedEvents": [
+            {
+              "name": "FileDiscarded",
+              "title": "File Discarded",
+              "className": "FileDiscardedEvent",
+              "fqcn": "tech.medo.fileupload.events.FileDiscardedEvent",
+              "fields": [
+                {
+                  "name": "fileId",
+                  "type": "UUID"
+                },
+                {
+                  "name": "discardReason",
+                  "type": "String"
+                }
+              ]
+            }
+          ],
+          "type": "command"
+        }
+      ],
+      "assertions": [
+        {
+          "type": "event",
+          "stepId": "uploadFile",
+          "event": {
+            "name": "FileUploaded",
+            "title": "File Uploaded",
+            "className": "FileUploadedEvent",
+            "fqcn": "tech.medo.fileupload.events.FileUploadedEvent",
+            "fields": [
+              {
+                "name": "fileId",
+                "type": "UUID"
+              },
+              {
+                "name": "originalFileName",
+                "type": "String"
+              },
+              {
+                "name": "contentType",
+                "type": "String"
+              },
+              {
+                "name": "sizeBytes",
+                "type": "Long"
+              },
+              {
+                "name": "purpose",
+                "type": "String"
+              },
+              {
+                "name": "fileLocation",
+                "type": "String"
+              },
+              {
+                "name": "checksum",
+                "type": "String"
+              },
+              {
+                "name": "expiresAt",
+                "type": "DateTime"
+              }
+            ]
+          },
+          "basis": "flow-candidate"
+        },
+        {
+          "type": "event",
+          "stepId": "discardFile",
+          "event": {
+            "name": "FileDiscarded",
+            "title": "File Discarded",
+            "className": "FileDiscardedEvent",
+            "fqcn": "tech.medo.fileupload.events.FileDiscardedEvent",
+            "fields": [
+              {
+                "name": "fileId",
+                "type": "UUID"
+              },
+              {
+                "name": "discardReason",
+                "type": "String"
+              }
+            ]
+          },
+          "basis": "flow-candidate"
+        }
+      ],
+      "timeoutMs": 60000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [
+        "Explicit input source required: uploadFile.uploadedFile",
+        "Explicit input source required: uploadFile.originalFileName",
+        "Explicit input source required: uploadFile.contentType",
+        "Explicit input source required: uploadFile.sizeBytes",
+        "Explicit input source required: uploadFile.fileLocation",
+        "Explicit input source required: uploadFile.checksum",
+        "Explicit input source required: uploadFile.expiresAt",
+        "Explicit input source required: uploadFile.purpose",
+        "Explicit input source required: discardFile.fileId",
+        "Explicit input source required: discardFile.discardReason",
+        "Confirm prerequisites and executable assertions"
+      ],
+      "sourceScenarioId": "upload-file-to-discard-file",
+      "sourceFingerprint": "91c50f2946297127271154cb44edfe140dc0b9de632cae048e64c8ab60cad84c"
+    },
+    {
+      "id": "reject-inconsistent-status",
+      "title": "Reject Inconsistent Status",
+      "status": "draft",
+      "origin": "model",
+      "prerequisites": [],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "requestDataImport",
+          "title": "Request Data Import",
+          "slice": "Data Import Job",
+          "context": "DataExchange",
+          "command": "RequestDataImport",
+          "commandTitle": "Request Data Import",
+          "commandClassName": "RequestDataImportCommand",
+          "commandFqcn": "tech.medo.dataexchange.dataimportjob.RequestDataImportCommand",
+          "http": {
+            "method": "POST",
+            "path": "/dataimportjob/requestdataimport",
+            "conceptRoute": "dataimportjob",
+            "commandRoute": "requestdataimport"
+          },
+          "execution": "COMMAND",
+          "inputs": [
+            {
+              "name": "dataImportJobId",
+              "label": "Data Import Job Id",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "kotlinType": "java.util.UUID",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.util.UUID",
+                "baseType": "UUID",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "f581bbd1-ed43-4596-9b43-23cb2d4616f4"
+              }
+            },
+            {
+              "name": "commandName",
+              "label": "Command Name",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "command-name-204"
+              }
+            },
+            {
+              "name": "resourceName",
+              "label": "Resource Name",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "resource-name-107"
+              }
+            },
+            {
+              "name": "originalFileName",
+              "label": "Original File Name",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "original-file-name-931"
+              }
+            },
+            {
+              "name": "filePath",
+              "label": "File Path",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "file-path-388"
+              }
+            },
+            {
+              "name": "requestedLocale",
+              "label": "Requested Locale",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "requested-locale-851"
+              }
+            },
+            {
+              "name": "requestedAt",
+              "label": "Requested At",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "java.time.LocalDateTime",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.time.LocalDateTime",
+                "baseType": "LocalDateTime",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "2026-01-11T10:50:00"
+              }
+            },
+            {
+              "name": "requestHash",
+              "label": "Request Hash",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "request-hash-548"
+              }
+            },
+            {
+              "name": "status",
+              "label": "Status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Constant",
+                "value": "INVALID",
+                "reason": "specification"
+              }
+            }
+          ],
+          "expectedEvents": [],
+          "expectedEventNodes": [],
+          "expectedRejection": {
+            "reason": "Status does not match the operation.",
+            "outcome": "REJECT"
+          },
+          "type": "command"
+        }
+      ],
+      "assertions": [
+        {
+          "type": "rejection",
+          "stepId": "requestDataImport",
+          "reason": "Status does not match the operation."
+        }
+      ],
+      "timeoutMs": 60000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [
+        "Explicit input source required: requestDataImport.dataImportJobId",
+        "Explicit input source required: requestDataImport.commandName",
+        "Explicit input source required: requestDataImport.resourceName",
+        "Explicit input source required: requestDataImport.originalFileName",
+        "Explicit input source required: requestDataImport.filePath",
+        "Explicit input source required: requestDataImport.requestedLocale",
+        "Explicit input source required: requestDataImport.requestedAt",
+        "Explicit input source required: requestDataImport.requestHash",
+        "Confirm prerequisites and executable assertions"
+      ],
+      "sourceScenarioId": "reject-inconsistent-status",
+      "sourceFingerprint": "113ea2ffe74fec2fdcaf7189a19da389c40f06b0d2c4e0a7e1c99f1ce5c24e8b"
+    }
+  ]
+}

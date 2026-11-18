@@ -1,0 +1,726 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "support-dictionary",
+      "title": "Register, update and archive an isolated dictionary",
+      "origin": "model",
+      "sourceScenarioId": "register-dictionary-to-archive-dictionary",
+      "sourceFingerprint": "9564a96f0b6a9a05d0cab06182161903cb95e5f47b31954dc5259e414cc8ef02",
+      "tags": [
+        "support-builtins",
+        "dictionary"
+      ],
+      "suites": [
+        "support"
+      ],
+      "status": "draft",
+      "variables": {
+        "id": {
+          "$uuid": true
+        },
+        "key": {
+          "$uuid": true
+        }
+      },
+      "prerequisites": [
+        "Authenticated Support API on a ready deployment"
+      ],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "register",
+          "type": "command",
+          "command": "RegisterDictionary",
+          "request": {
+            "endpoint": "support",
+            "path": "/dictionary/registerdictionary",
+            "body": {
+              "dictionaryId": {
+                "$ref": "variables.id"
+              },
+              "dictionaryCode": {
+                "$ref": "variables.key"
+              },
+              "dictionaryName": "Simulation dictionary"
+            }
+          }
+        },
+        {
+          "id": "registered",
+          "type": "query",
+          "query": "DictionaryCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/dictionary/dictionarycatalog",
+            "query": {
+              "dictionaryId.equals": {
+                "$ref": "variables.id"
+              }
+            },
+            "expect": {
+              "content.0.state": "Registered"
+            }
+          }
+        },
+        {
+          "id": "update",
+          "type": "command",
+          "command": "UpdateDictionary",
+          "request": {
+            "endpoint": "support",
+            "path": "/dictionary/updatedictionary",
+            "body": {
+              "dictionaryCode": {"$ref": "steps.register.body.dictionaryCode"},
+              "dictionaryId": {
+                "$ref": "variables.id"
+              },
+              "dictionaryName": "Revised simulation dictionary",
+              "description": "Updated"
+            }
+          }
+        },
+        {
+          "id": "updated",
+          "type": "query",
+          "query": "DictionaryCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/dictionary/dictionarycatalog",
+            "query": {
+              "dictionaryId.equals": {
+                "$ref": "variables.id"
+              }
+            },
+            "expect": {
+              "content.0.dictionaryName": "Revised simulation dictionary"
+            }
+          }
+        },
+        {
+          "id": "archive",
+          "type": "command",
+          "command": "ArchiveDictionary",
+          "request": {
+            "endpoint": "support",
+            "path": "/dictionary/archivedictionary",
+            "body": {
+              "dictionaryCode": {"$ref": "steps.register.body.dictionaryCode"},
+              "dictionaryId": {
+                "$ref": "variables.id"
+              },
+              "archiveReason": "Fixture complete"
+            }
+          }
+        },
+        {
+          "id": "archived",
+          "type": "query",
+          "query": "DictionaryCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/dictionary/dictionarycatalog",
+            "query": {
+              "dictionaryId.equals": {
+                "$ref": "variables.id"
+              }
+            },
+            "expect": {
+              "content.0.state": "Archived"
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "type": "query",
+          "stepId": "registered",
+          "path": "content.0.dictionaryId",
+          "operator": "equals",
+          "expected": {
+            "$ref": "variables.id"
+          }
+        },
+        {
+          "type": "query",
+          "stepId": "updated",
+          "path": "content.0.description",
+          "operator": "equals",
+          "expected": "Updated"
+        },
+        {
+          "type": "query",
+          "stepId": "archived",
+          "path": "content.0.archiveReason",
+          "operator": "equals",
+          "expected": "Fixture complete"
+        }
+      ],
+      "timeoutMs": 120000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": []
+    },
+    {
+      "id": "support-iam",
+      "title": "Grant an isolated test permission to an unassigned test role",
+      "origin": "model",
+      "sourceScenarioId": "register-role-to-grant-permission-to-role",
+      "sourceFingerprint": "8f91117bc2253c206467c22172a3058d66541f3a826cae69e4e32550e0d09c9c",
+      "tags": [
+        "support-builtins",
+        "iam"
+      ],
+      "suites": [
+        "support"
+      ],
+      "status": "draft",
+      "variables": {
+        "id": {
+          "$uuid": true
+        },
+        "key": {
+          "$uuid": true
+        }
+      },
+      "prerequisites": [
+        "Authenticated Support API on a ready deployment"
+      ],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "register",
+          "type": "command",
+          "command": "RegisterRole",
+          "request": {
+            "endpoint": "support",
+            "path": "/role/registerrole",
+            "body": {
+              "roleId": {
+                "$ref": "variables.id"
+              },
+              "roleCode": {
+                "$ref": "variables.key"
+              },
+              "roleName": "Simulation role"
+            }
+          }
+        },
+        {
+          "id": "role",
+          "type": "query",
+          "query": "RoleCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/role/rolecatalog",
+            "query": {
+              "roleId.equals": {
+                "$ref": "variables.id"
+              }
+            },
+            "expect": {
+              "content.0.roleCode": {
+                "$ref": "variables.key"
+              }
+            }
+          }
+        },
+        {
+          "id": "permission",
+          "type": "command",
+          "command": "RegisterPermission",
+          "request": {
+            "endpoint": "support",
+            "path": "/permission/registerpermission",
+            "body": {
+              "permissionId": {
+                "$uuid": true
+              },
+              "permissionCode": {
+                "$concat": [
+                  "sim:",
+                  {
+                    "$ref": "variables.key"
+                  }
+                ]
+              },
+              "permissionName": "Simulation permission"
+            }
+          }
+        },
+        {
+          "id": "available",
+          "type": "query",
+          "query": "PermissionCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/permission/permissioncatalog",
+            "query": {
+              "permissionCode.equals": {
+                "$concat": [
+                  "sim:",
+                  {
+                    "$ref": "variables.key"
+                  }
+                ]
+              }
+            },
+            "expect": {
+              "content.0.permissionName": "Simulation permission"
+            }
+          }
+        },
+        {
+          "id": "grant",
+          "type": "command",
+          "command": "GrantPermissionToRole",
+          "request": {
+            "endpoint": "support",
+            "path": "/role/grantpermissiontorole",
+            "body": {
+              "roleId": {
+                "$ref": "variables.id"
+              },
+              "roleCode": {
+                "$ref": "variables.key"
+              },
+              "permissionCodes": [
+                {
+                  "$concat": [
+                    "sim:",
+                    {
+                      "$ref": "variables.key"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "granted",
+          "type": "query",
+          "query": "RolePermissionGrantCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/rolepermissiongrant/rolepermissiongrantcatalog",
+            "query": {
+              "roleCode.equals": {
+                "$ref": "variables.key"
+              }
+            },
+            "expect": {
+              "content.0.permissionCode": {
+                "$concat": [
+                  "sim:",
+                  {
+                    "$ref": "variables.key"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "type": "query",
+          "stepId": "role",
+          "path": "content.0.roleId",
+          "operator": "equals",
+          "expected": {
+            "$ref": "variables.id"
+          }
+        },
+        {
+          "type": "query",
+          "stepId": "granted",
+          "path": "page.totalElements",
+          "operator": "equals",
+          "expected": 1
+        },
+        {
+          "type": "query",
+          "stepId": "granted",
+          "path": "content.0.roleId",
+          "operator": "equals",
+          "expected": {
+            "$ref": "variables.id"
+          }
+        }
+      ],
+      "timeoutMs": 120000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": []
+    },
+    {
+      "id": "support-file",
+      "title": "Upload real bytes, verify the stored content and discard the file",
+      "origin": "model",
+      "sourceScenarioId": "upload-file-to-discard-file",
+      "sourceFingerprint": "91c50f2946297127271154cb44edfe140dc0b9de632cae048e64c8ab60cad84c",
+      "tags": [
+        "support-builtins",
+        "file"
+      ],
+      "suites": [
+        "support"
+      ],
+      "status": "draft",
+      "variables": {
+        "id": {
+          "$uuid": true
+        },
+        "key": {
+          "$uuid": true
+        }
+      },
+      "prerequisites": [
+        "Authenticated Support API on a ready deployment"
+      ],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "upload",
+          "type": "command",
+          "command": "UploadFile",
+          "request": {
+            "endpoint": "support",
+            "path": "/uploadedfile/uploadfile/file",
+            "body": {
+              "fileId": {
+                "$ref": "variables.id"
+              },
+              "purpose": "simulation"
+            },
+            "multipart": [
+              {
+                "name": "uploadedFile",
+                "filename": "fixture.txt",
+                "text": "Simulation fixture\n"
+              }
+            ]
+          }
+        },
+        {
+          "id": "available",
+          "type": "query",
+          "query": "UploadedFileCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/uploadedfile/uploadedfilecatalog",
+            "query": {
+              "fileId.equals": {
+                "$ref": "variables.id"
+              }
+            },
+            "expect": {
+              "content.0.state": "Available"
+            }
+          }
+        },
+        {
+          "id": "download",
+          "type": "query",
+          "query": "StoredFileContent",
+          "request": {
+            "endpoint": "support",
+            "path": "/api/files",
+            "download": {
+              "url": {
+                "$concat": [
+                  {
+                    "$ref": "environment.endpoints.support"
+                  },
+                  "/api/files/",
+                  {
+                    "$ref": "variables.id"
+                  },
+                  "/content"
+                ]
+              },
+              "digest": "b1c56166acf5a5775b55fc031dcd4ba6d69d9afb0832caceb7b9592d7a99e718",
+              "maxBytes": 128
+            }
+          }
+        },
+        {
+          "id": "discard",
+          "type": "command",
+          "command": "DiscardFile",
+          "request": {
+            "endpoint": "support",
+            "path": "/uploadedfile/discardfile",
+            "body": {
+              "fileId": {
+                "$ref": "variables.id"
+              },
+              "discardReason": "Fixture complete"
+            }
+          }
+        },
+        {
+          "id": "discarded",
+          "type": "query",
+          "query": "UploadedFileCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/uploadedfile/uploadedfilecatalog",
+            "query": {
+              "fileId.equals": {
+                "$ref": "variables.id"
+              }
+            },
+            "expect": {
+              "content.0.state": "Discarded"
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "type": "query",
+          "stepId": "available",
+          "path": "content.0.originalFileName",
+          "operator": "equals",
+          "expected": "fixture.txt"
+        },
+        {
+          "type": "query",
+          "stepId": "available",
+          "path": "content.0.checksum",
+          "operator": "equals",
+          "expected": "b1c56166acf5a5775b55fc031dcd4ba6d69d9afb0832caceb7b9592d7a99e718"
+        },
+        {
+          "type": "query",
+          "stepId": "download",
+          "path": "bytes",
+          "operator": "equals",
+          "expected": 19
+        },
+        {
+          "type": "query",
+          "stepId": "discarded",
+          "path": "content.0.fileId",
+          "operator": "equals",
+          "expected": {
+            "$ref": "variables.id"
+          }
+        }
+      ],
+      "timeoutMs": 120000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": []
+    },
+    {
+      "id": "support-export",
+      "title": "Export only the selected role and column as CSV",
+      "origin": "manual",
+      "tags": [
+        "support-builtins",
+        "export"
+      ],
+      "suites": [
+        "support"
+      ],
+      "status": "draft",
+      "variables": {
+        "id": {
+          "$uuid": true
+        },
+        "key": {
+          "$uuid": true
+        }
+      },
+      "prerequisites": [
+        "Authenticated Support API on a ready deployment"
+      ],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "register",
+          "type": "command",
+          "command": "RegisterRole",
+          "request": {
+            "endpoint": "support",
+            "path": "/role/registerrole",
+            "body": {
+              "roleId": {
+                "$ref": "variables.id"
+              },
+              "roleCode": {
+                "$ref": "variables.key"
+              },
+              "roleName": "Simulation role"
+            }
+          }
+        },
+        {
+          "id": "role",
+          "type": "query",
+          "query": "RoleCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/role/rolecatalog",
+            "query": {
+              "roleId.equals": {
+                "$ref": "variables.id"
+              }
+            },
+            "expect": {
+              "content.0.roleCode": {
+                "$ref": "variables.key"
+              }
+            }
+          }
+        },
+        {
+          "id": "export",
+          "type": "command",
+          "command": "ExportRoleCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/role/rolecatalog/export",
+            "body": {
+              "columns": [
+                {
+                  "field": "roleCode",
+                  "label": "FixtureCode"
+                }
+              ]
+            },
+            "query": {
+              "roleId.equals": {
+                "$ref": "variables.id"
+              }
+            },
+            "responseType": "text",
+            "acceptStatuses": [
+              200
+            ]
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "type": "query",
+          "stepId": "export",
+          "path": "contentType",
+          "operator": "contains",
+          "expected": "text/csv"
+        },
+        {
+          "type": "query",
+          "stepId": "export",
+          "path": "text",
+          "operator": "equals",
+          "expected": {
+            "$concat": [
+              "FixtureCode\n",
+              {
+                "$ref": "variables.key"
+              },
+              "\n"
+            ]
+          }
+        }
+      ],
+      "timeoutMs": 120000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": []
+    },
+    {
+      "id": "support-invalid-import",
+      "title": "Reject an import request with an inconsistent initial status",
+      "origin": "model",
+      "sourceScenarioId": "reject-inconsistent-status",
+      "sourceFingerprint": "113ea2ffe74fec2fdcaf7189a19da389c40f06b0d2c4e0a7e1c99f1ce5c24e8b",
+      "tags": [
+        "support-builtins",
+        "invalid-import"
+      ],
+      "suites": [
+        "support"
+      ],
+      "status": "draft",
+      "variables": {
+        "id": {
+          "$uuid": true
+        },
+        "key": {
+          "$uuid": true
+        }
+      },
+      "prerequisites": [
+        "Authenticated Support API on a ready deployment"
+      ],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "invalid",
+          "type": "command",
+          "command": "RequestDataImport",
+          "request": {
+            "endpoint": "support",
+            "path": "/dataimportjob/requestdataimport",
+            "body": {
+              "dataImportJobId": {
+                "$ref": "variables.id"
+              },
+              "commandName": "SimulationFixture",
+              "resourceName": "simulation",
+              "originalFileName": "fixture.csv",
+              "filePath": "simulation-fixture.csv",
+              "requestedAt": {
+                "$now": "localDateTime"
+              },
+              "requestHash": {
+                "$ref": "variables.key"
+              },
+              "status": "INVALID"
+            },
+            "acceptStatuses": [
+              422
+            ]
+          }
+        },
+        {
+          "id": "absent",
+          "type": "query",
+          "query": "DataImportJobCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/dataimportjob/dataimportjobcatalog",
+            "query": {
+              "dataImportJobId.equals": {
+                "$ref": "variables.id"
+              }
+            },
+            "expect": {
+              "page.totalElements": 0
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "type": "query",
+          "stepId": "invalid",
+          "path": "detail",
+          "operator": "equals",
+          "expected": "Status does not match the operation."
+        },
+        {
+          "type": "query",
+          "stepId": "absent",
+          "path": "page.totalElements",
+          "operator": "equals",
+          "expected": 0
+        }
+      ],
+      "timeoutMs": 120000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": []
+    }
+  ]
+}
