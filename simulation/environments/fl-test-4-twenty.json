@@ -1,0 +1,14 @@
+{
+  "id": "fl-test-4-twenty",
+  "mode": "managed",
+  "environment": "local",
+  "target": "kubernetes",
+  "provisioner": "k3d",
+  "clusterName": "federation-learning-twenty",
+  "clusterConfig": "simulation/extensions/fixtures/k3d-twenty.yaml",
+  "registryConfig": "operations/extensions/registries-fl-test-4.yaml",
+  "workerNodes": 20,
+  "kubeconfigFile": "operations/k3s/.work/kubeconfig-federation-learning-twenty.yaml",
+  "output": "simulation/reports/environment-fl-test-4-twenty.json",
+  "timeoutMs": 900000
+}

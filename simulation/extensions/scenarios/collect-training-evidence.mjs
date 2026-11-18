@@ -59,7 +59,7 @@ const summary = {collectedAt: new Date().toISOString(), runId, environmentId: ru
         'Each participant uses the same synthetic 32-row CSV fixture; this is functional capacity evidence, not real-world model quality evidence.',
         'The configuration enables the secure-aggregation workflow, but the development engine performs FED_AVG_JSON; this run does not certify cryptographic secure aggregation.',
         'The UI globalAccuracy of 0.9 is a fixed development evaluation-adapter value, not a measured holdout accuracy.',
-        'Platform and agent ARM64 images were rebuilt for cross-round metadata and artifact URL fixes; engine, support and console images were reused.'], artifacts: verification.rounds.map(r => r.artifact)};
+        'Image versions and digests are recorded in deployment.json and pods.json; build or reuse provenance must be checked against the delivered image manifests.'], artifacts: verification.rounds.map(r => r.artifact)};
 write('summary.json', summary);
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const table = (keys, items) => `<table><thead><tr>${keys.map(k => `<th>${escape(k)}</th>`).join('')}</tr></thead><tbody>${items.map(item => `<tr>${keys.map(k => `<td>${escape(item[k])}</td>`).join('')}</tr>`).join('')}</tbody></table>`;

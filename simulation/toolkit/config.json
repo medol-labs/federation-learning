@@ -1,0 +1,6 @@
+{
+  "image": "medol/federation-learning-simulation-tool:20261118",
+  "platform": "linux/arm64",
+  "inputs": ["simulation/", "operations/", "scripts/", "dictionary-init/"],
+  "publicPolicies": ["operations/extensions/test-credentials.json"]
+}

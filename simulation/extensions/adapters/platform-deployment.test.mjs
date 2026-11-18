@@ -40,6 +40,7 @@ test('platform deploy renders Operations assets without training or K3d scripts'
         assert.match(rendered, /registry.example\/test\/federation-learning-platform@sha256:/);
         assert.match(rendered, /federation-learning-platform-local-secret/);
         assert.match(rendered, /https:\/\/gateway.example\/api\/support/);
+        assert.equal((rendered.match(/MEDOL_SECURITY_ALLOWED_ORIGINS: http:\/\/localhost:30080/g) || []).length, 2);
         assert.ok(calls.some(call => call[0] === 'docker' && call.includes('registry.example/test/engine:sklearn')));
         assert.doesNotMatch(rendered, /name: federation-learning-runtime-agent\n/);
         assert.ok(calls.every(call => ['docker', 'kubectl'].includes(call[0])));

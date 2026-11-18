@@ -2,7 +2,7 @@ import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createKubernetesDeployment} from '../../src/runtime/kubernetes-deployment.mjs';
-import {createParticipantSlots} from './participant-slots.mjs';
+import {createParticipantSlots, participantSlot} from './participant-slots.mjs';
 import {deploymentCatalog} from './service-catalog.mjs';
 import {resolveImageConfig} from '../../../operations/images/image-config.mjs';
 
@@ -15,7 +15,13 @@ export function createPlatformDeployment(config, dependencies = {}) {
         if (model.applications?.find(app => app.name === name)?.servicePort !== port) throw new Error('Deployment package service port differs from Operations: ' + name);
     }
     const imageConfig = resolveImageConfig(resolve(root, 'operations/images', environment), {prefix: config.imagePrefix, version: config.imageVersion, mode: 'registry'});
-    const settings = {...config, environment, namespace: config.namespace || bundle.namespace, imageVersion: imageConfig.version};
+    const namespace = config.namespace || bundle.namespace;
+    const origins = [new URL(config.gatewayUrl).origin];
+    if (config.participantAccess) for (let slot = 1; slot <= (config.participantSlots || 0); slot++) {
+        origins.push(participantSlot(namespace, slot, config.participantAccess).consoleUrl);
+    }
+    const settings = {...config, environment, namespace, imageVersion: imageConfig.version,
+        bindings: {...config.bindings, browserAllowedOrigins: [...new Set(origins)].join(',')}};
     const adapter = createKubernetesDeployment(bundle, settings, {root, catalog: deploymentCatalog(), ...dependencies});
     const slots = createParticipantSlots({root, environment, namespace: settings.namespace,
         kubeconfigFile: resolve(root, config.kubeconfigFile), count: config.participantSlots || 0,

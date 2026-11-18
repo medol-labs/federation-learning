@@ -1,0 +1,9 @@
+{
+  "image": "medol/simulation-tool:1.0.0",
+  "platform": "linux/arm64",
+  "inputs": [
+    "simulation/",
+    "operations/"
+  ],
+  "publicPolicies": []
+}

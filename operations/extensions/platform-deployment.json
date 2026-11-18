@@ -137,10 +137,19 @@
       "patch": {
         "apiVersion": "v1",
         "kind": "ConfigMap",
+        "metadata": {"name": "federation-learning-support-{{environment}}-config"},
+        "data": {"MEDOL_SECURITY_ALLOWED_ORIGINS": "{{browserAllowedOrigins}}"}
+      }
+    },
+    {
+      "patch": {
+        "apiVersion": "v1",
+        "kind": "ConfigMap",
         "metadata": {
           "name": "federation-learning-platform-{{environment}}-config"
         },
         "data": {
+          "MEDOL_SECURITY_ALLOWED_ORIGINS": "{{browserAllowedOrigins}}",
           "PLATFORM_RUNTIME_K3S_AGENT_SECURITY_SECRET_NAME": "federation-learning-runtime-agent-{{environment}}-secret"
         }
       }
