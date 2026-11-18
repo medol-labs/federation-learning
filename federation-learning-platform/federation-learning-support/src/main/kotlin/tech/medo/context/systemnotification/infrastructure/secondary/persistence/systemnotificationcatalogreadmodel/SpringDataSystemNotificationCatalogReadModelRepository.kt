@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 interface SpringDataSystemNotificationCatalogReadModelRepository : JpaRepository<SystemNotificationCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<SystemNotificationCatalogReadModelEntity> {
-
+    fun findAllByRecipientUserId(recipientUserId: String): List<SystemNotificationCatalogReadModelEntity>
 
 
 }

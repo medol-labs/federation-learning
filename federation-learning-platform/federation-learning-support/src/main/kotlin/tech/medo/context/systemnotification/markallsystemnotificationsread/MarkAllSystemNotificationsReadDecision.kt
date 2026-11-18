@@ -4,17 +4,17 @@ import tech.medo.systemnotification.markallsystemnotificationsread.MarkAllSystem
 
 
 import tech.medo.systemnotification.events.AllSystemNotificationsReadEvent
-import tech.medo.systemnotification.systemnotification.SystemNotificationState
+import tech.medo.systemnotification.recipientnotificationacknowledgement.RecipientNotificationAcknowledgementState
 
 
 
 
 
 interface MarkAllSystemNotificationsReadDecision {
-    fun decide(command: MarkAllSystemNotificationsReadCommand, state: SystemNotificationState): List<Any> {
+    fun decide(command: MarkAllSystemNotificationsReadCommand, state: RecipientNotificationAcknowledgementState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(
-            AllSystemNotificationsReadEvent(recipientUserId = command.recipientUserId, readAt = command.readAt, notificationId = command.notificationId)
+            AllSystemNotificationsReadEvent(recipientUserId = command.recipientUserId, readAt = command.readAt)
         )
     }
 }

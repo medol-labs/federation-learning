@@ -108,6 +108,7 @@ interface SystemNotificationCatalogReadModelRepository {
     fun findById(id: UUID): SystemNotificationCatalogReadModel?
     fun findByIdWithAccessPolicy(id: UUID): SystemNotificationCatalogReadModel?
     fun findProjectionById(id: UUID): SystemNotificationCatalogReadModelProjection?
+    fun findProjectionsByRecipientUserId(recipientUserId: String): List<SystemNotificationCatalogReadModelProjection>
     fun save(projection: SystemNotificationCatalogReadModelProjection)
 }
 

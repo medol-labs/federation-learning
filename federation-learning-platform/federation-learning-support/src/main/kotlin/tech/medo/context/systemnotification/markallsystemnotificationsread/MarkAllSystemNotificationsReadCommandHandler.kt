@@ -8,7 +8,7 @@ import tech.medo.systemnotification.markallsystemnotificationsread.MarkAllSystem
 
 
 
-import tech.medo.systemnotification.systemnotification.SystemNotificationState
+import tech.medo.systemnotification.recipientnotificationacknowledgement.RecipientNotificationAcknowledgementState
 
 
 
@@ -19,7 +19,7 @@ class MarkAllSystemNotificationsReadCommandHandler(
     @CommandHandler
     fun handle(
         command: MarkAllSystemNotificationsReadCommand,
-        @InjectEntity(idProperty = "notificationId") state: SystemNotificationState,
+        @InjectEntity(idProperty = "recipientUserId") state: RecipientNotificationAcknowledgementState,
         eventAppender: EventAppender
     ) {
 

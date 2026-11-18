@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture
 
 @CrossOrigin
 @RestController
-@RequestMapping("/systemnotification")
+@RequestMapping("/recipientnotificationacknowledgement")
 class MarkAllSystemNotificationsReadResource(
     private val commandGateway: CommandGateway
 ) {

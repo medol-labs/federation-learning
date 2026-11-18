@@ -8,7 +8,6 @@ import org.axonframework.messaging.eventstreaming.EventCriteria
 import org.axonframework.messaging.eventstreaming.Tag
 import tech.medo.systemnotification.events.SystemNotificationPublishedEvent
 import tech.medo.systemnotification.events.SystemNotificationReadEvent
-import tech.medo.systemnotification.events.AllSystemNotificationsReadEvent
 import tech.medo.systemnotification.domain.states.SystemNotificationStateEnum
 
 import java.util.UUID;
@@ -65,12 +64,6 @@ class SystemNotificationState @EntityCreator constructor() {
     fun evolve(event: SystemNotificationReadEvent): SystemNotificationState = apply {
         currentState = SystemNotificationStateEnum.Read
         notificationId = event.notificationId
-        recipientUserId = event.recipientUserId
-        readAt = event.readAt
-    }
-
-    @EventSourcingHandler
-    fun evolve(event: AllSystemNotificationsReadEvent): SystemNotificationState = apply {
         recipientUserId = event.recipientUserId
         readAt = event.readAt
     }

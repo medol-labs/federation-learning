@@ -84,11 +84,17 @@ open class DefaultSystemNotificationCatalogReadModelProjectionUpdater(
 
     }
 
-    open override fun update(
-        event: AllSystemNotificationsReadEvent,
-        message: EventMessage
-    ) {
-        // Skipped: AllSystemNotificationsReadEvent does not provide enough key fields to locate SystemNotificationCatalogReadModelProjection.
+    @Transactional
+    open override fun update(event: AllSystemNotificationsReadEvent, message: EventMessage) {
+        repository.findProjectionsByRecipientUserId(event.recipientUserId).forEach { entity ->
+            if (entity.state == SystemNotificationStateEnum.Unread) {
+                entity.state = SystemNotificationStateEnum.Read
+                entity.readAt = event.readAt
+            ProjectionMetadata.assign(entity, message)
+                repository.save(entity)
+
+            }
+        }
     }
 
 }

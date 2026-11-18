@@ -1,0 +1,1072 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "publish-system-notification-to-mark-system-notification-read",
+      "title": "Publish System Notification To Mark System Notification Read",
+      "status": "draft",
+      "origin": "model",
+      "prerequisites": [],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "publishSystemNotification",
+          "title": "Publish System Notification",
+          "slice": "Publish System Notification",
+          "context": "SystemNotification",
+          "command": "PublishSystemNotification",
+          "commandTitle": "Publish System Notification",
+          "commandClassName": "PublishSystemNotificationCommand",
+          "commandFqcn": "tech.medo.systemnotification.publishsystemnotification.PublishSystemNotificationCommand",
+          "http": {
+            "method": "POST",
+            "path": "/systemnotification/publishsystemnotification",
+            "conceptRoute": "systemnotification",
+            "commandRoute": "publishsystemnotification"
+          },
+          "execution": "COMMAND",
+          "inputs": [
+            {
+              "name": "notificationId",
+              "label": "Notification Id",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": true,
+              "kotlinType": "java.util.UUID",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.util.UUID",
+                "baseType": "UUID",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Generated",
+                "previewValue": "d6e2f52f-de3f-4854-b53f-a7996337b376"
+              }
+            },
+            {
+              "name": "recipientUserId",
+              "label": "Recipient User Id",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "recipient-user-id-805"
+              }
+            },
+            {
+              "name": "recipientRole",
+              "label": "Recipient Role",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "recipient-role-395"
+              }
+            },
+            {
+              "name": "category",
+              "label": "Category",
+              "type": "NotificationCategory",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "tech.medo.systemnotification.domain.types.NotificationCategory",
+              "typeInfo": {
+                "kind": "enum",
+                "kotlinType": "tech.medo.systemnotification.domain.types.NotificationCategory",
+                "typeName": "NotificationCategory",
+                "fqcn": "tech.medo.systemnotification.domain.types.NotificationCategory",
+                "values": [
+                  "SYSTEM",
+                  "DATA_EXCHANGE",
+                  "SECURITY"
+                ],
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "category-182"
+              }
+            },
+            {
+              "name": "severity",
+              "label": "Severity",
+              "type": "NotificationSeverity",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "tech.medo.systemnotification.domain.types.NotificationSeverity",
+              "typeInfo": {
+                "kind": "enum",
+                "kotlinType": "tech.medo.systemnotification.domain.types.NotificationSeverity",
+                "typeName": "NotificationSeverity",
+                "fqcn": "tech.medo.systemnotification.domain.types.NotificationSeverity",
+                "values": [
+                  "INFO",
+                  "SUCCESS",
+                  "WARNING",
+                  "ERROR"
+                ],
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "severity-930"
+              }
+            },
+            {
+              "name": "messageKey",
+              "label": "Message Key",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "message-key-873"
+              }
+            },
+            {
+              "name": "messageArgsJson",
+              "label": "Message Args Json",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "message-args-json-563"
+              }
+            },
+            {
+              "name": "fallbackTitle",
+              "label": "Fallback Title",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "fallback-title-722"
+              }
+            },
+            {
+              "name": "fallbackBody",
+              "label": "Fallback Body",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "fallback-body-363"
+              }
+            },
+            {
+              "name": "targetType",
+              "label": "Target Type",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "target-type-117"
+              }
+            },
+            {
+              "name": "targetId",
+              "label": "Target Id",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "target-id-933"
+              }
+            },
+            {
+              "name": "targetRoute",
+              "label": "Target Route",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "target-route-093"
+              }
+            },
+            {
+              "name": "toastPolicy",
+              "label": "Toast Policy",
+              "type": "NotificationToastPolicy",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "tech.medo.systemnotification.domain.types.NotificationToastPolicy",
+              "typeInfo": {
+                "kind": "enum",
+                "kotlinType": "tech.medo.systemnotification.domain.types.NotificationToastPolicy",
+                "typeName": "NotificationToastPolicy",
+                "fqcn": "tech.medo.systemnotification.domain.types.NotificationToastPolicy",
+                "values": [
+                  "NONE",
+                  "DEFAULT",
+                  "IMPORTANT"
+                ],
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "toast-policy-422"
+              }
+            },
+            {
+              "name": "publishedAt",
+              "label": "Published At",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "java.time.LocalDateTime",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.time.LocalDateTime",
+                "baseType": "LocalDateTime",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "2026-01-02T10:45:00"
+              }
+            },
+            {
+              "name": "status",
+              "label": "Status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "status-214"
+              }
+            }
+          ],
+          "expectedEvents": [
+            {
+              "name": "SystemNotificationPublished",
+              "title": "System Notification Published",
+              "className": "SystemNotificationPublishedEvent",
+              "fqcn": "tech.medo.systemnotification.events.SystemNotificationPublishedEvent",
+              "fields": [
+                {
+                  "name": "notificationId",
+                  "type": "UUID"
+                },
+                {
+                  "name": "recipientUserId",
+                  "type": "String"
+                },
+                {
+                  "name": "recipientRole",
+                  "type": "String"
+                },
+                {
+                  "name": "category",
+                  "type": "NotificationCategory"
+                },
+                {
+                  "name": "severity",
+                  "type": "NotificationSeverity"
+                },
+                {
+                  "name": "messageKey",
+                  "type": "String"
+                },
+                {
+                  "name": "messageArgsJson",
+                  "type": "Text"
+                },
+                {
+                  "name": "fallbackTitle",
+                  "type": "String"
+                },
+                {
+                  "name": "fallbackBody",
+                  "type": "Text"
+                },
+                {
+                  "name": "targetType",
+                  "type": "String"
+                },
+                {
+                  "name": "targetId",
+                  "type": "String"
+                },
+                {
+                  "name": "targetRoute",
+                  "type": "String"
+                },
+                {
+                  "name": "toastPolicy",
+                  "type": "NotificationToastPolicy"
+                },
+                {
+                  "name": "publishedAt",
+                  "type": "DateTime"
+                },
+                {
+                  "name": "status",
+                  "type": "String"
+                }
+              ]
+            }
+          ],
+          "type": "command"
+        },
+        {
+          "id": "markSystemNotificationRead",
+          "title": "Mark System Notification Read",
+          "slice": "Mark System Notification Read",
+          "context": "SystemNotification",
+          "command": "MarkSystemNotificationRead",
+          "commandTitle": "Mark System Notification Read",
+          "commandClassName": "MarkSystemNotificationReadCommand",
+          "commandFqcn": "tech.medo.systemnotification.marksystemnotificationread.MarkSystemNotificationReadCommand",
+          "http": {
+            "method": "POST",
+            "path": "/systemnotification/marksystemnotificationread",
+            "conceptRoute": "systemnotification",
+            "commandRoute": "marksystemnotificationread"
+          },
+          "execution": "COMMAND",
+          "triggeredBy": {
+            "event": "SystemNotificationPublished",
+            "eventTitle": "System Notification Published",
+            "reaction": "System Notification Published To Mark System Notification Read",
+            "reactionType": "FLOW"
+          },
+          "inputs": [
+            {
+              "name": "notificationId",
+              "label": "Notification Id",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "kotlinType": "java.util.UUID",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.util.UUID",
+                "baseType": "UUID",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "6c129d87-6443-431c-a743-e4b1753bd72e"
+              }
+            },
+            {
+              "name": "recipientUserId",
+              "label": "Recipient User Id",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "recipient-user-id-774"
+              }
+            },
+            {
+              "name": "readAt",
+              "label": "Read At",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "java.time.LocalDateTime",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.time.LocalDateTime",
+                "baseType": "LocalDateTime",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "2026-01-28T10:51:00"
+              }
+            }
+          ],
+          "expectedEvents": [
+            {
+              "name": "SystemNotificationRead",
+              "title": "System Notification Read",
+              "className": "SystemNotificationReadEvent",
+              "fqcn": "tech.medo.systemnotification.events.SystemNotificationReadEvent",
+              "fields": [
+                {
+                  "name": "notificationId",
+                  "type": "UUID"
+                },
+                {
+                  "name": "recipientUserId",
+                  "type": "String"
+                },
+                {
+                  "name": "readAt",
+                  "type": "DateTime"
+                }
+              ]
+            }
+          ],
+          "type": "command"
+        }
+      ],
+      "assertions": [
+        {
+          "type": "event",
+          "stepId": "publishSystemNotification",
+          "event": {
+            "name": "SystemNotificationPublished",
+            "title": "System Notification Published",
+            "className": "SystemNotificationPublishedEvent",
+            "fqcn": "tech.medo.systemnotification.events.SystemNotificationPublishedEvent",
+            "fields": [
+              {
+                "name": "notificationId",
+                "type": "UUID"
+              },
+              {
+                "name": "recipientUserId",
+                "type": "String"
+              },
+              {
+                "name": "recipientRole",
+                "type": "String"
+              },
+              {
+                "name": "category",
+                "type": "NotificationCategory"
+              },
+              {
+                "name": "severity",
+                "type": "NotificationSeverity"
+              },
+              {
+                "name": "messageKey",
+                "type": "String"
+              },
+              {
+                "name": "messageArgsJson",
+                "type": "Text"
+              },
+              {
+                "name": "fallbackTitle",
+                "type": "String"
+              },
+              {
+                "name": "fallbackBody",
+                "type": "Text"
+              },
+              {
+                "name": "targetType",
+                "type": "String"
+              },
+              {
+                "name": "targetId",
+                "type": "String"
+              },
+              {
+                "name": "targetRoute",
+                "type": "String"
+              },
+              {
+                "name": "toastPolicy",
+                "type": "NotificationToastPolicy"
+              },
+              {
+                "name": "publishedAt",
+                "type": "DateTime"
+              },
+              {
+                "name": "status",
+                "type": "String"
+              }
+            ]
+          },
+          "basis": "flow-candidate"
+        },
+        {
+          "type": "event",
+          "stepId": "markSystemNotificationRead",
+          "event": {
+            "name": "SystemNotificationRead",
+            "title": "System Notification Read",
+            "className": "SystemNotificationReadEvent",
+            "fqcn": "tech.medo.systemnotification.events.SystemNotificationReadEvent",
+            "fields": [
+              {
+                "name": "notificationId",
+                "type": "UUID"
+              },
+              {
+                "name": "recipientUserId",
+                "type": "String"
+              },
+              {
+                "name": "readAt",
+                "type": "DateTime"
+              }
+            ]
+          },
+          "basis": "flow-candidate"
+        }
+      ],
+      "timeoutMs": 60000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [
+        "Explicit input source required: publishSystemNotification.recipientUserId",
+        "Explicit input source required: publishSystemNotification.recipientRole",
+        "Explicit input source required: publishSystemNotification.category",
+        "Explicit input source required: publishSystemNotification.severity",
+        "Explicit input source required: publishSystemNotification.messageKey",
+        "Explicit input source required: publishSystemNotification.messageArgsJson",
+        "Explicit input source required: publishSystemNotification.fallbackTitle",
+        "Explicit input source required: publishSystemNotification.fallbackBody",
+        "Explicit input source required: publishSystemNotification.targetType",
+        "Explicit input source required: publishSystemNotification.targetId",
+        "Explicit input source required: publishSystemNotification.targetRoute",
+        "Explicit input source required: publishSystemNotification.toastPolicy",
+        "Explicit input source required: publishSystemNotification.publishedAt",
+        "Explicit input source required: publishSystemNotification.status",
+        "Explicit input source required: markSystemNotificationRead.notificationId",
+        "Explicit input source required: markSystemNotificationRead.recipientUserId",
+        "Explicit input source required: markSystemNotificationRead.readAt",
+        "Confirm prerequisites and executable assertions"
+      ],
+      "sourceScenarioId": "publish-system-notification-to-mark-system-notification-read",
+      "sourceFingerprint": "6693d66eabcfb4bf067f4eef3e65abff65dbfd7a880f7a874a986f5896f3912d"
+    },
+    {
+      "id": "reject-inconsistent-notification-status",
+      "title": "Reject Inconsistent Notification Status",
+      "status": "draft",
+      "origin": "model",
+      "prerequisites": [],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "publishSystemNotification",
+          "title": "Publish System Notification",
+          "slice": "Publish System Notification",
+          "context": "SystemNotification",
+          "command": "PublishSystemNotification",
+          "commandTitle": "Publish System Notification",
+          "commandClassName": "PublishSystemNotificationCommand",
+          "commandFqcn": "tech.medo.systemnotification.publishsystemnotification.PublishSystemNotificationCommand",
+          "http": {
+            "method": "POST",
+            "path": "/systemnotification/publishsystemnotification",
+            "conceptRoute": "systemnotification",
+            "commandRoute": "publishsystemnotification"
+          },
+          "execution": "COMMAND",
+          "inputs": [
+            {
+              "name": "notificationId",
+              "label": "Notification Id",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": true,
+              "kotlinType": "java.util.UUID",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.util.UUID",
+                "baseType": "UUID",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Generated",
+                "previewValue": "d6e2f52f-de3f-4854-b53f-a7996337b376"
+              }
+            },
+            {
+              "name": "recipientUserId",
+              "label": "Recipient User Id",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "recipient-user-id-805"
+              }
+            },
+            {
+              "name": "recipientRole",
+              "label": "Recipient Role",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "recipient-role-395"
+              }
+            },
+            {
+              "name": "category",
+              "label": "Category",
+              "type": "NotificationCategory",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "tech.medo.systemnotification.domain.types.NotificationCategory",
+              "typeInfo": {
+                "kind": "enum",
+                "kotlinType": "tech.medo.systemnotification.domain.types.NotificationCategory",
+                "typeName": "NotificationCategory",
+                "fqcn": "tech.medo.systemnotification.domain.types.NotificationCategory",
+                "values": [
+                  "SYSTEM",
+                  "DATA_EXCHANGE",
+                  "SECURITY"
+                ],
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "category-182"
+              }
+            },
+            {
+              "name": "severity",
+              "label": "Severity",
+              "type": "NotificationSeverity",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "tech.medo.systemnotification.domain.types.NotificationSeverity",
+              "typeInfo": {
+                "kind": "enum",
+                "kotlinType": "tech.medo.systemnotification.domain.types.NotificationSeverity",
+                "typeName": "NotificationSeverity",
+                "fqcn": "tech.medo.systemnotification.domain.types.NotificationSeverity",
+                "values": [
+                  "INFO",
+                  "SUCCESS",
+                  "WARNING",
+                  "ERROR"
+                ],
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "severity-930"
+              }
+            },
+            {
+              "name": "messageKey",
+              "label": "Message Key",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "message-key-873"
+              }
+            },
+            {
+              "name": "messageArgsJson",
+              "label": "Message Args Json",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "message-args-json-563"
+              }
+            },
+            {
+              "name": "fallbackTitle",
+              "label": "Fallback Title",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "fallback-title-722"
+              }
+            },
+            {
+              "name": "fallbackBody",
+              "label": "Fallback Body",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "fallback-body-363"
+              }
+            },
+            {
+              "name": "targetType",
+              "label": "Target Type",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "target-type-117"
+              }
+            },
+            {
+              "name": "targetId",
+              "label": "Target Id",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "target-id-933"
+              }
+            },
+            {
+              "name": "targetRoute",
+              "label": "Target Route",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String?",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String?",
+                "baseType": "String",
+                "list": false,
+                "optional": true
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "target-route-093"
+              }
+            },
+            {
+              "name": "toastPolicy",
+              "label": "Toast Policy",
+              "type": "NotificationToastPolicy",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "tech.medo.systemnotification.domain.types.NotificationToastPolicy",
+              "typeInfo": {
+                "kind": "enum",
+                "kotlinType": "tech.medo.systemnotification.domain.types.NotificationToastPolicy",
+                "typeName": "NotificationToastPolicy",
+                "fqcn": "tech.medo.systemnotification.domain.types.NotificationToastPolicy",
+                "values": [
+                  "NONE",
+                  "DEFAULT",
+                  "IMPORTANT"
+                ],
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "toast-policy-422"
+              }
+            },
+            {
+              "name": "publishedAt",
+              "label": "Published At",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "java.time.LocalDateTime",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "java.time.LocalDateTime",
+                "baseType": "LocalDateTime",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Unresolved",
+                "previewValue": "2026-01-02T10:45:00"
+              }
+            },
+            {
+              "name": "status",
+              "label": "Status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "kotlinType": "String",
+              "typeInfo": {
+                "kind": "scalar",
+                "kotlinType": "String",
+                "baseType": "String",
+                "list": false,
+                "optional": false
+              },
+              "source": {
+                "kind": "Constant",
+                "value": "READ",
+                "reason": "specification"
+              }
+            }
+          ],
+          "expectedEvents": [],
+          "expectedEventNodes": [],
+          "expectedRejection": {
+            "reason": "New notifications must be unread.",
+            "outcome": "REJECT"
+          },
+          "type": "command"
+        }
+      ],
+      "assertions": [
+        {
+          "type": "rejection",
+          "stepId": "publishSystemNotification",
+          "reason": "New notifications must be unread."
+        }
+      ],
+      "timeoutMs": 60000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [
+        "Explicit input source required: publishSystemNotification.recipientUserId",
+        "Explicit input source required: publishSystemNotification.recipientRole",
+        "Explicit input source required: publishSystemNotification.category",
+        "Explicit input source required: publishSystemNotification.severity",
+        "Explicit input source required: publishSystemNotification.messageKey",
+        "Explicit input source required: publishSystemNotification.messageArgsJson",
+        "Explicit input source required: publishSystemNotification.fallbackTitle",
+        "Explicit input source required: publishSystemNotification.fallbackBody",
+        "Explicit input source required: publishSystemNotification.targetType",
+        "Explicit input source required: publishSystemNotification.targetId",
+        "Explicit input source required: publishSystemNotification.targetRoute",
+        "Explicit input source required: publishSystemNotification.toastPolicy",
+        "Explicit input source required: publishSystemNotification.publishedAt",
+        "Confirm prerequisites and executable assertions"
+      ],
+      "sourceScenarioId": "reject-inconsistent-notification-status",
+      "sourceFingerprint": "c80bdfccac1b687692c8dd926fb362886bb57e775ec7b2d43755e69cbcc04f11"
+    }
+  ]
+}

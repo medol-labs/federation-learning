@@ -44,6 +44,9 @@ class JpaSystemNotificationCatalogReadModelRepository(
     override fun findProjectionById(id: UUID): SystemNotificationCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
 
+    override fun findProjectionsByRecipientUserId(recipientUserId: String): List<SystemNotificationCatalogReadModelProjection> =
+        jpaRepository.findAllByRecipientUserId(recipientUserId).map { it.toProjection() }
+
     override fun save(projection: SystemNotificationCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
