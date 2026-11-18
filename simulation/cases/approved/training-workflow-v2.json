@@ -602,9 +602,22 @@
       "timeoutMs": 7200000,
       "cleanupPolicy": "retain",
       "reviewIssues": [],
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        },
+        {
+          "path": "endpoints.platform"
+        },
+        {
+          "path": "participantDeployments",
+          "minItems": 2,
+          "maxItems": 2
+        }
+      ],
       "approval": {
-        "reviewer": "codex-configuration-review",
-        "fingerprint": "e3ea5eba0f01163fa533f9854857bd421c08ad620edad112e5add384e2bff2a3"
+        "reviewer": "simulation-catalog-review",
+        "fingerprint": "14372fbb1c76b85ce89119034d87b7349297f5d3fb06bcba05f40321d5bc8db7"
       }
     }
   ]

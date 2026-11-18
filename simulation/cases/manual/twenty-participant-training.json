@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "cases": [
     {
-      "id": "participants-complete-training",
+      "id": "twenty-participants-complete-training",
       "title": "20 participants complete 2 linked rounds with verified model artifacts",
       "origin": "manual",
       "status": "draft",
@@ -601,7 +601,20 @@
       ],
       "timeoutMs": 7200000,
       "cleanupPolicy": "retain",
-      "reviewIssues": []
+      "reviewIssues": [],
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        },
+        {
+          "path": "endpoints.platform"
+        },
+        {
+          "path": "participantDeployments",
+          "minItems": 20,
+          "maxItems": 20
+        }
+      ]
     }
   ]
 }

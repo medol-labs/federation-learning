@@ -6,8 +6,7 @@ import {createHash, randomUUID} from 'node:crypto';
 import {createComposeDeployment} from '../../src/runtime/compose-deployment.mjs';
 import {executeDeployment} from '../../src/runtime/deployment.mjs';
 import {prepareTestCredentials} from '../../src/runtime/test-credentials.mjs';
-import {checkCases, checkApproval} from '../../src/cases.mjs';
-import {validateBaselineManifest} from '../../src/data-plan.mjs';
+import {prepareWithoutFixtures} from '../../src/workflow-tasks.mjs';
 
 import {bootstrapParticipant} from './participant-bootstrap.mjs';
 
@@ -44,7 +43,8 @@ function client(environment, root, directory) {
 }
 
 export async function prepare({environment, baseline, cases}, {root, directory, runId}, connect = client) {
-  checkCases(cases); checkApproval(cases); validateBaselineManifest(baseline, environment);
+  const ready = prepareWithoutFixtures(environment, baseline, cases);
+  if (ready) return ready;
   const api = connect(environment, root, directory), participants = [], trainingRunKey = `compose-${runId}`;
   const overrideFile = resolve(root, 'simulation/compose/enrollment.private.json');
   const override = existsSync(overrideFile) ? JSON.parse(readFileSync(overrideFile)) : {services: {}};

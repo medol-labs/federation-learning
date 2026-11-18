@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "scenarioFiles": [
+    "training-workflow-v2.json",
+    "twenty-participant-training-workflow-v2.json",
+    "system-notification.json",
+    "support-builtins.json"
+  ]
+}

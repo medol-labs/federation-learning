@@ -601,7 +601,20 @@
       ],
       "timeoutMs": 7200000,
       "cleanupPolicy": "retain",
-      "reviewIssues": []
+      "reviewIssues": [],
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        },
+        {
+          "path": "endpoints.platform"
+        },
+        {
+          "path": "participantDeployments",
+          "minItems": 2,
+          "maxItems": 2
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,4 @@
+{
+  "participants-complete-training": "simulation/extensions/scenarios/two-participant-training.json",
+  "twenty-participants-complete-training": "simulation/extensions/scenarios/twenty-participant-training.json"
+}

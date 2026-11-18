@@ -4,7 +4,7 @@ export async function resolveTrainingEvidence({test, plan, data, deployment}, qu
   const fingerprint = createHash('sha256').update(JSON.stringify(plan)).digest('hex');
   if (test.status !== 'passed' || test.planFingerprint !== fingerprint || data.casePlanFingerprint !== fingerprint ||
       data.deploymentId !== deployment.deploymentId) throw new Error('Report, plan and deployment bindings differ');
-  const cases = test.cases.filter(c => c.id === 'participants-complete-training' && c.status === 'passed');
+  const cases = test.cases.filter(c => ['participants-complete-training', 'twenty-participants-complete-training'].includes(c.id) && c.status === 'passed');
   const items = cases.length === 1 && cases[0].steps.find(s => s.id === 'rounds' && s.status === 'passed')?.output?.items;
   const participants = data.records[0]?.participants;
   if (!items?.length || !participants?.length || new Set(participants.map(p=>p.runtimeId)).size !== participants.length) throw new Error('Incomplete training evidence');

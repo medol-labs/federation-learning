@@ -28,8 +28,9 @@
       "export": "select",
       "inputs": {
         "library": {
-          "path": "simulation/cases/approved/training-workflow-v2.json"
+          "path": "simulation/cases/catalog.json"
         },
+        "environment": {"artifact": "deployment.json", "env": "MEDOL_ENVIRONMENT_MANIFEST", "status": "ready", "binding": "deployment"},
         "selection": {
           "path": "simulation/pipelines/case-selection.json",
           "env": "MEDOL_CASE_SELECTION"
@@ -71,10 +72,12 @@
       "inputs": {
         "environment": {
           "artifact": "deployment.json",
+          "env": "MEDOL_ENVIRONMENT_MANIFEST",
           "binding": "deployment"
         },
         "baseline": {
           "artifact": "baseline.json",
+          "env": "MEDOL_BASELINE_DATA_MANIFEST",
           "binding": "baseline"
         },
         "cases": {
@@ -91,10 +94,12 @@
       "inputs": {
         "environment": {
           "artifact": "deployment.json",
+          "env": "MEDOL_ENVIRONMENT_MANIFEST",
           "binding": "deployment"
         },
         "data": {
           "artifact": "data.json",
+          "env": "MEDOL_DATA_MANIFEST",
           "binding": "data"
         },
         "cases": {

@@ -1,0 +1,891 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "system-notification-publish-and-read",
+      "title": "Published notification appears unread and single acknowledgement updates catalog and summary",
+      "origin": "model",
+      "sourceScenarioId": "publish-system-notification-to-mark-system-notification-read",
+      "sourceFingerprint": "6693d66eabcfb4bf067f4eef3e65abff65dbfd7a880f7a874a986f5896f3912d",
+      "status": "approved",
+      "tags": [
+        "system-notification",
+        "smoke"
+      ],
+      "suites": [
+        "support"
+      ],
+      "prerequisites": [
+        "Ready support deployment with notification commands and projections",
+        "FL_API_TOKEN grants notification publish, acknowledge and query permissions"
+      ],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "publish",
+          "type": "command",
+          "command": "PublishSystemNotification",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/publishsystemnotification",
+            "body": {
+              "notificationId": {
+                "$uuid": true
+              },
+              "publishedAt": {
+                "$now": "localDateTime"
+              },
+              "category": "SYSTEM",
+              "severity": "ERROR",
+              "messageKey": "simulation.notification.test",
+              "fallbackTitle": "Simulation notification",
+              "fallbackBody": "Notification lifecycle verification",
+              "toastPolicy": "IMPORTANT",
+              "status": "UNREAD",
+              "recipientUserId": {
+                "$ref": "variables.owner"
+              }
+            }
+          }
+        },
+        {
+          "id": "unread",
+          "type": "query",
+          "query": "SystemNotificationCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationcatalog",
+            "query": {
+              "page": 0,
+              "size": 20,
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            },
+            "expect": {
+              "page.totalElements": 1,
+              "content.0.state": "Unread"
+            }
+          }
+        },
+        {
+          "id": "summary-unread",
+          "type": "query",
+          "query": "SystemNotificationSummary",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationsummary",
+            "query": {
+              "page": 0,
+              "size": 20,
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            },
+            "expect": {
+              "content.0.unreadCount": 1,
+              "content.0.hasUnreadError": true
+            }
+          }
+        },
+        {
+          "id": "read",
+          "type": "command",
+          "command": "MarkSystemNotificationRead",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/marksystemnotificationread",
+            "body": {
+              "readAt": {
+                "$now": "localDateTime"
+              },
+              "notificationId": {
+                "$ref": "steps.publish.body.notificationId"
+              },
+              "recipientUserId": {
+                "$ref": "steps.publish.body.recipientUserId"
+              }
+            }
+          }
+        },
+        {
+          "id": "read-catalog",
+          "type": "query",
+          "query": "SystemNotificationCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationcatalog",
+            "query": {
+              "page": 0,
+              "size": 20,
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            },
+            "expect": {
+              "page.totalElements": 1,
+              "content.0.state": "Read"
+            }
+          }
+        },
+        {
+          "id": "summary-read",
+          "type": "query",
+          "query": "SystemNotificationSummary",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationsummary",
+            "query": {
+              "page": 0,
+              "size": 20,
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            },
+            "expect": {
+              "content.0.unreadCount": 0,
+              "content.0.hasUnreadError": false
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "type": "query",
+          "stepId": "unread",
+          "path": "content.0.notificationId",
+          "operator": "equals",
+          "expected": {
+            "$ref": "steps.publish.body.notificationId"
+          }
+        },
+        {
+          "type": "query",
+          "stepId": "unread",
+          "path": "content.0.fallbackTitle",
+          "operator": "equals",
+          "expected": "Simulation notification"
+        },
+        {
+          "type": "query",
+          "stepId": "summary-unread",
+          "path": "content.0.unreadCount",
+          "operator": "equals",
+          "expected": 1
+        },
+        {
+          "type": "query",
+          "stepId": "read-catalog",
+          "path": "content.0.readAt",
+          "operator": "exists"
+        },
+        {
+          "type": "query",
+          "stepId": "read-catalog",
+          "path": "content.0.state",
+          "operator": "equals",
+          "expected": "Read"
+        },
+        {
+          "type": "query",
+          "stepId": "summary-read",
+          "path": "content.0.unreadCount",
+          "operator": "equals",
+          "expected": 0
+        }
+      ],
+      "timeoutMs": 180000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [],
+      "variables": {
+        "owner": {
+          "$uuid": true
+        },
+        "other": {
+          "$uuid": true
+        }
+      },
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        }
+      ],
+      "approval": {
+        "reviewer": "simulation-catalog-review",
+        "fingerprint": "08d5a8ecb543efeda97b894f4179dd7735a5fb68ed15d208919218878ad327fa"
+      }
+    },
+    {
+      "id": "system-notification-filter-and-pagination",
+      "title": "Recipient, category, severity and state criteria filter the catalog and preserve total count",
+      "origin": "manual",
+      "status": "approved",
+      "tags": [
+        "system-notification",
+        "query"
+      ],
+      "suites": [
+        "support"
+      ],
+      "prerequisites": [
+        "Ready support deployment and authorized FL_API_TOKEN"
+      ],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "info",
+          "type": "command",
+          "command": "PublishSystemNotification",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/publishsystemnotification",
+            "body": {
+              "notificationId": {
+                "$uuid": true
+              },
+              "publishedAt": {
+                "$now": "localDateTime"
+              },
+              "category": "SYSTEM",
+              "severity": "INFO",
+              "messageKey": "simulation.notification.info",
+              "fallbackTitle": "Information",
+              "toastPolicy": "NONE",
+              "status": "UNREAD",
+              "recipientUserId": {
+                "$ref": "variables.owner"
+              }
+            }
+          }
+        },
+        {
+          "id": "error",
+          "type": "command",
+          "command": "PublishSystemNotification",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/publishsystemnotification",
+            "body": {
+              "notificationId": {
+                "$uuid": true
+              },
+              "publishedAt": {
+                "$now": "localDateTime"
+              },
+              "category": "SECURITY",
+              "severity": "ERROR",
+              "messageKey": "simulation.notification.error",
+              "fallbackTitle": "Security error",
+              "toastPolicy": "IMPORTANT",
+              "status": "UNREAD",
+              "recipientUserId": {
+                "$ref": "variables.owner"
+              }
+            }
+          }
+        },
+        {
+          "id": "other",
+          "type": "command",
+          "command": "PublishSystemNotification",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/publishsystemnotification",
+            "body": {
+              "notificationId": {
+                "$uuid": true
+              },
+              "publishedAt": {
+                "$now": "localDateTime"
+              },
+              "category": "SECURITY",
+              "severity": "ERROR",
+              "messageKey": "simulation.notification.other",
+              "fallbackTitle": "Other recipient",
+              "toastPolicy": "NONE",
+              "status": "UNREAD",
+              "recipientUserId": {
+                "$ref": "variables.other"
+              }
+            }
+          }
+        },
+        {
+          "id": "page",
+          "type": "query",
+          "query": "SystemNotificationCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationcatalog",
+            "query": {
+              "page": 0,
+              "size": "1",
+              "sort": "notificationId,asc",
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            },
+            "expect": {
+              "page.totalElements": 2,
+              "content.length": 1,
+              "page.totalPages": 2
+            }
+          }
+        },
+        {
+          "id": "page-two",
+          "type": "query",
+          "query": "SystemNotificationCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationcatalog",
+            "query": {
+              "page": "1",
+              "size": "1",
+              "sort": "notificationId,asc",
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            },
+            "expect": {
+              "page.totalElements": 2,
+              "content.length": 1,
+              "page.number": 1
+            }
+          }
+        },
+        {
+          "id": "filtered",
+          "type": "query",
+          "query": "SystemNotificationCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationcatalog",
+            "query": {
+              "page": 0,
+              "size": 20,
+              "category.equals": "SECURITY",
+              "severity.equals": "ERROR",
+              "state.equals": "Unread",
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            },
+            "expect": {
+              "page.totalElements": 1
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "type": "query",
+          "stepId": "page",
+          "path": "page.totalElements",
+          "operator": "equals",
+          "expected": 2
+        },
+        {
+          "type": "query",
+          "stepId": "page-two",
+          "path": "page.number",
+          "operator": "equals",
+          "expected": 1
+        },
+        {
+          "type": "query",
+          "stepId": "filtered",
+          "path": "content.0.notificationId",
+          "operator": "equals",
+          "expected": {
+            "$ref": "steps.error.body.notificationId"
+          }
+        }
+      ],
+      "timeoutMs": 180000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [],
+      "variables": {
+        "owner": {
+          "$uuid": true
+        },
+        "other": {
+          "$uuid": true
+        }
+      },
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        }
+      ],
+      "approval": {
+        "reviewer": "simulation-catalog-review",
+        "fingerprint": "6aefa389be68bb3ed98944e9081472554acc0465f85da0449af512d3048ee17c"
+      }
+    },
+    {
+      "id": "system-notification-empty-recipient",
+      "title": "A fresh recipient has neither notifications nor a summary row",
+      "origin": "manual",
+      "status": "approved",
+      "tags": [
+        "system-notification"
+      ],
+      "suites": [
+        "support"
+      ],
+      "variables": {
+        "owner": {
+          "$uuid": true
+        }
+      },
+      "prerequisites": [
+        "Ready support API and authenticated notification query access"
+      ],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "catalog",
+          "type": "query",
+          "query": "SystemNotificationCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationcatalog",
+            "query": {
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            }
+          }
+        },
+        {
+          "id": "summary",
+          "type": "query",
+          "query": "SystemNotificationSummary",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationsummary",
+            "query": {
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "type": "query",
+          "stepId": "catalog",
+          "path": "page.totalElements",
+          "operator": "equals",
+          "expected": 0
+        },
+        {
+          "type": "query",
+          "stepId": "summary",
+          "path": "page.totalElements",
+          "operator": "equals",
+          "expected": 0
+        }
+      ],
+      "timeoutMs": 30000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [],
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        }
+      ],
+      "approval": {
+        "reviewer": "simulation-catalog-review",
+        "fingerprint": "edf33494e6511a7f73ce89b8a7e2560579e9af48c8c590383ee0d10701e42f44"
+      }
+    },
+    {
+      "id": "system-notification-mark-all-recipient-scope",
+      "title": "Mark all read updates the recipient catalog and summary without changing another recipient",
+      "origin": "manual",
+      "status": "approved",
+      "tags": [
+        "system-notification",
+        "regression"
+      ],
+      "suites": [
+        "support"
+      ],
+      "prerequisites": [
+        "Ready support deployment and authorized FL_API_TOKEN"
+      ],
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "first",
+          "type": "command",
+          "command": "PublishSystemNotification",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/publishsystemnotification",
+            "body": {
+              "notificationId": {
+                "$uuid": true
+              },
+              "publishedAt": {
+                "$now": "localDateTime"
+              },
+              "category": "SYSTEM",
+              "severity": "INFO",
+              "messageKey": "simulation.notification.first",
+              "fallbackTitle": "First",
+              "toastPolicy": "NONE",
+              "status": "UNREAD",
+              "recipientUserId": {
+                "$ref": "variables.owner"
+              }
+            }
+          }
+        },
+        {
+          "id": "second",
+          "type": "command",
+          "command": "PublishSystemNotification",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/publishsystemnotification",
+            "body": {
+              "notificationId": {
+                "$uuid": true
+              },
+              "publishedAt": {
+                "$now": "localDateTime"
+              },
+              "category": "SYSTEM",
+              "severity": "ERROR",
+              "messageKey": "simulation.notification.second",
+              "fallbackTitle": "Second",
+              "toastPolicy": "NONE",
+              "status": "UNREAD",
+              "recipientUserId": {
+                "$ref": "variables.owner"
+              }
+            }
+          }
+        },
+        {
+          "id": "other",
+          "type": "command",
+          "command": "PublishSystemNotification",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/publishsystemnotification",
+            "body": {
+              "notificationId": {
+                "$uuid": true
+              },
+              "publishedAt": {
+                "$now": "localDateTime"
+              },
+              "category": "SYSTEM",
+              "severity": "ERROR",
+              "messageKey": "simulation.notification.other",
+              "fallbackTitle": "Other",
+              "toastPolicy": "NONE",
+              "status": "UNREAD",
+              "recipientUserId": {
+                "$ref": "variables.other"
+              }
+            }
+          }
+        },
+        {
+          "id": "before",
+          "type": "query",
+          "query": "SystemNotificationCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationcatalog",
+            "query": {
+              "page": 0,
+              "size": 20,
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            },
+            "expect": {
+              "page.totalElements": 2
+            }
+          }
+        },
+        {
+          "id": "before-summary",
+          "type": "query",
+          "query": "SystemNotificationSummary",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationsummary",
+            "query": {
+              "page": 0,
+              "size": 20,
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            },
+            "expect": {
+              "content.0.unreadCount": 2
+            }
+          }
+        },
+        {
+          "id": "mark-all",
+          "type": "command",
+          "command": "MarkAllSystemNotificationsRead",
+          "request": {
+            "endpoint": "support",
+            "path": "/recipientnotificationacknowledgement/markallsystemnotificationsread",
+            "body": {
+              "readAt": {
+                "$now": "localDateTime"
+              },
+              "recipientUserId": {
+                "$ref": "variables.owner"
+              }
+            }
+          }
+        },
+        {
+          "id": "catalog",
+          "type": "query",
+          "query": "SystemNotificationCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationcatalog",
+            "query": {
+              "page": 0,
+              "size": 20,
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            },
+            "expect": {
+              "page.totalElements": 2,
+              "content.0.state": "Read",
+              "content.1.state": "Read"
+            }
+          }
+        },
+        {
+          "id": "summary",
+          "type": "query",
+          "query": "SystemNotificationSummary",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationsummary",
+            "query": {
+              "page": 0,
+              "size": 20,
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            },
+            "expect": {
+              "content.0.unreadCount": 0,
+              "content.0.hasUnreadError": false
+            }
+          }
+        },
+        {
+          "id": "other-catalog",
+          "type": "query",
+          "query": "SystemNotificationCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationcatalog",
+            "query": {
+              "page": 0,
+              "size": 20,
+              "recipientUserId.equals": {
+                "$ref": "variables.other"
+              }
+            },
+            "expect": {
+              "page.totalElements": 1,
+              "content.0.state": "Unread"
+            }
+          }
+        },
+        {
+          "id": "other-summary",
+          "type": "query",
+          "query": "SystemNotificationSummary",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationsummary",
+            "query": {
+              "page": 0,
+              "size": 20,
+              "recipientUserId.equals": {
+                "$ref": "variables.other"
+              }
+            },
+            "expect": {
+              "content.0.unreadCount": 1
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "type": "query",
+          "stepId": "catalog",
+          "path": "content.0.state",
+          "operator": "equals",
+          "expected": "Read"
+        },
+        {
+          "type": "query",
+          "stepId": "catalog",
+          "path": "content.1.state",
+          "operator": "equals",
+          "expected": "Read"
+        },
+        {
+          "type": "query",
+          "stepId": "summary",
+          "path": "content.0.unreadCount",
+          "operator": "equals",
+          "expected": 0
+        },
+        {
+          "type": "query",
+          "stepId": "other-catalog",
+          "path": "content.0.state",
+          "operator": "equals",
+          "expected": "Unread"
+        },
+        {
+          "type": "query",
+          "stepId": "other-summary",
+          "path": "content.0.unreadCount",
+          "operator": "equals",
+          "expected": 1
+        }
+      ],
+      "timeoutMs": 180000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [],
+      "variables": {
+        "owner": {
+          "$uuid": true
+        },
+        "other": {
+          "$uuid": true
+        }
+      },
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        }
+      ],
+      "approval": {
+        "reviewer": "simulation-catalog-review",
+        "fingerprint": "ab94e11935feffe8d16f6caebddc01497b2ca11cdbb5fcb17e432997bd1a173e"
+      }
+    },
+    {
+      "id": "system-notification-reject-inconsistent-status",
+      "title": "Reject publishing a notification already marked READ",
+      "origin": "model",
+      "sourceScenarioId": "reject-inconsistent-notification-status",
+      "sourceFingerprint": "c80bdfccac1b687692c8dd926fb362886bb57e775ec7b2d43755e69cbcc04f11",
+      "status": "approved",
+      "tags": [
+        "system-notification"
+      ],
+      "suites": [
+        "support"
+      ],
+      "prerequisites": [
+        "Authenticated publish access"
+      ],
+      "variables": {
+        "owner": {
+          "$uuid": true
+        }
+      },
+      "dataRequirements": [],
+      "steps": [
+        {
+          "id": "publish",
+          "type": "command",
+          "command": "PublishSystemNotification",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/publishsystemnotification",
+            "acceptStatuses": [
+              422
+            ],
+            "body": {
+              "notificationId": {
+                "$uuid": true
+              },
+              "recipientUserId": {
+                "$ref": "variables.owner"
+              },
+              "category": "SYSTEM",
+              "severity": "INFO",
+              "messageKey": "simulation.notification.invalid-status",
+              "fallbackTitle": "Invalid initial status",
+              "toastPolicy": "NONE",
+              "publishedAt": {
+                "$now": "localDateTime"
+              },
+              "status": "READ"
+            }
+          }
+        },
+        {
+          "id": "catalog",
+          "type": "query",
+          "query": "SystemNotificationCatalog",
+          "request": {
+            "endpoint": "support",
+            "path": "/systemnotification/systemnotificationcatalog",
+            "query": {
+              "recipientUserId.equals": {
+                "$ref": "variables.owner"
+              }
+            }
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "type": "query",
+          "stepId": "publish",
+          "path": "detail",
+          "operator": "equals",
+          "expected": "New notifications must be unread."
+        },
+        {
+          "type": "query",
+          "stepId": "catalog",
+          "path": "page.totalElements",
+          "operator": "equals",
+          "expected": 0
+        }
+      ],
+      "timeoutMs": 30000,
+      "cleanupPolicy": "retain",
+      "reviewIssues": [],
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        }
+      ],
+      "approval": {
+        "reviewer": "simulation-catalog-review",
+        "fingerprint": "57bf652e1d13348c53983595d23abb52a013ca2164f3718af16961b598c29902"
+      }
+    }
+  ]
+}

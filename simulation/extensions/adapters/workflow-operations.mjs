@@ -2,8 +2,7 @@ import {resolve} from 'node:path';
 import {readFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {provisionFixtures} from '../../src/runtime/fixtures.mjs';
-import {checkCases, checkApproval, selectCases} from '../../src/cases.mjs';
-import {validateBaselineManifest} from '../../src/data-plan.mjs';
+import {prepareWithoutFixtures} from '../../src/workflow-tasks.mjs';
 import {createAdapter, deploymentPlan, runProjectDeployment} from '../runtime/deploy.mjs';
 import {prepareCaseData, enrollParticipants, trainingDataPlan} from '../runtime/training-stages.mjs';
 import {prepareBaseline} from './baseline-data.mjs';
@@ -33,12 +32,14 @@ export async function deploy({config}) {
 }
 
 export const baseline = prepareBaseline;
-export const select = ({library, selection}, {root}) => selectCases(library, selection,
-    selection.failedReport ? JSON.parse(readFileSync(resolve(root, selection.failedReport), 'utf8')) : undefined);
+export {select} from '../../src/workflow-tasks.mjs';
 export const enroll = ({environment, scenario, baseline}) => enrollParticipants(environment, scenario, baseline);
-export async function prepare({environment, scenario, baseline, cases}, {root}) {
-    validateBaselineManifest(baseline, environment);
-    checkCases(cases); checkApproval(cases);
+export async function prepare({environment, fixtureScenarios, baseline, cases}, {root}) {
+    const ready = prepareWithoutFixtures(environment, baseline, cases);
+    if (ready) return ready;
+    const files = new Set(cases.cases.filter(c => c.dataRequirements.length).map(c => fixtureScenarios[c.id]));
+    if (files.size !== 1 || files.has(undefined)) throw new Error('Selection requires a configured, shared fixture scenario');
+    const scenario = JSON.parse(readFileSync(resolve(root, [...files][0]), 'utf8'));
     trainingDataPlan(scenario, cases);
     const fixtures = provisionFixtures(scenario.fixtures || [], environment, {root});
     const result = await prepareCaseData(environment, scenario, baseline, cases);

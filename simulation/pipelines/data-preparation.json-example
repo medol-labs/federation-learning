@@ -21,8 +21,10 @@
       "command": [
         "node",
         "simulation/src/cases.mjs",
-        "check",
-        "simulation/cases/approved/cases.json"
+        "select",
+        "simulation/cases/catalog.json",
+        "simulation/cases/runs/selected.json",
+        "simulation/pipelines/case-selection.json"
       ]
     },
     {
@@ -43,7 +45,7 @@
         "--baseline",
         "simulation/data/results/baseline.json",
         "--cases",
-        "simulation/cases/approved/cases.json",
+        "simulation/cases/runs/selected.json",
         "--output",
         "simulation/data/results/case.json"
       ]

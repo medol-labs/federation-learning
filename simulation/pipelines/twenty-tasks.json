@@ -5,10 +5,11 @@
       "export": "select",
       "inputs": {
         "library": {
-          "path": "simulation/cases/approved/twenty-participant-training-workflow-v2.json"
+          "path": "simulation/cases/catalog.json"
         },
+        "environment": {"artifact": "deployment.json", "env": "MEDOL_ENVIRONMENT_MANIFEST", "status": "ready", "binding": "deployment"},
         "selection": {
-          "path": "simulation/pipelines/case-selection.json",
+          "path": "simulation/pipelines/case-selection-twenty.json",
           "env": "MEDOL_CASE_SELECTION"
         }
       },
@@ -106,9 +107,7 @@
           "status": "ready",
           "binding": "baseline"
         },
-        "scenario": {
-          "path": "simulation/extensions/scenarios/twenty-participant-training.json"
-        },
+        "fixtureScenarios": {"path": "simulation/extensions/scenarios/training-fixtures.json"},
         "cases": {
           "artifact": "execution-plan.json",
           "env": "MEDOL_EXECUTION_PLAN",

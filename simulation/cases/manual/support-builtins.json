@@ -71,7 +71,9 @@
             "endpoint": "support",
             "path": "/dictionary/updatedictionary",
             "body": {
-              "dictionaryCode": {"$ref": "steps.register.body.dictionaryCode"},
+              "dictionaryCode": {
+                "$ref": "steps.register.body.dictionaryCode"
+              },
               "dictionaryId": {
                 "$ref": "variables.id"
               },
@@ -105,7 +107,9 @@
             "endpoint": "support",
             "path": "/dictionary/archivedictionary",
             "body": {
-              "dictionaryCode": {"$ref": "steps.register.body.dictionaryCode"},
+              "dictionaryCode": {
+                "$ref": "steps.register.body.dictionaryCode"
+              },
               "dictionaryId": {
                 "$ref": "variables.id"
               },
@@ -158,7 +162,12 @@
       ],
       "timeoutMs": 120000,
       "cleanupPolicy": "retain",
-      "reviewIssues": []
+      "reviewIssues": [],
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        }
+      ]
     },
     {
       "id": "support-iam",
@@ -350,7 +359,12 @@
       ],
       "timeoutMs": 120000,
       "cleanupPolicy": "retain",
-      "reviewIssues": []
+      "reviewIssues": [],
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        }
+      ]
     },
     {
       "id": "support-file",
@@ -510,7 +524,12 @@
       ],
       "timeoutMs": 120000,
       "cleanupPolicy": "retain",
-      "reviewIssues": []
+      "reviewIssues": [],
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        }
+      ]
     },
     {
       "id": "support-export",
@@ -627,7 +646,12 @@
       ],
       "timeoutMs": 120000,
       "cleanupPolicy": "retain",
-      "reviewIssues": []
+      "reviewIssues": [],
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        }
+      ]
     },
     {
       "id": "support-invalid-import",
@@ -720,7 +744,12 @@
       ],
       "timeoutMs": 120000,
       "cleanupPolicy": "retain",
-      "reviewIssues": []
+      "reviewIssues": [],
+      "environmentRequirements": [
+        {
+          "path": "endpoints.support"
+        }
+      ]
     }
   ]
 }
