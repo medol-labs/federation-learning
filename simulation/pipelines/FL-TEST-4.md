@@ -69,6 +69,35 @@ Credentials are generated in `workspace/simulation/test-environment.private.json
 and `workspace/.env`; never commit or publish them. Run evidence is under
 `workspace/simulation/reports/workflows/<run-id>/`.
 
+## Restarting the Existing Installation
+
+Do not rerun data initialization or instance registration after a host restart.
+The maintained environment entry starts the existing cluster and checks static
+node addresses, API readiness and every Kubernetes node:
+
+```sh
+cd /home/h3c/fl/k3d
+sh run-simulation.sh exec node simulation/src/prepare-environment.mjs simulation/environments/fl-test-4-twenty.json
+sh run-simulation.sh exec kubectl --kubeconfig operations/k3s/.work/kubeconfig-federation-learning-twenty.yaml get deployments -A
+```
+
+Allow application startup probes to finish before logging in. Node readiness
+does not imply application readiness. For a planned shutdown, stop the cluster
+before powering off the host:
+
+```sh
+sh run-simulation.sh exec k3d cluster stop federation-learning-twenty
+```
+
+On 2026-11-18 the existing 22 node/proxy container endpoints were migrated to
+explicit static Docker addresses without replacing the cluster or volumes.
+The migration snapshot is `workspace/simulation/reports/network-before-static-20261118.json`.
+The previous `recover-node-ips-20261118.sh` status-patching script is not a normal
+startup command. See `simulation/DEPLOYMENT.md` for the generic network check and
+explicit migration procedure. Updated scripts are in the workspace; the original
+tool archive predates this change, so include the updated workspace when making
+a new offline delivery.
+
 ## Verification Scope
 
 The approved project case uses twenty independent runtime agents and two rounds,

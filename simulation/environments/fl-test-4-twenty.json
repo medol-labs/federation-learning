@@ -5,6 +5,7 @@
   "target": "kubernetes",
   "provisioner": "k3d",
   "clusterName": "federation-learning-twenty",
+  "subnet": "auto",
   "clusterConfig": "simulation/extensions/fixtures/k3d-twenty.yaml",
   "registryConfig": "operations/extensions/registries-fl-test-4.yaml",
   "workerNodes": 20,
