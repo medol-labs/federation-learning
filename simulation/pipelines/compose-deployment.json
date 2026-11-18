@@ -9,16 +9,25 @@
   ],
   "envFile": "simulation/compose/.env",
   "endpoints": {
-    "platform": "http://127.0.0.1:28081"
+    "platform": "http://127.0.0.1:28081",
+    "platformConsole": "http://127.0.0.1:5173",
+    "participantConsole1": "http://127.0.0.1:5174",
+    "participantConsole2": "http://127.0.0.1:5175"
   },
   "endpointEnv": {"support": "PUBLIC_SUPPORT_URL"},
   "healthUrls": [
+    "http://127.0.0.1:5173/health",
+    "http://127.0.0.1:5174/health",
+    "http://127.0.0.1:5175/health",
     "http://127.0.0.1:28080/actuator/health",
     "http://127.0.0.1:28081/actuator/health",
     "http://127.0.0.1:28082/actuator/health",
     "http://127.0.0.1:28083/actuator/health"
   ],
   "instances": [
+    {"service": "platform-console", "replicas": 1},
+    {"service": "participant-console1", "replicas": 1},
+    {"service": "participant-console2", "replicas": 1},
     {
       "service": "database",
       "replicas": 1

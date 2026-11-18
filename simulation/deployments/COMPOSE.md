@@ -17,10 +17,13 @@ host and containers: model artifact URLs use this origin.
 
 ```bash
 node operations/images/images.mjs build --environment local --platform linux/amd64 --version compose-20261116 --prefix fl-local --skip-console
+docker build --platform linux/amd64 -t fl-local/federation-learning-console:compose-20261118 federation-learning-console
+docker build --platform linux/amd64 -t fl-local/federation-learning-participant-console:compose-20261118 federation-learning-participant-console
 # From federation-learning-runtime-engine/:
 node scripts/build-images.mjs --platform linux/amd64 --version compose-20261116 --plugin-profile sklearn --prefix fl-local
 # From federation-learning-platform/, build the corrected platform revision:
 node scripts/image-bundle.mjs build --module federation-learning-platform --platform linux/amd64 --version compose-20261116-fixed --prefix fl-local
+node scripts/image-bundle.mjs build --module federation-learning-support --platform linux/amd64 --version notification-20261118 --prefix fl-local
 ```
 
 Return to the repository root. Dependency image references in the Compose file
@@ -72,8 +75,10 @@ but run `prepare-case` again with a new run ID to create a fresh configuration.
 Do not reuse `--data` from a previously submitted training case. The executor
 checks this precondition before submitting a command.
 
-API ports: support 28080, platform 28081, participants 28082 and 28083. This test
-deployment does not include frontend consoles. Volumes persist until explicitly
+The platform console is at http://127.0.0.1:5173 (Support authentication on
+28080, platform API on 28081). Participant consoles at http://127.0.0.1:5174
+and http://127.0.0.1:5175 authenticate and query their respective agents on
+28082 and 28083. All three console ports are loopback-only. Volumes persist until explicitly
 removed; stopping a run does not destroy the deployment.
 
 ## Deployment Revisions
