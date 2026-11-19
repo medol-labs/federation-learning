@@ -1,14 +1,16 @@
 # Simulation TODO
 
+通用设计见 [Simulation 业务旅程验收设计](../../code-generator/docs/simulation-journey-design.md)。本页追踪 Federation Learning 的验收任务。
+
 ## Given / When / Then 业务旅程验收（2026-11-19）
 
 目标：将 simulation 作为项目可执行验收套件，明确区分数据准备、业务动作和结果验证。保留现有 schemaVersion 2 执行器能力，不仅将 steps 改名，也不把脚本执行结束当成业务验收通过。
 
-- [ ] 常规旅程用例在 Medol 工作区独立的「旅程验收」页面从模型同步候选草稿，由人工补齐真实前置数据和验收预期并审核。Simulation 接收同版模型和已审核用例，不从测试代码导入，也不另建重复编辑入口。作者通过「步骤表 + 预期表」选择操作、填写参数、绑定前序输出、声明预期；Given / When / Then 仅用于组织用例和报告。不新增 DSL，不扩展 MEDOL 语法，不要求作者手写 JSON、YAML、Gherkin 或脚本。
+- [ ] 常规旅程用例在 Medol 工作区独立的「旅程验收」页面从模型同步候选草稿，由人工补齐真实前置数据和验收预期并审核。Simulation 接收同版模型和已审核用例，不从测试代码导入，也不另建重复编辑入口。作者通过「步骤表 + 预期表」选择操作、填写参数、绑定前序输出、声明预期；Given / When / Then 同时组织用例、执行判定和报告。不新增 DSL，不扩展 MEDOL 语法，不要求作者手写 JSON、YAML、Gherkin 或脚本。
 - [ ] 参考 [Tosca 模块化步骤](https://docs.tricentis.com/tosca-cloud/en-us/content/create_tests/design_modules.htm)：用 MEDOL 正向导出的 command、readmodel、字段和类型作为可选目录，选择步骤后显示可填参数和可引用的上游结果。接口路径和参数编码从目标生成器的接口契约获取，不按名称猜测。
 - [ ] 参考 [FitNesse 查询预期表](https://fitnesse.org/FitNesse/UserGuide/WritingAcceptanceTests/SliM.html)：预期表支持按业务键定位记录、检查记录数、比较两个来源的字段，以及对集合中的每条记录验证。比较双方可选择已定位记录的字段；报告区分缺失、重复、空值和不匹配。不开放任意公式、分支或循环编辑。
 - [ ] 将 Medol 导出的验收用例转换为现有 `schemaVersion: 2` 的 `command`、`query`、`assert`、`foreach` 计划，复用数据引用、异步等待、审核指纹和报告；`$ref`、筛选参数和响应路径留在执行产物。记录源用例 ID 和模型版本；生成及执行前校验引用、类型和接口支持，不支持的断言不能跳过。模型校验与真实运行结果分别报告。
-- [ ] 参考[数据驱动用例](https://robotframework.org/RobotDemo/)分离场景和参数组。使用相同验收标准时，用 2 节点参数组跑冒烟、20 节点参数组跑完整验收，均训练两轮；成功标准不同时另建用例。
+- [ ] 参考[数据驱动用例](https://robotframework.org/RobotDemo/)分离场景和参数组。使用相同验收标准时复用用例，通过参数组设置参与方数量。成功标准不同时另建用例。
 - [ ] 支持手工补充运行环境特有的用例，例如聚合完成但回执前重启服务。记录「手工维护」来源和关联的模型版本、slice/command/event 等元素 ID；模型引用失效时明确提示，不猜同名元素。区分关联模型与由 Medol 生成，重新生成不覆盖手工用例。
 - [ ] 提供人工与 AI 共用的用例调用入口，按用例标识及版本、参数组和目标环境执行已审核计划，返回运行标识与统一报告；两种调用遵循相同权限、环境限制及确认规则。未补齐或未审核的同步草稿不能执行，不影响既有手工用例的执行方式。
 - [ ] Given 用于准备或验证前置条件，区分复用数据与本次创建的数据；将 prerequisites 文本与可执行检查关联，前置不满足单独报告为阻塞或准备失败。
@@ -26,7 +28,7 @@
 
 以现有 [两轮训练计划](cases/approved/twenty-participant-training-workflow-v2.json) 为底层对照。用例作者应能完全通过 Medol 界面完成以下配置，再生成并通过 Simulation 验收：
 
-- [ ] **Given**：选已有准备流程，配置 2 个可训练参与方、2 轮训练、每轮至少 2 个参与方；创建并绑定一条新的可提交任务。
+- [ ] **Given**：选已有准备流程，从参数组读取参与方数量和每轮最少参与方数，准备可训练参与方及两轮训练配置，创建并绑定一条新的可提交任务。
 - [ ] **When**：选 `SubmitTrainingJob`，将 `trainingJobId` 绑定为本次任务 ID，只提交一次。
 - [ ] **Then**：查询同一任务的 `TrainingJobDashboard`，要求在期限内变为 `Completed`；按本次任务查询平台 `TrainingRoundProgress`，要求恰有两条，按 `roundNumber = 1` 和 `roundNumber = 2` 分别定位唯一记录，不依赖返回顺序。
 - [ ] **Then**：对每个参与方，查询其 Runtime Agent 的 `RoundExecutionCatalog`，按任务 ID、第二轮 ID 和 Runtime ID 筛选，要求恰有一条已产出更新工件的执行记录。选择该记录的 `baseModelId` 与平台第一轮的 `aggregatedModelId`，断言两侧均有值且相等。底层使用现有 `foreach`、参与方 `request.target`、查询和字段引用断言执行。
