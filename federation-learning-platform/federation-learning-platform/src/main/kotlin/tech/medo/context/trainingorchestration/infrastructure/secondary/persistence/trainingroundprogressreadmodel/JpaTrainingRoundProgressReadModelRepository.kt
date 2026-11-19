@@ -125,6 +125,13 @@ class JpaTrainingRoundProgressReadModelRepository(
             it.aggregatedModelId = this@toProjection.aggregatedModelId
             it.globalAccuracy = this@toProjection.globalAccuracy
             it.globalFairnessScore = this@toProjection.globalFairnessScore
+            it.validationDatasetVersion = this@toProjection.validationDatasetVersion
+            it.validationDatasetDigest = this@toProjection.validationDatasetDigest
+            it.evaluatedSampleCount = this@toProjection.evaluatedSampleCount
+            it.truePositiveCount = this@toProjection.truePositiveCount
+            it.trueNegativeCount = this@toProjection.trueNegativeCount
+            it.falsePositiveCount = this@toProjection.falsePositiveCount
+            it.falseNegativeCount = this@toProjection.falseNegativeCount
             it.failureReason = this@toProjection.failureReason
             it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
@@ -186,6 +193,13 @@ class JpaTrainingRoundProgressReadModelRepository(
             it.aggregatedModelId = this@toEntity.aggregatedModelId
             it.globalAccuracy = this@toEntity.globalAccuracy
             it.globalFairnessScore = this@toEntity.globalFairnessScore
+            it.validationDatasetVersion = this@toEntity.validationDatasetVersion
+            it.validationDatasetDigest = this@toEntity.validationDatasetDigest
+            it.evaluatedSampleCount = this@toEntity.evaluatedSampleCount
+            it.truePositiveCount = this@toEntity.truePositiveCount
+            it.trueNegativeCount = this@toEntity.trueNegativeCount
+            it.falsePositiveCount = this@toEntity.falsePositiveCount
+            it.falseNegativeCount = this@toEntity.falseNegativeCount
             it.failureReason = this@toEntity.failureReason
             it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId

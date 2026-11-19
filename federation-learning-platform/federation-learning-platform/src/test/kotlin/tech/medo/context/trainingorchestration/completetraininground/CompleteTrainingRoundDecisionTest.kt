@@ -19,6 +19,7 @@ class CompleteTrainingRoundDecisionTest {
         state.evolve(
             TrainingRoundParticipantsSelectedEvent(
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            previousRoundNumber = null,
             federationId = UUID.nameUUIDFromBytes("federation-1".toByteArray()),
             federationName = null,
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
@@ -63,8 +64,15 @@ class CompleteTrainingRoundDecisionTest {
             modelFormat = "",
             modelArtifactDigest = "",
             aggregatedModelSignatureUri = null,
-            globalAccuracy = java.math.BigDecimal("0.91"),
-            globalFairnessScore = java.math.BigDecimal.ZERO
+            globalAccuracy = BigDecimal("0.91"),
+            globalFairnessScore = null,
+            validationDatasetVersion = "",
+            validationDatasetDigest = "",
+            evaluatedSampleCount = 0,
+            truePositiveCount = 0,
+            trueNegativeCount = 0,
+            falsePositiveCount = 0,
+            falseNegativeCount = 0
             )
         )
 
@@ -84,7 +92,7 @@ class CompleteTrainingRoundDecisionTest {
             modelFormat = "",
             modelArtifactDigest = "",
             aggregatedModelSignatureUri = null,
-            globalAccuracy = java.math.BigDecimal("0.91")
+            globalAccuracy = BigDecimal("0.91")
         )
 
         val events = (object : CompleteTrainingRoundDecision {}).decide(
@@ -108,6 +116,6 @@ class CompleteTrainingRoundDecisionTest {
         assertEquals(command.modelFormat, event.modelFormat)
         assertEquals(command.modelArtifactDigest, event.modelArtifactDigest)
         assertEquals(command.aggregatedModelSignatureUri, event.aggregatedModelSignatureUri)
-        assertEquals(java.math.BigDecimal("0.91"), event.globalAccuracy)
+        assertEquals(BigDecimal("0.91"), event.globalAccuracy)
     }
 }

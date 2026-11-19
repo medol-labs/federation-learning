@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 
 @Event
 data class TrainingRoundStartFailedEvent(
-    @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
     val federationId: UUID,
     val federationName: String?,
@@ -20,6 +19,7 @@ data class TrainingRoundStartFailedEvent(
     val featureSchemaId: UUID,
     val featureDomain: String?,
     val featureSchemaVersion: String?,
+    @EventTag(key = "roundId")
     val roundId: UUID,
     val roundNumber: Int,
     val selectedOrganizationIds: List<UUID>,

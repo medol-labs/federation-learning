@@ -60,8 +60,21 @@ class LocalAcceptExecutionPlanAdapterTest {
         assertTrue(result.rejectionReasons.any { it.contains("No runtime dataset binding") })
     }
 
+    @Test
+    fun rejectsMissingPlanDatasetAndAmbiguousBindingsWithoutFallingBack() {
+        val first = binding(runtimeId, organizationId)
+        val adapter = LocalAcceptExecutionPlanAdapter(
+            bindingRepository(first, first.copy(runtimeDatasetBindingId = UUID.randomUUID(), filePath = "/data/duplicate.csv")),
+            roundExecutionRepository()
+        )
+        for (plan in listOf(input(), input().copy(datasetId = null), input().copy(datasetId = UUID.randomUUID()))) {
+            assertTrue(adapter.execute(plan) is AcceptExecutionPlanResult.Rejected)
+        }
+    }
+
     private fun input(): AcceptExecutionPlanInput =
         AcceptExecutionPlanInput(
+            datasetId = UUID.fromString("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"),
             executionPlanId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
             roundExecutionId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
             executionSessionId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
@@ -141,7 +154,12 @@ class LocalAcceptExecutionPlanAdapterTest {
                 criteria: RuntimeDatasetBindingCatalogReadModelCriteria?,
                 pageable: Pageable
             ): Page<RuntimeDatasetBindingCatalogReadModel> =
-                findAll(pageable)
+                PageImpl(bindings.filter {
+                    it.datasetId.toString() == criteria?.datasetId?.equals &&
+                        it.featureSchemaId.toString() == criteria?.featureSchemaId?.equals &&
+                        it.organizationId.toString() == criteria?.organizationId?.equals &&
+                        it.runtimeId.toString() == criteria?.runtimeId?.equals
+                })
 
             override fun findById(id: UUID): RuntimeDatasetBindingCatalogReadModel? = null
             override fun findByIdWithAccessPolicy(id: UUID): RuntimeDatasetBindingCatalogReadModel? = findById(id)

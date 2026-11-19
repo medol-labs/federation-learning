@@ -1,0 +1,7 @@
+{
+  "version": "synthetic-readmission-holdout-v1",
+  "file": "holdout.csv",
+  "sha256": "ca8f8a187e1cc4594e2a5eeeb38fe38bdbfe5e5dee97c9be115aaebe9d5f6ccd",
+  "features": ["age_years", "systolic_bp_mm_hg", "fasting_glucose_mg_dl"],
+  "label": "readmission_risk"
+}

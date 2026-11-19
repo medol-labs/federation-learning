@@ -16,10 +16,8 @@ data class FailTrainingRoundCommand(
     val minimumNodesPerRound: Int,
     val failureReason: String
 ) {
-
     @TargetEntityId
-    val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
-
+    val selection: TrainingRoundSelection = TrainingRoundSelection(roundId = roundId)
 
 
 }

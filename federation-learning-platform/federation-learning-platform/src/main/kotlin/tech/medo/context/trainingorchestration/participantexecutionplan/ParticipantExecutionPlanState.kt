@@ -30,6 +30,7 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
     var roundId: UUID? = null
     var roundNumber: Int? = null
     var runtimeId: UUID? = null
+    var datasetId: UUID? = null
     var organizationId: UUID? = null
     var personalizationMode: String? = null
     var personalizationScope: String? = null
@@ -77,6 +78,7 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        datasetId = event.datasetId
         organizationId = event.organizationId
         personalizationMode = event.personalizationMode
         personalizationScope = event.personalizationScope
@@ -121,6 +123,7 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        datasetId = event.datasetId
         organizationId = event.organizationId
         personalizationMode = event.personalizationMode
         personalizationScope = event.personalizationScope

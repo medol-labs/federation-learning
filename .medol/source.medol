@@ -3245,6 +3245,10 @@ context TrainingOrchestration {
     reactsTo TrainingJobSubmitted
     port
 
+    tags {
+      roundId
+    }
+
     // TODO Confirm whether initial participant selection should be triggered by TrainingJobSubmitted directly
     // or by a future eligibility-ready domain event after TrainingParticipantEligibility is fully projected.
     automation SelectInitialRoundParticipantsWhenTrainingSubmitted {
@@ -3253,7 +3257,12 @@ context TrainingOrchestration {
     }
 
     command SelectTrainingRoundParticipants {
-      trainingJobId: UUID id technical from TrainingJobSubmitted.trainingJobId
+      trainingJobId: UUID technical from TrainingJobSubmitted.trainingJobId
+      roundId: UUID id generated technical from TrainingRoundCompleted.nextRoundId
+      previousRoundNumber: Int derived {
+        from TrainingRoundCompleted.roundNumber, TrainingRoundParticipantSelectionRetryRequested.previousRoundNumber
+        rule "Use zero for the initial submission. Completion schedules exactly its successor. Retry reuses the failed selection's predecessor."
+      }
       federationId: UUID from TrainingJobSubmitted.federationId
       federationName: String? from TrainingJobSubmitted.federationName
       trainingRunConfigurationId: UUID from TrainingJobSubmitted.trainingRunConfigurationId
@@ -3266,6 +3275,7 @@ context TrainingOrchestration {
 
     event TrainingRoundParticipantsSelected {
       trainingJobId: UUID id technical
+      previousRoundNumber: Int? from SelectTrainingRoundParticipants.previousRoundNumber
       federationId: UUID
       federationName: String?
       trainingRunConfigurationId: UUID
@@ -3295,6 +3305,7 @@ context TrainingOrchestration {
 
     event TrainingRoundParticipantSelectionFailed {
       trainingJobId: UUID id technical
+      previousRoundNumber: Int? from SelectTrainingRoundParticipants.previousRoundNumber
       federationId: UUID
       federationName: String?
       trainingRunConfigurationId: UUID
@@ -3327,8 +3338,25 @@ context TrainingOrchestration {
 
     specification "Training Round Participants Are Snapshotted Per Round" {
       rule """
+        Reserve a job's successor slot only when selection succeeds. Redelivery of the same predecessor after reservation is a no-op. A failed selection can retry the same slot. Round state and accepted updates are isolated by trainingJobId and roundId.
         Each training round starts from a runtime snapshot selected by domain policy. Selection first verifies that the federation has joined organizations and that those organizations have dataset metadata for the training configuration's exact feature schema with both schema and label compatibility confirmed. Only then can an active runtime identity with the same organization and runtime identity be paired with that dataset. One deterministic dataset is selected per runtime for a round snapshot. When personalization is enabled, the selected participant also carries the stable personalization target and optional cohort/profile identity used by execution planning and personalized artifact lineage. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If federation membership, compatible dataset evidence, runtime identity matching, personalization capability matching, or quorum validation fails, the system records a failed participant selection event with a stage-specific reason so the operator can fix readiness and retry selection.
       """
+
+      expression {
+        unique (TrainingRound.trainingJobId, TrainingRound.previousRoundNumber)
+      }
+
+      scenario "Reject A Second Reservation Of The Same Successor Slot" {
+        given TrainingRoundParticipantsSelected {
+          trainingJobId = "job-1"
+          previousRoundNumber = 1
+        }
+        when SelectTrainingRoundParticipants {
+          trainingJobId = "job-1"
+          previousRoundNumber = 1
+        }
+        then reject "Training round already scheduled"
+      }
 
       scenario "Select Participants When Runtime Pool Reaches Quorum" {
         given TrainingJobSubmitted {
@@ -3374,15 +3402,18 @@ context TrainingOrchestration {
 
   slice RetryTrainingRoundParticipantSelection {
     actor TrainingOperator
-    ui TrainingJobDashboard confirm
+    ui TrainingRoundProgress confirm
     reactsTo TrainingRoundParticipantSelectionFailed
 
     command RetryTrainingRoundParticipantSelection {
       trainingJobId: UUID id technical
+      roundId: UUID id technical
     }
 
     event TrainingRoundParticipantSelectionRetryRequested {
       trainingJobId: UUID id technical
+      roundId: UUID
+      previousRoundNumber: Int? from TrainingRoundParticipantSelectionFailed.previousRoundNumber
     }
 
     automation SelectTrainingRoundParticipantsWhenRetryRequested {
@@ -3622,6 +3653,7 @@ context TrainingOrchestration {
       emits GenerateParticipantExecutionPlan
     }
 
+    // Freeze the dataset chosen for this runtime in the execution plan.
     command GenerateParticipantExecutionPlan {
       executionPlanId: UUID id generated technical
       executionSessionId: UUID generated technical
@@ -3635,6 +3667,7 @@ context TrainingOrchestration {
       roundId: UUID from TrainingRoundStarted.roundId
       roundNumber: Int from TrainingRoundStarted.roundNumber
       runtimeId: UUID from participant.runtimeId
+      datasetId: UUID? from participant.datasetId
       organizationId: UUID from participant.organizationId
       personalizationMode: String? from TrainingRoundStarted.personalizationMode
       personalizationScope: String? from TrainingRoundStarted.personalizationScope
@@ -3711,6 +3744,7 @@ context TrainingOrchestration {
       roundId: UUID
       roundNumber: Int
       runtimeId: UUID
+      datasetId: UUID?
       organizationId: UUID
       personalizationMode: String? dictionary "PERSONALIZATION_MODE"
       personalizationScope: String? dictionary "PERSONALIZATION_SCOPE"
@@ -3802,6 +3836,7 @@ context TrainingOrchestration {
       roundId: UUID from ParticipantExecutionPlanGenerated.roundId
       roundNumber: Int from ParticipantExecutionPlanGenerated.roundNumber
       runtimeId: UUID from ParticipantExecutionPlanGenerated.runtimeId
+      datasetId: UUID? from ParticipantExecutionPlanGenerated.datasetId
       organizationId: UUID from ParticipantExecutionPlanGenerated.organizationId
       personalizationMode: String? from ParticipantExecutionPlanGenerated.personalizationMode
       personalizationScope: String? from ParticipantExecutionPlanGenerated.personalizationScope
@@ -3844,6 +3879,7 @@ context TrainingOrchestration {
       roundId: UUID
       roundNumber: Int
       runtimeId: UUID
+      datasetId: UUID?
       organizationId: UUID
       personalizationMode: String? dictionary "PERSONALIZATION_MODE"
       personalizationScope: String? dictionary "PERSONALIZATION_SCOPE"
@@ -4072,6 +4108,18 @@ context TrainingOrchestration {
       updateArtifactId: UUID from ModelUpdateSubmissionReceived.updateArtifactId
       anomalyScore: Decimal
       rejectionReason: String generated technical
+    }
+
+    event HistoricalRoundUpdateDispositionRecorded {
+      modelUpdateSubmissionId: UUID id technical
+      trainingJobId: UUID
+      roundId: UUID
+      canonicalRoundId: UUID
+      runtimeId: UUID
+      updateArtifactId: UUID
+      artifactDigest: String
+      recoveryDigest: String
+      reconciledRejectionIds: UUID[]
     }
 
     state Evaluated
@@ -4593,7 +4641,14 @@ context TrainingOrchestration {
       modelArtifactDigest: String
       aggregatedModelSignatureUri: String?
       globalAccuracy: Decimal portOutput
-      globalFairnessScore: Decimal portOutput
+      globalFairnessScore: Decimal? portOutput
+      validationDatasetVersion: String portOutput
+      validationDatasetDigest: String portOutput
+      evaluatedSampleCount: Int portOutput
+      truePositiveCount: Int portOutput
+      trueNegativeCount: Int portOutput
+      falsePositiveCount: Int portOutput
+      falseNegativeCount: Int portOutput
     }
   }
 
@@ -4631,6 +4686,7 @@ context TrainingOrchestration {
       trainingJobObjective: String
       featureSchemaId: UUID
       roundId: UUID
+      nextRoundId: UUID generated technical
       roundNumber: Int
       maxRounds: Int
       minimumAccuracy: Decimal
@@ -4649,6 +4705,7 @@ context TrainingOrchestration {
     specification "Training Round Completion Requires Global Evaluation" {
       rule """
         A training round can be completed only after the aggregated global model has been evaluated.
+        Completing the same round again must not emit another completion or allocate another successor.
         The completed event retains federationId from the TrainingRound state so the next round selects participants from the same federation.
       """
 
@@ -4800,6 +4857,13 @@ context TrainingOrchestration {
       aggregatedModelId: UUID?
       globalAccuracy: Decimal?
       globalFairnessScore: Decimal?
+      validationDatasetVersion: String?
+      validationDatasetDigest: String?
+      evaluatedSampleCount: Int?
+      truePositiveCount: Int?
+      trueNegativeCount: Int?
+      falsePositiveCount: Int?
+      falseNegativeCount: Int?
       failureReason: String?
       subscribe TrainingJobCreated
       subscribe FeatureSchemaDefined
@@ -4829,6 +4893,37 @@ context TrainingOrchestration {
     }
   }
 
+  slice RecoverHistoricalTrainingRound {
+    actor TrainingOperator
+    command RecoverHistoricalTrainingRound {
+      roundId: UUID id technical
+      trainingJobId: UUID
+      recoveryDigest: String
+    }
+    event HistoricalTrainingRoundRecovered {
+      roundId: UUID id technical
+      trainingJobId: UUID
+      recoveryDigest: String
+      canonicalRoundId: UUID
+      recoverySubmissionIds: UUID[]
+      federationId: UUID
+      trainingRunConfigurationId: UUID
+      featureSchemaId: UUID
+      trainingJobObjective: String
+      roundNumber: Int
+      maxRounds: Int
+      minimumAccuracy: Decimal
+      aggregationAlgorithm: String
+      minimumNodesPerRound: Int
+      secureAggregationRequired: Boolean
+      selectedParticipants: TrainingRoundParticipant[]
+      selectedOrganizationIds: UUID[]
+      selectedRuntimeIds: UUID[]
+      selectedOrganizationCount: Int
+      selectedRuntimeCount: Int
+    }
+  }
+
   concept TrainingRound {
     state ParticipantsSelected
     state Running
@@ -4839,6 +4934,7 @@ context TrainingOrchestration {
     state Failed
 
     slice SelectTrainingRoundParticipants
+    slice RecoverHistoricalTrainingRound
     slice RetryTrainingRoundParticipantSelection
     slice StartTrainingRound
     slice SubmitModelUpdateSubmission
@@ -7106,6 +7202,7 @@ context RuntimeAgentOperations {
       roundId: UUID from ParticipantExecutionPlanDispatched.roundId
       roundNumber: Int from ParticipantExecutionPlanDispatched.roundNumber
       runtimeId: UUID from ParticipantExecutionPlanDispatched.runtimeId
+      datasetId: UUID? from ParticipantExecutionPlanDispatched.datasetId
       organizationId: UUID from ParticipantExecutionPlanDispatched.organizationId
       personalizationMode: String? from ParticipantExecutionPlanDispatched.personalizationMode
       personalizationScope: String? from ParticipantExecutionPlanDispatched.personalizationScope
@@ -7149,6 +7246,7 @@ context RuntimeAgentOperations {
       roundId: UUID
       roundNumber: Int
       runtimeId: UUID
+      datasetId: UUID?
       organizationId: UUID
       personalizationMode: String? dictionary "PERSONALIZATION_MODE"
       personalizationScope: String? dictionary "PERSONALIZATION_SCOPE"
@@ -7204,6 +7302,7 @@ context RuntimeAgentOperations {
       roundId: UUID from ExecutionPlanReceived.roundId
       roundNumber: Int from ExecutionPlanReceived.roundNumber
       runtimeId: UUID from ExecutionPlanReceived.runtimeId
+      datasetId: UUID? from ExecutionPlanReceived.datasetId
       organizationId: UUID from ExecutionPlanReceived.organizationId
       personalizationMode: String? from ExecutionPlanReceived.personalizationMode
       personalizationScope: String? from ExecutionPlanReceived.personalizationScope
@@ -7247,6 +7346,7 @@ context RuntimeAgentOperations {
       roundId: UUID
       roundNumber: Int
       runtimeId: UUID
+      datasetId: UUID?
       organizationId: UUID
       personalizationMode: String? dictionary "PERSONALIZATION_MODE"
       personalizationScope: String? dictionary "PERSONALIZATION_SCOPE"
@@ -7298,6 +7398,7 @@ context RuntimeAgentOperations {
       roundId: UUID
       roundNumber: Int
       runtimeId: UUID
+      datasetId: UUID?
       organizationId: UUID
       personalizationMode: String? dictionary "PERSONALIZATION_MODE"
       personalizationScope: String? dictionary "PERSONALIZATION_SCOPE"
@@ -7387,6 +7488,7 @@ context RuntimeAgentOperations {
       roundId: UUID from ExecutionPlanAccepted.roundId
       roundNumber: Int from ExecutionPlanAccepted.roundNumber
       runtimeId: UUID from ExecutionPlanAccepted.runtimeId
+      datasetId: UUID? from ExecutionPlanAccepted.datasetId
       organizationId: UUID from ExecutionPlanAccepted.organizationId
       featureSchemaId: UUID from ExecutionPlanAccepted.featureSchemaId
       personalizationMode: String? from ExecutionPlanAccepted.personalizationMode
@@ -7430,6 +7532,7 @@ context RuntimeAgentOperations {
       roundId: UUID
       roundNumber: Int
       runtimeId: UUID
+      datasetId: UUID?
       organizationId: UUID
       featureSchemaId: UUID
       personalizationMode: String? dictionary "PERSONALIZATION_MODE"
@@ -7509,6 +7612,7 @@ context RuntimeAgentOperations {
       roundId: UUID
       roundNumber: Int
       runtimeId: UUID
+      datasetId: UUID?
       organizationId: UUID
       featureSchemaId: UUID
       personalizationMode: String? dictionary "PERSONALIZATION_MODE"
@@ -7819,6 +7923,7 @@ context RuntimeAgentOperations {
       roundId: UUID from RoundExecutionStartFailed.roundId
       roundNumber: Int from RoundExecutionStartFailed.roundNumber
       runtimeId: UUID from RoundExecutionStartFailed.runtimeId
+      datasetId: UUID? from RoundExecutionStartFailed.datasetId
       organizationId: UUID from RoundExecutionStartFailed.organizationId
       featureSchemaId: UUID from RoundExecutionStartFailed.featureSchemaId
       baseModelId: UUID from RoundExecutionStartFailed.baseModelId
@@ -7835,6 +7940,7 @@ context RuntimeAgentOperations {
       roundId: UUID
       roundNumber: Int
       runtimeId: UUID
+      datasetId: UUID?
       organizationId: UUID
       featureSchemaId: UUID
       baseModelId: UUID
@@ -7863,6 +7969,7 @@ context RuntimeAgentOperations {
       roundId: UUID
       roundNumber: Int
       runtimeId: UUID
+      datasetId: UUID?
       organizationId: UUID
       featureSchemaId: UUID
       baseModelId: UUID
@@ -7889,6 +7996,7 @@ context RuntimeAgentOperations {
       roundId: UUID from RoundExecutionFailed.roundId
       roundNumber: Int derived from RoundExecutionStarted.roundNumber by roundExecutionId
       runtimeId: UUID from RoundExecutionFailed.runtimeId
+      datasetId: UUID? derived from RoundExecutionStarted.datasetId by roundExecutionId
       organizationId: UUID derived from RoundExecutionStarted.organizationId by roundExecutionId
       featureSchemaId: UUID derived from RoundExecutionStarted.featureSchemaId by roundExecutionId
       baseModelId: UUID derived from RoundExecutionStarted.baseModelId by roundExecutionId
@@ -7905,6 +8013,7 @@ context RuntimeAgentOperations {
       roundId: UUID
       roundNumber: Int
       runtimeId: UUID
+      datasetId: UUID?
       organizationId: UUID
       featureSchemaId: UUID
       baseModelId: UUID
@@ -7933,6 +8042,7 @@ context RuntimeAgentOperations {
       roundId: UUID
       roundNumber: Int
       runtimeId: UUID
+      datasetId: UUID?
       organizationId: UUID
       featureSchemaId: UUID
       baseModelId: UUID
@@ -8158,6 +8268,7 @@ context RuntimeAgentOperations {
       roundNumber: Int?
       organizationId: UUID?
       runtimeId: UUID
+      datasetId: UUID?
       state: RoundExecution.State
       featureSchemaId: UUID?
       baseModelId: UUID?

@@ -70,6 +70,13 @@ class TrainingRoundProgressReadModelQueryService(
             criteria.aggregatedModelId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("aggregatedModelId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.globalAccuracy?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<BigDecimal>> { root -> root.get("globalAccuracy") })) }
             criteria.globalFairnessScore?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<BigDecimal>> { root -> root.get("globalFairnessScore") })) }
+            criteria.validationDatasetVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<String>> { root -> root.get("validationDatasetVersion") })) }
+            criteria.validationDatasetDigest?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<String>> { root -> root.get("validationDatasetDigest") })) }
+            criteria.evaluatedSampleCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<Int>> { root -> root.get("evaluatedSampleCount") })) }
+            criteria.truePositiveCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<Int>> { root -> root.get("truePositiveCount") })) }
+            criteria.trueNegativeCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<Int>> { root -> root.get("trueNegativeCount") })) }
+            criteria.falsePositiveCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<Int>> { root -> root.get("falsePositiveCount") })) }
+            criteria.falseNegativeCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<Int>> { root -> root.get("falseNegativeCount") })) }
             criteria.failureReason?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<String>> { root -> root.get("failureReason") })) }
             criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
@@ -178,6 +185,13 @@ class TrainingRoundProgressReadModelQueryService(
             it.aggregatedModelId = this@toProjection.aggregatedModelId
             it.globalAccuracy = this@toProjection.globalAccuracy
             it.globalFairnessScore = this@toProjection.globalFairnessScore
+            it.validationDatasetVersion = this@toProjection.validationDatasetVersion
+            it.validationDatasetDigest = this@toProjection.validationDatasetDigest
+            it.evaluatedSampleCount = this@toProjection.evaluatedSampleCount
+            it.truePositiveCount = this@toProjection.truePositiveCount
+            it.trueNegativeCount = this@toProjection.trueNegativeCount
+            it.falsePositiveCount = this@toProjection.falsePositiveCount
+            it.falseNegativeCount = this@toProjection.falseNegativeCount
             it.failureReason = this@toProjection.failureReason
             it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId

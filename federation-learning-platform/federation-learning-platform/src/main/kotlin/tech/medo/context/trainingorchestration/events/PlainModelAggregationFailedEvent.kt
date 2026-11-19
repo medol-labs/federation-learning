@@ -8,11 +8,11 @@ import java.util.UUID;
 
 @Event
 data class PlainModelAggregationFailedEvent(
-    @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
     val trainingJobObjective: String,
     val featureSchemaId: UUID,
+    @EventTag(key = "roundId")
     val roundId: UUID,
     val roundNumber: Int,
     val selectedRuntimeCount: Int,

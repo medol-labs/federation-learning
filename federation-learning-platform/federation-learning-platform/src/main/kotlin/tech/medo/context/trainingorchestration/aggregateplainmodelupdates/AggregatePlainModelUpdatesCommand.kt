@@ -22,10 +22,8 @@ data class AggregatePlainModelUpdatesCommand(
     val aggregatedModelId: UUID = java.util.UUID.randomUUID(),
     val modelUpdateArtifactRefs: List<String>
 ) {
-
     @TargetEntityId
-    val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
-
+    val selection: TrainingRoundSelection = TrainingRoundSelection(roundId = roundId)
 
 
 }

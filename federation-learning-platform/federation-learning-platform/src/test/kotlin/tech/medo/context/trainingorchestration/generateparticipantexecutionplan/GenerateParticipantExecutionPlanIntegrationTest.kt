@@ -23,7 +23,6 @@ import java.math.BigDecimal
 class GenerateParticipantExecutionPlanIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
-
     @Test
     fun GenerateInitialRoundPlanWithInitialModelSnapshot() {
         val command = GenerateParticipantExecutionPlanCommand(
@@ -39,6 +38,7 @@ class GenerateParticipantExecutionPlanIntegrationTest(
             roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
             roundNumber = 1,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             personalizationMode = null,
             personalizationScope = null,
@@ -90,6 +90,7 @@ class GenerateParticipantExecutionPlanIntegrationTest(
             roundId = UUID.nameUUIDFromBytes("round-2".toByteArray()),
             roundNumber = 2,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             personalizationMode = null,
             personalizationScope = null,

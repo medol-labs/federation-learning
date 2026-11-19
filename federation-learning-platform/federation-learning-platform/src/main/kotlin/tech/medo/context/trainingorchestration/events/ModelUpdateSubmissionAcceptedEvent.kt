@@ -12,10 +12,10 @@ data class ModelUpdateSubmissionAcceptedEvent(
     val modelUpdateSubmissionId: UUID,
     val executionSessionId: UUID,
     val executionPlanId: UUID,
-    @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
     val trainingJobObjective: String,
+    @EventTag(key = "roundId")
     val roundId: UUID,
     val roundNumber: Int,
     val maxRounds: Int,

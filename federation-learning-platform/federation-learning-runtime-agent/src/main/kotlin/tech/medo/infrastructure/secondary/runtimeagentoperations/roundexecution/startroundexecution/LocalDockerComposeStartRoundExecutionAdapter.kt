@@ -1,11 +1,9 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.startroundexecution
 
 import org.slf4j.LoggerFactory
-import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
-import tech.jhipster.service.filter.StringFilter
+import tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.forExecutionPlan
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
-import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionInput
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionResult
@@ -31,7 +29,7 @@ class LocalDockerComposeStartRoundExecutionAdapter(
         val binding = findBinding(input)
             ?: return StartRoundExecutionResult.Rejected(
                 runtimeEngineJobId = null,
-                failureReason = "No runtime dataset binding is available for runtime ${input.runtimeId}."
+                failureReason = "No runtime dataset binding uniquely matches dataset ${input.datasetId} for runtime ${input.runtimeId}."
             )
         val datasetPath = binding.filePath?.takeIf { it.isNotBlank() }
             ?: return StartRoundExecutionResult.Rejected(
@@ -107,15 +105,7 @@ class LocalDockerComposeStartRoundExecutionAdapter(
     }
 
     private fun findBinding(input: StartRoundExecutionInput): RuntimeDatasetBindingCatalogReadModel? =
-        bindingRepository.findAllByCriteria(
-            RuntimeDatasetBindingCatalogReadModelCriteria().apply {
-                runtimeId = StringFilter().apply { equals = input.runtimeId.toString() }
-                organizationId = StringFilter().apply { equals = input.organizationId.toString() }
-            },
-            PageRequest.of(0, 20)
-        ).content
-            .filter { it.datasetId != null }
-            .maxByOrNull { it.configuredAt ?: java.time.LocalDateTime.MIN }
+        bindingRepository.forExecutionPlan(input.runtimeId, input.organizationId, input.featureSchemaId, input.datasetId)
 
     private fun waitUntilHealthy(endpoint: String) {
         val deadline = Instant.now().plus(properties.healthTimeout.coerceAtLeast(Duration.ofSeconds(1)))

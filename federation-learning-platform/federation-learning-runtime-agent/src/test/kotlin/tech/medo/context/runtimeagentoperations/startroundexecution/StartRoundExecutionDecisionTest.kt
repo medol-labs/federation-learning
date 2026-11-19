@@ -28,6 +28,7 @@ class StartRoundExecutionDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             personalizationMode = null,
             personalizationScope = null,
@@ -79,6 +80,7 @@ class StartRoundExecutionDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
             personalizationMode = null,
@@ -131,6 +133,7 @@ class StartRoundExecutionDecisionTest {
         assertEquals(command.roundId, event.roundId)
         assertEquals(command.roundNumber, event.roundNumber)
         assertEquals(command.runtimeId, event.runtimeId)
+        assertEquals(command.datasetId, event.datasetId)
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
         assertEquals(command.personalizationMode, event.personalizationMode)
@@ -179,6 +182,7 @@ class StartRoundExecutionDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             personalizationMode = null,
             personalizationScope = null,
@@ -230,6 +234,7 @@ class StartRoundExecutionDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
             personalizationMode = null,
@@ -283,6 +288,7 @@ class StartRoundExecutionDecisionTest {
         assertEquals(command.roundId, event.roundId)
         assertEquals(command.roundNumber, event.roundNumber)
         assertEquals(command.runtimeId, event.runtimeId)
+        assertEquals(command.datasetId, event.datasetId)
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
         assertEquals(command.personalizationMode, event.personalizationMode)

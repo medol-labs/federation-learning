@@ -100,6 +100,21 @@ if (args['training-job-key']) {
     seed.trainingJob.trainingJobId = stableUuid(`fl-dev:training-job:${trainingScenario}:${federationMode}:${args['training-job-key']}`);
 }
 const authTokensByBaseUrl = new Map();
+// A run may supply scenario-specific data without changing participant identities.
+if (args['seed-inputs']) {
+    const overrides = JSON.parse(readFileSync(resolve(args['seed-inputs']), 'utf8'));
+    const allowed = ['featureSchema', 'dataset', 'binding', 'accessValidation', 'platformMetadata',
+        'model', 'trainingRunConfiguration', 'trainingJob'];
+    for (const [record, fields] of Object.entries(overrides)) {
+        if (!allowed.includes(record) || !fields || typeof fields !== 'object' || Array.isArray(fields))
+            fail('Invalid seed input: ' + record);
+        for (const key of Object.keys(fields)) {
+            if (!Object.hasOwn(seed[record], key) || ['runtimeId', 'runtimeAgentId', 'runtimeInfrastructureId',
+                'organizationId', 'federationId'].includes(key)) fail('Invalid seed field: ' + record + '.' + key);
+        }
+        Object.assign(seed[record], fields);
+    }
+}
 
 if (args['print-seed-json-only']) {
     console.log(JSON.stringify(seedSummary(seed), null, 2));
@@ -215,7 +230,13 @@ async function runPreparation(name, endpoint, baseUrl, inputs) {
         return;
     }
     const executor = createHttpExecutor({endpoints: Object.fromEntries(Object.keys(endpoints).map(key => [key, {anonymous: true}])), probes: [{endpoint, path: '/actuator/health'}]}, {
-        fetchImpl: (url, options) => fetch(url, {...options, headers: requestHeaders(options.headers, url.href)})
+        fetchImpl: (url, options) => {
+            if (args['require-agent-metadata'] && options.method === 'POST' &&
+                url.pathname.endsWith('/recordruntimedatasetmetadata')) {
+                throw new Error('Waiting for actual runtime-agent metadata; synthetic fallback disabled.');
+            }
+            return fetch(url, {...options, headers: requestHeaders(options.headers, url.href)});
+        }
     });
     const report = await executeCases(plan, environment, data, executor);
     if (report.status !== 'passed') {

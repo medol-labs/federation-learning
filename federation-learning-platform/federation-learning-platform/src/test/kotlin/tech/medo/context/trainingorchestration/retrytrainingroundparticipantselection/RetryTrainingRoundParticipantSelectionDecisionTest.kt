@@ -18,6 +18,7 @@ class RetryTrainingRoundParticipantSelectionDecisionTest {
         state.evolve(
             TrainingRoundParticipantSelectionFailedEvent(
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            previousRoundNumber = null,
             federationId = java.util.UUID.randomUUID(),
             federationName = null,
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
@@ -48,7 +49,8 @@ class RetryTrainingRoundParticipantSelectionDecisionTest {
         )
 
         val command = RetryTrainingRoundParticipantSelectionCommand(
-            trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray())
+            trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            roundId = java.util.UUID.randomUUID()
         )
 
         val events = (object : RetryTrainingRoundParticipantSelectionDecision {}).decide(
@@ -58,5 +60,6 @@ class RetryTrainingRoundParticipantSelectionDecisionTest {
 
         val event = events.filterIsInstance<TrainingRoundParticipantSelectionRetryRequestedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("job-1".toByteArray()), event.trainingJobId)
+        assertEquals(command.roundId, event.roundId)
     }
 }

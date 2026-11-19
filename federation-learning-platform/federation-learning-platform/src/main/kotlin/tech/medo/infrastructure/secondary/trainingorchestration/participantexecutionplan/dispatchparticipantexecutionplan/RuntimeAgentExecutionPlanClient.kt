@@ -55,6 +55,7 @@ data class ReceiveParticipantExecutionPlanRequest(
     val roundId: UUID,
     val roundNumber: Int,
     val runtimeId: UUID,
+    val datasetId: UUID,
     val organizationId: UUID,
     val baseModelId: UUID,
     val baseModelArtifactUri: String,

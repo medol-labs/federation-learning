@@ -4,6 +4,7 @@ setup(
     name="runtime-engine",
     version="0.0.1",
     packages=find_packages(),
+    package_data={"gemifl.runtime": ["holdout.json", "holdout.csv"]},
     install_requires=["setuptools", "grpcio", "protobuf", "cloudpickle"],
     description="Runtime engine for platform-orchestrated federated training",
     entry_points={

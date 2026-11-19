@@ -21,14 +21,12 @@ class SubmitGlobalModelEvaluationCommandHandler(
     @CommandHandler
     fun handle(
         command: SubmitGlobalModelEvaluationCommand,
-        @InjectEntity(idProperty = "trainingJobId") state: TrainingRoundState,
+        @InjectEntity(idProperty = "roundId") state: TrainingRoundState,
         eventAppender: EventAppender
     ) {
-
         val input = SubmitGlobalModelEvaluationInput(trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, trainingJobObjective = command.trainingJobObjective, featureSchemaId = command.featureSchemaId, roundId = command.roundId, roundNumber = command.roundNumber, maxRounds = command.maxRounds, minimumAccuracy = command.minimumAccuracy, aggregatedModelId = command.aggregatedModelId, modelPlugin = command.modelPlugin, aggregatedModelArtifactUri = command.aggregatedModelArtifactUri, aggregatedModelRegistryRef = command.aggregatedModelRegistryRef, modelFormat = command.modelFormat, modelArtifactDigest = command.modelArtifactDigest, aggregatedModelSignatureUri = command.aggregatedModelSignatureUri)
         val portResult = submitGlobalModelEvaluationService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))
-
     }
 }

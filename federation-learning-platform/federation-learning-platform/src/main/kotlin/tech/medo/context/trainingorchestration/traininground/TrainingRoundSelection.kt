@@ -4,11 +4,11 @@ import java.util.UUID;
 
 
 data class TrainingRoundSelection(
-    val trainingJobId: UUID
+    val roundId: UUID
 )
 
 object TrainingRoundTags {
-    const val TRAINING_JOB_ID = "trainingJobId"
+    const val ROUND_ID = "roundId"
 }
 
 object TrainingRoundMetadata {

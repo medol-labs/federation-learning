@@ -74,6 +74,7 @@ class JpaRoundExecutionCatalogReadModelRepository(
             it.roundNumber = this@toProjection.roundNumber
             it.organizationId = this@toProjection.organizationId
             it.runtimeId = this@toProjection.runtimeId
+            it.datasetId = this@toProjection.datasetId
             it.state = this@toProjection.state
             it.featureSchemaId = this@toProjection.featureSchemaId
             it.baseModelId = this@toProjection.baseModelId
@@ -131,6 +132,7 @@ class JpaRoundExecutionCatalogReadModelRepository(
             it.roundNumber = this@toEntity.roundNumber
             it.organizationId = this@toEntity.organizationId
             it.runtimeId = this@toEntity.runtimeId
+            it.datasetId = this@toEntity.datasetId
             it.state = this@toEntity.state
             it.featureSchemaId = this@toEntity.featureSchemaId
             it.baseModelId = this@toEntity.baseModelId

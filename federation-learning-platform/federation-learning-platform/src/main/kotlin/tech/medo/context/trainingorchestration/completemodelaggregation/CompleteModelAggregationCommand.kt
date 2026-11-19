@@ -31,10 +31,8 @@ data class CompleteModelAggregationCommand(
     val aggregatedModelSignatureUri: String?,
     val aggregatedModelSizeBytes: Int?
 ) {
-
     @TargetEntityId
-    val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
-
+    val selection: TrainingRoundSelection = TrainingRoundSelection(roundId = roundId)
 
 
 }

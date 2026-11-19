@@ -29,6 +29,7 @@ class RoundExecutionCatalogReadModelCriteria {
     var roundNumber: IntegerFilter? = null
     var organizationId: StringFilter? = null
     var runtimeId: StringFilter? = null
+    var datasetId: StringFilter? = null
     var state: Filter<RoundExecutionStateEnum>? = null
     var featureSchemaId: StringFilter? = null
     var baseModelId: StringFilter? = null
@@ -79,6 +80,7 @@ class RoundExecutionCatalogReadModelProjection : MetadataProjection {
     var roundNumber: Int? = null
     var organizationId: UUID? = null
     var runtimeId: UUID? = null
+    var datasetId: UUID? = null
     var state: RoundExecutionStateEnum? = null
     var featureSchemaId: UUID? = null
     var baseModelId: UUID? = null
@@ -146,6 +148,7 @@ fun RoundExecutionCatalogReadModelProjection.toReadModel(): RoundExecutionCatalo
     roundNumber = roundNumber,
     organizationId = organizationId,
     runtimeId = runtimeId,
+    datasetId = datasetId,
     state = state,
     featureSchemaId = featureSchemaId,
     baseModelId = baseModelId,
@@ -211,6 +214,7 @@ data class RoundExecutionCatalogReadModel(
     val roundNumber: Int?,
     val organizationId: UUID?,
     val runtimeId: UUID?,
+    val datasetId: UUID?,
     val state: RoundExecutionStateEnum?,
     val featureSchemaId: UUID?,
     val baseModelId: UUID?,

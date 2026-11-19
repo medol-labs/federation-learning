@@ -9,11 +9,11 @@ import java.math.BigDecimal;
 
 @Event
 data class GlobalModelUpdatedEvent(
-    @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
     val trainingJobObjective: String,
     val featureSchemaId: UUID,
+    @EventTag(key = "roundId")
     val roundId: UUID,
     val roundNumber: Int,
     val maxRounds: Int,

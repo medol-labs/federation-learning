@@ -22,6 +22,7 @@ class ReceiveParticipantExecutionPlanDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             personalizationMode = null,
             personalizationScope = null,

@@ -19,11 +19,9 @@ class SubmitModelUpdateSubmissionCommandHandler(
     @CommandHandler
     fun handle(
         command: SubmitModelUpdateSubmissionCommand,
-        @InjectEntity(idProperty = "trainingJobId") state: TrainingRoundState,
+        @InjectEntity(idProperty = "roundId") state: TrainingRoundState,
         eventAppender: EventAppender
     ) {
-
         eventAppender.append(decision.decide(command, state))
-
     }
 }

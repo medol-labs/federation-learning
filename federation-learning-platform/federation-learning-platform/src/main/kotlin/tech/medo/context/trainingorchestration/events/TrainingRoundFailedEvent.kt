@@ -8,10 +8,10 @@ import java.util.UUID;
 
 @Event
 data class TrainingRoundFailedEvent(
-    @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
     val featureSchemaId: UUID,
+    @EventTag(key = "roundId")
     val roundId: UUID,
     val selectedRuntimeCount: Int,
     val minimumNodesPerRound: Int,

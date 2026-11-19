@@ -42,6 +42,7 @@ class GenerateParticipantExecutionPlanDecisionComponentTest {
         assertEquals(trainingJobId, event.trainingJobId)
         assertEquals(trainingRunConfigurationId, event.trainingRunConfigurationId)
         assertEquals(featureSchemaId, event.featureSchemaId)
+        assertEquals(uuid("dddddddd-dddd-4ddd-8ddd-dddddddddddd"), event.datasetId)
         assertEquals(roundId, event.roundId)
         assertEquals(1, event.roundNumber)
         assertEquals(uuid("77777777-7777-4777-8777-777777777777"), event.runtimeId)
@@ -121,6 +122,7 @@ class GenerateParticipantExecutionPlanDecisionComponentTest {
         personalizationTargetId: UUID? = null,
     ): GenerateParticipantExecutionPlanCommand =
         GenerateParticipantExecutionPlanCommand(
+            datasetId = UUID.fromString("dddddddd-dddd-4ddd-8ddd-dddddddddddd"),
             trainingJobId = trainingJobId,
             federationId = uuid("88888888-8888-4888-8888-888888888888"),
             federationName = "Test Federation",

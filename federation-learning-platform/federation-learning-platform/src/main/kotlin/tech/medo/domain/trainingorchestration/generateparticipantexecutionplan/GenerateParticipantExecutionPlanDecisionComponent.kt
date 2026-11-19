@@ -61,6 +61,7 @@ class GenerateParticipantExecutionPlanDecisionComponent(
                 roundId = command.roundId,
                 roundNumber = command.roundNumber,
                 runtimeId = command.runtimeId,
+                datasetId = requireNotNull(command.datasetId) { "Execution plan requires the dataset selected for this runtime." },
                 organizationId = command.organizationId,
                 personalizationMode = command.personalizationMode,
                 personalizationScope = command.personalizationScope,

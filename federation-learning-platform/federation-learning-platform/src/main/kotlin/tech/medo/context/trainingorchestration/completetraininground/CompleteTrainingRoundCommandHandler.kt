@@ -19,11 +19,9 @@ class CompleteTrainingRoundCommandHandler(
     @CommandHandler
     fun handle(
         command: CompleteTrainingRoundCommand,
-        @InjectEntity(idProperty = "trainingJobId") state: TrainingRoundState,
+        @InjectEntity(idProperty = "roundId") state: TrainingRoundState,
         eventAppender: EventAppender
     ) {
-
         eventAppender.append(decision.decide(command, state))
-
     }
 }

@@ -45,10 +45,8 @@ data class SubmitModelUpdateSubmissionCommand(
     val personalizedAccuracy: BigDecimal?,
     val personalizationLift: BigDecimal?
 ) {
-
     @TargetEntityId
-    val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
-
+    val selection: TrainingRoundSelection = TrainingRoundSelection(roundId = roundId)
 
 
 }

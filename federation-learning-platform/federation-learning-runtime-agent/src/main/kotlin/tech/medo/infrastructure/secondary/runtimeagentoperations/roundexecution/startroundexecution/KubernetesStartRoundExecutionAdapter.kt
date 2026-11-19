@@ -1,10 +1,8 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.startroundexecution
 
 import org.slf4j.LoggerFactory
-import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
-import tech.jhipster.service.filter.StringFilter
-import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelCriteria
+import tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.forExecutionPlan
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionInput
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionResult
@@ -18,19 +16,14 @@ class KubernetesStartRoundExecutionAdapter(
     private val properties: LocalRuntimeEngineProperties,
     private val manager: RuntimeEngineResourceManager,
     private val runtimeEngineClient: RuntimeEngineClient,
-    private val bindingRepository: RuntimeDatasetBindingCatalogReadModelRepository
+    private val bindingRepository: RuntimeDatasetBindingCatalogReadModelRepository,
+    private val trainingParameters: PlatformTrainingParametersClient
 ) : StartRoundExecutionService {
     override fun supports(input: StartRoundExecutionInput): Boolean = properties.enabled && properties.usesKubernetes()
 
     override fun execute(input: StartRoundExecutionInput): StartRoundExecutionResult {
-        val binding = bindingRepository.findAllByCriteria(
-            RuntimeDatasetBindingCatalogReadModelCriteria().apply {
-                runtimeId = StringFilter().apply { equals = input.runtimeId.toString() }
-                organizationId = StringFilter().apply { equals = input.organizationId.toString() }
-            },
-            PageRequest.of(0, 20)
-        ).content.filter { it.datasetId != null }.maxByOrNull { it.configuredAt ?: java.time.LocalDateTime.MIN }
-            ?: return StartRoundExecutionResult.Rejected(null, "No runtime dataset binding is available for runtime ${input.runtimeId}.")
+        val binding = bindingRepository.forExecutionPlan(input.runtimeId, input.organizationId, input.featureSchemaId, input.datasetId)
+            ?: return StartRoundExecutionResult.Rejected(null, "No unique binding for planned dataset ${input.datasetId} on runtime ${input.runtimeId}.")
         val datasetPath = binding.filePath?.takeIf(String::isNotBlank)
             ?: return StartRoundExecutionResult.Rejected(
                 null,
@@ -44,10 +37,11 @@ class KubernetesStartRoundExecutionAdapter(
         val jobId = "round-${input.roundNumber}-${input.executionPlanId}"
         return try {
             input.personalizationParameters()
+            val parameters = trainingParameters.get(input.trainingRunConfigurationId)
             manager.ensureStarted(jobId, runtimeEngineImageReference(input.runtimeEngineImage, input.runtimeEngineImageDigest))
             val endpoint = properties.endpointFor(jobId)
             waitUntilHealthy(endpoint)
-            val request = jobRequest(input, jobId, modelPlugin, datasetPath)
+            val request = jobRequest(input, jobId, modelPlugin, datasetPath, parameters)
             val response = runtimeEngineClient.startJob(endpoint, request)
             if (response.status.equals("failed", ignoreCase = true)) {
                 manager.delete(jobId)
@@ -83,7 +77,8 @@ class KubernetesStartRoundExecutionAdapter(
         input: StartRoundExecutionInput,
         jobId: String,
         modelPlugin: String,
-        datasetPath: String
+        datasetPath: String,
+        parameters: ExecutionTrainingParameters
     ): RuntimeEngineJobRequest {
         val outputRoot = "${properties.runtimeRoot}/$jobId/${properties.nodeName}"
         return RuntimeEngineJobRequest(
@@ -108,9 +103,9 @@ class KubernetesStartRoundExecutionAdapter(
                 "modelPlugin" to modelPlugin,
                 "engine" to "python",
                 "process" to "train",
-                "epochs" to properties.epoch,
-                "epoch" to properties.epoch,
-                "learningRate" to properties.learningRate
+                "epochs" to parameters.localEpochs,
+                "epoch" to parameters.localEpochs,
+                "learningRate" to parameters.learningRate
             ) + input.personalizationParameters(),
             jobParameter = mapOf("encryptMethod" to "plain", "loggerLevel" to "INFO"),
             runtimeRoot = properties.runtimeRoot

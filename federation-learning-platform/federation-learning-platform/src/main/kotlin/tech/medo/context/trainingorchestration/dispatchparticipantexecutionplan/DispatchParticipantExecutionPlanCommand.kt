@@ -17,6 +17,7 @@ data class DispatchParticipantExecutionPlanCommand(
     val roundId: UUID,
     val roundNumber: Int,
     val runtimeId: UUID,
+    val datasetId: UUID?,
     val organizationId: UUID,
     val personalizationMode: String?,
     val personalizationScope: String?,
@@ -49,10 +50,8 @@ data class DispatchParticipantExecutionPlanCommand(
     val publicKeyRef: String?,
     val encryptedParameterScale: Int?
 ) {
-
     @TargetEntityId
     val selection: ParticipantExecutionPlanSelection = ParticipantExecutionPlanSelection(executionPlanId = executionPlanId)
-
 
 
 }

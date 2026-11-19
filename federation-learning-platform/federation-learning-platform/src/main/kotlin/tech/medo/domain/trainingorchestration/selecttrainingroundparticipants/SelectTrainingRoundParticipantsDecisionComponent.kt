@@ -1,27 +1,29 @@
 package tech.medo.domain.trainingorchestration.selecttrainingroundparticipants
 
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionFailedEvent
-import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsCommand
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsDecision
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsResult
 import java.math.BigDecimal
 import java.time.LocalDateTime
-import java.util.UUID
+import tech.medo.trainingorchestration.traininground.TrainingRoundTrainingJobIdPreviousRoundNumberReservationState
 
 @Component
 class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundParticipantsDecision {
-    private val log = LoggerFactory.getLogger(SelectTrainingRoundParticipantsDecisionComponent::class.java)
-
     override fun decide(
         command: SelectTrainingRoundParticipantsCommand,
+        reservation: TrainingRoundTrainingJobIdPreviousRoundNumberReservationState,
         portResult: SelectTrainingRoundParticipantsResult,
         now: LocalDateTime
-    ): List<Any> =
-        when (portResult) {
-            is SelectTrainingRoundParticipantsResult.Succeeded -> decideSucceeded(command, portResult)
+    ): List<Any> {
+        if (reservation.reserved) return emptyList()
+        return when (portResult) {
+            is SelectTrainingRoundParticipantsResult.Succeeded -> {
+                require(portResult.minimumNodesPerRound > 0 && portResult.selectedRuntimeCount >= portResult.minimumNodesPerRound)
+                require(portResult.roundNumber == Math.addExact(command.previousRoundNumber, 1))
+                super.decide(command, reservation, portResult, now)
+            }
             is SelectTrainingRoundParticipantsResult.Rejected -> listOf(
                 TrainingRoundParticipantSelectionFailedEvent(
                     trainingJobId = command.trainingJobId,
@@ -33,7 +35,8 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
                     featureDomain = command.featureDomain,
                     featureSchemaVersion = command.featureSchemaVersion,
                     trainingJobObjective = command.trainingJobObjective,
-                    roundId = portResult.roundId,
+                    roundId = command.roundId,
+                    previousRoundNumber = command.previousRoundNumber,
                     roundNumber = portResult.roundNumber,
                     maxRounds = portResult.maxRounds,
                     minimumAccuracy = portResult.minimumAccuracy,
@@ -64,8 +67,9 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
                     featureDomain = command.featureDomain,
                     featureSchemaVersion = command.featureSchemaVersion,
                     trainingJobObjective = command.trainingJobObjective,
-                    roundId = UUID.randomUUID(),
-                    roundNumber = 0,
+                    roundId = command.roundId,
+                    previousRoundNumber = command.previousRoundNumber,
+                    roundNumber = Math.addExact(command.previousRoundNumber, 1),
                     maxRounds = 0,
                     minimumAccuracy = BigDecimal.ZERO,
                     aggregationAlgorithm = "UNKNOWN",
@@ -85,56 +89,6 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
                 )
             )
         }
-
-    private fun decideSucceeded(
-        command: SelectTrainingRoundParticipantsCommand,
-        result: SelectTrainingRoundParticipantsResult.Succeeded
-    ): List<Any> {
-        require(result.minimumNodesPerRound > 0) {
-            "TrainingRunConfiguration.minimumNodesPerRound must be greater than zero."
-        }
-        if (result.selectedRuntimeCount < result.minimumNodesPerRound) {
-            error("SelectTrainingRoundParticipantsResult.Succeeded cannot be below quorum.")
-        }
-
-        log.info(
-            "Selected training round participants. trainingJobId={}, featureSchemaId={}, selectedRuntimeCount={}, selectedOrganizationCount={}, minimumNodesPerRound={}",
-            command.trainingJobId,
-            command.featureSchemaId,
-            result.selectedRuntimeCount,
-            result.selectedOrganizationCount,
-            result.minimumNodesPerRound
-        )
-
-        return listOf(
-            TrainingRoundParticipantsSelectedEvent(
-                trainingJobId = command.trainingJobId,
-                federationId = command.federationId,
-                federationName = command.federationName,
-                trainingRunConfigurationId = command.trainingRunConfigurationId,
-                configurationName = command.configurationName,
-                featureSchemaId = command.featureSchemaId,
-                featureDomain = command.featureDomain,
-                featureSchemaVersion = command.featureSchemaVersion,
-                trainingJobObjective = command.trainingJobObjective,
-                roundId = result.roundId,
-                roundNumber = result.roundNumber,
-                maxRounds = result.maxRounds,
-                minimumAccuracy = result.minimumAccuracy,
-                aggregationAlgorithm = result.aggregationAlgorithm,
-                personalizationMode = result.personalizationMode,
-                personalizationScope = result.personalizationScope,
-                personalizedArtifactPolicy = result.personalizedArtifactPolicy,
-                personalizationMetric = result.personalizationMetric,
-                minimumPersonalizationLift = result.minimumPersonalizationLift,
-                minimumNodesPerRound = result.minimumNodesPerRound,
-                secureAggregationRequired = result.secureAggregationRequired,
-                selectedOrganizationIds = result.selectedOrganizationIds,
-                selectedRuntimeIds = result.selectedRuntimeIds,
-                selectedParticipants = result.selectedParticipants,
-                selectedOrganizationCount = result.selectedOrganizationCount,
-                selectedRuntimeCount = result.selectedRuntimeCount
-            )
-        )
     }
+
 }

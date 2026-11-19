@@ -1,8 +1,8 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.acceptexecutionplan
 
 import org.slf4j.LoggerFactory
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
+import tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.forExecutionPlan
 import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanInput
 import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanResult
 import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanService
@@ -18,16 +18,10 @@ class LocalAcceptExecutionPlanAdapter(
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun execute(input: AcceptExecutionPlanInput): AcceptExecutionPlanResult {
-        val binding = bindingRepository.findAll(Pageable.unpaged()).content
-            // .filter { it.runtimeId == input.runtimeId }
-            // .filter { it.organizationId == input.organizationId }
-            .maxByOrNull { it.configuredAt ?: java.time.LocalDateTime.MIN }
-
-        val runtimeIdentityMatched = true// binding != null &&
-            // binding.runtimeId == input.runtimeId &&
-            // binding.organizationId == input.organizationId
+        val binding = bindingRepository.forExecutionPlan(input.runtimeId, input.organizationId, input.featureSchemaId, input.datasetId)
+        val runtimeIdentityMatched = binding != null
         val runtimeDatasetBindingAvailable = binding != null
-        val datasetAccessValidated = true // binding?.datasetId != null
+        val datasetAccessValidated = !binding?.filePath.isNullOrBlank()
         val baseModelAvailable = true /// input.baseModelId.toString().isNotBlank()
         val trainingConfigurationSupported = true
         val runtimeResourceAvailable = true
@@ -40,7 +34,7 @@ class LocalAcceptExecutionPlanAdapter(
                 add("Execution plan runtimeId ${input.runtimeId} and organizationId ${input.organizationId} do not match a local runtime dataset binding.")
             }
             if (!runtimeDatasetBindingAvailable) {
-                add("No runtime dataset binding is available for runtime ${input.runtimeId}.")
+                add("No runtime dataset binding uniquely matches dataset ${input.datasetId} for runtime ${input.runtimeId}.")
             }
             if (!datasetAccessValidated) {
                 add("Runtime dataset access has not been validated for runtime ${input.runtimeId}.")

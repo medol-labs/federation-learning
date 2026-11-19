@@ -11,7 +11,7 @@ import java.util.UUID
 
 class EvaluateModelUpdateSubmissionDecisionComponentTest {
     @Test
-    fun `accepts update by appending unique runtime ids`() {
+    fun `does not accept another artifact from the same runtime in the round`() {
         val runtimeId = uuid("runtime-1")
         val state = TrainingRoundState().apply {
             evolve(
@@ -91,10 +91,7 @@ class EvaluateModelUpdateSubmissionDecisionComponentTest {
             state = state
         )
 
-        val event = events.filterIsInstance<ModelUpdateSubmissionAcceptedEvent>().single()
-        assertEquals(listOf(runtimeId), event.acceptedRuntimeIds)
-        assertEquals(1, event.acceptedModelUpdateCount)
-        assertEquals(1, event.minimumNodesPerRound)
+        assertEquals(emptyList<Any>(), events)
     }
 
     @Test

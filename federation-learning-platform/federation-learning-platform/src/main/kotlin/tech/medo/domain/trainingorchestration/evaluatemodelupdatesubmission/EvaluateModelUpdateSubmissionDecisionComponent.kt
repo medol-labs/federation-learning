@@ -4,12 +4,28 @@ import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.evaluatemodelupdatesubmission.EvaluateModelUpdateSubmissionDecision
 import tech.medo.trainingorchestration.evaluatemodelupdatesubmission.EvaluateModelUpdateSubmissionCommand
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionAcceptedEvent
+import tech.medo.trainingorchestration.events.HistoricalRoundUpdateDispositionRecordedEvent
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 @Component
 class EvaluateModelUpdateSubmissionDecisionComponent : EvaluateModelUpdateSubmissionDecision {
     override fun decide(command: EvaluateModelUpdateSubmissionCommand, state: TrainingRoundState): List<Any> {
-        val isNewRuntime = command.runtimeId !in state.acceptedRuntimeIds
+        state.canonicalRoundId?.let { canonical ->
+            require(command.modelUpdateSubmissionId in state.recoverySubmissionIds && command.runtimeId in state.selectedRuntimeIds) {
+                "Update is not in the audited physical round."
+            }
+            if (canonical != command.roundId) {
+                if (command.modelUpdateSubmissionId in state.reconciledRejectionIds) return emptyList()
+                return listOf(HistoricalRoundUpdateDispositionRecordedEvent(
+                    modelUpdateSubmissionId = command.modelUpdateSubmissionId,
+                    trainingJobId = command.trainingJobId, roundId = command.roundId, canonicalRoundId = canonical,
+                    runtimeId = command.runtimeId, updateArtifactId = command.updateArtifactId, artifactDigest = command.artifactDigest,
+                    recoveryDigest = requireNotNull(state.recoveryDigest),
+                    reconciledRejectionIds = state.reconciledRejectionIds + command.modelUpdateSubmissionId
+                ))
+            }
+        }
+        if (command.runtimeId in state.acceptedRuntimeIds) return emptyList()
         val acceptedRuntimeIds = (state.acceptedRuntimeIds + command.runtimeId).distinct()
         val acceptedModelUpdateArtifactRefs =
             (state.acceptedModelUpdateArtifactRefs + command.artifactRef).distinct()
@@ -75,7 +91,6 @@ class EvaluateModelUpdateSubmissionDecisionComponent : EvaluateModelUpdateSubmis
                 requiredModelUpdateCount = requiredModelUpdateCount,
                 plainAggregationReady =
                     !command.secureAggregationRequired &&
-                        isNewRuntime &&
                         acceptedRuntimeIds.size >= requiredModelUpdateCount
             )
         )

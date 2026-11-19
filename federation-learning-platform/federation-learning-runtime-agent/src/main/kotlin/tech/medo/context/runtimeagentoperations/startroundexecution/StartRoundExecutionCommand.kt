@@ -17,6 +17,7 @@ data class StartRoundExecutionCommand(
     val roundId: UUID,
     val roundNumber: Int,
     val runtimeId: UUID,
+    val datasetId: UUID?,
     val organizationId: UUID,
     val featureSchemaId: UUID,
     val personalizationMode: String?,
@@ -50,10 +51,8 @@ data class StartRoundExecutionCommand(
     val publicKeyRef: String?,
     val encryptedParameterScale: Int?
 ) {
-
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
-
 
 
 }

@@ -26,10 +26,8 @@ data class CompleteTrainingRoundCommand(
     val aggregatedModelSignatureUri: String?,
     val globalAccuracy: BigDecimal
 ) {
-
     @TargetEntityId
-    val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
-
+    val selection: TrainingRoundSelection = TrainingRoundSelection(roundId = roundId)
 
 
 }

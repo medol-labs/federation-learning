@@ -29,15 +29,23 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
             override fun ensureStarted(jobId: String, image: String) { images += image }
             override fun delete(jobId: String) = Unit
         }
+        val client = RecordingClient()
+        val plan = input()
         val adapter = KubernetesStartRoundExecutionAdapter(
             LocalRuntimeEngineProperties(mode = "kubernetes", kubernetesImage = "registry.example/old-engine:v1"),
-            manager, RecordingClient(), bindingRepository(listOf(binding(filePath = "/workspace/datasets/images")))
+            manager, client, bindingRepository(listOf(binding(filePath = "/workspace/datasets/images"))),
+            PlatformTrainingParametersClient { id ->
+                assertEquals(plan.trainingRunConfigurationId, id)
+                ExecutionTrainingParameters(200, 0.05)
+            }
         )
         val digest = "sha256:" + "a".repeat(64)
         val image = "registry.example/new-engine:v2@$digest"
-        val result = adapter.execute(input().copy(runtimeEngineImage = image, runtimeEngineImageDigest = digest))
+        val result = adapter.execute(plan.copy(runtimeEngineImage = image, runtimeEngineImageDigest = digest))
         assertTrue(result is StartRoundExecutionResult.Succeeded)
         assertEquals(listOf(image), images)
+        assertEquals(200, client.jobs.single().modelParameter["epoch"])
+        assertEquals(0.05, client.jobs.single().modelParameter["learningRate"])
     }
 
     @Test
@@ -71,13 +79,19 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
     }
 
     @Test
-    fun startsRuntimeEngineAndSubmitsTrainingJob() {
+    fun submitsThePlannedDatasetEvenWhenTheSameRuntimeHasANewerCompatibleBinding() {
         val runner = RecordingRunner(LocalRuntimeEngineCommandResult(exitCode = 0, output = "started", timedOut = false))
         val client = RecordingClient()
         val adapter = adapter(
             runner = runner,
             client = client,
-            bindings = listOf(binding(filePath = "../volumes/datasets/alice.csv"))
+            bindings = listOf(
+                binding(filePath = "../volumes/datasets/alice.csv"),
+                binding(filePath = "../volumes/datasets/other.csv").copy(
+                    datasetId = UUID.randomUUID(), runtimeDatasetBindingId = UUID.randomUUID(),
+                    configuredAt = LocalDateTime.now().plusDays(1)
+                )
+            )
         )
 
         val result = adapter.execute(input())
@@ -175,6 +189,7 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
 
     private fun input(): StartRoundExecutionInput =
         StartRoundExecutionInput(
+            datasetId = UUID.fromString("cccccccc-cccc-4ccc-8ccc-cccccccccccc"),
             roundExecutionId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
             executionSessionId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
             executionPlanId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
@@ -251,7 +266,12 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
                 criteria: RuntimeDatasetBindingCatalogReadModelCriteria?,
                 pageable: Pageable
             ): Page<RuntimeDatasetBindingCatalogReadModel> =
-                findAll(pageable)
+                PageImpl(bindings.filter {
+                    it.datasetId.toString() == criteria?.datasetId?.equals &&
+                        it.featureSchemaId.toString() == criteria?.featureSchemaId?.equals &&
+                        it.organizationId.toString() == criteria?.organizationId?.equals &&
+                        it.runtimeId.toString() == criteria?.runtimeId?.equals
+                })
 
             override fun findById(id: UUID): RuntimeDatasetBindingCatalogReadModel? = null
             override fun findByIdWithAccessPolicy(id: UUID): RuntimeDatasetBindingCatalogReadModel? = findById(id)

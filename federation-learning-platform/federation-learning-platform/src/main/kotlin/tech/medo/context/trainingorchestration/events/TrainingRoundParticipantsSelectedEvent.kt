@@ -10,8 +10,8 @@ import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
 
 @Event
 data class TrainingRoundParticipantsSelectedEvent(
-    @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
+    val previousRoundNumber: Int?,
     val federationId: UUID,
     val federationName: String?,
     val trainingRunConfigurationId: UUID,
@@ -20,6 +20,7 @@ data class TrainingRoundParticipantsSelectedEvent(
     val featureDomain: String?,
     val featureSchemaVersion: String?,
     val trainingJobObjective: String,
+    @EventTag(key = "roundId")
     val roundId: UUID,
     val roundNumber: Int,
     val maxRounds: Int,

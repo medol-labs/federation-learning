@@ -147,6 +147,7 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.roundNumber = event.roundNumber
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
+            entity.datasetId = event.datasetId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
             entity.runtimeEngineProfileId = event.runtimeEngineProfileId
@@ -178,6 +179,7 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.roundNumber = event.roundNumber
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
+            entity.datasetId = event.datasetId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
             entity.runtimeEngineProfileId = event.runtimeEngineProfileId
@@ -217,6 +219,7 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.roundNumber = event.roundNumber
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
+            entity.datasetId = event.datasetId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
             entity.runtimeEngineProfileId = event.runtimeEngineProfileId
@@ -256,6 +259,7 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.roundNumber = event.roundNumber
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
+            entity.datasetId = event.datasetId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
             entity.runtimeEngineProfileId = event.runtimeEngineProfileId
@@ -288,6 +292,7 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.roundNumber = event.roundNumber
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
+            entity.datasetId = event.datasetId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
             entity.runtimeEngineProfileId = event.runtimeEngineProfileId
@@ -411,6 +416,7 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.roundNumber = event.roundNumber
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
+            entity.datasetId = event.datasetId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
@@ -439,6 +445,7 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.roundNumber = event.roundNumber
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
+            entity.datasetId = event.datasetId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
@@ -469,6 +476,7 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.roundNumber = event.roundNumber
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
+            entity.datasetId = event.datasetId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
@@ -497,6 +505,7 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.roundNumber = event.roundNumber
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
+            entity.datasetId = event.datasetId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
             entity.runtimeEngineJobId = event.runtimeEngineJobId

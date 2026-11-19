@@ -29,7 +29,14 @@ data class SubmitGlobalModelEvaluationInput(
 sealed interface SubmitGlobalModelEvaluationResult {
     data class Succeeded(
         val globalAccuracy: BigDecimal,
-        val globalFairnessScore: BigDecimal
+        val globalFairnessScore: BigDecimal?,
+        val validationDatasetVersion: String,
+        val validationDatasetDigest: String,
+        val evaluatedSampleCount: Int,
+        val truePositiveCount: Int,
+        val trueNegativeCount: Int,
+        val falsePositiveCount: Int,
+        val falseNegativeCount: Int
     ) : SubmitGlobalModelEvaluationResult
 
 

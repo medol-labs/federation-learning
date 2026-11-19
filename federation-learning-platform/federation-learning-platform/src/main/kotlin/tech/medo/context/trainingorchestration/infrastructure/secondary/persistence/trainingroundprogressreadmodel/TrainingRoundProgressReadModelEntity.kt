@@ -79,6 +79,13 @@ class TrainingRoundProgressReadModelEntity : MetadataProjection {
     var aggregatedModelId: UUID? = null
     var globalAccuracy: BigDecimal? = null
     var globalFairnessScore: BigDecimal? = null
+    var validationDatasetVersion: String? = null
+    var validationDatasetDigest: String? = null
+    var evaluatedSampleCount: Int? = null
+    var truePositiveCount: Int? = null
+    var trueNegativeCount: Int? = null
+    var falsePositiveCount: Int? = null
+    var falseNegativeCount: Int? = null
     @Column(columnDefinition = "text")
     var failureReason: String? = null
     var projectionUpdatedAt: LocalDateTime? = null

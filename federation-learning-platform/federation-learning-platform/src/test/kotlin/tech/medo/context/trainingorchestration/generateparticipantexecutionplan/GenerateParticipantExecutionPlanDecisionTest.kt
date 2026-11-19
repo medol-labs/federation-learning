@@ -29,6 +29,7 @@ class GenerateParticipantExecutionPlanDecisionTest {
             roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
             roundNumber = 1,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             personalizationMode = null,
             personalizationScope = null,
@@ -79,6 +80,7 @@ class GenerateParticipantExecutionPlanDecisionTest {
         assertEquals(UUID.nameUUIDFromBytes("round-1".toByteArray()), event.roundId)
         assertEquals(1, event.roundNumber)
         assertEquals(command.runtimeId, event.runtimeId)
+        assertEquals(command.datasetId, event.datasetId)
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.personalizationMode, event.personalizationMode)
         assertEquals(command.personalizationScope, event.personalizationScope)
@@ -129,6 +131,7 @@ class GenerateParticipantExecutionPlanDecisionTest {
             roundId = UUID.nameUUIDFromBytes("round-2".toByteArray()),
             roundNumber = 2,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             personalizationMode = null,
             personalizationScope = null,
@@ -179,6 +182,7 @@ class GenerateParticipantExecutionPlanDecisionTest {
         assertEquals(UUID.nameUUIDFromBytes("round-2".toByteArray()), event.roundId)
         assertEquals(2, event.roundNumber)
         assertEquals(command.runtimeId, event.runtimeId)
+        assertEquals(command.datasetId, event.datasetId)
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.personalizationMode, event.personalizationMode)
         assertEquals(command.personalizationScope, event.personalizationScope)

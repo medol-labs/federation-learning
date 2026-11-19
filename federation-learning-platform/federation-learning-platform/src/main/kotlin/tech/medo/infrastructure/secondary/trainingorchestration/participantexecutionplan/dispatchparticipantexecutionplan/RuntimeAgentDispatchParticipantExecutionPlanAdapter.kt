@@ -28,6 +28,7 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapter(
             roundId = input.roundId,
             roundNumber = input.roundNumber,
             runtimeId = input.runtimeId,
+            datasetId = requireNotNull(input.datasetId) { "Execution plan has no selected dataset." },
             organizationId = input.organizationId,
             baseModelId = input.baseModelId,
             baseModelArtifactUri = input.baseModelArtifactUri,

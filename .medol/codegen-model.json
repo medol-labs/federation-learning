@@ -1130,6 +1130,11 @@
           "id": "slice-158bd8b1",
           "name": "TrainingRoundProgress",
           "title": "Training Round Progress"
+        },
+        {
+          "id": "slice-d3e8d49e",
+          "name": "RecoverHistoricalTrainingRound",
+          "title": "Recover Historical Training Round"
         }
       ]
     },
@@ -3630,6 +3635,11 @@
           "id": "slice-093e2668",
           "name": "SelectTrainingRoundParticipants",
           "title": "Select Training Round Participants"
+        },
+        {
+          "id": "slice-d3e8d49e",
+          "name": "RecoverHistoricalTrainingRound",
+          "title": "Recover Historical Training Round"
         },
         {
           "id": "slice-3afb3435",
@@ -40204,7 +40214,11 @@
       "title": "Select Training Round Participants",
       "chapter": "TrainingOrchestration",
       "context": "TrainingOrchestration",
-      "tags": [],
+      "tags": [
+        {
+          "name": "roundId"
+        }
+      ],
       "port": true,
       "concepts": [
         "TrainingRound"
@@ -40223,7 +40237,7 @@
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
-              "idAttribute": true,
+              "idAttribute": false,
               "generated": false,
               "technicalAttribute": true,
               "query": false,
@@ -40236,6 +40250,48 @@
                 "from": [
                   "TrainingJobSubmitted.trainingJobId"
                 ]
+              }
+            },
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": true,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "TrainingRoundCompleted.nextRoundId"
+                ]
+              }
+            },
+            {
+              "name": "previousRoundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "TrainingRoundCompleted.roundNumber",
+                  "TrainingRoundParticipantSelectionRetryRequested.previousRoundNumber"
+                ],
+                "rule": "Use zero for the initial submission. Completion schedules exactly its successor. Retry reuses the failed selection's predecessor."
               }
             },
             {
@@ -40457,6 +40513,26 @@
               "uploadFile": false,
               "file": false,
               "portOutput": false
+            },
+            {
+              "name": "previousRoundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SelectTrainingRoundParticipants.previousRoundNumber"
+                ]
+              }
             },
             {
               "name": "federationId",
@@ -40862,6 +40938,26 @@
               "uploadFile": false,
               "file": false,
               "portOutput": false
+            },
+            {
+              "name": "previousRoundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SelectTrainingRoundParticipants.previousRoundNumber"
+                ]
+              }
             },
             {
               "name": "federationId",
@@ -41289,13 +41385,171 @@
       ],
       "specifications": [
         {
+          "id": "gwt-540d33cb",
+          "chapter": "TrainingOrchestration",
+          "sliceName": "Select Training Round Participants",
+          "title": "Reject A Second Reservation Of The Same Successor Slot",
+          "specification": "Training Round Participants Are Snapshotted Per Round",
+          "rule": "Reserve a job's successor slot only when selection succeeds. Redelivery of the same predecessor after reservation is a no-op. A failed selection can retry the same slot. Round state and accepted updates are isolated by trainingJobId and roundId.\nEach training round starts from a runtime snapshot selected by domain policy. Selection first verifies that the federation has joined organizations and that those organizations have dataset metadata for the training configuration's exact feature schema with both schema and label compatibility confirmed. Only then can an active runtime identity with the same organization and runtime identity be paired with that dataset. One deterministic dataset is selected per runtime for a round snapshot. When personalization is enabled, the selected participant also carries the stable personalization target and optional cohort/profile identity used by execution planning and personalized artifact lineage. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If federation membership, compatible dataset evidence, runtime identity matching, personalization capability matching, or quorum validation fails, the system records a failed participant selection event with a stage-specific reason so the operator can fix readiness and retry selection.",
+          "expressions": [
+            "unique (TrainingRound.trainingJobId, TrainingRound.previousRoundNumber)"
+          ],
+          "validates": [
+            "unique (TrainingRound.trainingJobId, TrainingRound.previousRoundNumber)"
+          ],
+          "given": [
+            {
+              "title": "Training Round Participants Selected",
+              "id": "event-f36ff121",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "previousRoundNumber",
+                  "example": "1"
+                },
+                {
+                  "name": "federationId"
+                },
+                {
+                  "name": "federationName"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "configurationName"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "featureDomain"
+                },
+                {
+                  "name": "featureSchemaVersion"
+                },
+                {
+                  "name": "trainingJobObjective"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
+                },
+                {
+                  "name": "aggregationAlgorithm"
+                },
+                {
+                  "name": "personalizationMode"
+                },
+                {
+                  "name": "personalizationScope"
+                },
+                {
+                  "name": "personalizedArtifactPolicy"
+                },
+                {
+                  "name": "personalizationMetric"
+                },
+                {
+                  "name": "minimumPersonalizationLift"
+                },
+                {
+                  "name": "minimumNodesPerRound"
+                },
+                {
+                  "name": "secureAggregationRequired"
+                },
+                {
+                  "name": "selectedOrganizationIds"
+                },
+                {
+                  "name": "selectedRuntimeIds"
+                },
+                {
+                  "name": "selectedParticipants"
+                },
+                {
+                  "name": "selectedOrganizationCount"
+                },
+                {
+                  "name": "selectedRuntimeCount"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Select Training Round Participants",
+              "id": "command-5362dd01",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "previousRoundNumber",
+                  "example": "1"
+                },
+                {
+                  "name": "federationId"
+                },
+                {
+                  "name": "federationName"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "configurationName"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "featureDomain"
+                },
+                {
+                  "name": "featureSchemaVersion"
+                },
+                {
+                  "name": "trainingJobObjective"
+                }
+              ]
+            }
+          ],
+          "then": {
+            "title": "Rejected",
+            "id": "spec-reject-540d33cb",
+            "description": "Training round already scheduled",
+            "outcome": "REJECT"
+          }
+        },
+        {
           "id": "gwt-d6eadd33",
           "chapter": "TrainingOrchestration",
           "sliceName": "Select Training Round Participants",
           "title": "Select Participants When Runtime Pool Reaches Quorum",
           "specification": "Training Round Participants Are Snapshotted Per Round",
-          "rule": "Each training round starts from a runtime snapshot selected by domain policy. Selection first verifies that the federation has joined organizations and that those organizations have dataset metadata for the training configuration's exact feature schema with both schema and label compatibility confirmed. Only then can an active runtime identity with the same organization and runtime identity be paired with that dataset. One deterministic dataset is selected per runtime for a round snapshot. When personalization is enabled, the selected participant also carries the stable personalization target and optional cohort/profile identity used by execution planning and personalized artifact lineage. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If federation membership, compatible dataset evidence, runtime identity matching, personalization capability matching, or quorum validation fails, the system records a failed participant selection event with a stage-specific reason so the operator can fix readiness and retry selection.",
-          "expressions": [],
+          "rule": "Reserve a job's successor slot only when selection succeeds. Redelivery of the same predecessor after reservation is a no-op. A failed selection can retry the same slot. Round state and accepted updates are isolated by trainingJobId and roundId.\nEach training round starts from a runtime snapshot selected by domain policy. Selection first verifies that the federation has joined organizations and that those organizations have dataset metadata for the training configuration's exact feature schema with both schema and label compatibility confirmed. Only then can an active runtime identity with the same organization and runtime identity be paired with that dataset. One deterministic dataset is selected per runtime for a round snapshot. When personalization is enabled, the selected participant also carries the stable personalization target and optional cohort/profile identity used by execution planning and personalized artifact lineage. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If federation membership, compatible dataset evidence, runtime identity matching, personalization capability matching, or quorum validation fails, the system records a failed participant selection event with a stage-specific reason so the operator can fix readiness and retry selection.",
+          "expressions": [
+            "unique (TrainingRound.trainingJobId, TrainingRound.previousRoundNumber)"
+          ],
           "validates": [],
           "given": [
             {
@@ -41348,6 +41602,12 @@
                   "example": "job-1"
                 },
                 {
+                  "name": "roundId"
+                },
+                {
+                  "name": "previousRoundNumber"
+                },
+                {
                   "name": "federationId"
                 },
                 {
@@ -41383,6 +41643,9 @@
                 {
                   "name": "trainingJobId",
                   "example": "job-1"
+                },
+                {
+                  "name": "previousRoundNumber"
                 },
                 {
                   "name": "federationId"
@@ -41469,8 +41732,10 @@
           "sliceName": "Select Training Round Participants",
           "title": "Reject Participant Snapshot Below Quorum",
           "specification": "Training Round Participants Are Snapshotted Per Round",
-          "rule": "Each training round starts from a runtime snapshot selected by domain policy. Selection first verifies that the federation has joined organizations and that those organizations have dataset metadata for the training configuration's exact feature schema with both schema and label compatibility confirmed. Only then can an active runtime identity with the same organization and runtime identity be paired with that dataset. One deterministic dataset is selected per runtime for a round snapshot. When personalization is enabled, the selected participant also carries the stable personalization target and optional cohort/profile identity used by execution planning and personalized artifact lineage. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If federation membership, compatible dataset evidence, runtime identity matching, personalization capability matching, or quorum validation fails, the system records a failed participant selection event with a stage-specific reason so the operator can fix readiness and retry selection.",
-          "expressions": [],
+          "rule": "Reserve a job's successor slot only when selection succeeds. Redelivery of the same predecessor after reservation is a no-op. A failed selection can retry the same slot. Round state and accepted updates are isolated by trainingJobId and roundId.\nEach training round starts from a runtime snapshot selected by domain policy. Selection first verifies that the federation has joined organizations and that those organizations have dataset metadata for the training configuration's exact feature schema with both schema and label compatibility confirmed. Only then can an active runtime identity with the same organization and runtime identity be paired with that dataset. One deterministic dataset is selected per runtime for a round snapshot. When personalization is enabled, the selected participant also carries the stable personalization target and optional cohort/profile identity used by execution planning and personalized artifact lineage. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If federation membership, compatible dataset evidence, runtime identity matching, personalization capability matching, or quorum validation fails, the system records a failed participant selection event with a stage-specific reason so the operator can fix readiness and retry selection.",
+          "expressions": [
+            "unique (TrainingRound.trainingJobId, TrainingRound.previousRoundNumber)"
+          ],
           "validates": [],
           "given": [
             {
@@ -41523,6 +41788,12 @@
                   "example": "job-1"
                 },
                 {
+                  "name": "roundId"
+                },
+                {
+                  "name": "previousRoundNumber"
+                },
+                {
                   "name": "federationId"
                 },
                 {
@@ -41558,6 +41829,9 @@
                 {
                   "name": "trainingJobId",
                   "example": "job-1"
+                },
+                {
+                  "name": "previousRoundNumber"
                 },
                 {
                   "name": "federationId"
@@ -41647,8 +41921,10 @@
           "sliceName": "Select Training Round Participants",
           "title": "Reject Selection Without Joined Federation Members",
           "specification": "Training Round Participants Are Snapshotted Per Round",
-          "rule": "Each training round starts from a runtime snapshot selected by domain policy. Selection first verifies that the federation has joined organizations and that those organizations have dataset metadata for the training configuration's exact feature schema with both schema and label compatibility confirmed. Only then can an active runtime identity with the same organization and runtime identity be paired with that dataset. One deterministic dataset is selected per runtime for a round snapshot. When personalization is enabled, the selected participant also carries the stable personalization target and optional cohort/profile identity used by execution planning and personalized artifact lineage. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If federation membership, compatible dataset evidence, runtime identity matching, personalization capability matching, or quorum validation fails, the system records a failed participant selection event with a stage-specific reason so the operator can fix readiness and retry selection.",
-          "expressions": [],
+          "rule": "Reserve a job's successor slot only when selection succeeds. Redelivery of the same predecessor after reservation is a no-op. A failed selection can retry the same slot. Round state and accepted updates are isolated by trainingJobId and roundId.\nEach training round starts from a runtime snapshot selected by domain policy. Selection first verifies that the federation has joined organizations and that those organizations have dataset metadata for the training configuration's exact feature schema with both schema and label compatibility confirmed. Only then can an active runtime identity with the same organization and runtime identity be paired with that dataset. One deterministic dataset is selected per runtime for a round snapshot. When personalization is enabled, the selected participant also carries the stable personalization target and optional cohort/profile identity used by execution planning and personalized artifact lineage. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If federation membership, compatible dataset evidence, runtime identity matching, personalization capability matching, or quorum validation fails, the system records a failed participant selection event with a stage-specific reason so the operator can fix readiness and retry selection.",
+          "expressions": [
+            "unique (TrainingRound.trainingJobId, TrainingRound.previousRoundNumber)"
+          ],
           "validates": [],
           "given": [
             {
@@ -41701,6 +41977,12 @@
                   "example": "job-1"
                 },
                 {
+                  "name": "roundId"
+                },
+                {
+                  "name": "previousRoundNumber"
+                },
+                {
                   "name": "federationId"
                 },
                 {
@@ -41736,6 +42018,9 @@
                 {
                   "name": "trainingJobId",
                   "example": "job-1"
+                },
+                {
+                  "name": "previousRoundNumber"
                 },
                 {
                   "name": "federationId"
@@ -41825,8 +42110,10 @@
           "sliceName": "Select Training Round Participants",
           "title": "Reject Selection Without Compatible Dataset Evidence",
           "specification": "Training Round Participants Are Snapshotted Per Round",
-          "rule": "Each training round starts from a runtime snapshot selected by domain policy. Selection first verifies that the federation has joined organizations and that those organizations have dataset metadata for the training configuration's exact feature schema with both schema and label compatibility confirmed. Only then can an active runtime identity with the same organization and runtime identity be paired with that dataset. One deterministic dataset is selected per runtime for a round snapshot. When personalization is enabled, the selected participant also carries the stable personalization target and optional cohort/profile identity used by execution planning and personalized artifact lineage. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If federation membership, compatible dataset evidence, runtime identity matching, personalization capability matching, or quorum validation fails, the system records a failed participant selection event with a stage-specific reason so the operator can fix readiness and retry selection.",
-          "expressions": [],
+          "rule": "Reserve a job's successor slot only when selection succeeds. Redelivery of the same predecessor after reservation is a no-op. A failed selection can retry the same slot. Round state and accepted updates are isolated by trainingJobId and roundId.\nEach training round starts from a runtime snapshot selected by domain policy. Selection first verifies that the federation has joined organizations and that those organizations have dataset metadata for the training configuration's exact feature schema with both schema and label compatibility confirmed. Only then can an active runtime identity with the same organization and runtime identity be paired with that dataset. One deterministic dataset is selected per runtime for a round snapshot. When personalization is enabled, the selected participant also carries the stable personalization target and optional cohort/profile identity used by execution planning and personalized artifact lineage. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If federation membership, compatible dataset evidence, runtime identity matching, personalization capability matching, or quorum validation fails, the system records a failed participant selection event with a stage-specific reason so the operator can fix readiness and retry selection.",
+          "expressions": [
+            "unique (TrainingRound.trainingJobId, TrainingRound.previousRoundNumber)"
+          ],
           "validates": [],
           "given": [
             {
@@ -41879,6 +42166,12 @@
                   "example": "job-1"
                 },
                 {
+                  "name": "roundId"
+                },
+                {
+                  "name": "previousRoundNumber"
+                },
+                {
                   "name": "federationId"
                 },
                 {
@@ -41914,6 +42207,9 @@
                 {
                   "name": "trainingJobId",
                   "example": "job-1"
+                },
+                {
+                  "name": "previousRoundNumber"
                 },
                 {
                   "name": "federationId"
@@ -42039,6 +42335,20 @@
               "uploadFile": false,
               "file": false,
               "portOutput": false
+            },
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
             }
           ],
           "dependencies": [
@@ -42049,9 +42359,9 @@
               "elementType": "EVENT"
             },
             {
-              "id": "screen-8d40d9f4",
+              "id": "screen-4b14f238",
               "direction": "INBOUND",
-              "title": "Training Job Dashboard",
+              "title": "Training Round Progress",
               "elementType": "SCREEN"
             },
             {
@@ -42088,6 +42398,40 @@
               "uploadFile": false,
               "file": false,
               "portOutput": false
+            },
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "previousRoundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "TrainingRoundParticipantSelectionFailed.previousRoundNumber"
+                ]
+              }
             }
           ],
           "dependencies": [
@@ -42109,9 +42453,9 @@
       "readmodels": [],
       "screens": [
         {
-          "id": "screen-8d40d9f4",
-          "name": "TrainingJobDashboard",
-          "title": "Training Job Dashboard",
+          "id": "screen-4b14f238",
+          "name": "TrainingRoundProgress",
+          "title": "Training Round Progress",
           "type": "SCREEN",
           "modelContext": "TrainingOrchestration",
           "slice": "Retry Training Round Participant Selection",
@@ -42178,6 +42522,9 @@
                 {
                   "name": "trainingJobId",
                   "example": "job-1"
+                },
+                {
+                  "name": "previousRoundNumber"
                 },
                 {
                   "name": "federationId"
@@ -42269,6 +42616,9 @@
                 {
                   "name": "trainingJobId",
                   "example": "job-1"
+                },
+                {
+                  "name": "roundId"
                 }
               ]
             }
@@ -42282,6 +42632,12 @@
                 {
                   "name": "trainingJobId",
                   "example": "job-1"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "previousRoundNumber"
                 }
               ]
             }
@@ -44725,6 +45081,26 @@
               }
             },
             {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "participant.datasetId"
+                ]
+              }
+            },
+            {
               "name": "organizationId",
               "type": "UUID",
               "cardinality": "Single",
@@ -45557,6 +45933,20 @@
               "portOutput": false
             },
             {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "organizationId",
               "type": "UUID",
               "cardinality": "Single",
@@ -46217,6 +46607,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -46358,6 +46751,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -46490,6 +46886,9 @@
                   "example": "round-1"
                 },
                 {
+                  "name": "nextRoundId"
+                },
+                {
                   "name": "roundNumber"
                 },
                 {
@@ -46573,6 +46972,9 @@
                 },
                 {
                   "name": "runtimeId"
+                },
+                {
+                  "name": "datasetId"
                 },
                 {
                   "name": "organizationId"
@@ -46714,6 +47116,9 @@
                 },
                 {
                   "name": "runtimeId"
+                },
+                {
+                  "name": "datasetId"
                 },
                 {
                   "name": "organizationId"
@@ -46999,6 +47404,26 @@
                 "kind": "direct",
                 "from": [
                   "ParticipantExecutionPlanGenerated.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanGenerated.datasetId"
                 ]
               }
             },
@@ -47752,6 +48177,20 @@
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -51078,6 +51517,143 @@
               "elementType": "READMODEL"
             }
           ]
+        },
+        {
+          "id": "event-1d263757",
+          "name": "HistoricalRoundUpdateDispositionRecorded",
+          "title": "Historical Round Update Disposition Recorded",
+          "type": "EVENT",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Evaluate Model Update Submission",
+          "fields": [
+            {
+              "name": "modelUpdateSubmissionId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "canonicalRoundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "updateArtifactId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "artifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "recoveryDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "reconciledRejectionIds",
+              "type": "UUID",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": []
         }
       ],
       "readmodels": [],
@@ -57342,6 +57918,104 @@
               "name": "globalFairnessScore",
               "type": "Decimal",
               "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "validationDatasetVersion",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "validationDatasetDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "evaluatedSampleCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "truePositiveCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "trueNegativeCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "falsePositiveCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "falseNegativeCount",
+              "type": "Int",
+              "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
               "generated": false,
@@ -57826,6 +58500,20 @@
               "portOutput": false
             },
             {
+              "name": "nextRoundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": true,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "roundNumber",
               "type": "Int",
               "cardinality": "Single",
@@ -58054,7 +58742,7 @@
           "sliceName": "Complete Training Round",
           "title": "Complete Round After Global Evaluation",
           "specification": "Training Round Completion Requires Global Evaluation",
-          "rule": "A training round can be completed only after the aggregated global model has been evaluated.\nThe completed event retains federationId from the TrainingRound state so the next round selects participants from the same federation.",
+          "rule": "A training round can be completed only after the aggregated global model has been evaluated.\nCompleting the same round again must not emit another completion or allocate another successor.\nThe completed event retains federationId from the TrainingRound state so the next round selects participants from the same federation.",
           "expressions": [],
           "validates": [],
           "given": [
@@ -58066,6 +58754,9 @@
                 {
                   "name": "trainingJobId",
                   "example": "job-1"
+                },
+                {
+                  "name": "previousRoundNumber"
                 },
                 {
                   "name": "federationId",
@@ -58206,6 +58897,27 @@
                 },
                 {
                   "name": "globalFairnessScore"
+                },
+                {
+                  "name": "validationDatasetVersion"
+                },
+                {
+                  "name": "validationDatasetDigest"
+                },
+                {
+                  "name": "evaluatedSampleCount"
+                },
+                {
+                  "name": "truePositiveCount"
+                },
+                {
+                  "name": "trueNegativeCount"
+                },
+                {
+                  "name": "falsePositiveCount"
+                },
+                {
+                  "name": "falseNegativeCount"
                 }
               ]
             }
@@ -58300,6 +59012,9 @@
                   "example": "round-1"
                 },
                 {
+                  "name": "nextRoundId"
+                },
+                {
                   "name": "roundNumber"
                 },
                 {
@@ -58344,7 +59059,7 @@
           "sliceName": "Complete Training Round",
           "title": "Reject Round Completion Without Global Evaluation",
           "specification": "Training Round Completion Requires Global Evaluation",
-          "rule": "A training round can be completed only after the aggregated global model has been evaluated.\nThe completed event retains federationId from the TrainingRound state so the next round selects participants from the same federation.",
+          "rule": "A training round can be completed only after the aggregated global model has been evaluated.\nCompleting the same round again must not emit another completion or allocate another successor.\nThe completed event retains federationId from the TrainingRound state so the next round selects participants from the same federation.",
           "expressions": [],
           "validates": [],
           "given": [
@@ -59698,6 +60413,104 @@
               "portOutput": false
             },
             {
+              "name": "validationDatasetVersion",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "validationDatasetDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "evaluatedSampleCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "truePositiveCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "trueNegativeCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "falsePositiveCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "falseNegativeCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "failureReason",
               "type": "String",
               "cardinality": "Single",
@@ -59874,8 +60687,394 @@
       "hotspots": []
     },
     {
-      "id": "slice-97531d57",
+      "id": "slice-d3e8d49e",
       "index": 81,
+      "name": "RecoverHistoricalTrainingRound",
+      "title": "Recover Historical Training Round",
+      "chapter": "TrainingOrchestration",
+      "context": "TrainingOrchestration",
+      "tags": [],
+      "concepts": [
+        "TrainingRound"
+      ],
+      "commands": [
+        {
+          "id": "command-65f579d7",
+          "name": "RecoverHistoricalTrainingRound",
+          "title": "Recover Historical Training Round",
+          "type": "COMMAND",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Recover Historical Training Round",
+          "fields": [
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "recoveryDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-773aacd9",
+              "direction": "OUTBOUND",
+              "title": "Historical Training Round Recovered",
+              "elementType": "EVENT"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "event-773aacd9",
+          "name": "HistoricalTrainingRoundRecovered",
+          "title": "Historical Training Round Recovered",
+          "type": "EVENT",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Recover Historical Training Round",
+          "fields": [
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "recoveryDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "canonicalRoundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "recoverySubmissionIds",
+              "type": "UUID",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "federationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "trainingJobObjective",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumNodesPerRound",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "secureAggregationRequired",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "selectedParticipants",
+              "type": "TrainingRoundParticipant",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "selectedOrganizationIds",
+              "type": "UUID",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "selectedRuntimeIds",
+              "type": "UUID",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "selectedOrganizationCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "selectedRuntimeCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-65f579d7",
+              "direction": "INBOUND",
+              "title": "Recover Historical Training Round",
+              "elementType": "COMMAND"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [
+        {
+          "id": "actor-fbb712c9",
+          "name": "TrainingOperator",
+          "title": "Training Operator"
+        }
+      ],
+      "hotspots": []
+    },
+    {
+      "id": "slice-97531d57",
+      "index": 82,
       "name": "RuntimeTelemetryLatest",
       "title": "Runtime Telemetry Latest",
       "chapter": "RuntimeMonitoring",
@@ -60265,7 +61464,7 @@
     },
     {
       "id": "slice-e2404d65",
-      "index": 82,
+      "index": 83,
       "name": "RecordRuntimeTelemetry",
       "title": "Record Runtime Telemetry",
       "chapter": "RuntimeMonitoring",
@@ -61058,7 +62257,7 @@
     },
     {
       "id": "slice-d498ecb8",
-      "index": 83,
+      "index": 84,
       "name": "DetectRuntimeAgentOffline",
       "title": "Detect Runtime Agent Offline",
       "chapter": "RuntimeMonitoring",
@@ -61494,7 +62693,7 @@
     },
     {
       "id": "slice-fd282504",
-      "index": 84,
+      "index": 85,
       "name": "MarkRuntimeAgentRecovered",
       "title": "Mark Runtime Agent Recovered",
       "chapter": "RuntimeMonitoring",
@@ -61929,7 +63128,7 @@
     },
     {
       "id": "slice-7aeba98f",
-      "index": 85,
+      "index": 86,
       "name": "DetectRuntimeNodeResourcePressure",
       "title": "Detect Runtime Node Resource Pressure",
       "chapter": "RuntimeMonitoring",
@@ -62483,7 +63682,7 @@
     },
     {
       "id": "slice-3f7c280e",
-      "index": 86,
+      "index": 87,
       "name": "RecordRuntimeNodeInventory",
       "title": "Record Runtime Node Inventory",
       "chapter": "RuntimeMonitoring",
@@ -63138,7 +64337,7 @@
     },
     {
       "id": "slice-79929d9e",
-      "index": 87,
+      "index": 88,
       "name": "RuntimeNodeInventoryView",
       "title": "Runtime Node Inventory View",
       "chapter": "RuntimeMonitoring",
@@ -63433,7 +64632,7 @@
     },
     {
       "id": "slice-c5ab698a",
-      "index": 88,
+      "index": 89,
       "name": "RuntimeNodeResourceLatest",
       "title": "Runtime Node Resource Latest",
       "chapter": "RuntimeMonitoring",
@@ -63739,7 +64938,7 @@
     },
     {
       "id": "slice-c3869f79",
-      "index": 89,
+      "index": 90,
       "name": "RecordRuntimeNodeResourceTelemetry",
       "title": "Record Runtime Node Resource Telemetry",
       "chapter": "RuntimeMonitoring",
@@ -64347,7 +65546,7 @@
     },
     {
       "id": "slice-dc4e224d",
-      "index": 90,
+      "index": 91,
       "name": "RuntimeHealthDashboard",
       "title": "Runtime Health Dashboard",
       "chapter": "RuntimeMonitoring",
@@ -64692,7 +65891,7 @@
     },
     {
       "id": "slice-f43e8d0f",
-      "index": 91,
+      "index": 92,
       "name": "RaiseTrainingAlert",
       "title": "Raise Training Alert",
       "chapter": "RuntimeMonitoring",
@@ -65041,7 +66240,7 @@
     },
     {
       "id": "slice-102e6798",
-      "index": 92,
+      "index": 93,
       "name": "TrainingAlertCatalog",
       "title": "Training Alert Catalog",
       "chapter": "RuntimeMonitoring",
@@ -65278,7 +66477,7 @@
     },
     {
       "id": "slice-63ac1487",
-      "index": 93,
+      "index": 94,
       "name": "AcknowledgeTrainingAlert",
       "title": "Acknowledge Training Alert",
       "chapter": "RuntimeMonitoring",
@@ -65445,7 +66644,7 @@
     },
     {
       "id": "slice-c3edeeef",
-      "index": 94,
+      "index": 95,
       "name": "ResolveTrainingAlert",
       "title": "Resolve Training Alert",
       "chapter": "RuntimeMonitoring",
@@ -65606,7 +66805,7 @@
     },
     {
       "id": "slice-6883883e",
-      "index": 95,
+      "index": 96,
       "name": "ActivateRuntimeIdentity",
       "title": "Activate Runtime Identity",
       "chapter": "RuntimeGovernance",
@@ -66006,7 +67205,7 @@
     },
     {
       "id": "slice-6949bdab",
-      "index": 96,
+      "index": 97,
       "name": "RevokeRuntimeIdentity",
       "title": "Revoke Runtime Identity",
       "chapter": "RuntimeGovernance",
@@ -66191,7 +67390,7 @@
     },
     {
       "id": "slice-267be0b4",
-      "index": 97,
+      "index": 98,
       "name": "DetectRuntimeCapabilities",
       "title": "Detect Runtime Capabilities",
       "chapter": "RuntimeGovernance",
@@ -66374,7 +67573,7 @@
     },
     {
       "id": "slice-53705008",
-      "index": 98,
+      "index": 99,
       "name": "RuntimeIdentityCatalog",
       "title": "Runtime Identity Catalog",
       "chapter": "RuntimeGovernance",
@@ -66552,7 +67751,7 @@
     },
     {
       "id": "slice-a09f6b28",
-      "index": 99,
+      "index": 100,
       "name": "RuntimeCapabilityCatalog",
       "title": "Runtime Capability Catalog",
       "chapter": "RuntimeGovernance",
@@ -66649,7 +67848,7 @@
     },
     {
       "id": "slice-0df6c6b1",
-      "index": 100,
+      "index": 101,
       "name": "CreateSecureAggregationSession",
       "title": "Create Secure Aggregation Session",
       "chapter": "SecureAggregation",
@@ -67682,7 +68881,7 @@
     },
     {
       "id": "slice-af59eab5",
-      "index": 101,
+      "index": 102,
       "name": "SelectSecureAggregationParticipants",
       "title": "Select Secure Aggregation Participants",
       "chapter": "SecureAggregation",
@@ -68676,7 +69875,7 @@
     },
     {
       "id": "slice-a903d2aa",
-      "index": 102,
+      "index": 103,
       "name": "PrepareHomomorphicEncryptionContext",
       "title": "Prepare Homomorphic Encryption Context",
       "chapter": "SecureAggregation",
@@ -69732,7 +70931,7 @@
     },
     {
       "id": "slice-5d843deb",
-      "index": 103,
+      "index": 104,
       "name": "RecordEncryptedModelUpdate",
       "title": "Record Encrypted Model Update",
       "chapter": "SecureAggregation",
@@ -70475,7 +71674,7 @@
     },
     {
       "id": "slice-74fb7a88",
-      "index": 104,
+      "index": 105,
       "name": "CompleteHomomorphicAggregationSession",
       "title": "Complete Homomorphic Aggregation Session",
       "chapter": "SecureAggregation",
@@ -71118,7 +72317,7 @@
     },
     {
       "id": "slice-5c7bd7e5",
-      "index": 105,
+      "index": 106,
       "name": "FailSecureAggregationSession",
       "title": "Fail Secure Aggregation Session",
       "chapter": "SecureAggregation",
@@ -71255,7 +72454,7 @@
     },
     {
       "id": "slice-ae5b24d8",
-      "index": 106,
+      "index": 107,
       "name": "SecureAggregationSessionCatalog",
       "title": "Secure Aggregation Session Catalog",
       "chapter": "SecureAggregation",
@@ -71732,7 +72931,7 @@
     },
     {
       "id": "slice-33df9783",
-      "index": 107,
+      "index": 108,
       "name": "AgentOrganizationDirectory",
       "title": "Agent Organization Directory",
       "chapter": "RuntimeAgentOperations",
@@ -71865,7 +73064,7 @@
     },
     {
       "id": "slice-f3bd320b",
-      "index": 108,
+      "index": 109,
       "name": "AgentFeatureSchemaCatalog",
       "title": "Agent Feature Schema Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -71992,7 +73191,7 @@
     },
     {
       "id": "slice-368c3f63",
-      "index": 109,
+      "index": 110,
       "name": "AgentDictionaryValueCatalog",
       "title": "Agent Dictionary Value Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -72214,7 +73413,7 @@
     },
     {
       "id": "slice-c77ee2ba",
-      "index": 110,
+      "index": 111,
       "name": "AgentDictionaryValueTranslationCatalog",
       "title": "Agent Dictionary Value Translation Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -72415,7 +73614,7 @@
     },
     {
       "id": "slice-06111262",
-      "index": 111,
+      "index": 112,
       "name": "AgentRuntimeIdentityCatalog",
       "title": "Agent Runtime Identity Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -72648,7 +73847,7 @@
     },
     {
       "id": "slice-725195cc",
-      "index": 112,
+      "index": 113,
       "name": "DeclareDataset",
       "title": "Declare Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -73248,7 +74447,7 @@
     },
     {
       "id": "slice-5a2194a7",
-      "index": 113,
+      "index": 114,
       "name": "ConfigureRuntimeDatasetBinding",
       "title": "Configure Runtime Dataset Binding",
       "chapter": "RuntimeAgentOperations",
@@ -73923,7 +75122,7 @@
     },
     {
       "id": "slice-358d4122",
-      "index": 114,
+      "index": 115,
       "name": "RuntimeDatasetBindingCatalog",
       "title": "Runtime Dataset Binding Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -74152,7 +75351,7 @@
     },
     {
       "id": "slice-c31ba9a1",
-      "index": 115,
+      "index": 116,
       "name": "ValidateAgentDatasetAccess",
       "title": "Validate Agent Dataset Access",
       "chapter": "RuntimeAgentOperations",
@@ -75036,7 +76235,7 @@
     },
     {
       "id": "slice-b5e1f859",
-      "index": 116,
+      "index": 117,
       "name": "RecordAgentDatasetAccessValidationFailure",
       "title": "Record Agent Dataset Access Validation Failure",
       "chapter": "RuntimeAgentOperations",
@@ -75320,7 +76519,7 @@
     },
     {
       "id": "slice-aa47e014",
-      "index": 117,
+      "index": 118,
       "name": "RevalidateAgentDatasetAccess",
       "title": "Revalidate Agent Dataset Access",
       "chapter": "RuntimeAgentOperations",
@@ -76138,7 +77337,7 @@
     },
     {
       "id": "slice-ba3dc29b",
-      "index": 118,
+      "index": 119,
       "name": "AgentDatasetAccessValidationCatalog",
       "title": "Agent Dataset Access Validation Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -76440,7 +77639,7 @@
     },
     {
       "id": "slice-f44b66bc",
-      "index": 119,
+      "index": 120,
       "name": "ProfileAgentDataset",
       "title": "Profile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -77408,7 +78607,7 @@
     },
     {
       "id": "slice-3c637400",
-      "index": 120,
+      "index": 121,
       "name": "RecordAgentDatasetProfilingFailure",
       "title": "Record Agent Dataset Profiling Failure",
       "chapter": "RuntimeAgentOperations",
@@ -77698,7 +78897,7 @@
     },
     {
       "id": "slice-d6f2a3cf",
-      "index": 121,
+      "index": 122,
       "name": "ReprofileAgentDataset",
       "title": "Reprofile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -78726,7 +79925,7 @@
     },
     {
       "id": "slice-2529cf36",
-      "index": 122,
+      "index": 123,
       "name": "ValidateDatasetContract",
       "title": "Validate Dataset Contract",
       "chapter": "RuntimeAgentOperations",
@@ -79154,7 +80353,7 @@
     },
     {
       "id": "slice-0564d6a6",
-      "index": 123,
+      "index": 124,
       "name": "RecordDatasetContractValidationFailure",
       "title": "Record Dataset Contract Validation Failure",
       "chapter": "RuntimeAgentOperations",
@@ -79328,7 +80527,7 @@
     },
     {
       "id": "slice-2e18bcb1",
-      "index": 124,
+      "index": 125,
       "name": "RetryDatasetContractValidation",
       "title": "Retry Dataset Contract Validation",
       "chapter": "RuntimeAgentOperations",
@@ -79967,7 +81166,7 @@
     },
     {
       "id": "slice-d28aff88",
-      "index": 125,
+      "index": 126,
       "name": "RejectDatasetForTraining",
       "title": "Reject Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -80134,7 +81333,7 @@
     },
     {
       "id": "slice-284a72da",
-      "index": 126,
+      "index": 127,
       "name": "ApproveDatasetForTraining",
       "title": "Approve Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -80416,7 +81615,7 @@
     },
     {
       "id": "slice-847c2855",
-      "index": 127,
+      "index": 128,
       "name": "RevokeDatasetTrainingApproval",
       "title": "Revoke Dataset Training Approval",
       "chapter": "RuntimeAgentOperations",
@@ -80589,7 +81788,7 @@
     },
     {
       "id": "slice-30869f70",
-      "index": 128,
+      "index": 129,
       "name": "DatasetCapability",
       "title": "Dataset Capability",
       "chapter": "RuntimeAgentOperations",
@@ -81029,7 +82228,7 @@
     },
     {
       "id": "slice-ff9e2f26",
-      "index": 129,
+      "index": 130,
       "name": "DatasetReadiness",
       "title": "Dataset Readiness",
       "chapter": "RuntimeAgentOperations",
@@ -81707,7 +82906,7 @@
     },
     {
       "id": "slice-5bf739cd",
-      "index": 130,
+      "index": 131,
       "name": "ReceiveParticipantExecutionPlan",
       "title": "Receive Participant Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -81902,6 +83101,26 @@
                 "kind": "direct",
                 "from": [
                   "ParticipantExecutionPlanDispatched.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanDispatched.datasetId"
                 ]
               }
             },
@@ -82679,6 +83898,20 @@
               "portOutput": false
             },
             {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "organizationId",
               "type": "UUID",
               "cardinality": "Single",
@@ -83186,7 +84419,7 @@
     },
     {
       "id": "slice-64faaa9b",
-      "index": 131,
+      "index": 132,
       "name": "AcceptExecutionPlan",
       "title": "Accept Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -83382,6 +84615,26 @@
                 "kind": "direct",
                 "from": [
                   "ExecutionPlanReceived.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.datasetId"
                 ]
               }
             },
@@ -84165,6 +85418,20 @@
               "portOutput": false
             },
             {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "organizationId",
               "type": "UUID",
               "cardinality": "Single",
@@ -84875,6 +86142,20 @@
               "portOutput": false
             },
             {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "organizationId",
               "type": "UUID",
               "cardinality": "Single",
@@ -85536,6 +86817,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -85666,6 +86950,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -85794,6 +87081,9 @@
                 },
                 {
                   "name": "runtimeId"
+                },
+                {
+                  "name": "datasetId"
                 },
                 {
                   "name": "organizationId"
@@ -85960,6 +87250,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -86090,6 +87383,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -86218,6 +87514,9 @@
                 },
                 {
                   "name": "runtimeId"
+                },
+                {
+                  "name": "datasetId"
                 },
                 {
                   "name": "organizationId"
@@ -86354,7 +87653,7 @@
     },
     {
       "id": "slice-4d4016d0",
-      "index": 132,
+      "index": 133,
       "name": "StartRoundExecution",
       "title": "Start Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -86530,6 +87829,26 @@
                 "kind": "direct",
                 "from": [
                   "ExecutionPlanAccepted.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanAccepted.datasetId"
                 ]
               }
             },
@@ -87319,6 +88638,20 @@
               "portOutput": false
             },
             {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "organizationId",
               "type": "UUID",
               "cardinality": "Single",
@@ -87894,6 +89227,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -88045,6 +89381,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -88173,6 +89512,9 @@
                 },
                 {
                   "name": "runtimeId"
+                },
+                {
+                  "name": "datasetId"
                 },
                 {
                   "name": "organizationId"
@@ -88321,6 +89663,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -88472,6 +89817,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -88602,6 +89950,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -88718,7 +90069,7 @@
     },
     {
       "id": "slice-5fadb4df",
-      "index": 133,
+      "index": 134,
       "name": "RecordRoundExecutionStartFailure",
       "title": "Record Round Execution Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -88840,6 +90191,20 @@
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -89388,7 +90753,7 @@
     },
     {
       "id": "slice-0cecfd3f",
-      "index": 134,
+      "index": 135,
       "name": "ObserveRuntimeEngineJob",
       "title": "Observe Runtime Engine Job",
       "chapter": "RuntimeAgentOperations",
@@ -90598,6 +91963,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -90954,6 +92322,9 @@
                 },
                 {
                   "name": "runtimeId"
+                },
+                {
+                  "name": "datasetId"
                 },
                 {
                   "name": "organizationId"
@@ -91314,6 +92685,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -91637,7 +93011,7 @@
     },
     {
       "id": "slice-b1a48287",
-      "index": 135,
+      "index": 136,
       "name": "CompleteRoundExecution",
       "title": "Complete Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -93087,7 +94461,7 @@
     },
     {
       "id": "slice-45c663e8",
-      "index": 136,
+      "index": 137,
       "name": "FailRoundExecution",
       "title": "Fail Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -93624,7 +94998,7 @@
     },
     {
       "id": "slice-ff352882",
-      "index": 137,
+      "index": 138,
       "name": "RetryRoundExecutionAfterStartFailure",
       "title": "Retry Round Execution After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -93794,6 +95168,26 @@
                 "kind": "direct",
                 "from": [
                   "RoundExecutionStartFailed.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionStartFailed.datasetId"
                 ]
               }
             },
@@ -94037,6 +95431,20 @@
               "portOutput": false
             },
             {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "organizationId",
               "type": "UUID",
               "cardinality": "Single",
@@ -94191,6 +95599,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -94327,6 +95738,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -94376,6 +95790,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -94414,7 +95831,7 @@
     },
     {
       "id": "slice-c039e21f",
-      "index": 138,
+      "index": 139,
       "name": "RecordRoundExecutionStartRetryFailure",
       "title": "Record Round Execution Start Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -94536,6 +95953,20 @@
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -94678,7 +96109,7 @@
     },
     {
       "id": "slice-2cb34062",
-      "index": 139,
+      "index": 140,
       "name": "RetryRoundExecutionAfterRuntimeFailure",
       "title": "Retry Round Execution After Runtime Failure",
       "chapter": "RuntimeAgentOperations",
@@ -94856,6 +96287,33 @@
                 "from": [
                   "RoundExecutionFailed.runtimeId"
                 ]
+              }
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RoundExecutionStarted.datasetId"
+                ],
+                "lookup": {
+                  "key": "roundExecutionId",
+                  "cacheProjection": "RoundExecutionStarted",
+                  "sourceField": "datasetId",
+                  "targetField": "datasetId",
+                  "missingValuePolicy": "keep"
+                }
               }
             },
             {
@@ -95119,6 +96577,20 @@
               "portOutput": false
             },
             {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "organizationId",
               "type": "UUID",
               "cardinality": "Single",
@@ -95319,6 +96791,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -95368,6 +96843,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "datasetId"
+                },
+                {
                   "name": "organizationId"
                 },
                 {
@@ -95406,7 +96884,7 @@
     },
     {
       "id": "slice-c062297b",
-      "index": 140,
+      "index": 141,
       "name": "RecordRoundExecutionRuntimeRetryFailure",
       "title": "Record Round Execution Runtime Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -95528,6 +97006,20 @@
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -95670,7 +97162,7 @@
     },
     {
       "id": "slice-d54dcc12",
-      "index": 141,
+      "index": 142,
       "name": "SubmitAgentLocalModelUpdate",
       "title": "Submit Agent Local Model Update",
       "chapter": "RuntimeAgentOperations",
@@ -97001,7 +98493,7 @@
     },
     {
       "id": "slice-6485fdce",
-      "index": 142,
+      "index": 143,
       "name": "ReleaseRuntimeEngineJobAfterCompletion",
       "title": "Release Runtime Engine Job After Completion",
       "chapter": "RuntimeAgentOperations",
@@ -97175,7 +98667,7 @@
     },
     {
       "id": "slice-ef8420f2",
-      "index": 143,
+      "index": 144,
       "name": "ReleaseRuntimeEngineJobAfterFailure",
       "title": "Release Runtime Engine Job After Failure",
       "chapter": "RuntimeAgentOperations",
@@ -97363,7 +98855,7 @@
     },
     {
       "id": "slice-30156076",
-      "index": 144,
+      "index": 145,
       "name": "ReleaseRuntimeEngineJobAfterStartFailure",
       "title": "Release Runtime Engine Job After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -97551,7 +99043,7 @@
     },
     {
       "id": "slice-5d7a0380",
-      "index": 145,
+      "index": 146,
       "name": "ReleaseRuntimeEngineJobAfterRetryFailure",
       "title": "Release Runtime Engine Job After Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -97739,7 +99231,7 @@
     },
     {
       "id": "slice-bc1eac14",
-      "index": 146,
+      "index": 147,
       "name": "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure",
       "title": "Release Runtime Engine Job After Runtime Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -97927,7 +99419,7 @@
     },
     {
       "id": "slice-eb00f5f7",
-      "index": 147,
+      "index": 148,
       "name": "RoundExecutionCatalog",
       "title": "Round Execution Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -98064,6 +99556,20 @@
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -98720,7 +100226,7 @@
     },
     {
       "id": "slice-d248addb",
-      "index": 148,
+      "index": 149,
       "name": "LoadRuntimeAgentBootstrapConfiguration",
       "title": "Load Runtime Agent Bootstrap Configuration",
       "chapter": "RuntimeAgentOperations",
@@ -99080,7 +100586,7 @@
     },
     {
       "id": "slice-c7d2df46",
-      "index": 149,
+      "index": 150,
       "name": "ReportRuntimeAgentStarted",
       "title": "Report Runtime Agent Started",
       "chapter": "RuntimeAgentOperations",
@@ -99368,7 +100874,7 @@
     },
     {
       "id": "slice-75635ed7",
-      "index": 150,
+      "index": 151,
       "name": "ReportRuntimeInstanceSelfCheckPassed",
       "title": "Report Runtime Instance Self Check Passed",
       "chapter": "RuntimeAgentOperations",
@@ -99875,7 +101381,7 @@
     },
     {
       "id": "slice-574f1d44",
-      "index": 151,
+      "index": 152,
       "name": "RuntimeAgentLifecycleCatalog",
       "title": "Runtime Agent Lifecycle Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -100200,7 +101706,7 @@
     },
     {
       "id": "slice-e5b0caa2",
-      "index": 152,
+      "index": 153,
       "name": "ReportRuntimeInstanceConnected",
       "title": "Report Runtime Instance Connected",
       "chapter": "RuntimeAgentOperations",
@@ -101040,7 +102546,7 @@
     },
     {
       "id": "slice-8d5d066d",
-      "index": 153,
+      "index": 154,
       "name": "AgentRuntimeInfrastructureConnectionCatalog",
       "title": "Agent Runtime Infrastructure Connection Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -101240,7 +102746,7 @@
     },
     {
       "id": "slice-ff0c55e7",
-      "index": 154,
+      "index": 155,
       "name": "AgentRuntimeTelemetryLatest",
       "title": "Agent Runtime Telemetry Latest",
       "chapter": "RuntimeAgentOperations",
@@ -101420,7 +102926,7 @@
     },
     {
       "id": "slice-ae0c7e4a",
-      "index": 155,
+      "index": 156,
       "name": "ReportAgentRuntimeTelemetry",
       "title": "Report Agent Runtime Telemetry",
       "chapter": "RuntimeAgentOperations",
@@ -101770,7 +103276,7 @@
     },
     {
       "id": "slice-d8eaacb9",
-      "index": 156,
+      "index": 157,
       "name": "ReportAgentRuntimeNodeInventory",
       "title": "Report Agent Runtime Node Inventory",
       "chapter": "RuntimeAgentOperations",
@@ -102322,7 +103828,7 @@
     },
     {
       "id": "slice-6a815e36",
-      "index": 157,
+      "index": 158,
       "name": "AgentRuntimeNodeInventoryCatalog",
       "title": "Agent Runtime Node Inventory Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -102592,7 +104098,7 @@
     },
     {
       "id": "slice-a56419ba",
-      "index": 158,
+      "index": 159,
       "name": "AgentRuntimeNodeResourceLatest",
       "title": "Agent Runtime Node Resource Latest",
       "chapter": "RuntimeAgentOperations",
@@ -102884,7 +104390,7 @@
     },
     {
       "id": "slice-973cdae6",
-      "index": 159,
+      "index": 160,
       "name": "ReportAgentRuntimeNodeResourceTelemetry",
       "title": "Report Agent Runtime Node Resource Telemetry",
       "chapter": "RuntimeAgentOperations",
@@ -103458,7 +104964,7 @@
     },
     {
       "id": "slice-314f81ac",
-      "index": 160,
+      "index": 161,
       "name": "PublishSystemNotification",
       "title": "Publish System Notification",
       "chapter": "SystemNotification",
@@ -104036,7 +105542,7 @@
     },
     {
       "id": "slice-2fbf1194",
-      "index": 161,
+      "index": 162,
       "name": "MarkSystemNotificationRead",
       "title": "Mark System Notification Read",
       "chapter": "SystemNotification",
@@ -104201,7 +105707,7 @@
     },
     {
       "id": "slice-2d5b5cec",
-      "index": 162,
+      "index": 163,
       "name": "MarkAllSystemNotificationsRead",
       "title": "Mark All System Notifications Read",
       "chapter": "SystemNotification",
@@ -104327,7 +105833,7 @@
     },
     {
       "id": "slice-e7e1379c",
-      "index": 163,
+      "index": 164,
       "name": "SystemNotificationCatalog",
       "title": "System Notification Catalog",
       "chapter": "SystemNotification",
@@ -104594,7 +106100,12 @@
           ],
           "listElement": true,
           "accessPolicy": "SystemNotificationPublicAccess",
-          "accessPolicyInherited": true
+          "accessPolicyInherited": true,
+          "projectionExtension": {
+            "capability": "system-notification",
+            "role": "catalog",
+            "batchEventId": "event-fe7177aa"
+          }
         },
         {
           "id": "readmodel-c7ce1d77",
@@ -104767,7 +106278,12 @@
           ],
           "listElement": true,
           "accessPolicy": "SystemNotificationPublicAccess",
-          "accessPolicyInherited": true
+          "accessPolicyInherited": true,
+          "projectionExtension": {
+            "capability": "system-notification",
+            "role": "summary",
+            "batchEventId": "event-fe7177aa"
+          }
         }
       ],
       "screens": [],
@@ -104778,7 +106294,7 @@
     },
     {
       "id": "slice-44017ae3",
-      "index": 164,
+      "index": 165,
       "name": "DataImportJob",
       "title": "Data Import Job",
       "chapter": "DataExchange",
@@ -105470,7 +106986,7 @@
     },
     {
       "id": "slice-b502b08a",
-      "index": 165,
+      "index": 166,
       "name": "MarkDataImportProcessing",
       "title": "Mark Data Import Processing",
       "chapter": "DataExchange",
@@ -105687,7 +107203,7 @@
     },
     {
       "id": "slice-796e7b6b",
-      "index": 166,
+      "index": 167,
       "name": "CompleteDataImport",
       "title": "Complete Data Import",
       "chapter": "DataExchange",
@@ -105986,7 +107502,7 @@
     },
     {
       "id": "slice-38c04448",
-      "index": 167,
+      "index": 168,
       "name": "FailDataImport",
       "title": "Fail Data Import",
       "chapter": "DataExchange",
@@ -106198,7 +107714,7 @@
     },
     {
       "id": "slice-c6e982a6",
-      "index": 168,
+      "index": 169,
       "name": "DataExportJob",
       "title": "Data Export Job",
       "chapter": "DataExchange",
@@ -106982,7 +108498,7 @@
     },
     {
       "id": "slice-2bd143c9",
-      "index": 169,
+      "index": 170,
       "name": "MarkDataExportProcessing",
       "title": "Mark Data Export Processing",
       "chapter": "DataExchange",
@@ -107168,7 +108684,7 @@
     },
     {
       "id": "slice-223b52ec",
-      "index": 170,
+      "index": 171,
       "name": "CompleteDataExport",
       "title": "Complete Data Export",
       "chapter": "DataExchange",
@@ -107473,7 +108989,7 @@
     },
     {
       "id": "slice-5d5eeba7",
-      "index": 171,
+      "index": 172,
       "name": "FailDataExport",
       "title": "Fail Data Export",
       "chapter": "DataExchange",
@@ -107685,7 +109201,7 @@
     },
     {
       "id": "slice-9af02ded",
-      "index": 172,
+      "index": 173,
       "name": "DownloadDataExportFile",
       "title": "Download Data Export File",
       "chapter": "DataExchange",
@@ -107876,7 +109392,7 @@
     },
     {
       "id": "slice-16b3a1ce",
-      "index": 173,
+      "index": 174,
       "name": "UploadFile",
       "title": "Upload File",
       "chapter": "FileUpload",
@@ -108336,7 +109852,7 @@
     },
     {
       "id": "slice-06708c39",
-      "index": 174,
+      "index": 175,
       "name": "MarkFileReferenced",
       "title": "Mark File Referenced",
       "chapter": "FileUpload",
@@ -108628,7 +110144,7 @@
     },
     {
       "id": "slice-3075787b",
-      "index": 175,
+      "index": 176,
       "name": "DownloadFile",
       "title": "Download File",
       "chapter": "FileUpload",
@@ -108963,7 +110479,7 @@
     },
     {
       "id": "slice-d252b143",
-      "index": 176,
+      "index": 177,
       "name": "DiscardFile",
       "title": "Discard File",
       "chapter": "FileUpload",
@@ -109257,7 +110773,7 @@
     },
     {
       "id": "slice-3c9cf498",
-      "index": 177,
+      "index": 178,
       "name": "ExpireFile",
       "title": "Expire File",
       "chapter": "FileUpload",
@@ -109590,7 +111106,7 @@
     },
     {
       "id": "slice-f1733462",
-      "index": 178,
+      "index": 179,
       "name": "UploadedFileCatalog",
       "title": "Uploaded File Catalog",
       "chapter": "FileUpload",
@@ -109936,7 +111452,7 @@
     },
     {
       "id": "slice-b0b0ac18",
-      "index": 179,
+      "index": 180,
       "name": "RegisterDictionary",
       "title": "Register Dictionary",
       "chapter": "DictionaryMaintenance",
@@ -110235,7 +111751,7 @@
     },
     {
       "id": "slice-76eb436c",
-      "index": 180,
+      "index": 181,
       "name": "UpdateDictionary",
       "title": "Update Dictionary",
       "chapter": "DictionaryMaintenance",
@@ -110419,7 +111935,7 @@
     },
     {
       "id": "slice-03e241b1",
-      "index": 181,
+      "index": 182,
       "name": "ArchiveDictionary",
       "title": "Archive Dictionary",
       "chapter": "DictionaryMaintenance",
@@ -110586,7 +112102,7 @@
     },
     {
       "id": "slice-6907b784",
-      "index": 182,
+      "index": 183,
       "name": "DictionaryCatalog",
       "title": "Dictionary Catalog",
       "chapter": "DictionaryMaintenance",
@@ -110782,7 +112298,7 @@
     },
     {
       "id": "slice-70522cbd",
-      "index": 183,
+      "index": 184,
       "name": "AddDictionaryValue",
       "title": "Add Dictionary Value",
       "chapter": "DictionaryMaintenance",
@@ -111292,7 +112808,7 @@
     },
     {
       "id": "slice-bd12ce54",
-      "index": 184,
+      "index": 185,
       "name": "DisableDictionaryValue",
       "title": "Disable Dictionary Value",
       "chapter": "DictionaryMaintenance",
@@ -111465,7 +112981,7 @@
     },
     {
       "id": "slice-15905637",
-      "index": 185,
+      "index": 186,
       "name": "EnableDictionaryValue",
       "title": "Enable Dictionary Value",
       "chapter": "DictionaryMaintenance",
@@ -111626,7 +113142,7 @@
     },
     {
       "id": "slice-ef299d7d",
-      "index": 186,
+      "index": 187,
       "name": "DictionaryValueCatalog",
       "title": "Dictionary Value Catalog",
       "chapter": "DictionaryMaintenance",
@@ -111907,7 +113423,7 @@
     },
     {
       "id": "slice-23aa6f37",
-      "index": 187,
+      "index": 188,
       "name": "SetDictionaryValueTranslation",
       "title": "Set Dictionary Value Translation",
       "chapter": "DictionaryMaintenance",
@@ -112312,7 +113828,7 @@
     },
     {
       "id": "slice-1e01826c",
-      "index": 188,
+      "index": 189,
       "name": "UpdateDictionaryValueTranslation",
       "title": "Update Dictionary Value Translation",
       "chapter": "DictionaryMaintenance",
@@ -112608,7 +114124,7 @@
     },
     {
       "id": "slice-de89db54",
-      "index": 189,
+      "index": 190,
       "name": "DictionaryValueTranslationCatalog",
       "title": "Dictionary Value Translation Catalog",
       "chapter": "DictionaryMaintenance",
@@ -112783,7 +114299,7 @@
     },
     {
       "id": "slice-4fcce762",
-      "index": 190,
+      "index": 191,
       "name": "RegisterUserAccount",
       "title": "Register User Account",
       "chapter": "IdentityAccessManagement",
@@ -113094,7 +114610,7 @@
     },
     {
       "id": "slice-2f4abaeb",
-      "index": 191,
+      "index": 192,
       "name": "DeactivateUserAccount",
       "title": "Deactivate User Account",
       "chapter": "IdentityAccessManagement",
@@ -113243,7 +114759,7 @@
     },
     {
       "id": "slice-49157835",
-      "index": 192,
+      "index": 193,
       "name": "ReactivateUserAccount",
       "title": "Reactivate User Account",
       "chapter": "IdentityAccessManagement",
@@ -113392,7 +114908,7 @@
     },
     {
       "id": "slice-5da5f728",
-      "index": 193,
+      "index": 194,
       "name": "GenerateUserAccountLoginPassword",
       "title": "Generate User Account Login Password",
       "chapter": "IdentityAccessManagement",
@@ -113556,7 +115072,7 @@
     },
     {
       "id": "slice-7b54b84c",
-      "index": 194,
+      "index": 195,
       "name": "RegisterRole",
       "title": "Register Role",
       "chapter": "IdentityAccessManagement",
@@ -113785,7 +115301,7 @@
     },
     {
       "id": "slice-1bda8ebb",
-      "index": 195,
+      "index": 196,
       "name": "RegisterPermission",
       "title": "Register Permission",
       "chapter": "IdentityAccessManagement",
@@ -114042,7 +115558,7 @@
     },
     {
       "id": "slice-1d773a87",
-      "index": 196,
+      "index": 197,
       "name": "GrantPermissionToRole",
       "title": "Grant Permission To Role",
       "chapter": "IdentityAccessManagement",
@@ -114278,7 +115794,7 @@
     },
     {
       "id": "slice-0766b926",
-      "index": 197,
+      "index": 198,
       "name": "AssignRoleToUser",
       "title": "Assign Role To User",
       "chapter": "IdentityAccessManagement",
@@ -114467,7 +115983,7 @@
     },
     {
       "id": "slice-b263007b",
-      "index": 198,
+      "index": 199,
       "name": "IssueServiceAccountApiToken",
       "title": "Issue Service Account Api Token",
       "chapter": "IdentityAccessManagement",
@@ -115001,7 +116517,7 @@
     },
     {
       "id": "slice-425842d5",
-      "index": 199,
+      "index": 200,
       "name": "UserAccountCatalogs",
       "title": "User Account Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -115181,7 +116697,7 @@
     },
     {
       "id": "slice-10714181",
-      "index": 200,
+      "index": 201,
       "name": "RoleCatalogs",
       "title": "Role Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -115272,7 +116788,7 @@
     },
     {
       "id": "slice-9f1bec7a",
-      "index": 201,
+      "index": 202,
       "name": "PermissionCatalogs",
       "title": "Permission Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -115377,7 +116893,7 @@
     },
     {
       "id": "slice-33855446",
-      "index": 202,
+      "index": 203,
       "name": "UserRoleAssignmentCatalog",
       "title": "User Role Assignment Catalog",
       "chapter": "IdentityAccessManagement",
@@ -115508,7 +117024,7 @@
     },
     {
       "id": "slice-4d6e3a7f",
-      "index": 203,
+      "index": 204,
       "name": "RolePermissionGrantCatalog",
       "title": "Role Permission Grant Catalog",
       "chapter": "IdentityAccessManagement",
@@ -115666,7 +117182,7 @@
     },
     {
       "id": "slice-6047e82e",
-      "index": 204,
+      "index": 205,
       "name": "ServiceAccountApiTokenCatalogs",
       "title": "Service Account Api Token Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -115918,7 +117434,7 @@
     "schemaVersion": 1,
     "medolVersion": "0.1.0",
     "source": {
-      "sha256": "a2032e84c22147e05a033baf58d713e0e0bd1036feff9ccc589f21a5dcde6bd1"
+      "sha256": "5ebe4c4f01ee866ff1dd8a17d5027ad8acc8c5fe5f842af944fa789554874609"
     }
   }
 }

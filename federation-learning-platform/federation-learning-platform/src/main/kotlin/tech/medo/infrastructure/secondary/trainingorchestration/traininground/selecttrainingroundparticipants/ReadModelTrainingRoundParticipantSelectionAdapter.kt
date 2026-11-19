@@ -64,8 +64,8 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             error("Training job context is incomplete for participant selection.")
         }
 
-        val roundId = UUID.randomUUID()
-        val roundNumber = (trainingJob.currentRoundNumber ?: 0) + 1
+        require(input.previousRoundNumber in 0 until maxRounds) { "No successor within configured rounds." }
+        val roundNumber = input.previousRoundNumber + 1
 
         val contextMismatches = buildList {
             if (trainingJob.federationId != null && trainingJob.federationId != federationId) {
@@ -93,7 +93,6 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 contextMismatches
             )
             return rejected(
-                roundId = roundId,
                 roundNumber = roundNumber,
                 maxRounds = maxRounds,
                 minimumAccuracy = minimumAccuracy,
@@ -123,7 +122,6 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 failureReason
             )
             return rejected(
-                roundId = roundId,
                 roundNumber = roundNumber,
                 maxRounds = maxRounds,
                 minimumAccuracy = minimumAccuracy,
@@ -168,7 +166,6 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 failureReason
             )
             return rejected(
-                roundId = roundId,
                 roundNumber = roundNumber,
                 maxRounds = maxRounds,
                 minimumAccuracy = minimumAccuracy,
@@ -195,7 +192,6 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 failureReason
             )
             return rejected(
-                roundId = roundId,
                 roundNumber = roundNumber,
                 maxRounds = maxRounds,
                 minimumAccuracy = minimumAccuracy,
@@ -212,7 +208,7 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 val organizationId = runtime?.organizationId
                 val runtimeId = runtime?.runtimeId
                 val datasetId = metadata.datasetId
-                if (organizationId == null || runtimeId == null || datasetId == null) {
+                if (organizationId == null || runtimeId == null || datasetId == null || metadata.organizationId != organizationId) {
                     null
                 } else {
                     TrainingRoundParticipant(
@@ -261,7 +257,6 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 failureReason
             )
             return rejected(
-                roundId = roundId,
                 roundNumber = roundNumber,
                 maxRounds = maxRounds,
                 minimumAccuracy = minimumAccuracy,
@@ -278,7 +273,6 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         }
 
         return SelectTrainingRoundParticipantsResult.Succeeded(
-            roundId = roundId,
             roundNumber = roundNumber,
             maxRounds = maxRounds,
             minimumAccuracy = minimumAccuracy,
@@ -364,15 +358,17 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                     cb.isTrue(root.get("labelCompatible"))
                 )
             )
+            // Only metadata reports and reprofiles write this projection; its timestamp is the source event time.
+            val reportTime = cb.coalesce(root.get<LocalDateTime>("profiledAt"), root.get<LocalDateTime>("projectionUpdatedAt"))
             query.orderBy(
-                cb.desc(root.get<LocalDateTime>("profiledAt")),
+                cb.asc(cb.selectCase<Int>().`when`(cb.isNull(reportTime), 1).otherwise(0)),
+                cb.desc(reportTime),
                 cb.asc(root.get<UUID>("runtimeDatasetBindingId"))
             )
             entityManager.createQuery(query).resultList
         }
 
     private fun rejected(
-        roundId: UUID,
         roundNumber: Int,
         maxRounds: Int,
         minimumAccuracy: BigDecimal,
@@ -392,7 +388,6 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         failureReason: String
     ): SelectTrainingRoundParticipantsResult.Rejected =
         SelectTrainingRoundParticipantsResult.Rejected(
-            roundId = roundId,
             roundNumber = roundNumber,
             maxRounds = maxRounds,
             minimumAccuracy = minimumAccuracy,

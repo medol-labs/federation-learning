@@ -33,6 +33,7 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapterTest {
         assertEquals(input.trainingJobId, client.request?.trainingJobId)
         assertEquals(input.trainingRunConfigurationId, client.request?.trainingRunConfigurationId)
         assertEquals(input.featureSchemaId, client.request?.featureSchemaId)
+        assertEquals(input.datasetId, client.request?.datasetId)
         assertEquals(input.roundId, client.request?.roundId)
         assertEquals(input.roundNumber, client.request?.roundNumber)
         assertEquals(input.runtimeId, client.request?.runtimeId)
@@ -86,6 +87,7 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapterTest {
 
     private fun input(): DispatchParticipantExecutionPlanInput =
         DispatchParticipantExecutionPlanInput(
+            datasetId = UUID.fromString("dddddddd-dddd-4ddd-8ddd-dddddddddddd"),
             executionPlanId = uuid("11111111-1111-4111-8111-111111111111"),
             executionSessionId = uuid("22222222-2222-4222-8222-222222222222"),
             trainingJobId = uuid("33333333-3333-4333-8333-333333333333"),

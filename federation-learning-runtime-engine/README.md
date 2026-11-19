@@ -634,3 +634,19 @@ existing device behavior.
 If an Agent creates the engine container itself, configure it to use this
 GB10 Compose configuration and image as well; changing a manually launched
 engine does not change the Agent's deployment configuration.
+### Per-round binary logistic evaluation
+
+The platform sends the exact Support artifact bytes to the aggregation engine's
+`POST /evaluations` endpoint. Set `FL_AGGREGATION_RUNTIME_ENGINE_ENDPOINT` on
+the platform, even when aggregation itself runs in embedded mode. A valid JSON
+logistic model must contain learned weights and bias, not a list of updates.
+Unsupported plugins, invalid artifacts and failed evaluations do not complete a round.
+
+The bundled synthetic holdout is for the readmission simulation only, not a
+clinical benchmark. For another task, mount a separate, immutable validation CSV
+and manifest on the engine and set `RUNTIME_ENGINE_EVALUATION_CONFIG` to the
+manifest path. Use `python/gemifl/runtime/holdout.json` as the format; set
+`featureSchemaId` to the platform schema ID, keep features in training order,
+and pin the CSV SHA-256. Do not include validation records in participant
+training data or change the manifest between rounds. Predictions use a 0.5
+threshold. Fairness is not evaluated.

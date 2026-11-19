@@ -43,6 +43,7 @@ class RoundExecutionState @EntityCreator constructor() {
     var roundId: UUID? = null
     var roundNumber: Int? = null
     var runtimeId: UUID? = null
+    var datasetId: UUID? = null
     var organizationId: UUID? = null
     var personalizationMode: String? = null
     var personalizationScope: String? = null
@@ -121,6 +122,7 @@ class RoundExecutionState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        datasetId = event.datasetId
         organizationId = event.organizationId
         personalizationMode = event.personalizationMode
         personalizationScope = event.personalizationScope
@@ -166,6 +168,7 @@ class RoundExecutionState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        datasetId = event.datasetId
         organizationId = event.organizationId
         personalizationMode = event.personalizationMode
         personalizationScope = event.personalizationScope
@@ -209,6 +212,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ExecutionPlanRejectedEvent): RoundExecutionState = apply {
+        currentState = RoundExecutionStateEnum.PlanRejected
         executionPlanId = event.executionPlanId
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
@@ -218,6 +222,7 @@ class RoundExecutionState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        datasetId = event.datasetId
         organizationId = event.organizationId
         personalizationMode = event.personalizationMode
         personalizationScope = event.personalizationScope
@@ -271,6 +276,7 @@ class RoundExecutionState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
         personalizationMode = event.personalizationMode
@@ -317,6 +323,7 @@ class RoundExecutionState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
         personalizationMode = event.personalizationMode
@@ -355,6 +362,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeEngineJobObservedEvent): RoundExecutionState = apply {
+        currentState = RoundExecutionStateEnum.RuntimeEngineReleased
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId
@@ -470,6 +478,7 @@ class RoundExecutionState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
         baseModelId = event.baseModelId
@@ -488,6 +497,7 @@ class RoundExecutionState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
         baseModelId = event.baseModelId
@@ -507,6 +517,7 @@ class RoundExecutionState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
         baseModelId = event.baseModelId
@@ -525,6 +536,7 @@ class RoundExecutionState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
         baseModelId = event.baseModelId

@@ -26,6 +26,7 @@ class RetryRoundExecutionAfterStartFailureDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
             personalizationMode = null,
@@ -72,6 +73,7 @@ class RetryRoundExecutionAfterStartFailureDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
             baseModelId = java.util.UUID.randomUUID(),
@@ -97,6 +99,7 @@ class RetryRoundExecutionAfterStartFailureDecisionTest {
         assertEquals(command.roundId, event.roundId)
         assertEquals(command.roundNumber, event.roundNumber)
         assertEquals(command.runtimeId, event.runtimeId)
+        assertEquals(command.datasetId, event.datasetId)
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
         assertEquals(command.baseModelId, event.baseModelId)

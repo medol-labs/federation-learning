@@ -1,0 +1,9 @@
+age_years,systolic_bp_mm_hg,fasting_glucose_mg_dl,readmission_risk
+26,114,81,0
+34,121,94,0
+45,125,103,0
+56,132,109,0
+59,151,135,1
+69,157,144,1
+74,166,153,1
+81,174,161,1

@@ -16,16 +16,15 @@ data class RetryRoundExecutionAfterRuntimeFailureCommand(
     val roundId: UUID,
     val roundNumber: Int,
     val runtimeId: UUID,
+    val datasetId: UUID?,
     val organizationId: UUID,
     val featureSchemaId: UUID,
     val baseModelId: UUID,
     val runtimeEngineJobId: String,
     val retryReason: String
 ) {
-
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
-
 
 
 }

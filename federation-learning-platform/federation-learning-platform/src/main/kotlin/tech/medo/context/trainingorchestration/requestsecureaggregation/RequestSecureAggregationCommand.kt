@@ -36,10 +36,8 @@ data class RequestSecureAggregationCommand(
     val minimumPersonalizationLift: BigDecimal?,
     val secureAggregationRequired: Boolean
 ) {
-
     @TargetEntityId
-    val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
-
+    val selection: TrainingRoundSelection = TrainingRoundSelection(roundId = roundId)
 
 
 }

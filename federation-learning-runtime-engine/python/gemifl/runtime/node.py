@@ -157,6 +157,14 @@ class RuntimeHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         parsed = urlparse(self.path)
+        if parsed.path == "/evaluations":
+            from gemifl.runtime.evaluation import evaluate
+            try:
+                self.respond(200, evaluate(self.read_json()))
+            except Exception as error:
+                log.exception("Round evaluation failed")
+                self.respond(422, {"error": str(error)})
+            return
         if parsed.path == "/jobs":
             try:
                 payload = self.read_json()

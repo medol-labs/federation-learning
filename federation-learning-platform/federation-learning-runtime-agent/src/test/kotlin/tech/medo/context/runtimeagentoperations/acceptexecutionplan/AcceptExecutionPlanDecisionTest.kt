@@ -28,6 +28,7 @@ class AcceptExecutionPlanDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             personalizationMode = null,
             personalizationScope = null,
@@ -72,6 +73,7 @@ class AcceptExecutionPlanDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             personalizationMode = null,
             personalizationScope = null,
@@ -131,6 +133,7 @@ class AcceptExecutionPlanDecisionTest {
         assertEquals(command.roundId, event.roundId)
         assertEquals(command.roundNumber, event.roundNumber)
         assertEquals(command.runtimeId, event.runtimeId)
+        assertEquals(command.datasetId, event.datasetId)
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.personalizationMode, event.personalizationMode)
         assertEquals(command.personalizationScope, event.personalizationScope)
@@ -178,6 +181,7 @@ class AcceptExecutionPlanDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             personalizationMode = null,
             personalizationScope = null,
@@ -222,6 +226,7 @@ class AcceptExecutionPlanDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             personalizationMode = null,
             personalizationScope = null,
@@ -282,6 +287,7 @@ class AcceptExecutionPlanDecisionTest {
         assertEquals(command.roundId, event.roundId)
         assertEquals(command.roundNumber, event.roundNumber)
         assertEquals(command.runtimeId, event.runtimeId)
+        assertEquals(command.datasetId, event.datasetId)
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.personalizationMode, event.personalizationMode)
         assertEquals(command.personalizationScope, event.personalizationScope)

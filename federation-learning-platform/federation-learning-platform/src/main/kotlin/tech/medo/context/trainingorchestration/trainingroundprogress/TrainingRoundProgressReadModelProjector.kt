@@ -476,6 +476,13 @@ open class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.aggregatedModelId = event.aggregatedModelId
             entity.globalAccuracy = event.globalAccuracy
             entity.globalFairnessScore = event.globalFairnessScore
+            entity.validationDatasetVersion = event.validationDatasetVersion
+            entity.validationDatasetDigest = event.validationDatasetDigest
+            entity.evaluatedSampleCount = event.evaluatedSampleCount
+            entity.truePositiveCount = event.truePositiveCount
+            entity.trueNegativeCount = event.trueNegativeCount
+            entity.falsePositiveCount = event.falsePositiveCount
+            entity.falseNegativeCount = event.falseNegativeCount
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 

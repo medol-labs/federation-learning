@@ -32,6 +32,7 @@ class RestClientRuntimeAgentExecutionPlanClientTest {
             requestTo("http://runtime-agent:8082/roundexecution/receiveparticipantexecutionplan"),
         )
             .andExpect(method(HttpMethod.POST))
+            .andExpect(jsonPath("$.datasetId").value("dddddddd-dddd-4ddd-8ddd-dddddddddddd"))
             .andExpect(header(InternalTokenAuthenticationFilter.INTERNAL_TOKEN_HEADER, "service-token"))
             .andExpect(jsonPath("$.personalizationMode").value("LOCAL_ADAPTATION"))
             .andExpect(jsonPath("$.personalizationTargetId").value("77777777-7777-4777-8777-777777777777"))
@@ -47,6 +48,7 @@ class RestClientRuntimeAgentExecutionPlanClientTest {
 
     private fun request(): ReceiveParticipantExecutionPlanRequest =
         ReceiveParticipantExecutionPlanRequest(
+            datasetId = UUID.fromString("dddddddd-dddd-4ddd-8ddd-dddddddddddd"),
             executionPlanId = uuid("11111111-1111-4111-8111-111111111111"),
             roundExecutionId = uuid("11111111-1111-4111-8111-111111111111"),
             executionSessionId = uuid("22222222-2222-4222-8222-222222222222"),

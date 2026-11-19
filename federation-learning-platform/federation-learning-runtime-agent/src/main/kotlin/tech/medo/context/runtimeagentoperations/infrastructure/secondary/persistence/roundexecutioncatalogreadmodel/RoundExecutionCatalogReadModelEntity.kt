@@ -29,6 +29,7 @@ class RoundExecutionCatalogReadModelEntity : MetadataProjection {
     var roundNumber: Int? = null
     var organizationId: UUID? = null
     var runtimeId: UUID? = null
+    var datasetId: UUID? = null
     @Enumerated(EnumType.STRING)
     var state: RoundExecutionStateEnum? = null
     var featureSchemaId: UUID? = null

@@ -10,9 +10,9 @@ import java.math.BigDecimal;
 @Event
 data class ModelUpdateSubmissionRejectedEvent(
     val modelUpdateSubmissionId: UUID,
-    @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
+    @EventTag(key = "roundId")
     val roundId: UUID,
     val runtimeId: UUID,
     val updateArtifactId: UUID,

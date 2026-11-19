@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 
 @Event
 data class SecureAggregationRequestedEvent(
-    @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
     val federationId: UUID,
     val federationName: String?,
@@ -19,6 +18,7 @@ data class SecureAggregationRequestedEvent(
     val featureSchemaId: UUID,
     val featureDomain: String?,
     val featureSchemaVersion: String?,
+    @EventTag(key = "roundId")
     val roundId: UUID,
     val roundNumber: Int,
     val requiredParticipantCount: Int,

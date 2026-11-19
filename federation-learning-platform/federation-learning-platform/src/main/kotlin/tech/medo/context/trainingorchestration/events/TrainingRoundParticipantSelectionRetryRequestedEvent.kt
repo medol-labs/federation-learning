@@ -8,6 +8,8 @@ import java.util.UUID;
 
 @Event
 data class TrainingRoundParticipantSelectionRetryRequestedEvent(
-    @EventTag(key = "trainingJobId")
-    val trainingJobId: UUID
+    val trainingJobId: UUID,
+    @EventTag(key = "roundId")
+    val roundId: UUID,
+    val previousRoundNumber: Int?
 )

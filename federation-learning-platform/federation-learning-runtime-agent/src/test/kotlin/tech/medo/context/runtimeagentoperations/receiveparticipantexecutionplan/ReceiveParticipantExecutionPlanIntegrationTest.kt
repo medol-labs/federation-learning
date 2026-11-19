@@ -23,7 +23,6 @@ import java.math.BigDecimal
 class ReceiveParticipantExecutionPlanIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
-
     @Test
     fun ReceiveParticipantExecutionPlanintegration() {
         val command = ReceiveParticipantExecutionPlanCommand(
@@ -36,6 +35,7 @@ class ReceiveParticipantExecutionPlanIntegrationTest(
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
+            datasetId = null,
             organizationId = java.util.UUID.randomUUID(),
             personalizationMode = null,
             personalizationScope = null,

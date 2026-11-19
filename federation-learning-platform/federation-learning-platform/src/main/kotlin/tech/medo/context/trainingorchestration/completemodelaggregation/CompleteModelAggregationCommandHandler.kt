@@ -19,11 +19,9 @@ class CompleteModelAggregationCommandHandler(
     @CommandHandler
     fun handle(
         command: CompleteModelAggregationCommand,
-        @InjectEntity(idProperty = "trainingJobId") state: TrainingRoundState,
+        @InjectEntity(idProperty = "roundId") state: TrainingRoundState,
         eventAppender: EventAppender
     ) {
-
         eventAppender.append(decision.decide(command, state))
-
     }
 }

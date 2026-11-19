@@ -21,15 +21,14 @@ class AggregatePlainModelUpdatesCommandHandler(
     @CommandHandler
     fun handle(
         command: AggregatePlainModelUpdatesCommand,
-        @InjectEntity(idProperty = "trainingJobId") state: TrainingRoundState,
+        @InjectEntity(idProperty = "roundId") state: TrainingRoundState,
         eventAppender: EventAppender
     ) {
-
+        // TODO: validate child/member state before appending events.
         val input = AggregatePlainModelUpdatesInput(trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, trainingJobObjective = command.trainingJobObjective, featureSchemaId = command.featureSchemaId, roundId = command.roundId, roundNumber = command.roundNumber, maxRounds = command.maxRounds, minimumAccuracy = command.minimumAccuracy, modelPlugin = command.modelPlugin, aggregationAlgorithm = command.aggregationAlgorithm, aggregatedModelId = command.aggregatedModelId, modelUpdateArtifactRefs = command.modelUpdateArtifactRefs)
         val portResult = aggregatePlainModelUpdatesService.execute(input)
         val now = java.time.LocalDateTime.now()
 
         eventAppender.append(decision.decide(command, state, portResult, now))
-
     }
 }

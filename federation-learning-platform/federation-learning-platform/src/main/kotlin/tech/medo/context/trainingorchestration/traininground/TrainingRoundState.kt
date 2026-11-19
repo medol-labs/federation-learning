@@ -14,6 +14,7 @@ import tech.medo.trainingorchestration.events.TrainingRoundStartFailedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionReceivedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionAcceptedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionRejectedEvent
+import tech.medo.trainingorchestration.events.HistoricalRoundUpdateDispositionRecordedEvent
 import tech.medo.trainingorchestration.events.PlainModelAggregationCompletedEvent
 import tech.medo.trainingorchestration.events.PlainModelAggregationFailedEvent
 import tech.medo.trainingorchestration.events.SecureAggregationRequestedEvent
@@ -21,6 +22,7 @@ import tech.medo.trainingorchestration.events.GlobalModelUpdatedEvent
 import tech.medo.trainingorchestration.events.GlobalModelEvaluationSubmittedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundCompletedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundFailedEvent
+import tech.medo.trainingorchestration.events.HistoricalTrainingRoundRecoveredEvent
 import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum
 
 import java.util.UUID;
@@ -28,11 +30,12 @@ import java.math.BigDecimal;
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
 
 
-@EventSourced(idType = UUID::class, tagKey = TrainingRoundTags.TRAINING_JOB_ID)
+@EventSourced(idType = UUID::class, tagKey = TrainingRoundTags.ROUND_ID)
 class TrainingRoundState @EntityCreator constructor() {
 
     var currentState: TrainingRoundStateEnum? = null
     var trainingJobId: UUID? = null
+    var previousRoundNumber: Int? = null
     var federationId: UUID? = null
     var federationName: String? = null
     var trainingRunConfigurationId: UUID? = null
@@ -93,6 +96,9 @@ class TrainingRoundState @EntityCreator constructor() {
     var requiredModelUpdateCount: Int? = null
     var plainAggregationReady: Boolean? = null
     var rejectionReason: String? = null
+    var canonicalRoundId: UUID? = null
+    var recoveryDigest: String? = null
+    var reconciledRejectionIds: List<UUID> = emptyList()
     var modelPlugin: String? = null
     var aggregatedModelId: UUID? = null
     var aggregatedModelName: String? = null
@@ -108,11 +114,21 @@ class TrainingRoundState @EntityCreator constructor() {
     var requiredParticipantCount: Int? = null
     var globalAccuracy: BigDecimal? = null
     var globalFairnessScore: BigDecimal? = null
+    var validationDatasetVersion: String? = null
+    var validationDatasetDigest: String? = null
+    var evaluatedSampleCount: Int? = null
+    var truePositiveCount: Int? = null
+    var trueNegativeCount: Int? = null
+    var falsePositiveCount: Int? = null
+    var falseNegativeCount: Int? = null
+    var nextRoundId: UUID? = null
+    var recoverySubmissionIds: List<UUID> = emptyList()
 
     @EventSourcingHandler
     fun evolve(event: TrainingRoundParticipantsSelectedEvent): TrainingRoundState = apply {
         currentState = TrainingRoundStateEnum.ParticipantsSelected
         trainingJobId = event.trainingJobId
+        previousRoundNumber = event.previousRoundNumber
         federationId = event.federationId
         federationName = event.federationName
         trainingRunConfigurationId = event.trainingRunConfigurationId
@@ -142,7 +158,9 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRoundParticipantSelectionFailedEvent): TrainingRoundState = apply {
+        currentState = TrainingRoundStateEnum.Failed
         trainingJobId = event.trainingJobId
+        previousRoundNumber = event.previousRoundNumber
         federationId = event.federationId
         federationName = event.federationName
         trainingRunConfigurationId = event.trainingRunConfigurationId
@@ -174,6 +192,8 @@ class TrainingRoundState @EntityCreator constructor() {
     @EventSourcingHandler
     fun evolve(event: TrainingRoundParticipantSelectionRetryRequestedEvent): TrainingRoundState = apply {
         trainingJobId = event.trainingJobId
+        roundId = event.roundId
+        previousRoundNumber = event.previousRoundNumber
     }
 
     @EventSourcingHandler
@@ -214,6 +234,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRoundStartFailedEvent): TrainingRoundState = apply {
+        currentState = TrainingRoundStateEnum.Failed
         trainingJobId = event.trainingJobId
         federationId = event.federationId
         federationName = event.federationName
@@ -336,6 +357,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ModelUpdateSubmissionRejectedEvent): TrainingRoundState = apply {
+        currentState = TrainingRoundStateEnum.EvaluatingGlobalModel
         modelUpdateSubmissionId = event.modelUpdateSubmissionId
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
@@ -344,6 +366,19 @@ class TrainingRoundState @EntityCreator constructor() {
         updateArtifactId = event.updateArtifactId
         anomalyScore = event.anomalyScore
         rejectionReason = event.rejectionReason
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: HistoricalRoundUpdateDispositionRecordedEvent): TrainingRoundState = apply {
+        modelUpdateSubmissionId = event.modelUpdateSubmissionId
+        trainingJobId = event.trainingJobId
+        roundId = event.roundId
+        canonicalRoundId = event.canonicalRoundId
+        runtimeId = event.runtimeId
+        updateArtifactId = event.updateArtifactId
+        artifactDigest = event.artifactDigest
+        recoveryDigest = event.recoveryDigest
+        reconciledRejectionIds = event.reconciledRejectionIds
     }
 
     @EventSourcingHandler
@@ -373,6 +408,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: PlainModelAggregationFailedEvent): TrainingRoundState = apply {
+        currentState = TrainingRoundStateEnum.Failed
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         trainingJobObjective = event.trainingJobObjective
@@ -442,6 +478,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: GlobalModelEvaluationSubmittedEvent): TrainingRoundState = apply {
+        currentState = TrainingRoundStateEnum.EvaluatingGlobalModel
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         trainingJobObjective = event.trainingJobObjective
@@ -459,6 +496,13 @@ class TrainingRoundState @EntityCreator constructor() {
         aggregatedModelSignatureUri = event.aggregatedModelSignatureUri
         globalAccuracy = event.globalAccuracy
         globalFairnessScore = event.globalFairnessScore
+        validationDatasetVersion = event.validationDatasetVersion
+        validationDatasetDigest = event.validationDatasetDigest
+        evaluatedSampleCount = event.evaluatedSampleCount
+        truePositiveCount = event.truePositiveCount
+        trueNegativeCount = event.trueNegativeCount
+        falsePositiveCount = event.falsePositiveCount
+        falseNegativeCount = event.falseNegativeCount
     }
 
     @EventSourcingHandler
@@ -470,6 +514,7 @@ class TrainingRoundState @EntityCreator constructor() {
         trainingJobObjective = event.trainingJobObjective
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
+        nextRoundId = event.nextRoundId
         roundNumber = event.roundNumber
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
@@ -493,5 +538,29 @@ class TrainingRoundState @EntityCreator constructor() {
         selectedRuntimeCount = event.selectedRuntimeCount
         minimumNodesPerRound = event.minimumNodesPerRound
         failureReason = event.failureReason
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: HistoricalTrainingRoundRecoveredEvent): TrainingRoundState = apply {
+        roundId = event.roundId
+        trainingJobId = event.trainingJobId
+        recoveryDigest = event.recoveryDigest
+        canonicalRoundId = event.canonicalRoundId
+        recoverySubmissionIds = event.recoverySubmissionIds
+        federationId = event.federationId
+        trainingRunConfigurationId = event.trainingRunConfigurationId
+        featureSchemaId = event.featureSchemaId
+        trainingJobObjective = event.trainingJobObjective
+        roundNumber = event.roundNumber
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
+        aggregationAlgorithm = event.aggregationAlgorithm
+        minimumNodesPerRound = event.minimumNodesPerRound
+        secureAggregationRequired = event.secureAggregationRequired
+        selectedParticipants = event.selectedParticipants
+        selectedOrganizationIds = event.selectedOrganizationIds
+        selectedRuntimeIds = event.selectedRuntimeIds
+        selectedOrganizationCount = event.selectedOrganizationCount
+        selectedRuntimeCount = event.selectedRuntimeCount
     }
 }

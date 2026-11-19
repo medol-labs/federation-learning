@@ -18,6 +18,7 @@ data class RoundExecutionStartedEvent(
     val roundId: UUID,
     val roundNumber: Int,
     val runtimeId: UUID,
+    val datasetId: UUID?,
     val organizationId: UUID,
     val featureSchemaId: UUID,
     val personalizationMode: String?,

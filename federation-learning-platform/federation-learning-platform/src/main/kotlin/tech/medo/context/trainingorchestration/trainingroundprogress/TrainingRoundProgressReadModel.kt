@@ -71,6 +71,13 @@ class TrainingRoundProgressReadModelCriteria {
     var aggregatedModelId: StringFilter? = null
     var globalAccuracy: BigDecimalFilter? = null
     var globalFairnessScore: BigDecimalFilter? = null
+    var validationDatasetVersion: StringFilter? = null
+    var validationDatasetDigest: StringFilter? = null
+    var evaluatedSampleCount: IntegerFilter? = null
+    var truePositiveCount: IntegerFilter? = null
+    var trueNegativeCount: IntegerFilter? = null
+    var falsePositiveCount: IntegerFilter? = null
+    var falseNegativeCount: IntegerFilter? = null
     var failureReason: StringFilter? = null
     var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
@@ -126,6 +133,13 @@ class TrainingRoundProgressReadModelProjection : MetadataProjection {
     var aggregatedModelId: UUID? = null
     var globalAccuracy: BigDecimal? = null
     var globalFairnessScore: BigDecimal? = null
+    var validationDatasetVersion: String? = null
+    var validationDatasetDigest: String? = null
+    var evaluatedSampleCount: Int? = null
+    var truePositiveCount: Int? = null
+    var trueNegativeCount: Int? = null
+    var falsePositiveCount: Int? = null
+    var falseNegativeCount: Int? = null
     var failureReason: String? = null
     var projectionUpdatedAt: LocalDateTime? = null
     var userId: String? = null
@@ -197,6 +211,13 @@ fun TrainingRoundProgressReadModelProjection.toReadModel(): TrainingRoundProgres
     aggregatedModelId = aggregatedModelId,
     globalAccuracy = globalAccuracy,
     globalFairnessScore = globalFairnessScore,
+    validationDatasetVersion = validationDatasetVersion,
+    validationDatasetDigest = validationDatasetDigest,
+    evaluatedSampleCount = evaluatedSampleCount,
+    truePositiveCount = truePositiveCount,
+    trueNegativeCount = trueNegativeCount,
+    falsePositiveCount = falsePositiveCount,
+    falseNegativeCount = falseNegativeCount,
     failureReason = failureReason,
     projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
@@ -268,6 +289,13 @@ data class TrainingRoundProgressReadModel(
     val aggregatedModelId: UUID?,
     val globalAccuracy: BigDecimal?,
     val globalFairnessScore: BigDecimal?,
+    val validationDatasetVersion: String?,
+    val validationDatasetDigest: String?,
+    val evaluatedSampleCount: Int?,
+    val truePositiveCount: Int?,
+    val trueNegativeCount: Int?,
+    val falsePositiveCount: Int?,
+    val falseNegativeCount: Int?,
     val failureReason: String?,
     val projectionUpdatedAt: LocalDateTime? = null,
     val userId: String? = null,

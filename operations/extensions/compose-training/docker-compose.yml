@@ -41,6 +41,7 @@ x-pg: &pg
 x-engine: &engine
   image: fl-local/federation-learning-runtime-engine:sklearn-compose-20261116
   environment:
+    RUNTIME_ENGINE_EVALUATION_CONFIG: /workspace/app/python/gemifl/runtime/holdout.json
     RUNTIME_ENGINE_HOST: 0.0.0.0
     RUNTIME_ENGINE_PORT: "8080"
     RUNTIME_ENGINE_ROOT: /workspace/tmp/runtime-engine

@@ -33,6 +33,7 @@ class RoundExecutionCatalogReadModelQueryService(
             criteria.roundNumber?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<Int>> { root -> root.get("roundNumber") })) }
             criteria.organizationId?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("organizationId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeId?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.datasetId?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("datasetId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.state?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<RoundExecutionStateEnum>> { root -> root.get("state") })) }
             criteria.featureSchemaId?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("featureSchemaId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.baseModelId?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("baseModelId") as JpaExpression<UUID>).cast(String::class.java) })) }
@@ -136,6 +137,7 @@ class RoundExecutionCatalogReadModelQueryService(
             it.roundNumber = this@toProjection.roundNumber
             it.organizationId = this@toProjection.organizationId
             it.runtimeId = this@toProjection.runtimeId
+            it.datasetId = this@toProjection.datasetId
             it.state = this@toProjection.state
             it.featureSchemaId = this@toProjection.featureSchemaId
             it.baseModelId = this@toProjection.baseModelId

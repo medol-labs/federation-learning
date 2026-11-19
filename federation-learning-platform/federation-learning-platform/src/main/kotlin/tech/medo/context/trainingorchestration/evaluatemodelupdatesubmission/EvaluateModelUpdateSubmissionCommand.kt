@@ -43,10 +43,8 @@ data class EvaluateModelUpdateSubmissionCommand(
     val personalizationLift: BigDecimal?,
     val anomalyScore: BigDecimal = java.math.BigDecimal.ZERO
 ) {
-
     @TargetEntityId
-    val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
-
+    val selection: TrainingRoundSelection = TrainingRoundSelection(roundId = roundId)
 
 
 }
