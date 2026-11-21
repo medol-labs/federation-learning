@@ -42,6 +42,21 @@ class LocalUploadFileAdapterTest {
     }
 
     @Test
+    fun repeatedFileIdIsImmutableEvenWithConcurrentWriters() {
+        val storage = LocalUploadedFileStorage(tempDir.toString())
+        fun save(text: String) = storage.save(FILE_ID, "update.json", "application/json", text.byteInputStream())
+        val pool = java.util.concurrent.Executors.newFixedThreadPool(4)
+        try {
+            val writes = (1..8).map { pool.submit<String> { save("original").checksum } }
+            assertEquals(1, writes.map { it.get() }.distinct().size)
+        } finally {
+            pool.shutdownNow()
+        }
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException::class.java) { save("changed") }
+        assertEquals("original", storage.open(FILE_ID)!!.inputStream.bufferedReader().use { it.readText() })
+    }
+
+    @Test
     fun generatesUploadIdWhenNotProvided() {
         val source = tempDir.resolve("dataset.csv")
         Files.writeString(source, "x,y\n1,0")

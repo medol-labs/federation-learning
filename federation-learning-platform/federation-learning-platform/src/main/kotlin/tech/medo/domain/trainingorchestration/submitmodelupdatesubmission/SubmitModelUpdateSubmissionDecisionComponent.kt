@@ -4,6 +4,9 @@ import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.submitmodelupdatesubmission.SubmitModelUpdateSubmissionDecision
 import tech.medo.trainingorchestration.submitmodelupdatesubmission.SubmitModelUpdateSubmissionCommand
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
+import tech.medo.trainingorchestration.domain.types.ModelUpdateReceipt
+import tech.medo.trainingorchestration.domain.types.RoundSubmissionLedger
+import tech.medo.trainingorchestration.events.ModelUpdateSubmissionReceivedEvent
 import java.math.BigDecimal
 
 @Component
@@ -27,6 +30,20 @@ class SubmitModelUpdateSubmissionDecisionComponent : SubmitModelUpdateSubmission
         } else {
             require(!command.personalizedArtifactAvailable) { "Global-only execution must not register a personalized artifact." }
         }
-        return super.decide(command, state)
+        val receipts = state.submissionLedger?.receipts.orEmpty()
+        val receipt = ModelUpdateReceipt(command.roundExecutionId, command.runtimeId, command.updateArtifactId, command.artifactDigest)
+        receipts.firstOrNull { it.roundExecutionId == command.roundExecutionId }?.let {
+            require(it == receipt) { "Conflicting model update for execution ${command.roundExecutionId}." }
+            return emptyList()
+        }
+        // Older Received events have no ledger; do not reopen accepted contributions on replay.
+        if (command.runtimeId in state.acceptedRuntimeIds) {
+            require(command.artifactRef in state.acceptedModelUpdateArtifactRefs) {
+                "Runtime ${command.runtimeId} already contributed a different update to this round."
+            }
+            return emptyList()
+        }
+        val received = super.decide(command, state).single() as ModelUpdateSubmissionReceivedEvent
+        return listOf(received.copy(submissionLedger = RoundSubmissionLedger(receipts + receipt)))
     }
 }

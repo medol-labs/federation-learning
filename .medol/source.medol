@@ -3916,6 +3916,17 @@ context TrainingOrchestration {
     state PlanDispatched
   }
 
+  value ModelUpdateReceipt {
+    roundExecutionId: UUID
+    runtimeId: UUID
+    updateArtifactId: UUID
+    artifactDigest: String
+  }
+
+  value RoundSubmissionLedger {
+    receipts: ModelUpdateReceipt[]
+  }
+
   slice SubmitModelUpdateSubmission {
     actor RuntimeAgent
     reactsTo AgentLocalModelUpdateSubmitted
@@ -3959,6 +3970,7 @@ context TrainingOrchestration {
     }
 
     event ModelUpdateSubmissionReceived {
+      submissionLedger: RoundSubmissionLedger?
       modelUpdateSubmissionId: UUID id technical
       executionSessionId: UUID
       executionPlanId: UUID
@@ -8063,7 +8075,7 @@ context RuntimeAgentOperations {
     }
 
     command SubmitAgentLocalModelUpdate {
-      modelUpdateSubmissionId: UUID id generated technical
+      modelUpdateSubmissionId: UUID id generated technical from RoundExecutionCompleted.roundExecutionId
       executionSessionId: UUID from RoundExecutionCompleted.executionSessionId
       executionPlanId: UUID from RoundExecutionCompleted.executionPlanId
       roundExecutionId: UUID from RoundExecutionCompleted.roundExecutionId
@@ -8086,8 +8098,8 @@ context RuntimeAgentOperations {
       encryptionScheme: String? from RoundExecutionCompleted.encryptionScheme
       publicKeyVersion: String? from RoundExecutionCompleted.publicKeyVersion
       runtimeEngineJobId: String from RoundExecutionCompleted.runtimeEngineJobId
-      localModelId: UUID
-      updateArtifactId: UUID
+      localModelId: UUID from RoundExecutionCompleted.roundExecutionId
+      updateArtifactId: UUID from RoundExecutionCompleted.roundExecutionId
       artifactRef: String from RoundExecutionCompleted.modelUpdateArtifactRef
       artifactDigest: String from RoundExecutionCompleted.modelUpdateArtifactDigest
       updateProtectionType: String from RoundExecutionCompleted.updateProtectionType

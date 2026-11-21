@@ -11,6 +11,7 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 import java.util.UUID
 import java.math.BigDecimal
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
+import tech.medo.trainingorchestration.domain.types.RoundSubmissionLedger
 
 class EvaluateModelUpdateSubmissionDecisionTest {
     @Test
@@ -53,6 +54,7 @@ class EvaluateModelUpdateSubmissionDecisionTest {
         )
         state.evolve(
             ModelUpdateSubmissionReceivedEvent(
+            submissionLedger = null,
             modelUpdateSubmissionId = UUID.nameUUIDFromBytes("submission-1".toByteArray()),
             executionSessionId = java.util.UUID.randomUUID(),
             executionPlanId = java.util.UUID.randomUUID(),

@@ -30,33 +30,49 @@ class LocalUploadedFileStorage(
         require(targetDirectory.startsWith(rootPath)) {
             "Resolved uploaded file directory escapes storage root."
         }
-        Files.createDirectories(targetDirectory)
-
+        Files.createDirectories(rootPath)
         val safeFileName = sanitizeFileName(originalFileName.ifBlank { "uploaded-file" })
+        require(safeFileName !in setOf(".", "..", METADATA_FILE_NAME)) { "Invalid uploaded file name." }
         val target = targetDirectory.resolve(safeFileName).normalize()
         require(target.startsWith(rootPath)) {
             "Resolved uploaded file path escapes storage root."
         }
 
-        inputStream.use { Files.copy(it, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING) }
-        val sizeBytes = Files.size(target)
-        val checksum = sha256(target)
-        val stored = StoredUploadedFile(
-            fileId = fileId,
-            originalFileName = originalFileName.ifBlank { safeFileName },
-            contentType = contentType ?: Files.probeContentType(target),
-            sizeBytes = sizeBytes,
-            location = target.toUri().toString(),
-            checksum = checksum
-        )
-        writeMetadata(targetDirectory, stored)
-        log.info(
-            "Stored uploaded file locally. fileId={}, location={}, sizeBytes={}",
-            fileId,
-            stored.location,
-            sizeBytes
-        )
-        return stored
+        // Publish content and metadata together. Losing a concurrent upload must never replace the winner.
+        val staging = Files.createTempDirectory(rootPath, ".upload-")
+        val staged = staging.resolve(safeFileName)
+        try {
+            inputStream.use { Files.copy(it, staged) }
+            val sizeBytes = Files.size(staged)
+            val checksum = sha256(staged)
+            val stored = StoredUploadedFile(
+                fileId = fileId,
+                originalFileName = originalFileName.ifBlank { safeFileName },
+                contentType = contentType ?: Files.probeContentType(target),
+                sizeBytes = sizeBytes,
+                location = target.toUri().toString(),
+                checksum = checksum
+            )
+            writeMetadata(staging, stored)
+            try {
+                Files.move(staging, targetDirectory, java.nio.file.StandardCopyOption.ATOMIC_MOVE)
+            } catch (ex: java.nio.file.FileSystemException) {
+                val existing = metadata(fileId) ?: throw ex
+                require(existing.checksum == checksum) { "Stored file ID $fileId already refers to different content." }
+                return existing
+            }
+            log.info(
+                "Stored uploaded file locally. fileId={}, location={}, sizeBytes={}",
+                fileId,
+                stored.location,
+                sizeBytes
+            )
+            return stored
+        } finally {
+            Files.deleteIfExists(staged)
+            Files.deleteIfExists(staging.resolve(METADATA_FILE_NAME))
+            Files.deleteIfExists(staging)
+        }
     }
 
     override fun metadata(location: String): StoredUploadedFile? {

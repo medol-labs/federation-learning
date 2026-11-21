@@ -28,6 +28,7 @@ import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum
 import java.util.UUID;
 import java.math.BigDecimal;
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
+import tech.medo.trainingorchestration.domain.types.RoundSubmissionLedger;
 
 
 @EventSourced(idType = UUID::class, tagKey = TrainingRoundTags.ROUND_ID)
@@ -67,6 +68,7 @@ class TrainingRoundState @EntityCreator constructor() {
     var publicKeyVersion: String? = null
     var publicKeyRef: String? = null
     var encryptedParameterScale: Int? = null
+    var submissionLedger: RoundSubmissionLedger? = null
     var modelUpdateSubmissionId: UUID? = null
     var executionSessionId: UUID? = null
     var executionPlanId: UUID? = null
@@ -270,6 +272,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ModelUpdateSubmissionReceivedEvent): TrainingRoundState = apply {
+        submissionLedger = event.submissionLedger
         modelUpdateSubmissionId = event.modelUpdateSubmissionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId

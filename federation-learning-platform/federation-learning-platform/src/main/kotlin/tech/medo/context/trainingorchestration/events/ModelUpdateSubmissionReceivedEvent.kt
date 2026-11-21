@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.events
 
 import org.axonframework.eventsourcing.annotation.EventTag
 import org.axonframework.messaging.eventhandling.annotation.Event
+import tech.medo.trainingorchestration.domain.types.RoundSubmissionLedger;
 import java.util.UUID;
 import java.math.BigDecimal;
 
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 
 @Event
 data class ModelUpdateSubmissionReceivedEvent(
+    val submissionLedger: RoundSubmissionLedger?,
     val modelUpdateSubmissionId: UUID,
     val executionSessionId: UUID,
     val executionPlanId: UUID,

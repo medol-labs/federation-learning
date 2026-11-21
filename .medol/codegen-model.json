@@ -908,6 +908,18 @@
           "name": "TrainingRoundParticipant",
           "title": "Training Round Participant",
           "kind": "object"
+        },
+        {
+          "id": "type-a6ac7320",
+          "name": "ModelUpdateReceipt",
+          "title": "Model Update Receipt",
+          "kind": "object"
+        },
+        {
+          "id": "type-011221c5",
+          "name": "RoundSubmissionLedger",
+          "title": "Round Submission Ledger",
+          "kind": "object"
         }
       ],
       "aggregates": [],
@@ -2719,6 +2731,100 @@
           "type": "UUID",
           "cardinality": "Single",
           "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false,
+          "uploadFile": false,
+          "file": false,
+          "portOutput": false
+        }
+      ]
+    },
+    {
+      "id": "type-a6ac7320",
+      "name": "ModelUpdateReceipt",
+      "title": "Model Update Receipt",
+      "context": "TrainingOrchestration",
+      "baseType": "ModelUpdateReceipt",
+      "kind": "object",
+      "constraints": [],
+      "values": [],
+      "fields": [
+        {
+          "name": "roundExecutionId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false,
+          "uploadFile": false,
+          "file": false,
+          "portOutput": false
+        },
+        {
+          "name": "runtimeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false,
+          "uploadFile": false,
+          "file": false,
+          "portOutput": false
+        },
+        {
+          "name": "updateArtifactId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false,
+          "uploadFile": false,
+          "file": false,
+          "portOutput": false
+        },
+        {
+          "name": "artifactDigest",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false,
+          "uploadFile": false,
+          "file": false,
+          "portOutput": false
+        }
+      ]
+    },
+    {
+      "id": "type-011221c5",
+      "name": "RoundSubmissionLedger",
+      "title": "Round Submission Ledger",
+      "context": "TrainingOrchestration",
+      "baseType": "RoundSubmissionLedger",
+      "kind": "object",
+      "constraints": [],
+      "values": [],
+      "fields": [
+        {
+          "name": "receipts",
+          "type": "ModelUpdateReceipt",
+          "cardinality": "Multiple",
+          "optional": false,
           "idAttribute": false,
           "generated": false,
           "technicalAttribute": false,
@@ -49405,6 +49511,20 @@
           "slice": "Submit Model Update Submission",
           "fields": [
             {
+              "name": "submissionLedger",
+              "type": "RoundSubmissionLedger",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "modelUpdateSubmissionId",
               "type": "UUID",
               "cardinality": "Single",
@@ -51812,6 +51932,9 @@
               "type": "EVENT",
               "fields": [
                 {
+                  "name": "submissionLedger"
+                },
+                {
                   "name": "modelUpdateSubmissionId",
                   "example": "submission-1"
                 },
@@ -52199,6 +52322,9 @@
               "id": "event-598526f3",
               "type": "EVENT",
               "fields": [
+                {
+                  "name": "submissionLedger"
+                },
                 {
                   "name": "modelUpdateSubmissionId",
                   "example": "submission-1"
@@ -97193,7 +97319,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionCompleted.roundExecutionId"
+                ]
+              }
             },
             {
               "name": "executionSessionId",
@@ -97647,7 +97779,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionCompleted.roundExecutionId"
+                ]
+              }
             },
             {
               "name": "updateArtifactId",
@@ -97661,7 +97799,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionCompleted.roundExecutionId"
+                ]
+              }
             },
             {
               "name": "artifactRef",
@@ -117434,7 +117578,7 @@
     "schemaVersion": 1,
     "medolVersion": "0.1.0",
     "source": {
-      "sha256": "5ebe4c4f01ee866ff1dd8a17d5027ad8acc8c5fe5f842af944fa789554874609"
+      "sha256": "db7beeea73ca787a5c98690f41cc515e6922118ee2fa522659e7054ea69391ea"
     }
   }
 }
