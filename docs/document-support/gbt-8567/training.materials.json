@@ -1,0 +1,2602 @@
+{
+  "schemaVersion": 1,
+  "project": "联邦学习平台",
+  "revision": "0.3-draft",
+  "scope": "联邦学习平台软件项目设计与验证。覆盖组织和联邦准入、参与站点接入、数据治理、训练执行与模型登记、聚合和个性化分支、监控、生成交付和试验验证。合成 CSV 明文基准、模型已有分支及交付环境待测能力分别标识。",
+  "sources": [
+    {
+      "id": "SRC-MODEL",
+      "title": "联邦学习平台 MEDOL 模型",
+      "path": "../../../.medol/source.medol"
+    },
+    {
+      "id": "SRC-EXPORT",
+      "title": "项目代码生成模型",
+      "path": "../../../.medol/codegen-model.json"
+    },
+    {
+      "id": "SRC-GENERATION",
+      "title": "项目生成步骤与部署模块说明",
+      "path": "../../../README.md"
+    },
+    {
+      "id": "SRC-GUARD",
+      "title": "训练配置命令处理器的资格校验",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/context/trainingorchestration/definetrainingrunconfiguration/DefineTrainingRunConfigurationCommandHandler.kt"
+    },
+    {
+      "id": "SRC-RUNTIME",
+      "title": "Python 训练引擎的职责、插件镜像与运行契约",
+      "path": "../../../federation-learning-runtime-engine/README.md"
+    },
+    {
+      "id": "SRC-NODE",
+      "title": "训练引擎节点 HTTP 接口及工作目录处理",
+      "path": "../../../federation-learning-runtime-engine/python/gemifl/runtime/node.py"
+    },
+    {
+      "id": "SRC-PERSISTENCE",
+      "title": "平台持久化与事件存储的默认配置",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/resources/application.yml"
+    },
+    {
+      "id": "SRC-OPS",
+      "title": "工程部署依赖及覆盖配置",
+      "path": "../../../operations/config/common.yml"
+    },
+    {
+      "id": "SRC-SCALE",
+      "title": "FL-TEST-4 测试工况与证据约定",
+      "path": "../../../simulation/pipelines/FL-TEST-4.md"
+    },
+    {
+      "id": "SRC-EVIDENCE",
+      "title": "训练结果与执行证据采集实现",
+      "path": "../../../simulation/extensions/scenarios/collect-training-evidence.mjs"
+    },
+    {
+      "id": "SRC-ARTIFACT",
+      "title": "模型制品检查实现",
+      "path": "../../../simulation/extensions/scenarios/verify-artifact.mjs"
+    },
+    {
+      "id": "SRC-FED-TABLE",
+      "title": "联邦概览投影实体",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/context/federationmanagement/infrastructure/secondary/persistence/federationoverviewreadmodel/FederationOverviewReadModelEntity.kt"
+    },
+    {
+      "id": "SRC-CONFIG-TABLE",
+      "title": "训练配置投影实体",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/context/trainingorchestration/infrastructure/secondary/persistence/trainingrunconfigurationcatalogreadmodel/TrainingRunConfigurationCatalogReadModelEntity.kt"
+    },
+    {
+      "id": "SRC-JOB-TABLE",
+      "title": "训练任务投影实体",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/context/trainingorchestration/infrastructure/secondary/persistence/trainingjobdashboardreadmodel/TrainingJobDashboardReadModelEntity.kt"
+    },
+    {
+      "id": "SRC-ROUND-TABLE",
+      "title": "训练轮次投影实体",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/context/trainingorchestration/infrastructure/secondary/persistence/trainingroundprogressreadmodel/TrainingRoundProgressReadModelEntity.kt"
+    },
+    {
+      "id": "SRC-MODEL-TABLE",
+      "title": "模型制品投影实体",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/context/modelrepository/infrastructure/secondary/persistence/modelartifactcatalogreadmodel/ModelArtifactCatalogReadModelEntity.kt"
+    },
+    {
+      "id": "SRC-SELECTION",
+      "title": "轮次参与方选择及法定人数决策",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/domain/trainingorchestration/selecttrainingroundparticipants/SelectTrainingRoundParticipantsDecisionComponent.kt"
+    },
+    {
+      "id": "SRC-DISPATCH",
+      "title": "平台到运行代理的计划请求与端点解析",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/infrastructure/secondary/trainingorchestration/participantexecutionplan/dispatchparticipantexecutionplan/RuntimeAgentDispatchParticipantExecutionPlanAdapter.kt"
+    },
+    {
+      "id": "SRC-RECEIVE",
+      "title": "运行代理收计划的 HTTP 契约",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/infrastructure/secondary/trainingorchestration/participantexecutionplan/dispatchparticipantexecutionplan/RuntimeAgentExecutionPlanClient.kt"
+    },
+    {
+      "id": "SRC-LEDGER",
+      "title": "本地更新接收账本与重投决策",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/domain/trainingorchestration/submitmodelupdatesubmission/SubmitModelUpdateSubmissionDecisionComponent.kt"
+    },
+    {
+      "id": "SRC-UPLOAD",
+      "title": "代理向支持服务上传本地更新文件",
+      "path": "../../../federation-learning-platform/federation-learning-runtime-agent/src/main/kotlin/tech/medo/infrastructure/secondary/runtimeagentoperations/roundexecution/submitagentlocalmodelupdate/SupportFileUploadClient.kt"
+    },
+    {
+      "id": "SRC-ENGINE-EXECUTOR",
+      "title": "运行引擎单步执行与插件入口",
+      "path": "../../../federation-learning-runtime-engine/python/gemifl/runtime/executor.py"
+    },
+    {
+      "id": "SRC-ENGINE-FEDAVG",
+      "title": "合成 CSV 基准工况使用的 FedAvg 插件",
+      "path": "../../../federation-learning-runtime-engine/python/gemifl/runtime/plugins/fed_avg.py"
+    },
+    {
+      "id": "SRC-ENROLL",
+      "title": "外部代理先部署后注册与等待配置",
+      "path": "../../../docs/runtime-agent-external-enrollment.md"
+    },
+    {
+      "id": "SRC-ENGINE-CAP",
+      "title": "引擎能力清单",
+      "path": "../../../federation-learning-runtime-engine/python/gemifl/runtime/capabilities.py"
+    },
+    {
+      "id": "SRC-ENGINE-STEPS",
+      "title": "引擎单步与插件选择",
+      "path": "../../../federation-learning-runtime-engine/python/gemifl/runtime/steps.py"
+    },
+    {
+      "id": "SRC-SECURE-CONTEXT",
+      "title": "本地同态上下文适配器",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/infrastructure/secondary/secureaggregation/secureaggregationsession/preparehomomorphicencryptioncontext/LocalPrepareHomomorphicEncryptionContextAdapter.kt"
+    },
+    {
+      "id": "SRC-SECURE-RUNTIME",
+      "title": "同态聚合执行适配分支",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/infrastructure/secondary/secureaggregation/secureaggregationsession/completehomomorphicaggregationsession/RuntimeEngineCompleteHomomorphicAggregationSessionAdapter.kt"
+    },
+    {
+      "id": "SRC-SECURE-EMBEDDED",
+      "title": "内嵌聚合的实际制品处理",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/infrastructure/secondary/secureaggregation/secureaggregationsession/completehomomorphicaggregationsession/EmbeddedAggregationService.kt"
+    },
+    {
+      "id": "SRC-PERSONAL",
+      "title": "个性化结果引用与留存策略决策",
+      "path": "../../../federation-learning-platform/federation-learning-platform/src/main/kotlin/tech/medo/domain/trainingorchestration/recordpersonalizedmodelresult/RecordPersonalizedModelResultDecisionComponent.kt"
+    },
+    {
+      "id": "SRC-DELIVERY",
+      "title": "分站点 Compose 安装与环境隔离",
+      "path": "../../../operations/COMPOSE-PRODUCTION.md"
+    },
+    {
+      "id": "SRC-PACKAGE",
+      "title": "离线镜像分发与交付打包",
+      "path": "../../../operations/COMPOSE-IMAGE-DELIVERY.md"
+    },
+    {
+      "id": "SRC-VERSION",
+      "title": "模型、生成、镜像和文档版本追溯",
+      "path": "../../../docs/versioning.md"
+    },
+    {
+      "id": "SRC-OBSERVABILITY",
+      "title": "OTLP 运行观测及参考栈边界",
+      "path": "../../../operations/observability/local/README.md"
+    },
+    {
+      "id": "SRC-SIM-PLAN",
+      "title": "已批准用例的选择、数据准备与运行",
+      "path": "../../../simulation/CASE-SELECTION.md"
+    },
+    {
+      "id": "SRC-SIM-EVIDENCE",
+      "title": "轮次、参与方和制品证据校验",
+      "path": "../../../simulation/extensions/scenarios/training-report-evidence.mjs"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "FL-REQ-001",
+      "title": "训练配置须使用有效业务对象",
+      "statement": "配置训练任务时，联邦须处于 Active 状态，特征架构须已发布，初始模型须已登记，运行引擎配置须已登记且激活。提交时重新判断选择资格。",
+      "acceptance": "有效对象组合可创建训练配置。草稿联邦无法通过页面选择。直接提交无效联邦、未发布特征架构、未登记模型或停用引擎配置均被拒绝，且不产生成功定义配置的事件。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-GUARD"
+      ]
+    },
+    {
+      "id": "FL-REQ-002",
+      "title": "在参与方运行本地训练",
+      "statement": "平台协调轮次和参与方，参与方运行环境读取其本地数据完成训练，返回状态、指标及模型更新制品。所选工况下的跨端训练链路不应传输原始训练记录。",
+      "acceptance": "可从任务、轮次和参与方定位对应执行及产出。采集的跨端消息与文件传输记录中无原始训练记录，不能仅凭一次任务完成推断数据边界通过。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-RUNTIME"
+      ]
+    },
+    {
+      "id": "FL-REQ-003",
+      "title": "多参与方轮次聚合与结果可查询",
+      "statement": "系统按轮次收集本地更新和聚合结果，记录轮次及训练任务状态。具备证据确认每轮参与情况、有效执行及聚合输出。",
+      "acceptance": "计划工况为单台物理机、20 个独立运行代理、两轮、合成 CSV 和 LogisticRegression/FedAvg。核对每轮参与方、40 个成功本地执行、两轮完成及轮次制品；其他规模单独验证。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SCALE",
+        "SRC-EVIDENCE"
+      ]
+    },
+    {
+      "id": "FL-REQ-004",
+      "title": "登记并核验训练模型制品",
+      "statement": "聚合生成的模型制品须能按训练任务与轮次追溯。授权人员可查到制品记录、版本、格式和摘要，并核对可下载文件。",
+      "acceptance": "目标制品记录关联正确的训练任务及轮次。按清单下载的制品可读取且摘要一致。文件缺失或摘要不符时，验证用例应判失败。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-ARTIFACT"
+      ]
+    },
+    {
+      "id": "FL-REQ-005",
+      "title": "按轮次建立合格参与方快照",
+      "statement": "作业提交后，从已加入联邦的组织中选择运行身份、运行环境和数据集。所选数据集须满足本次特征架构及标签兼容证据。每个运行环境只选一份数据集，成功选点后固定本轮名单。",
+      "acceptance": "满足本轮最小节点数时才可进入执行。分别撤去有效成员资格、数据集兼容证据或活跃身份后验证排除；低于节点数时记录选点失败原因，补齐后可重试。运行中新增就绪节点不得追加到已固定名单。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SELECTION"
+      ]
+    },
+    {
+      "id": "FL-REQ-006",
+      "title": "跨端计划可关联且运行引擎异步执行",
+      "statement": "每份计划须能关联作业、轮次、运行环境、数据集和初始模型。引擎接受任务后可查询状态，业务进度以实际执行结果更新。",
+      "acceptance": "检查平台发送的计划、参与方接收记录和引擎步骤一一可核对。运行节点返回受理时，业务不计为训练完成。节点异常或不可达须留下可定位的失败信息。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-DISPATCH",
+        "SRC-NODE"
+      ]
+    },
+    {
+      "id": "FL-REQ-007",
+      "title": "执行失败可判定并保留恢复路径",
+      "statement": "区分启动失败和运行失败，记录执行标识、失败原因与轮次归属。支持模型声明的重试和资源释放流程，轮次失去法定人数时进入失败状态。",
+      "acceptance": "注入启动失败、运行失败。在可恢复场景核查重试与新观察记录。在法定人数不足场景核查轮次失败及资源释放，确保失败执行未被计入成功更新。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-NODE"
+      ]
+    },
+    {
+      "id": "FL-REQ-008",
+      "title": "本地模型更新重复送达不重复入账",
+      "statement": "同一轮次执行的相同更新可重投。相同执行标识的新制品或新摘要属于冲突。投递成功与业务接受分别记录。",
+      "acceptance": "在允许提交的轮次重投相同收据，接收事件与贡献计数不增加。以相同执行标识提交不同摘要时拒绝并保留既有贡献。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-LEDGER",
+        "SRC-UPLOAD"
+      ]
+    },
+    {
+      "id": "FL-REQ-009",
+      "title": "聚合完成与轮次完成分别判定",
+      "statement": "聚合产出后保留全局模型引用，并在收到对应全局评估结果后才完成轮次。按已配置的轮次与停止条件决定是否继续。",
+      "acceptance": "只有聚合产出时拒绝轮次完成。收到此前聚合结果对应的全局评估后可完成轮次。验证轮次观测值、成功事件及制品之间的关联。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-EVIDENCE"
+      ]
+    },
+    {
+      "id": "FL-REQ-010",
+      "title": "组织、联邦与参与资格分别治理",
+      "statement": "组织归属、联邦可用状态及参加某个联邦的成员资格须分别识别。训练引用有效联邦，轮次只从当前合格成员中选择。",
+      "acceptance": "能分别查到组织状态、联邦状态、成员状态。暂停联邦后不得新建引用它的训练配置；暂停某成员后其不得进入后续新轮次的候选。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-GUARD",
+        "SRC-SELECTION"
+      ]
+    },
+    {
+      "id": "FL-REQ-011",
+      "title": "运行基础设施注册、代理接入与身份激活",
+      "statement": "参与方接入须记录安装计划、运行基础设施、代理连接和有效运行身份。验证、部署或连接失败必须可定位。外部已部署代理在配置齐全前处于等待状态。",
+      "acceptance": "未配置代理的健康检查与业务入口可分别核验；完成计划登记、身份配置、自检及连通流程后，平台能定位对应代理端点，并据运行身份判断后续使用。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-ENROLL",
+        "SRC-DELIVERY"
+      ]
+    },
+    {
+      "id": "FL-REQ-012",
+      "title": "特征架构版本与本地数据集审批",
+      "statement": "平台发布并推荐特征架构版本。参与方持有数据路径，在本地完成访问验证、剖析、契约校验与审批。提供给平台的材料限于业务所需的数据集元信息、兼容证据和引用。",
+      "acceptance": "生效版本和参与端同步结果可定位；访问失败、结构或标签不匹配均不能产生可用于训练的批准状态。修正后可重新验证，撤销审批后退出后续训练资格。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SELECTION",
+        "SRC-RUNTIME",
+        "SRC-DELIVERY"
+      ]
+    },
+    {
+      "id": "FL-REQ-013",
+      "title": "引擎镜像插件、执行与聚合格式约束",
+      "statement": "训练配置及计划须保存引擎镜像和插件配置。执行端识别所需模型及聚合插件，拒绝镜像不支持的插件、个性化模式或不兼容的制品路径。",
+      "acceptance": "可在选定镜像列举插件，核对配置、下发计划面对同一份镜像快照；用已装与未装插件验证正负路径。针对 PyTorch 多更新必须验证实际引擎聚合链路。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-RUNTIME",
+        "SRC-ENGINE-CAP",
+        "SRC-ENGINE-STEPS",
+        "SRC-SECURE-EMBEDDED"
+      ]
+    },
+    {
+      "id": "FL-REQ-014",
+      "title": "安全聚合独立会话与实现边界",
+      "statement": "启用安全聚合的轮次应单独记录会话、参与方、加密上下文引用与加密更新收据。需要验证所配置后端的聚合语义以及无效更新处理。",
+      "acceptance": "能追到会话与轮次、选定参与方、上下文参数及加密制品。开发上下文和内嵌聚合仅按其实际语义验证。正式密码学有效性需目标实现的独立证据。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-RUNTIME",
+        "SRC-SECURE-CONTEXT",
+        "SRC-SECURE-RUNTIME",
+        "SRC-SECURE-EMBEDDED"
+      ]
+    },
+    {
+      "id": "FL-REQ-015",
+      "title": "个性化模式与参与方模型制品归属",
+      "statement": "全局模式与本地适配模式须区分，个性化制品须与参与方运行身份匹配，并携带独立摘要、评价结果和存储策略。支持能力不足时应清楚拒绝。",
+      "acceptance": "全局模式拒绝混入个性化产物；支持本地适配的工况验证目标身份、摘要、评价以及最小提升门槛。核对本地保留和目录登记策略各自适用的制品引用。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-ENGINE-STEPS",
+        "SRC-PERSONAL",
+        "SRC-LEDGER"
+      ]
+    },
+    {
+      "id": "FL-REQ-016",
+      "title": "业务运行观测与工程遥测分层",
+      "statement": "应区分运行代理心跳、节点资源、告警处理及应用日志和链路追踪。统一保留关联运行环境身份以支持在线、恢复和压力事件的分析。",
+      "acceptance": "可独立验证正常、断联、恢复和资源压力。启用工程遥测时能按服务搜索日志、链路和指标；以实际采样与配置说明证据范围。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-MODEL",
+        "SRC-OBSERVABILITY",
+        "SRC-OPS"
+      ]
+    },
+    {
+      "id": "FL-REQ-017",
+      "title": "分站点部署、生成扩展与版本追溯",
+      "statement": "平台与参与方应按同一发布清单核对部署单元、镜像、网关边界和独立数据卷。模型导出、生成代码、手写适配器和发布包可分别核验。",
+      "acceptance": "能从发布清单识别本次业务镜像及构建身份；平台与参与方可按各自部署条件验装。相同模型重新生成后，检查生成遗留差异与手写扩展保留。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-EXPORT",
+        "SRC-GENERATION",
+        "SRC-PACKAGE",
+        "SRC-DELIVERY",
+        "SRC-VERSION",
+        "SRC-OPS"
+      ]
+    },
+    {
+      "id": "FL-REQ-018",
+      "title": "用例批准、执行计划与试验证据",
+      "statement": "测试应固定已批准用例、测试数据、环境和正向验收条件，失败重跑须保持用例版本可核对。交付证据应可校验到独立轮次、参与方和下载制品。",
+      "acceptance": "执行计划、准备与执行使用同一用例快照。报告关联实际部署、训练任务、轮次、唯一执行、模型摘要。改动已批准用例、摘要错误或缺少执行证据时无法沿用原结论。",
+      "qualification": "测试",
+      "sources": [
+        "SRC-SIM-PLAN",
+        "SRC-SCALE",
+        "SRC-EVIDENCE",
+        "SRC-SIM-EVIDENCE",
+        "SRC-ARTIFACT"
+      ]
+    }
+  ],
+  "designs": [
+    {
+      "id": "FL-DES-001",
+      "title": "共用建模资格规则",
+      "component": "MEDOL 代码生成链路、平台控制台及平台后端",
+      "decision": "通过 MEDOL 导出 CodegenModel。Axon 5 后端模板生成命令、事件、状态及投影代码，Refine 模板生成查询资源和命令表单。配置命令使用联邦和运行引擎配置等投影作为选择来源，后端据投影重新校验资格，再进入业务决策。",
+      "rationale": "规则由模型集中表达，减少前后端各写一份状态判断的维护成本。查询投影可能滞后，因此验收应分别检查选择器和直接提交，并区分投影尚未追平与规则失效。",
+      "workflows": [
+        "TrainingOrchestration.DefineTrainingRunConfiguration"
+      ],
+      "requirements": [
+        "FL-REQ-001"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-EXPORT",
+        "SRC-GENERATION",
+        "SRC-GUARD"
+      ]
+    },
+    {
+      "id": "FL-DES-002",
+      "title": "业务编排与节点计算分离",
+      "component": "平台后端、运行代理、Python Runtime Engine",
+      "decision": "平台持有任务及轮次状态，运行代理承接节点侧执行并回传。Python 引擎通过 POST /jobs 接收单步载荷，经 GET /jobs/{jobId} 查询执行，使用本地挂载的数据与输入模型。训练和聚合插件通过配置加载，交付时可选相应插件镜像。",
+      "rationale": "相较于由中心进程读取各方数据执行训练，这种职责分离使跨域交换边界可检查。相较于所有节点统一装完整镜像，按插件交付可减少无关依赖；镜像体积收益须在相同依赖来源和架构下测量。代价是调度、制品传输、失败定位和镜像兼容性需要单独处理。",
+      "workflows": [
+        "TrainingOrchestration.SelectTrainingRoundParticipants",
+        "RuntimeAgentOperations.CompleteRoundExecution",
+        "RuntimeAgentOperations.SubmitAgentLocalModelUpdate"
+      ],
+      "requirements": [
+        "FL-REQ-002",
+        "FL-REQ-003"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-RUNTIME",
+        "SRC-NODE",
+        "SRC-OPS"
+      ]
+    },
+    {
+      "id": "FL-DES-003",
+      "title": "轮次按事件推进并提供查询投影",
+      "component": "训练编排与查询投影",
+      "decision": "平台提交训练任务，收集本地更新。在本用例采用的明文 FedAvg 路径中，执行聚合和全局评估后再完成轮次，并根据训练条件决定后续轮次或结束。训练作业与轮次投影提供查询和进度核对入口。",
+      "rationale": "相较于依靠运行日志人工判断，显式轮次事件和查询投影允许按任务与轮次核对过程。读取投影不必为每次查询从头遍历已发生事件，同时引入投影延迟，需要单独测量。",
+      "workflows": [
+        "TrainingOrchestration.SubmitTrainingJob",
+        "TrainingOrchestration.SubmitModelUpdateSubmission",
+        "TrainingOrchestration.AggregatePlainModelUpdates",
+        "TrainingOrchestration.CompleteTrainingRound",
+        "TrainingOrchestration.CompleteTrainingJob"
+      ],
+      "requirements": [
+        "FL-REQ-003"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-PERSISTENCE",
+        "SRC-SCALE"
+      ]
+    },
+    {
+      "id": "FL-DES-004",
+      "title": "制品登记与文件内容核验",
+      "component": "模型仓库、制品存储与证据检查",
+      "decision": "全局模型更新触发模型制品登记，登记包含训练任务、轮次、模型版本、格式、地址和摘要。将目录记录、下载路径与文件核验作为不同的可验证环节。",
+      "rationale": "相较于只按文件名辨认版本，任务、轮次和摘要形成可核对的制品引用。摘要一致可以证明检查的内容一致性，发布者身份验证需另有证据。",
+      "workflows": [
+        "ModelRepository.RegisterFederatedModelArtifact"
+      ],
+      "requirements": [
+        "FL-REQ-004"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-ARTIFACT"
+      ]
+    },
+    {
+      "id": "FL-DES-005",
+      "title": "参与方快照与最小节点数",
+      "component": "平台训练编排",
+      "decision": "提交作业触发轮次选点。以组织入联资格、当前有效运行身份、特征架构和标签兼容证据构成候选。选点结果包含实际运行环境与所选数据集。本轮成功占用轮次位置后保留快照，选点失败时可对对应轮次位置发起重试。",
+      "rationale": "固定名单可以核对每轮参与人、权重输入与制品来源，并避免轮内候选变化。选点依赖多方查询投影，需要记录筛选阶段和失败原因以定位等待或数据不合格。",
+      "workflows": [
+        "TrainingOrchestration.CreateTrainingJob",
+        "TrainingOrchestration.SubmitTrainingJob",
+        "TrainingOrchestration.SelectTrainingRoundParticipants",
+        "TrainingOrchestration.RetryTrainingRoundParticipantSelection",
+        "TrainingOrchestration.StartTrainingRound"
+      ],
+      "requirements": [
+        "FL-REQ-005"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SELECTION"
+      ]
+    },
+    {
+      "id": "FL-DES-006",
+      "title": "计划下发及节点契约",
+      "component": "平台端计划适配器、运行代理与 Python 引擎",
+      "decision": "平台通过运行身份解析已连接的代理地址，下发包含轮次标识、数据集标识、基础模型引用与引擎镜像快照的计划。代理接收并作就绪判定，再构造节点本地载荷。引擎把单步配置写到工作目录并启动执行进程；进程状态与产物分别通过节点 API 查询。",
+      "rationale": "业务计划和执行载荷分层，业务层可以改调度策略，引擎保留单步执行边界。调用超时会产生提交结果未知，恢复应以可查询的作业状态和模型事件为依据，避免把受理等同于完成。",
+      "workflows": [
+        "TrainingOrchestration.GenerateParticipantExecutionPlan",
+        "TrainingOrchestration.DispatchParticipantExecutionPlan",
+        "RuntimeAgentOperations.ReceiveParticipantExecutionPlan",
+        "RuntimeAgentOperations.AcceptExecutionPlan",
+        "RuntimeAgentOperations.StartRoundExecution",
+        "RuntimeAgentOperations.ObserveRuntimeEngineJob"
+      ],
+      "requirements": [
+        "FL-REQ-002",
+        "FL-REQ-006"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-DISPATCH",
+        "SRC-RECEIVE",
+        "SRC-NODE",
+        "SRC-ENGINE-EXECUTOR"
+      ]
+    },
+    {
+      "id": "FL-DES-007",
+      "title": "失败归属、重试与资源清理",
+      "component": "运行代理和平台轮次协调",
+      "decision": "代理分别记录启动失败和作业运行失败，模型提供对应的重试路径。完成、失败和重试失败均有资源释放切片。平台在有效更新或剩余执行已经无法满足本轮最小节点数的条件下记录轮次失败。",
+      "rationale": "保存失败阶段和轮次身份有利于用同一异常演练验证可观测性和恢复。局部失败是否可继续由业务法定人数决定，资源重建与旧任务清理是另外的工程操作。",
+      "workflows": [
+        "RuntimeAgentOperations.RecordRoundExecutionStartFailure",
+        "RuntimeAgentOperations.FailRoundExecution",
+        "RuntimeAgentOperations.RetryRoundExecutionAfterStartFailure",
+        "RuntimeAgentOperations.RetryRoundExecutionAfterRuntimeFailure",
+        "RuntimeAgentOperations.ReleaseRuntimeEngineJobAfterRuntimeRetryFailure",
+        "TrainingOrchestration.FailTrainingRound"
+      ],
+      "requirements": [
+        "FL-REQ-007"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-NODE",
+        "SRC-OPS"
+      ]
+    },
+    {
+      "id": "FL-DES-008",
+      "title": "提交收据幂等与历史事件兼容",
+      "component": "代理更新适配器与平台训练轮次决策",
+      "decision": "代理提交文件引用及制品元信息，平台以 roundExecutionId 查收据。比较 runtimeId、updateArtifactId、artifactDigest 等收据身份。相同收据不追加接收事件，冲突收据拒绝。旧事件未带账本时，已接受贡献按已有运行环境及制品引用判断。提交与后续评估接受分开处理。",
+      "rationale": "相较于对每次 HTTP 重投重新累计贡献，轮次账本将可靠交付和有效贡献次数分离。此约束发生在业务接收处，文件上传重试仍需独立验证存储侧影响。",
+      "workflows": [
+        "RuntimeAgentOperations.SubmitAgentLocalModelUpdate",
+        "TrainingOrchestration.SubmitModelUpdateSubmission",
+        "TrainingOrchestration.EvaluateModelUpdateSubmission"
+      ],
+      "requirements": [
+        "FL-REQ-008"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-LEDGER",
+        "SRC-UPLOAD"
+      ]
+    },
+    {
+      "id": "FL-DES-009",
+      "title": "聚合与全局评估的阶段界线",
+      "component": "平台训练编排与模型仓库",
+      "decision": "明文路径聚合完成后通过 CompleteModelAggregation 产生 GlobalModelUpdated，供评估及模型登记消费。轮次完成以对应的 GlobalModelEvaluationSubmitted 为前序条件。调度后继轮次与结束作业各由对应的自动化条件处理。",
+      "rationale": "显式区分聚合产物可得、全局评估完成、轮次完成及作业完成，便于定位失败和核对状态。各投影可能短时间呈现不同阶段，交付验证要按关联标识等待和读取状态。",
+      "workflows": [
+        "TrainingOrchestration.CompleteModelAggregation",
+        "TrainingOrchestration.SubmitGlobalModelEvaluation",
+        "TrainingOrchestration.CompleteTrainingRound",
+        "TrainingOrchestration.ScheduleNextTrainingRound",
+        "TrainingOrchestration.CompleteTrainingJob"
+      ],
+      "requirements": [
+        "FL-REQ-009"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-EVIDENCE",
+        "SRC-ENGINE-FEDAVG"
+      ]
+    },
+    {
+      "id": "FL-DES-010",
+      "title": "组织、联邦与参与资格分别治理",
+      "component": "组织管理、联邦管理与训练编排",
+      "decision": "身份和业务关系分层：组织生命周期管理基本身份，用户组织绑定记录归属，联邦生命周期管理可用性，邀请与审批维护成员资格。训练配置消费联邦可用投影，选点消费具体成员和数据证据。",
+      "rationale": "同一个组织可参与多个联邦，独立成员资格使一个联邦内的调整不会被解释为删除组织。需要针对组织、联邦和轮次分别建立查询及诊断证据。",
+      "workflows": [
+        "OrganizationManagement.ActivateOrganization",
+        "OrganizationManagement.BindUserAccountToOrganization",
+        "FederationManagement.ActivateFederation",
+        "FederationManagement.SuspendFederation",
+        "FederationManagement.InviteParticipant",
+        "FederationManagement.ApproveParticipant",
+        "FederationManagement.SuspendParticipant"
+      ],
+      "details": [],
+      "requirements": [
+        "FL-REQ-010"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-GUARD",
+        "SRC-SELECTION"
+      ]
+    },
+    {
+      "id": "FL-DES-011",
+      "title": "运行基础设施注册、代理接入与身份激活",
+      "component": "运行基础设施供应、运行治理与参与方代理",
+      "decision": "平台维护安装包、安装计划和基础设施验证，按安装模式进行代理部署和连接记录。外部部署路径由运维先部署，使用现有 MANUAL_GUIDED 计划登记后配置代理，并显式触发启动初始化。平台记录连接后，运行治理单独管理身份与能力。",
+      "rationale": "将进程可用、站点连通和训练资格分别评估，避免把健康检查 UP 当成可用参与方。部署失败和验证失败由各自切片重试，现场登记仍需要安装计划。",
+      "workflows": [
+        "RuntimeProvisioning.CreateRuntimeInstallationPlan",
+        "RuntimeProvisioning.VerifyRuntimeInfrastructure",
+        "RuntimeProvisioning.RetryRuntimeInfrastructureVerification",
+        "RuntimeProvisioning.DeployRuntimeAgent",
+        "RuntimeProvisioning.RecordRuntimeConnectionEstablished",
+        "RuntimeGovernance.ActivateRuntimeIdentity",
+        "RuntimeGovernance.DetectRuntimeCapabilities",
+        "RuntimeAgentOperations.LoadRuntimeAgentBootstrapConfiguration",
+        "RuntimeAgentOperations.ReportRuntimeInstanceSelfCheckPassed",
+        "RuntimeAgentOperations.ReportRuntimeInstanceConnected"
+      ],
+      "details": [
+        {
+          "title": "平台管理与外部注册",
+          "points": [
+            "平台部署和外部先部署后登记共享同一安装计划与基础设施流程。",
+            "外部代理普通重启由既有服务流程处理。该配置路径没有自动认领或自动补发启动报告。"
+          ]
+        }
+      ],
+      "requirements": [
+        "FL-REQ-011"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-ENROLL",
+        "SRC-DELIVERY"
+      ]
+    },
+    {
+      "id": "FL-DES-012",
+      "title": "特征架构版本与本地数据集审批",
+      "component": "数据治理、参与端数据绑定与训练资格",
+      "decision": "平台管理特征架构的发布、替代与当前推荐；参与端同步特征架构与必要字典，并独立维护数据集标识和路径绑定。访问、剖析、校验和审批各有相应状态与投影。平台记录数据集元信息并按实际配置要求的特征版本选点。",
+      "rationale": "把本地路径可读、数据结构匹配和业务批准分开，能定位失败阶段并保留修正路径。推荐版本引导新配置，已定训练配置继续按它引用的特征架构核对。",
+      "workflows": [
+        "DatasetGovernance.PublishFeatureSchema",
+        "DatasetGovernance.SupersedeFeatureSchemaVersion",
+        "DatasetGovernance.MarkCurrentRecommendedFeatureSchemaVersion",
+        "DatasetGovernance.RecordRuntimeDatasetMetadata",
+        "RuntimeAgentOperations.ConfigureRuntimeDatasetBinding",
+        "RuntimeAgentOperations.ValidateAgentDatasetAccess",
+        "RuntimeAgentOperations.RevalidateAgentDatasetAccess",
+        "RuntimeAgentOperations.ProfileAgentDataset",
+        "RuntimeAgentOperations.ValidateDatasetContract",
+        "RuntimeAgentOperations.RetryDatasetContractValidation",
+        "RuntimeAgentOperations.ApproveDatasetForTraining",
+        "RuntimeAgentOperations.RevokeDatasetTrainingApproval"
+      ],
+      "details": [],
+      "requirements": [
+        "FL-REQ-012"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SELECTION",
+        "SRC-RUNTIME",
+        "SRC-DELIVERY"
+      ]
+    },
+    {
+      "id": "FL-DES-013",
+      "title": "引擎镜像插件、执行与聚合格式约束",
+      "component": "训练引擎配置、计划适配器、Python 引擎与平台聚合协调",
+      "decision": "接订单元根据任务载荷的操作类型分派到模型或聚合插件。支持按 sklearn、PyTorch 适用任务等选择镜像。配置与计划传递镜像快照，运行时从镜像插件清单和允许配置确认实际可用能力。",
+      "rationale": "共享执行协议和制品约定，插件隔离模型依赖，便于针对性构建和交付。输出格式、插件兼容及 CPU/GPU 工况需要独立实测，单一工况不能代替其他模型栈。",
+      "workflows": [
+        "TrainingOrchestration.DefineTrainingRunConfiguration",
+        "TrainingOrchestration.GenerateParticipantExecutionPlan",
+        "TrainingOrchestration.AggregatePlainModelUpdates"
+      ],
+      "details": [
+        {
+          "title": "训练和聚合制品",
+          "points": [
+            "sklearn 的合成基准采用 LogisticRegression 和 FedAvg JSON。PyTorch 模型参数聚合使用对应的 state_dict 路径。",
+            "内嵌实现对单更新直接保留字节，多份普通更新可写成封装数据；PyTorch state_dict 多更新被明确拒绝，需由 Runtime Engine 路径处理。"
+          ]
+        }
+      ],
+      "requirements": [
+        "FL-REQ-013"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-RUNTIME",
+        "SRC-ENGINE-CAP",
+        "SRC-ENGINE-STEPS",
+        "SRC-SECURE-EMBEDDED"
+      ]
+    },
+    {
+      "id": "FL-DES-014",
+      "title": "安全聚合独立会话与实现边界",
+      "component": "安全聚合编排、聚合适配器与 Runtime Engine",
+      "decision": "安全路径创建会话、选点并准备同态上下文，收集加密更新后调用聚合适配器。适配器按部署配置区分运行引擎和内嵌执行。当前本地适配器返回固定开发公钥引用与参数。",
+      "rationale": "独立会话可控制参与范围、关联上下文和解释失败，且可单独验证明文路径与安全路径。安全性依赖启用的密码和密钥实现；会话进入完成、文件存在或参数标记为安全均不足以证明密码学性质。",
+      "workflows": [
+        "TrainingOrchestration.RequestSecureAggregation",
+        "SecureAggregation.CreateSecureAggregationSession",
+        "SecureAggregation.SelectSecureAggregationParticipants",
+        "SecureAggregation.PrepareHomomorphicEncryptionContext",
+        "SecureAggregation.RecordEncryptedModelUpdate",
+        "SecureAggregation.CompleteHomomorphicAggregationSession",
+        "SecureAggregation.FailSecureAggregationSession"
+      ],
+      "details": [
+        {
+          "title": "已核对的实现边界",
+          "points": [
+            "本地同态上下文为开发实现，使用固定 local-dev-v1 公钥引用。",
+            "内嵌聚合实现不等于密码学聚合，secureAggregation 参数会进入记录，需核查真正执行计算的适配器和算法。"
+          ]
+        }
+      ],
+      "requirements": [
+        "FL-REQ-014"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-RUNTIME",
+        "SRC-SECURE-CONTEXT",
+        "SRC-SECURE-RUNTIME",
+        "SRC-SECURE-EMBEDDED"
+      ]
+    },
+    {
+      "id": "FL-DES-015",
+      "title": "个性化模式与参与方模型制品归属",
+      "component": "平台训练编排、参与方插件、个性化结果及模型仓库",
+      "decision": "执行计划携带模式、目标及制品策略。引擎检查插件是否支持该模式；提交决策核对个性化目标与提交 runtime 一致、所需摘要及评价完整，并按配置校验最低提升。个性化结果与全局聚合产物分别登记。",
+      "rationale": "个性化能力与业务目标独立，允许在共享全局基线之上保留参与方模型谱系。收益需与同一参与方同一评估样本的基线比较，同时核验额外训练成本。",
+      "workflows": [
+        "TrainingOrchestration.GenerateParticipantExecutionPlan",
+        "TrainingOrchestration.SubmitModelUpdateSubmission",
+        "TrainingOrchestration.RecordPersonalizedModelResult",
+        "ModelRepository.RegisterPersonalizedModelArtifact"
+      ],
+      "details": [],
+      "requirements": [
+        "FL-REQ-015"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-ENGINE-STEPS",
+        "SRC-PERSONAL",
+        "SRC-LEDGER"
+      ]
+    },
+    {
+      "id": "FL-DES-016",
+      "title": "业务运行观测与工程遥测分层",
+      "component": "运行监控、参与代理遥测与工程观测",
+      "decision": "代理上报心跳、节点清单与资源，平台读模型分别维护最近值和健康视图；告警有提出、确认和解决。Spring 模块通过环境配置向 OTLP 接收端输出。部署可选择 disabled、external 或开发测试 managed 参考栈。",
+      "rationale": "领域状态决定可见的治理状态，工程遥测用于诊断。两条信息路径可以分别验收。外部采集器接入需配置实际可达端点、采样和保留策略。",
+      "workflows": [
+        "RuntimeAgentOperations.ReportAgentRuntimeTelemetry",
+        "RuntimeAgentOperations.ReportAgentRuntimeNodeInventory",
+        "RuntimeAgentOperations.ReportAgentRuntimeNodeResourceTelemetry",
+        "RuntimeMonitoring.RecordRuntimeTelemetry",
+        "RuntimeMonitoring.DetectRuntimeAgentOffline",
+        "RuntimeMonitoring.MarkRuntimeAgentRecovered",
+        "RuntimeMonitoring.DetectRuntimeNodeResourcePressure",
+        "RuntimeMonitoring.AcknowledgeTrainingAlert",
+        "RuntimeMonitoring.ResolveTrainingAlert"
+      ],
+      "details": [],
+      "requirements": [
+        "FL-REQ-016"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-OBSERVABILITY",
+        "SRC-OPS"
+      ]
+    },
+    {
+      "id": "FL-DES-017",
+      "title": "分站点部署、生成扩展与版本追溯",
+      "component": "MEDOL、Axon 5 / Refine 生成、部署配置和发布打包",
+      "decision": "模型导出驱动 Axon 5 后端、Refine 前端、operations 及 simulation。生成模板处理重复的状态、入口、投影和配置；手写决策／端口适配实现项目逻辑。两站点 Compose 工件按角色分发，K3s 工况采用各自配置。",
+      "rationale": "清晰的生成边界可集中升级基础模板并保留项目决策。发布清单将模型基线、生成与构建、镜像实际身份串起。不同部署方式使用各自持久化配置，迁移和恢复需要现场核验。",
+      "workflows": [],
+      "details": [
+        {
+          "title": "重生成边界",
+          "points": [
+            "生成代码以当前 MEDOL 模型为基线。项目决策和基础设施适配在独立入口维护。",
+            "引擎容器、插件和物理部署不是 MEDOL 模型自动实现的业务切片，通过项目源码和镜像清单取证。"
+          ]
+        }
+      ],
+      "requirements": [
+        "FL-REQ-017"
+      ],
+      "sources": [
+        "SRC-EXPORT",
+        "SRC-GENERATION",
+        "SRC-PACKAGE",
+        "SRC-DELIVERY",
+        "SRC-VERSION",
+        "SRC-OPS"
+      ]
+    },
+    {
+      "id": "FL-DES-018",
+      "title": "用例批准、执行计划与试验证据",
+      "component": "联邦学习仿真、批准用例和证据核验",
+      "decision": "仿真按部署、环境、数据准备和用例快照驱动。已批准用例可按标签筛选，将同一执行计划用于准备与测试。失败重跑基于原报告中的用例指纹；证据把运行结果、集群状态和制品摘要一起关联。",
+      "rationale": "相比只看成功截图，可复验每轮人数和执行唯一性，也能确保重跑针对原工况。合成数据单主机验证范围必须独立记录，无法外推为多站点生产规模或正式加密验证。",
+      "workflows": [],
+      "details": [],
+      "requirements": [
+        "FL-REQ-018"
+      ],
+      "sources": [
+        "SRC-SIM-PLAN",
+        "SRC-SCALE",
+        "SRC-EVIDENCE",
+        "SRC-SIM-EVIDENCE",
+        "SRC-ARTIFACT"
+      ]
+    }
+  ],
+  "storage": [
+    {
+      "id": "FL-DATA-001",
+      "title": "联邦资格与训练配置",
+      "owner": "联邦管理与训练编排的平台端",
+      "physical": "平台查询投影使用 PostgreSQL。联邦概览和训练配置投影实体分别映射 federation_overview 与 training_run_configuration_catalog。目标环境实际索引与数据库版本以交付现场核对为准。",
+      "lifecycle": "联邦事件推进状态，投影更新后供配置选择；配置定义事件保存所选引用及配置快照。",
+      "access": "控制台读取选择投影，训练配置处理器按选择标识读取投影并重新校验。",
+      "projections": [
+        "FederationManagement.FederationOverview",
+        "TrainingOrchestration.TrainingRunConfigurationCatalog",
+        "DatasetGovernance.FeatureSchemaCatalog",
+        "ModelRepository.ModelArtifactCatalog",
+        "TrainingOrchestration.RuntimeEngineProfileCatalog"
+      ],
+      "requirements": [
+        "FL-REQ-001"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-GUARD",
+        "SRC-PERSISTENCE",
+        "SRC-FED-TABLE",
+        "SRC-CONFIG-TABLE"
+      ]
+    },
+    {
+      "id": "FL-DATA-002",
+      "title": "本地数据和轮次执行产物",
+      "owner": "参与方与 Runtime Engine",
+      "physical": "训练数据使用参与方挂载路径，节点载荷和本地制品位于引擎工作目录及配置的产出路径。",
+      "lifecycle": "步骤接收后保留运行载荷和产物，跨端回传由平台和代理管理。工作目录清理及留存期按交付环境确认。",
+      "access": "训练引擎读取本地数据和输入模型，通过节点作业及制品接口供编排侧获取状态和产物。",
+      "projections": [
+        "RuntimeAgentOperations.RoundExecutionCatalog"
+      ],
+      "requirements": [
+        "FL-REQ-002",
+        "FL-REQ-003"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-NODE",
+        "SRC-RUNTIME"
+      ]
+    },
+    {
+      "id": "FL-DATA-003",
+      "title": "任务与训练轮次状态",
+      "owner": "平台训练编排",
+      "physical": "平台默认使用 UMA DB 保存业务事件，查询投影使用 PostgreSQL，实体分别映射 training_job_dashboard 与 training_round_progress。事件存储配置可按部署覆盖，验收应记录实际值。",
+      "lifecycle": "任务和轮次状态随事件变更，投影消费事件形成查询数据。证据采集在投影可见后按轮次核对。",
+      "access": "平台命令写入事件，投影处理器更新查询数据，操作界面和测试证据采集读取任务与轮次。",
+      "projections": [
+        "TrainingOrchestration.TrainingJobDashboard",
+        "TrainingOrchestration.TrainingRoundProgress"
+      ],
+      "requirements": [
+        "FL-REQ-003"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-PERSISTENCE",
+        "SRC-EVIDENCE",
+        "SRC-JOB-TABLE",
+        "SRC-ROUND-TABLE"
+      ]
+    },
+    {
+      "id": "FL-DATA-004",
+      "title": "训练制品及模型目录",
+      "owner": "模型仓库维护登记元数据，制品存储维护文件内容",
+      "physical": "模型目录投影在 PostgreSQL 中映射 model_artifact_catalog，保存制品引用及摘要。模型字节由制品地址对应的存储提供，实际服务由交付配置确定。",
+      "lifecycle": "全局模型更新关联任务和轮次后登记制品。目录与实际文件须分别纳入可恢复性和留存计划。",
+      "access": "模型仓库写入登记事件，目录查询返回元数据，制品检查器按引用获取文件并校验内容。",
+      "projections": [
+        "ModelRepository.ModelArtifactCatalog"
+      ],
+      "requirements": [
+        "FL-REQ-004"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-ARTIFACT",
+        "SRC-PERSISTENCE",
+        "SRC-MODEL-TABLE"
+      ]
+    },
+    {
+      "id": "FL-DATA-005",
+      "title": "本轮参与方和计划关联",
+      "owner": "平台与参与方分别持有本地职责范围内的状态",
+      "physical": "平台使用训练参与方资格和轮次的 PostgreSQL 投影；下发副本经运行代理消费，各端按本端部署保存自己的执行状态。",
+      "lifecycle": "资格投影可持续变化，但选点成功的轮次名单用于固定该轮的计划。下发计划携带基础模型与引擎配置快照。",
+      "access": "选点逻辑查询资格，平台计划适配器发起下发，代理通过计划接收命令建立执行状态。",
+      "projections": [
+        "TrainingOrchestration.TrainingParticipantEligibility",
+        "TrainingOrchestration.TrainingRoundProgress",
+        "RuntimeAgentOperations.RoundExecutionCatalog"
+      ],
+      "requirements": [
+        "FL-REQ-005",
+        "FL-REQ-006"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SELECTION",
+        "SRC-DISPATCH",
+        "SRC-PERSISTENCE"
+      ],
+      "integrity": [
+        "按 trainingJobId 与 roundId 核对平台快照。执行计划以 executionPlanId 标识，当前下发映射将它作为接收端 roundExecutionId。",
+        "runtimeId、organizationId、datasetId 必须匹配所选参与方。基础模型引用随计划传递。"
+      ],
+      "recovery": "重建资格查询时对比选点事件、该轮快照和接收记录。对同一轮补算资格不应重写已下发名单。"
+    },
+    {
+      "id": "FL-DATA-006",
+      "title": "参与方失败、重试与运行节点状态",
+      "owner": "运行代理、Python 引擎与平台轮次协调",
+      "physical": "运行作业进程状态由节点维护，持久产物按配置目录保存；业务失败记录分别进入代理执行与平台轮次数据。",
+      "lifecycle": "启动、运行、重试和释放事件用于解释一次执行的结果。节点的活动进程表只在该节点进程中维护。",
+      "access": "代理观察节点的作业状态，根据实际结果写入失败或完成记录。平台读取轮次结果并保留失败原因。",
+      "projections": [
+        "RuntimeAgentOperations.RoundExecutionCatalog",
+        "TrainingOrchestration.TrainingRoundProgress"
+      ],
+      "requirements": [
+        "FL-REQ-006",
+        "FL-REQ-007"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-NODE",
+        "SRC-OPS"
+      ],
+      "integrity": [
+        "关联业务 roundExecutionId 与部署返回的引擎 jobId，保留两端状态和发生时间。",
+        "HTTP 202 只代表受理，成功更新必须来自实际完成且通过后续验收的执行。"
+      ],
+      "recovery": "恢复演练时保留已发生的执行记录。进程重启后的节点内状态能否找回须单独验证，以业务记录、作业日志及输出目录交叉核对。"
+    },
+    {
+      "id": "FL-DATA-007",
+      "title": "轮次提交账本、聚合产物与评估结果",
+      "owner": "平台训练编排、支持制品存储与模型仓库",
+      "physical": "账本随平台侧 ModelUpdateSubmissionReceived 事件记录，聚合制品保存在制品服务。轮次进度和模型目录是查询投影。",
+      "lifecycle": "相同收据不增加账本记录。接受更新后参与聚合，聚合结果进入评估流程，相关事件携带轮次和制品标识。",
+      "access": "平台更新接收决策读写轮次账本，聚合与评估读取对应阶段的文件及参数，查询端读取轮次进度。",
+      "projections": [
+        "TrainingOrchestration.TrainingRoundProgress",
+        "ModelRepository.ModelArtifactCatalog"
+      ],
+      "requirements": [
+        "FL-REQ-008",
+        "FL-REQ-009"
+      ],
+      "sources": [
+        "SRC-LEDGER",
+        "SRC-MODEL",
+        "SRC-PERSISTENCE",
+        "SRC-ARTIFACT"
+      ],
+      "integrity": [
+        "轮次状态以作业与轮次区分，单轮收据用 roundExecutionId 去重。校验 runtimeId、updateArtifactId 和 artifactDigest 对应同一提交。",
+        "聚合模型 ID、模型摘要、评估所关联的轮次与模型必须一致；轮次投影可晚于事件可查。"
+      ],
+      "recovery": "比较重放前后同一轮次的已接受贡献数和制品引用。遇到旧事件无账本时，检查已接受运行环境和原制品引用的兼容路径。"
+    },
+    {
+      "id": "FL-DATA-013",
+      "title": "组织、联邦与参与资格分别治理",
+      "owner": "平台组织管理与联邦管理",
+      "physical": "中央端业务事件与各自查询投影",
+      "lifecycle": "组织、联邦和成员关系分别推进各自生命周期。选点记录保留发生时的轮次快照。",
+      "access": "平台控制台按角色管理关系，训练服务读取联邦与轮次资格视图。",
+      "projections": [
+        "OrganizationManagement.OrganizationDirectory",
+        "FederationManagement.FederationOverview",
+        "FederationManagement.FederationMembershipDirectory"
+      ],
+      "integrity": [
+        "成员关联联邦与组织；组织激活后仍须完成具体联邦的邀请与审批。",
+        "联邦状态变化和单个成员资格变化应该分别影响各自的选择入口。"
+      ],
+      "recovery": "用事件与目录回读核对各自状态。已运行轮次的名单作为历史快照对照。",
+      "requirements": [
+        "FL-REQ-010"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-GUARD",
+        "SRC-SELECTION"
+      ]
+    },
+    {
+      "id": "FL-DATA-014",
+      "title": "运行基础设施注册、代理接入与身份激活",
+      "owner": "平台保管基础设施和运行身份，参与端保管代理自身生命周期",
+      "physical": "平台与参与端分别使用各自的数据库和事件存储。配置环境变量与凭据通过部署环境管理。",
+      "lifecycle": "安装计划及基础设施结果关联代理标识。启动、自检、连通与身份激活分别记录。",
+      "access": "安装人员读取计划及指南；平台用已连接端点派发，代理在有效配置下启动业务流程。",
+      "projections": [
+        "RuntimeProvisioning.RuntimeInstallationPlanCatalog",
+        "RuntimeProvisioning.RuntimeAgentEndpointCatalog",
+        "RuntimeGovernance.RuntimeIdentityCatalog",
+        "RuntimeGovernance.RuntimeCapabilityCatalog",
+        "RuntimeAgentOperations.RuntimeAgentLifecycleCatalog"
+      ],
+      "integrity": [
+        "保留 runtimeAgentId 与 runtimeInfrastructureId 的配对及端点范围。",
+        "新代理使用独立持久化配置，当前使用预先配置的服务间凭据。"
+      ],
+      "recovery": "同一已登记代理重部署时保留身份及独立持久化。比对启动、自检、连接事件，避免把普通重启当成重新注册。",
+      "requirements": [
+        "FL-REQ-011"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-ENROLL",
+        "SRC-DELIVERY"
+      ]
+    },
+    {
+      "id": "FL-DATA-015",
+      "title": "特征架构版本与本地数据集审批",
+      "owner": "平台持有特征契约及元信息，参与方持有原始记录及路径绑定",
+      "physical": "特征架构、数据集元信息和资格在业务投影中可查；数据文件位于参与站点的挂载路径。",
+      "lifecycle": "契约与代理元数据分别同步。路径变化或剖析结果变化后按实施流程重新校验与批准。",
+      "access": "参与方代理本地读取文件，控制台执行校验和审批，平台查询兼容证据。",
+      "projections": [
+        "DatasetGovernance.CurrentRecommendedFeatureSchemaCatalog",
+        "DatasetGovernance.RuntimeDatasetMetadataCatalog",
+        "RuntimeAgentOperations.RuntimeDatasetBindingCatalog",
+        "RuntimeAgentOperations.AgentDatasetAccessValidationCatalog",
+        "RuntimeAgentOperations.DatasetReadiness",
+        "RuntimeAgentOperations.DatasetCapability"
+      ],
+      "integrity": [
+        "保留 datasetId、runtimeId、featureSchemaId 及版本关系。",
+        "能读取不等于获准训练；按状态证据确认结构、标签和审批结果。"
+      ],
+      "recovery": "恢复后回读绑定、访问、剖析、契约及审批状态，再确认平台元信息与参与端批准一致。",
+      "requirements": [
+        "FL-REQ-012"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SELECTION",
+        "SRC-RUNTIME",
+        "SRC-DELIVERY"
+      ]
+    },
+    {
+      "id": "FL-DATA-016",
+      "title": "引擎镜像插件、执行与聚合格式约束",
+      "owner": "平台持有引擎配置与镜像标识，引擎持有工作目录与制品",
+      "physical": "业务投影保留引擎版本和引用，节点运行盘保存配置和产物，镜像仓储保存不同配置的构建。",
+      "lifecycle": "已选择的配置被记录到计划；升级兼容性通过新配置与受控执行验证。",
+      "access": "引擎能力命令输出插件列表，调度读取引擎配置，执行器加载节点载荷及制品。",
+      "projections": [
+        "TrainingOrchestration.RuntimeEngineProfileCatalog",
+        "TrainingOrchestration.TrainingRunConfigurationCatalog",
+        "RuntimeAgentOperations.RoundExecutionCatalog"
+      ],
+      "integrity": [
+        "核对 profile、镜像标识与模型／聚合插件搭配。",
+        "目录记录的格式、实际输出文件和下一轮输入应一致。"
+      ],
+      "recovery": "重新安装时先核对镜像摘要和插件能力，再恢复已登记的业务配置。",
+      "requirements": [
+        "FL-REQ-013"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-RUNTIME",
+        "SRC-ENGINE-CAP",
+        "SRC-ENGINE-STEPS",
+        "SRC-SECURE-EMBEDDED"
+      ]
+    },
+    {
+      "id": "FL-DATA-017",
+      "title": "安全聚合独立会话与实现边界",
+      "owner": "平台维护会话及引用，制品服务保管更新文件，部署侧维护密钥材料",
+      "physical": "平台会话及查询视图记录加密参数和引用，实际公私钥行为须根据部署适配器另外核验。",
+      "lifecycle": "会话从创建和选点到上下文准备、收据记录及完成／失败。会话与训练轮次分别追溯。",
+      "access": "选点与上下文通过命令边界写入，聚合端取得相应会话制品引用，控制台查询会话状态。",
+      "projections": [
+        "SecureAggregation.SecureAggregationSessionCatalog",
+        "TrainingOrchestration.TrainingRoundProgress"
+      ],
+      "integrity": [
+        "核对 secureAggregationSessionId、roundId、runtimeId 和制品引用。",
+        "记录密钥版本与公钥引用，正式密钥安全和保管验证使用目标环境证据。"
+      ],
+      "recovery": "恢复时核对会话状态、加密上下文引用与制品可用性；记录开发上下文和正式环境的差异。",
+      "requirements": [
+        "FL-REQ-014"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-RUNTIME",
+        "SRC-SECURE-CONTEXT",
+        "SRC-SECURE-RUNTIME",
+        "SRC-SECURE-EMBEDDED"
+      ]
+    },
+    {
+      "id": "FL-DATA-018",
+      "title": "个性化模式与参与方模型制品归属",
+      "owner": "参与方保管本地个性化模型，平台保管结果、归属及可登记引用",
+      "physical": "运行环境保管本地文件，登记目录保留模型身份、运行环境、文件引用和摘要。",
+      "lifecycle": "按模式和保存策略决定记录；历史应能关联目标参与方、本轮和本地适配评估。",
+      "access": "引擎生成本地模型及评估，更新提交校验后进入相应的业务记录与目录。",
+      "projections": [
+        "TrainingOrchestration.PersonalizedModelCatalog",
+        "ModelRepository.ModelArtifactCatalog"
+      ],
+      "integrity": [
+        "personalizationTargetId 必须匹配贡献 runtimeId。",
+        "本地制品引用按现有决策使用 file: 或 runtime-artifact:；分别核对权限和后端可达性。"
+      ],
+      "recovery": "恢复时用运行环境和摘要核查制品是否真实存在，平台目录不能替代参与方文件备份。",
+      "requirements": [
+        "FL-REQ-015"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-ENGINE-STEPS",
+        "SRC-PERSONAL",
+        "SRC-LEDGER"
+      ]
+    },
+    {
+      "id": "FL-DATA-019",
+      "title": "业务运行观测与工程遥测分层",
+      "owner": "参与方发出遥测，平台维护业务监控视图，外部观测组件持有工程数据",
+      "physical": "运行监控投影在平台数据库；开发 managed 栈与外部采集模式由运维选择。",
+      "lifecycle": "最近值投影及业务告警各自变化；工程遥测保留期由部署配置负责。",
+      "access": "平台控制台查看状态与告警，工程观测通过 Collector 或托管工具查询。",
+      "projections": [
+        "RuntimeMonitoring.RuntimeTelemetryLatest",
+        "RuntimeMonitoring.RuntimeHealthDashboard",
+        "RuntimeMonitoring.RuntimeNodeResourceLatest",
+        "RuntimeMonitoring.TrainingAlertCatalog"
+      ],
+      "integrity": [
+        "心跳状态与节点压力分别保留，避免把旧的最近值解释为现时读数。",
+        "令牌、模型数据和正式 payload 不作为默认工程追踪证据。"
+      ],
+      "recovery": "中断恢复后比较告警、最近状态与新遥测。对采集器停机验证核心业务是否能继续。",
+      "requirements": [
+        "FL-REQ-016"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-OBSERVABILITY",
+        "SRC-OPS"
+      ]
+    },
+    {
+      "id": "FL-DATA-020",
+      "title": "分站点部署、生成扩展与版本追溯",
+      "owner": "项目仓库、发布系统、平台和参与方运维各持有各自工件",
+      "physical": "生成模型及版本清单随工程与发布包保存，站点业务状态和制品使用独立卷。",
+      "lifecycle": "模型基线变化、同基线重打包和文档修订分别跟踪；镜像摘要用于核对实际交付。",
+      "access": "发布工具校验镜像包；站点按发布清单验装，业务实例访问本站点配置的持久化与服务地址。",
+      "projections": [],
+      "integrity": [
+        "模型源、CodegenModel、发布清单、镜像标识分别关联。",
+        "包与已加载镜像核对使用实际校验值，模型标签与打包修订分开维护。"
+      ],
+      "recovery": "Compose 与 K3s 间切换要安排数据迁移与回滚。验收比较实际部署的卷、配置和镜像。",
+      "requirements": [
+        "FL-REQ-017"
+      ],
+      "sources": [
+        "SRC-EXPORT",
+        "SRC-GENERATION",
+        "SRC-PACKAGE",
+        "SRC-DELIVERY",
+        "SRC-VERSION",
+        "SRC-OPS"
+      ]
+    },
+    {
+      "id": "FL-DATA-021",
+      "title": "用例批准、执行计划与试验证据",
+      "owner": "仿真保管用例和输入，部署环境产生事件、投影、日志及制品，证据目录保管报告",
+      "physical": "使用执行计划 JSON 和按 run ID 归档的证据目录。报告保留制品摘要与文件校验值。",
+      "lifecycle": "批准后冻结选择，执行生成结果，重跑校验版本，结果与相应发布基线归档。",
+      "access": "运行人员组织测试，验证器通过任务、轮次和参与方查询比对各证据。",
+      "projections": [],
+      "integrity": [
+        "执行计划记录用例版本和选择条件。",
+        "不能用重复执行标识或缺失制品充抵成功贡献。"
+      ],
+      "recovery": "恢复评审时核对用例指纹、运行证据文件哈希及适用的软件版本；历史报告缺指纹时生成新的测试计划。",
+      "requirements": [
+        "FL-REQ-018"
+      ],
+      "sources": [
+        "SRC-SIM-PLAN",
+        "SRC-SCALE",
+        "SRC-EVIDENCE",
+        "SRC-SIM-EVIDENCE",
+        "SRC-ARTIFACT"
+      ]
+    }
+  ],
+  "indicators": [
+    {
+      "id": "FL-MET-001",
+      "title": "资格校验一致性",
+      "baseline": "对比同一联邦状态下的控制台选择和直接命令提交",
+      "measure": "逐条记录有效组合和无效组合的页面结果、命令结果及是否产生成功事件",
+      "criterion": "定义的无效组合均拒绝，有效组合可提交",
+      "basis": "模型判据",
+      "verificationTests": [
+        "FL-TC-001",
+        "FL-TC-002"
+      ],
+      "requirements": [
+        "FL-REQ-001"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-GUARD"
+      ]
+    },
+    {
+      "id": "FL-MET-002",
+      "title": "节点数据边界与插件交付体积",
+      "baseline": "相同任务输入及目标架构下，对比所需插件镜像与 full 镜像",
+      "measure": "核查跨端消息和文件内容，另外记录两种镜像的压缩交付大小及相同插件任务的可运行性",
+      "criterion": "原始记录不跨端，镜像体积改善幅度待实测与确认",
+      "basis": "目标待定",
+      "verificationTests": [
+        "FL-TC-003"
+      ],
+      "requirements": [
+        "FL-REQ-002"
+      ],
+      "sources": [
+        "SRC-RUNTIME",
+        "SRC-NODE"
+      ]
+    },
+    {
+      "id": "FL-MET-003",
+      "title": "轮次完成和证据覆盖",
+      "baseline": "FL-TEST-4 同主机 20 代理、两轮",
+      "measure": "核对每轮实际参与数、成功本地执行数、轮次状态和制品可用性",
+      "criterion": "20 个参与方，40 个成功本地执行，两轮完成且相应全局制品可查验",
+      "basis": "计划工况",
+      "verificationTests": [
+        "FL-TC-004"
+      ],
+      "requirements": [
+        "FL-REQ-003"
+      ],
+      "sources": [
+        "SRC-SCALE",
+        "SRC-EVIDENCE"
+      ]
+    },
+    {
+      "id": "FL-MET-004",
+      "title": "分规模轮次耗时与投影延迟",
+      "baseline": "同一主机、镜像、数据规模和插件的单参与方工况；若用例要求的最小规模更大，记录实际最小规模",
+      "measure": "在基准和 20 参与方工况分别记录轮次端到端耗时、成功率及事件到投影可见时差。记录样本数并报告中位数和 P95",
+      "criterion": "阈值待项目确认，报告各规模测试条件与分布",
+      "basis": "目标待定",
+      "verificationTests": [
+        "FL-TC-004"
+      ],
+      "requirements": [
+        "FL-REQ-003"
+      ],
+      "sources": [
+        "SRC-SCALE",
+        "SRC-EVIDENCE"
+      ]
+    },
+    {
+      "id": "FL-MET-005",
+      "title": "登记制品的内容完整性",
+      "baseline": "以目录记录中的摘要和任务轮次关联为基准",
+      "measure": "下载目标制品并核验可读性、摘要和目录归属",
+      "criterion": "本用例要求的全部制品均通过，篡改样本不能通过核验",
+      "basis": "计划工况",
+      "verificationTests": [
+        "FL-TC-005"
+      ],
+      "requirements": [
+        "FL-REQ-004"
+      ],
+      "sources": [
+        "SRC-ARTIFACT",
+        "SRC-SCALE"
+      ]
+    },
+    {
+      "id": "FL-MET-006",
+      "title": "跨端生成规则一致性",
+      "baseline": "对照当前模型和生成的前端选择条件、后端资格校验以及关联用例",
+      "measure": "逐条核对四类引用对象的模型条件及后端实现，再对模型声明支持的前端过滤做对照；记录人工覆盖和缺失项",
+      "criterion": "四类后端资格判据与模型一致；识别生成差异后重新生成并重复验证。",
+      "basis": "模型判据",
+      "verificationTests": [
+        "FL-TC-002"
+      ],
+      "requirements": [
+        "FL-REQ-001"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-EXPORT",
+        "SRC-GENERATION",
+        "SRC-GUARD"
+      ]
+    },
+    {
+      "id": "FL-MET-007",
+      "title": "选点排除与快照稳定性",
+      "baseline": "同一任务的候选集合及最小节点数配置",
+      "measure": "登记逐项失效的筛选结果与该轮快照，计算不合格入选数和开始后名单增量",
+      "criterion": "两个计数均为 0；不足节点数时必须有可追踪失败原因",
+      "basis": "模型判据",
+      "verificationTests": [
+        "FL-TC-006"
+      ],
+      "requirements": [
+        "FL-REQ-005"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SELECTION"
+      ]
+    },
+    {
+      "id": "FL-MET-008",
+      "title": "节点故障观测与恢复耗时",
+      "baseline": "同样的执行数据以及正常、启动失败、运行失败三个工况",
+      "measure": "分开采集故障注入到可见、恢复到重新受理、以及资源释放三个时间窗口，同时记录每种结果的有效样本数",
+      "criterion": "时限待定；功能方面成功贡献不计失败执行，失去法定人数应记录失败",
+      "basis": "目标待定",
+      "verificationTests": [
+        "FL-TC-008"
+      ],
+      "requirements": [
+        "FL-REQ-007"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-NODE"
+      ]
+    },
+    {
+      "id": "FL-MET-009",
+      "title": "重投不重复计数",
+      "baseline": "同一执行标识首次成功提交后的接收事件和贡献数",
+      "measure": "在重投和冲突样本前后分别读取账本、事件与贡献数，报告增量",
+      "criterion": "同一收据重投的事件和贡献增量均为 0；冲突被拒绝",
+      "basis": "模型判据",
+      "verificationTests": [
+        "FL-TC-009"
+      ],
+      "requirements": [
+        "FL-REQ-008"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-LEDGER"
+      ]
+    },
+    {
+      "id": "FL-MET-010",
+      "title": "接入耗时与误判检查",
+      "baseline": "同站点代理由待配置到连通并激活身份",
+      "measure": "分别计时配置齐全、自检、连接及投影可见阶段，核对未配置代理是否被选中",
+      "criterion": "状态分层符合设置，接入时延目标待实测",
+      "basis": "目标待定",
+      "verificationTests": [
+        "FL-TC-012"
+      ],
+      "requirements": [
+        "FL-REQ-011"
+      ],
+      "sources": [
+        "SRC-ENROLL",
+        "SRC-MODEL"
+      ]
+    },
+    {
+      "id": "FL-MET-011",
+      "title": "数据契约拒绝覆盖",
+      "baseline": "使用有效、不兼容及不可读取的合成数据样本",
+      "measure": "统计类型覆盖、误批准数和重新验证路径数",
+      "criterion": "失败样本误批准为 0；修正后有重新验证记录",
+      "basis": "模型判据",
+      "verificationTests": [
+        "FL-TC-013"
+      ],
+      "requirements": [
+        "FL-REQ-012"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SELECTION"
+      ]
+    },
+    {
+      "id": "FL-MET-012",
+      "title": "插件与制品兼容矩阵",
+      "baseline": "固定镜像架构和用例，分别跑模型插件及聚合插件",
+      "measure": "记录支持的代码、产出格式和缺失插件／不兼容错误；测每次实际输出字节数",
+      "criterion": "兼容用例可读，缺失插件和未支持的聚合分支可区分",
+      "basis": "计划工况",
+      "verificationTests": [
+        "FL-TC-014"
+      ],
+      "requirements": [
+        "FL-REQ-013"
+      ],
+      "sources": [
+        "SRC-ENGINE-CAP",
+        "SRC-ENGINE-STEPS"
+      ]
+    },
+    {
+      "id": "FL-MET-013",
+      "title": "加密链路和实算差异",
+      "baseline": "同一合成输入的明文与目标加密后端；开发占位单列",
+      "measure": "记录后端类型和密钥参数版本，比较制品形态、结果误差、上传字节与耗时",
+      "criterion": "生产误差与性能阈值待核定；占位或封装记录不得替代实算",
+      "basis": "目标待定",
+      "verificationTests": [
+        "FL-TC-015"
+      ],
+      "requirements": [
+        "FL-REQ-014"
+      ],
+      "sources": [
+        "SRC-SECURE-CONTEXT",
+        "SRC-SECURE-RUNTIME",
+        "SRC-SECURE-EMBEDDED"
+      ]
+    },
+    {
+      "id": "FL-MET-014",
+      "title": "个性化增益和开销",
+      "baseline": "同一参与方与固定评估集上的全局模型结果",
+      "measure": "比较个性化指标变化、额外运行时间、制品大小，记录阈值未达状态",
+      "criterion": "最低提升采用训练配置值；不同插件或数据集的收益单独报告",
+      "basis": "模型判据",
+      "verificationTests": [
+        "FL-TC-016"
+      ],
+      "requirements": [
+        "FL-REQ-015"
+      ],
+      "sources": [
+        "SRC-LEDGER",
+        "SRC-PERSONAL"
+      ]
+    },
+    {
+      "id": "FL-MET-015",
+      "title": "业务告警和工程观测时效",
+      "baseline": "固定心跳周期、资源阈值和采样率的正常与故障工况",
+      "measure": "记录故障起点、告警可查时间、恢复时间，分别统计日志、指标、链路可关联性",
+      "criterion": "具体时延阈值待确认；测试说明实际配置与信号覆盖",
+      "basis": "目标待定",
+      "verificationTests": [
+        "FL-TC-017"
+      ],
+      "requirements": [
+        "FL-REQ-016"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-OBSERVABILITY"
+      ]
+    },
+    {
+      "id": "FL-MET-016",
+      "title": "同基线重生成与交付完整性",
+      "baseline": "同样的模型、生成器和配置，比较两次生成及发布清单",
+      "measure": "记录生成目录差异、手写扩展哈希、镜像与交付清单匹配情况",
+      "criterion": "差异可解释且扩展保留，计划交付的镜像均可追到清单",
+      "basis": "计划工况",
+      "verificationTests": [
+        "FL-TC-018"
+      ],
+      "requirements": [
+        "FL-REQ-017"
+      ],
+      "sources": [
+        "SRC-EXPORT",
+        "SRC-GENERATION",
+        "SRC-VERSION"
+      ]
+    },
+    {
+      "id": "FL-MET-017",
+      "title": "执行证据覆盖与唯一性",
+      "baseline": "以实际批准工况的轮次、参与方和制品清单为分母",
+      "measure": "校验独立执行 ID、制品摘要和应执行用例数，单列跳过及未执行",
+      "criterion": "该次工况要求的证据逐条可核对；重复执行不补足缺项",
+      "basis": "计划工况",
+      "verificationTests": [
+        "FL-TC-019"
+      ],
+      "requirements": [
+        "FL-REQ-018"
+      ],
+      "sources": [
+        "SRC-SIM-PLAN",
+        "SRC-SIM-EVIDENCE"
+      ]
+    }
+  ],
+  "environment": [
+    "记录目标版模型、平台、控制台、运行代理及训练引擎镜像标识，记录运行资源、数据库与制品服务配置。",
+    "准备有配置权限的用户、可用联邦及其他合格配置对象。另准备草稿联邦和用于资格测试的无效对象。",
+    "运行 FL-TEST-4 时使用 20 个独立代理、两轮、合成 CSV、LogisticRegression/FedAvg。使用测试环境和合成数据。",
+    "记录作业标识、角色、环境、触发时间与产物校验值。按项目脚本采集执行证据，将测试版本与记录一起归档。"
+  ],
+  "tests": [
+    {
+      "id": "FL-TC-001",
+      "title": "有效对象可建立训练配置",
+      "requirements": [
+        "FL-REQ-001"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-GUARD"
+      ],
+      "preconditions": [
+        "联邦为 Active，特征架构已发布，模型及引擎配置有效，查询投影已反映当前状态。"
+      ],
+      "steps": [
+        {
+          "action": "从控制台选取合格对象并用有效参数提交。",
+          "expected": "创建成功，可查到本次定义的配置，引用与选择一致。"
+        }
+      ],
+      "evidence": [
+        "有效输入的对象标识、调用结果、成功定义事件和查询回读。"
+      ],
+      "cleanup": "清理专用测试对象与制品，保留证据文件及其版本记录。",
+      "modelScenarios": [
+        {
+          "workflow": "TrainingOrchestration.DefineTrainingRunConfiguration",
+          "scenario": "Define Runnable Configuration"
+        }
+      ]
+    },
+    {
+      "id": "FL-TC-002",
+      "title": "资格检查拒绝无效选择与直接提交",
+      "requirements": [
+        "FL-REQ-001"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-GUARD"
+      ],
+      "preconditions": [
+        "准备草稿联邦、未发布特征架构、未登记模型状态的样本或不存在的模型标识、停用的引擎配置；等待投影反映测试状态。"
+      ],
+      "steps": [
+        {
+          "action": "复核 CodegenModel 的资格条件和当前前端、后端生成产物，记录本次验证使用的代码版本。",
+          "expected": "后端对四类引用对象的校验均可追到模型条件，控制台联邦选择使用模型声明的可用条件。"
+        },
+        {
+          "action": "打开新增训练配置表单，检查联邦选择列表。",
+          "expected": "草稿联邦不可选，有效联邦可选。"
+        },
+        {
+          "action": "对其余输入均有效的训练配置，分别替换为无效联邦、特征架构、模型或引擎配置后直接调用命令端点。",
+          "expected": "各次均被拒绝，无成功定义事件或对应配置记录。"
+        }
+      ],
+      "evidence": [
+        "页面选择过滤、四类规则来源、命令拒绝结果和成功事件未出现的观察范围。"
+      ],
+      "cleanup": "清理专用测试对象与制品，保留证据文件及其版本记录。"
+    },
+    {
+      "id": "FL-TC-003",
+      "title": "核查参与方数据边界与插件镜像",
+      "requirements": [
+        "FL-REQ-002"
+      ],
+      "sources": [
+        "SRC-RUNTIME",
+        "SRC-NODE"
+      ],
+      "preconditions": [
+        "安装至少一个参与方环境，准备带有唯一标识的合成训练数据、本地路径、所需插件和可选的 full 镜像。"
+      ],
+      "steps": [
+        {
+          "action": "启动包含合格参与方的训练，记录调度载荷、跨端消息和可检查的文件传输清单。",
+          "expected": "节点读取本地数据，平台按任务和轮次看到本地执行与更新；检查范围内无标记原始数据或原始记录。"
+        },
+        {
+          "action": "若两种镜像就绪，在相同架构分别运行相同插件步骤，记录压缩镜像体积和执行结果。",
+          "expected": "记录比较数据及测试条件；缺少对照镜像时标记该比较未执行。"
+        }
+      ],
+      "evidence": [
+        "跨端输入与制品的检查范围和脱敏摘要。镜像比较保留架构、工具版本、压缩参数及归档字节大小。"
+      ],
+      "cleanup": "清理专用测试对象与制品，保留证据文件及其版本记录。"
+    },
+    {
+      "id": "FL-TC-004",
+      "title": "两轮训练及聚合查询回读",
+      "requirements": [
+        "FL-REQ-003"
+      ],
+      "sources": [
+        "SRC-SCALE",
+        "SRC-EVIDENCE",
+        "SRC-MODEL"
+      ],
+      "preconditions": [
+        "FL-TEST-4 工况已部署且 20 个代理可执行相同规格的训练。"
+      ],
+      "steps": [
+        {
+          "action": "提交两轮任务，等待轮次状态与制品收集，执行训练证据采集。",
+          "expected": "每轮核实 20 个参与方，两轮共 40 个完成的本地执行，两个轮次均完成且存在可核验的全局制品。"
+        },
+        {
+          "action": "记录任务及轮次状态写入和查询可见时间。如需做对比，按 SDD 指标规定重复执行基准与扩大规模工况。",
+          "expected": "记录耗时分布与不可用样本；无确认阈值时报告测量结果，不作性能达标判定。"
+        }
+      ],
+      "evidence": [
+        "每轮参与方名单、四十次执行与其轮次归属、轮次状态、制品摘要及计时原始样本。"
+      ],
+      "cleanup": "清理专用测试对象与制品，保留证据文件及其版本记录。"
+    },
+    {
+      "id": "FL-TC-005",
+      "title": "核验训练模型制品及错误样本",
+      "requirements": [
+        "FL-REQ-004"
+      ],
+      "sources": [
+        "SRC-ARTIFACT",
+        "SRC-SCALE"
+      ],
+      "preconditions": [
+        "训练产生允许下载的模型制品，目录可查询模型标识、所属任务及轮次、版本和摘要。"
+      ],
+      "steps": [
+        {
+          "action": "按任务轮次查找目录，下载对应文件并执行制品内容和摘要验证。",
+          "expected": "关联标识和预期一致，文件可读取，摘要匹配。"
+        },
+        {
+          "action": "使用独立测试副本，替换文件内容或给验证器一个错误的预期摘要。",
+          "expected": "核验明确失败，原有登记和正式制品不受影响。"
+        }
+      ],
+      "evidence": [
+        "目录记录、独立下载文件摘要、正常校验结果和故障样本的失败结果。"
+      ],
+      "cleanup": "清理专用测试对象与制品，保留证据文件及其版本记录。"
+    },
+    {
+      "id": "FL-TC-006",
+      "title": "按候选资格和法定人数选择参与方",
+      "requirements": [
+        "FL-REQ-005"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SELECTION"
+      ],
+      "preconditions": [
+        "准备一个最小节点数设为 2 的受控工况。使用两名合格参与方以及一名具有不兼容数据集的参与方。"
+      ],
+      "steps": [
+        {
+          "action": "先使其中一名合格参与方的环境不可用后提交，等待选择结果。",
+          "expected": "记录候选不足或对应筛选阶段的失败原因，本轮不生成可执行的成功选点结果。"
+        },
+        {
+          "action": "恢复第二名合格参与方，等待资格投影可见，重试相应轮次选点。",
+          "expected": "成功快照包含两名合格参与方，排除不兼容数据集，且每个运行环境只有一份选定数据集。"
+        },
+        {
+          "action": "该轮开始后再使第三名参与方合格，重新查询本轮。",
+          "expected": "已固定名单仍与选点成功时一致。"
+        }
+      ],
+      "evidence": [
+        "每次选择前的资格投影、选择结果事件、roundId 和选中数据集清单。"
+      ],
+      "cleanup": "还原参与方与数据集状态，按测试环境流程结束测试任务。",
+      "modelScenarios": [
+        {
+          "workflow": "TrainingOrchestration.SelectTrainingRoundParticipants",
+          "scenario": "Select Participants When Runtime Pool Reaches Quorum"
+        },
+        {
+          "workflow": "TrainingOrchestration.SelectTrainingRoundParticipants",
+          "scenario": "Reject Participant Snapshot Below Quorum"
+        },
+        {
+          "workflow": "TrainingOrchestration.SelectTrainingRoundParticipants",
+          "scenario": "Reject Selection Without Compatible Dataset Evidence"
+        }
+      ]
+    },
+    {
+      "id": "FL-TC-007",
+      "title": "核对下发、接收、受理和实际完成的阶段",
+      "requirements": [
+        "FL-REQ-002",
+        "FL-REQ-006"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-DISPATCH",
+        "SRC-RECEIVE",
+        "SRC-NODE"
+      ],
+      "preconditions": [
+        "以可暂停或能持续运行一段时间的合成数据任务取得受理和执行间隔。准备平台、代理及引擎日志采集。"
+      ],
+      "steps": [
+        {
+          "action": "启动训练并核对计划请求、接收事件与节点载荷的标识对应。",
+          "expected": "看到匹配的训练任务、轮次和执行计划，节点仅收到节点本地所需输入。"
+        },
+        {
+          "action": "在节点受理但进程未结束时读取节点状态、轮次执行记录和贡献计数。",
+          "expected": "受理后的步骤处于执行中，贡献计数未因 HTTP 202 增长。"
+        },
+        {
+          "action": "待成功退出后读取制品及代理提交记录。",
+          "expected": "能用同一执行的业务标识关联引擎输出，未把另一个节点的产物归到本次执行。"
+        }
+      ],
+      "evidence": [
+        "脱敏后的计划与载荷、请求状态、节点 jobId、业务 roundExecutionId、同一时间窗的状态及产物摘要。"
+      ],
+      "cleanup": "清理测试任务和合成数据产生的制品。"
+    },
+    {
+      "id": "FL-TC-008",
+      "title": "启动失败与运行失败不会伪造成功贡献",
+      "requirements": [
+        "FL-REQ-007"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-OPS",
+        "SRC-NODE"
+      ],
+      "preconditions": [
+        "准备能隔离个人工况的参与方。对启动失败和启动后运行失败分别建独立任务，配置小规模可判断的最小节点数。"
+      ],
+      "steps": [
+        {
+          "action": "在测试环境使引擎启动失败，恢复环境并触发模型允许的重试。",
+          "expected": "记录启动失败事件及原因，恢复后产生可定位的新执行观察。"
+        },
+        {
+          "action": "在另一任务令本地执行进程失败并使剩余可用参与方不足。",
+          "expected": "代理记录运行失败，平台记录失去法定人数的轮次失败，未把失败更新计为可聚合贡献。"
+        },
+        {
+          "action": "核对模型声明的释放路径和目标环境资源清理。",
+          "expected": "失败或重试失败可关联到清理动作，遗留资源作为测试问题记录。"
+        }
+      ],
+      "evidence": [
+        "失败前后命令结果、代理事件、平台轮次状态、节点作业日志和清理前后资源清单。"
+      ],
+      "cleanup": "还原引擎配置和参与方连接，清理测试剩余资源。",
+      "modelScenarios": [
+        {
+          "workflow": "RuntimeAgentOperations.StartRoundExecution",
+          "scenario": "Round Execution Start Failed"
+        }
+      ]
+    },
+    {
+      "id": "FL-TC-009",
+      "title": "相同收据重投和冲突收据有不同结果",
+      "requirements": [
+        "FL-REQ-008"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-LEDGER",
+        "SRC-UPLOAD"
+      ],
+      "preconditions": [
+        "准备处于可接收更新阶段的测试轮次，保存首次有效提交载荷、制品标识、摘要及轮次执行的前置记录。"
+      ],
+      "steps": [
+        {
+          "action": "提交一次更新，记录接收事件数和独立贡献数。",
+          "expected": "对应运行环境形成一条可查接收记录。"
+        },
+        {
+          "action": "用相同标识、制品和摘要再次送达。",
+          "expected": "原收据可识别，没有新增接收事件，独立贡献数不变。"
+        },
+        {
+          "action": "保持相同 roundExecutionId，使用另一制品或不同摘要提交。",
+          "expected": "冲突被拒绝，原收据与原制品引用保留，贡献数未增加。"
+        }
+      ],
+      "evidence": [
+        "三次输入的摘要和标识、调用结果、首个接收事件以及重投前后贡献计数。"
+      ],
+      "cleanup": "只保留脱敏测试证据，清理独立测试制品。"
+    },
+    {
+      "id": "FL-TC-010",
+      "title": "全局评估之前不可完成轮次",
+      "requirements": [
+        "FL-REQ-009"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-EVIDENCE",
+        "SRC-ENGINE-FEDAVG"
+      ],
+      "preconditions": [
+        "准备隔离测试轮次和可控制的评估调度。在测试夹具中先保留全局更新事件，暂不投递有效的评估结果。"
+      ],
+      "steps": [
+        {
+          "action": "在全局模型已更新且还未评估的状态下，通过同一命令规则尝试完成轮次。",
+          "expected": "拒绝提前完成，轮次未产生完成事件。"
+        },
+        {
+          "action": "提交与当前 roundId、模型 ID 对应的有效全局评估，允许正常自动化执行。",
+          "expected": "记录评估并随后完成轮次。以事件序列和读模型交叉核对评级与制品关联。"
+        },
+        {
+          "action": "检查当前轮次与上限或停止条件，观察后继轮次或任务结束。",
+          "expected": "结果符合该工况的停止／继续条件，不出现同时被解释为完成和继续的观测缺口。异常保留证据。"
+        }
+      ],
+      "evidence": [
+        "全局更新、评估提交、轮次完成、后继或终止的事件顺序和共同标识。"
+      ],
+      "cleanup": "恢复测试用评估触发配置，清理测试任务。",
+      "modelScenarios": [
+        {
+          "workflow": "TrainingOrchestration.CompleteTrainingRound",
+          "scenario": "Reject Round Completion Without Global Evaluation"
+        },
+        {
+          "workflow": "TrainingOrchestration.CompleteTrainingRound",
+          "scenario": "Complete Round After Global Evaluation"
+        }
+      ]
+    },
+    {
+      "id": "FL-TC-011",
+      "title": "组织、联邦与参与资格分别治理",
+      "preconditions": [
+        "准备已登记组织、两份联邦及可恢复的测试成员关系。"
+      ],
+      "steps": [
+        {
+          "action": "在两个联邦分别管理同一组织的成员资格，暂停第一份关联。",
+          "expected": "第一份成员关系变化，第二份保留其已有状态。"
+        },
+        {
+          "action": "分别暂停联邦、暂停成员，待投影可见后执行配置和新轮次场景。",
+          "expected": "观察相应入口拒绝或排除，记录受影响的具体身份范围。"
+        }
+      ],
+      "evidence": [
+        "组织、联邦、成员状态与配置／选点结果，记录对应事件和关联标识。"
+      ],
+      "cleanup": "清理该工况专用配置和测试制品，保留脱敏记录及适用版本。",
+      "requirements": [
+        "FL-REQ-010"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-GUARD",
+        "SRC-SELECTION"
+      ]
+    },
+    {
+      "id": "FL-TC-012",
+      "title": "运行基础设施注册、代理接入与身份激活",
+      "preconditions": [
+        "准备隔离的参与方站点和专用事件存储，选用 MANUAL_GUIDED 安装计划。"
+      ],
+      "steps": [
+        {
+          "action": "在测试环境启动未填写登记标识的代理，核对健康与业务入口。",
+          "expected": "可用性探针可运行，业务入口返回等待配置状态，平台没有产生已注册参与资格。"
+        },
+        {
+          "action": "完成安装计划与基础设施登记，配置身份和合法端点并显式启动初始化。",
+          "expected": "平台与代理可查到同一身份及端点；按实际配置观察自检、连接和运行身份状态。"
+        },
+        {
+          "action": "对验证失败的项目保留原失败记录，修正后走对应重试。",
+          "expected": "重试结果关联同一基础设施，失败理由能区分前置验证和实际代理部署。"
+        }
+      ],
+      "evidence": [
+        "安装计划、等待状态、代理自检和连接事件、端点与运行身份回读。"
+      ],
+      "cleanup": "清理该工况专用配置和测试制品，保留脱敏记录及适用版本。",
+      "requirements": [
+        "FL-REQ-011"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-ENROLL",
+        "SRC-DELIVERY"
+      ]
+    },
+    {
+      "id": "FL-TC-013",
+      "title": "特征架构版本与本地数据集审批",
+      "preconditions": [
+        "准备两个特征架构版本、有效合成文件、路径不可达样本及不兼容标签样本。"
+      ],
+      "steps": [
+        {
+          "action": "同步已发布契约，在参与方登记数据集并运行完整准备流程。",
+          "expected": "本地绑定与对应特征架构版本清楚，平台查询只出现约定元信息。"
+        },
+        {
+          "action": "分别验证不可读路径和不匹配标签，修正后重试。",
+          "expected": "保留可区分的失败状态，通过重新校验后才允许批准。"
+        },
+        {
+          "action": "撤销批准并等待决定所需投影追平后建立新的轮次。",
+          "expected": "已撤销数据集从后续训练候选排除。"
+        }
+      ],
+      "evidence": [
+        "版本、文件检查结果、批准及撤销记录、平台元数据与候选变化。"
+      ],
+      "cleanup": "清理该工况专用配置和测试制品，保留脱敏记录及适用版本。",
+      "requirements": [
+        "FL-REQ-012"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SELECTION",
+        "SRC-RUNTIME",
+        "SRC-DELIVERY"
+      ]
+    },
+    {
+      "id": "FL-TC-014",
+      "title": "引擎镜像插件、执行与聚合格式约束",
+      "preconditions": [
+        "准备至少两种明确区分插件安装范围的镜像和配套合成数据。"
+      ],
+      "steps": [
+        {
+          "action": "读取引擎能力，创建训练配置，检查计划与部署使用的镜像、配置和插件。",
+          "expected": "对应关系一致，正确插件能处理预期格式并产出可读制品。"
+        },
+        {
+          "action": "尝试运行缺失插件或不支持指定模式的工况。",
+          "expected": "失败可定位到能力不符，不能把该工况记录为成功。"
+        },
+        {
+          "action": "对两个及以上 PyTorch 更新执行独立聚合验证。",
+          "expected": "确认选中的实现确实执行多更新聚合。不能把嵌入式归档或单文件透传认定为聚合通过。"
+        }
+      ],
+      "evidence": [
+        "镜像标识、能力清单、实际操作插件、输入输出摘要、错误和聚合结果验证。"
+      ],
+      "cleanup": "清理该工况专用配置和测试制品，保留脱敏记录及适用版本。",
+      "requirements": [
+        "FL-REQ-013"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-RUNTIME",
+        "SRC-ENGINE-CAP",
+        "SRC-ENGINE-STEPS",
+        "SRC-SECURE-EMBEDDED"
+      ]
+    },
+    {
+      "id": "FL-TC-015",
+      "title": "安全聚合独立会话与实现边界",
+      "preconditions": [
+        "在隔离环境为明文与安全分支分别建任务；记录当前选用聚合实现、上下文适配器与测试制品格式。"
+      ],
+      "steps": [
+        {
+          "action": "建立安全聚合任务，观察会话、参与方选择、上下文准备及更新登记。",
+          "expected": "会话与轮次、参与方和上下文关联完整。失败时记录具体阶段和制品状态。"
+        },
+        {
+          "action": "核查聚合输出是算法结果、单更新透传还是内嵌封装。",
+          "expected": "测试记录与实际后端行为一致。需要密码学结论时，以独立算法及密钥测试补充，内嵌封装不得作为该证据。"
+        }
+      ],
+      "evidence": [
+        "会话事件、适配器路径、输出制品结构、密钥版本或参数来源、真实算法测试记录（如适用）。"
+      ],
+      "cleanup": "清理该工况专用配置和测试制品，保留脱敏记录及适用版本。",
+      "requirements": [
+        "FL-REQ-014"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-RUNTIME",
+        "SRC-SECURE-CONTEXT",
+        "SRC-SECURE-RUNTIME",
+        "SRC-SECURE-EMBEDDED"
+      ]
+    },
+    {
+      "id": "FL-TC-016",
+      "title": "个性化模式与参与方模型制品归属",
+      "preconditions": [
+        "准备已确认支持 LOCAL_ADAPTATION 的镜像工况及 GLOBAL_ONLY 对照，固定可复现的本地评估集。"
+      ],
+      "steps": [
+        {
+          "action": "用 GLOBAL_ONLY 提交非法个性化标记，在本地适配工况分别提供错误参与方及不符合门槛的结果。",
+          "expected": "各无效提交按对应规则失败。"
+        },
+        {
+          "action": "在支持的试验环境完成本地适配并核对评估和制品。",
+          "expected": "全局及个性化产物可根据目标和摘要区分，保留本地制品策略和清晰的评价基线。"
+        }
+      ],
+      "evidence": [
+        "全局基线和本地评估说明、插件能力、模式、目标、摘要、策略及命令结果。"
+      ],
+      "cleanup": "清理该工况专用配置和测试制品，保留脱敏记录及适用版本。",
+      "requirements": [
+        "FL-REQ-015"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-ENGINE-STEPS",
+        "SRC-PERSONAL",
+        "SRC-LEDGER"
+      ]
+    },
+    {
+      "id": "FL-TC-017",
+      "title": "业务运行观测与工程遥测分层",
+      "preconditions": [
+        "准备可中断的测试代理，记录健康阈值、资源阈值、观测配置与样本范围。"
+      ],
+      "steps": [
+        {
+          "action": "注入心跳中断、恢复及资源压力，处理相应告警。",
+          "expected": "对应状态有时间、来源和归属。告警确认、解决与节点恢复各可查询。"
+        },
+        {
+          "action": "按配置检查 OTLP 导出的服务指标、日志和链路。模拟采集器中断并执行测试业务命令。",
+          "expected": "记录各信号实际可达性及故障隔离结果。节点业务遥测与 Python 进程观测能力分别确认。"
+        }
+      ],
+      "evidence": [
+        "状态证据、故障注入时间、日志和链路、采样参数及采集器异常时的业务结果。"
+      ],
+      "cleanup": "清理该工况专用配置和测试制品，保留脱敏记录及适用版本。",
+      "requirements": [
+        "FL-REQ-016"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-OBSERVABILITY",
+        "SRC-OPS"
+      ]
+    },
+    {
+      "id": "FL-TC-018",
+      "title": "分站点部署、生成扩展与版本追溯",
+      "preconditions": [
+        "使用固定模型、生成器版本和同一交付输入，在临时环境准备一套平台与参与方安装包。"
+      ],
+      "steps": [
+        {
+          "action": "核对模型哈希、CodegenModel、手写扩展位置及发布清单，生成产物做同基线差异检查。",
+          "expected": "差异可归属模型、模板、手写扩展或打包。同一模型重生成保留手写扩展。"
+        },
+        {
+          "action": "按两个站点清单验装并做访问与挂载检查。",
+          "expected": "两站点分别使用自身服务与数据卷，受控跨端 URL 可用，镜像与清单一致。"
+        }
+      ],
+      "evidence": [
+        "生成器和模型版本、生成差异、镜像清单与校验、两站点验装和拓扑。"
+      ],
+      "cleanup": "清理该工况专用配置和测试制品，保留脱敏记录及适用版本。",
+      "requirements": [
+        "FL-REQ-017"
+      ],
+      "sources": [
+        "SRC-EXPORT",
+        "SRC-GENERATION",
+        "SRC-PACKAGE",
+        "SRC-DELIVERY",
+        "SRC-VERSION",
+        "SRC-OPS"
+      ]
+    },
+    {
+      "id": "FL-TC-019",
+      "title": "用例批准、执行计划与试验证据",
+      "preconditions": [
+        "准备已批准的两参与方或 20 参与方演练用例，确定计划、报告和制品存放路径。"
+      ],
+      "steps": [
+        {
+          "action": "从同一计划执行数据准备与测试并归档报告。",
+          "expected": "确认用例、参与方、轮次、执行与聚合产物符合该工况的证据结构。"
+        },
+        {
+          "action": "使用独立报告副本注入缺失证据或不同用例版本，尝试复用失败重跑计划。",
+          "expected": "校验拒绝缺失证据或失效版本，未执行用例不记为通过。"
+        }
+      ],
+      "evidence": [
+        "用例选择、SHA-256 指纹、执行与报告文件、镜像标识、制品及检查结果。"
+      ],
+      "cleanup": "清理该工况专用配置和测试制品，保留脱敏记录及适用版本。",
+      "requirements": [
+        "FL-REQ-018"
+      ],
+      "sources": [
+        "SRC-SIM-PLAN",
+        "SRC-SCALE",
+        "SRC-EVIDENCE",
+        "SRC-SIM-EVIDENCE",
+        "SRC-ARTIFACT"
+      ]
+    }
+  ],
+  "architecture": [
+    "平台端建立组织、联邦及成员关系，通过安装计划登记运行基础设施，独立确认代理连接、运行身份和插件能力。",
+    "平台发布特征架构，参与方获准后管理本地文件路径。通过访问、剖析、契约和审批流程核对数据就绪，平台保留选点需要的元信息。",
+    "平台控制台提交配置和作业。平台用同一模型定义的规则验证选择值，创建作业后按轮次获取参与方名单。",
+    "选点先验证联邦成员、特征架构及标签的兼容证据，再选择活跃运行环境和数据集。未满足最小节点数时记录失败，成功后固定本轮快照。",
+    "平台解析已连接的运行代理端点并下发单节点计划。参与方控制台承担参与方管理，代理验证计划与本地状态，构建本地执行载荷。",
+    "Python 引擎启动单步训练进程。完成后代理取得本地产物，完成上传并提交制品引用和摘要。平台通过收据幂等接收，再判断更新是否参与聚合。",
+    "各阶段失效分别记录启动失败、运行失败与轮次失败。符合条件时重试并清理旧资源，失去法定人数时停止轮次。",
+    "明文路径的聚合产出经全局评估后推进轮次状态，模型仓库登记全局模型。下一轮使用前序轮次的结果重新判断资格与执行计划。",
+    "安全聚合、个性化分别按显式配置分支运行。开发安全适配器、目标运行实现和正式安全验证分别记录。",
+    "运行监控、工程观测、发布和仿真各保留自己的业务与工程证据。观测结果和用例结论关联实际版本和部署工况。"
+  ],
+  "interfaces": [
+    {
+      "id": "FL-IF-001",
+      "title": "定义训练配置",
+      "provider": "平台后端",
+      "consumer": "平台控制台",
+      "obligation": "业务引用须经资格校验；直接调用同样执行校验。",
+      "contract": "训练配置命令携带联邦、特征架构、初始模型和引擎配置的标识，后台回读选择投影。",
+      "correlation": "trainingRunConfigurationId、federationId、featureSchemaId、initialModelId、runtimeEngineProfileId",
+      "failure": "选择无效时拒绝并返回 SELECTION_NOT_ELIGIBLE；不进入成功定义路径。",
+      "requirements": [
+        "FL-REQ-001"
+      ],
+      "designs": [
+        "FL-DES-001"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-GUARD"
+      ],
+      "verificationTests": [
+        "FL-TC-001",
+        "FL-TC-002"
+      ]
+    },
+    {
+      "id": "FL-IF-002",
+      "title": "下发参与方执行计划",
+      "provider": "运行代理",
+      "consumer": "平台计划适配器",
+      "obligation": "每个计划归属已选参与方，跨端发送引用和配置快照。",
+      "contract": "POST /roundexecution/receiveparticipantexecutionplan。携带已选数据集、基础模型制品、引擎镜像快照及与策略有关的参数。",
+      "correlation": "executionPlanId、roundExecutionId、executionSessionId、trainingJobId、roundId、runtimeId",
+      "failure": "代理端点不可用或请求被拒时由适配器报告错误；平台不得据此认定节点已开始计算。",
+      "requirements": [
+        "FL-REQ-006"
+      ],
+      "designs": [
+        "FL-DES-006"
+      ],
+      "sources": [
+        "SRC-DISPATCH",
+        "SRC-RECEIVE",
+        "SRC-MODEL"
+      ],
+      "verificationTests": [
+        "FL-TC-007"
+      ]
+    },
+    {
+      "id": "FL-IF-003",
+      "title": "执行节点单步任务",
+      "provider": "Python Runtime Engine",
+      "consumer": "运行代理或平台聚合客户端",
+      "obligation": "以本地载荷执行一次指定步骤，提供可查询的进程状态和产出。",
+      "contract": "POST /jobs 返回 202；GET /jobs/{jobId} 查询；GET /jobs/{jobId}/artifacts/{artifactName} 获取产物；POST /jobs/{jobId}/cancel 请求取消。",
+      "correlation": "引擎 jobId 对应编排层作业提交记录；节点工作目录按 jobId 与 nodeName 区分。",
+      "failure": "启动请求异常返回错误；同一活动 jobId 再次启动会被拒绝。需分别核验取消请求和进程实际状态。",
+      "requirements": [
+        "FL-REQ-002",
+        "FL-REQ-006",
+        "FL-REQ-007"
+      ],
+      "designs": [
+        "FL-DES-006",
+        "FL-DES-007"
+      ],
+      "sources": [
+        "SRC-NODE",
+        "SRC-ENGINE-EXECUTOR"
+      ],
+      "verificationTests": [
+        "FL-TC-003",
+        "FL-TC-007",
+        "FL-TC-008"
+      ]
+    },
+    {
+      "id": "FL-IF-004",
+      "title": "模型更新提交与文件引用",
+      "provider": "支持制品存储与平台更新处理器",
+      "consumer": "参与方运行代理",
+      "obligation": "上传本轮更新文件并提交关联元数据，允许一致收据重投。",
+      "contract": "上传到支持文件服务，更新提交携带制品引用、执行标识、运行环境标识及摘要。平台写入收据后另行评估。",
+      "correlation": "trainingJobId、roundId、roundExecutionId、runtimeId、updateArtifactId、artifactDigest",
+      "failure": "上传和命令提交分别检查。平台识别相同收据并空返回，冲突收据拒绝。",
+      "requirements": [
+        "FL-REQ-008"
+      ],
+      "designs": [
+        "FL-DES-008"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-LEDGER",
+        "SRC-UPLOAD"
+      ],
+      "verificationTests": [
+        "FL-TC-009"
+      ]
+    },
+    {
+      "id": "FL-IF-005",
+      "title": "聚合产出与全局评估衔接",
+      "provider": "全局评估和轮次编排",
+      "consumer": "平台聚合处理器",
+      "obligation": "轮次完成之前可核对聚合产物同评估结果的关联。",
+      "contract": "模型更新与评估是两个事件阶段，GlobalModelUpdated 及 GlobalModelEvaluationSubmitted 提供数据来源。",
+      "correlation": "trainingJobId、roundId、aggregatedModelId、modelArtifactDigest",
+      "failure": "只有聚合更新时完成轮次应拒绝；保留关联标识以定位未评估或错配。",
+      "requirements": [
+        "FL-REQ-009"
+      ],
+      "designs": [
+        "FL-DES-009"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-EVIDENCE"
+      ],
+      "verificationTests": [
+        "FL-TC-010"
+      ]
+    },
+    {
+      "id": "FL-IF-006",
+      "title": "外部代理初始化和连接登记",
+      "consumer": "参与方运维及运行代理",
+      "provider": "运行代理业务端点与平台登记服务",
+      "obligation": "参与方接入须记录安装计划、运行基础设施、代理连接和有效运行身份。验证、部署或连接失败必须可定位。外部已部署代理在配置齐全前处于等待状态。",
+      "contract": "配置已登记的代理与设施标识后，显式调用 POST /runtimeagentlifecycle/loadruntimeagentbootstrapconfiguration，随后按自动化报告启动、自检和连接。",
+      "correlation": "runtimeAgentId、runtimeInfrastructureId、端点范围与运行时身份。",
+      "failure": "未配置返回 WAITING_FOR_CONFIGURATION，健康不代表完成登记。",
+      "designs": [
+        "FL-DES-011"
+      ],
+      "verificationTests": [
+        "FL-TC-012"
+      ],
+      "requirements": [
+        "FL-REQ-011"
+      ],
+      "sources": [
+        "SRC-ENROLL",
+        "SRC-MODEL"
+      ]
+    },
+    {
+      "id": "FL-IF-007",
+      "title": "特征架构同步与数据集元信息回报",
+      "consumer": "参与方数据治理与平台选点",
+      "provider": "平台契约来源与参与方代理",
+      "obligation": "平台发布并推荐特征架构版本。参与方持有数据路径，在本地完成访问验证、剖析、契约校验与审批。提供给平台的材料限于业务所需的数据集元信息、兼容证据和引用。",
+      "contract": "参与侧按当前同步声明读取特征架构目录，与本地绑定按特征架构引用进行契约校验；平台记录用于选择的元信息。",
+      "correlation": "featureSchemaId 及版本、datasetId、runtimeId。",
+      "failure": "结构或标签不兼容时拒绝批准；缺少兼容证据的候选不得参加新轮次。",
+      "designs": [
+        "FL-DES-012"
+      ],
+      "verificationTests": [
+        "FL-TC-013"
+      ],
+      "requirements": [
+        "FL-REQ-012"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SELECTION"
+      ]
+    },
+    {
+      "id": "FL-IF-008",
+      "title": "安全聚合会话与聚合执行适配",
+      "consumer": "安全聚合编排",
+      "provider": "加密上下文和聚合适配器",
+      "obligation": "启用安全聚合的轮次应单独记录会话、参与方、加密上下文引用与加密更新收据。需要验证所配置后端的聚合语义以及无效更新处理。",
+      "contract": "会话向适配器传递加密更新制品引用。后端依据配置使用 Runtime Engine 或内嵌实现。",
+      "correlation": "secureAggregationSessionId、roundId、publicKeyVersion、encryptedUpdateArtifactRefs。",
+      "failure": "保留失败或缺少上下文的阶段信息。开发上下文和内嵌封装按实际用途验收。",
+      "designs": [
+        "FL-DES-014"
+      ],
+      "verificationTests": [
+        "FL-TC-015"
+      ],
+      "requirements": [
+        "FL-REQ-014"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-SECURE-CONTEXT",
+        "SRC-SECURE-RUNTIME",
+        "SRC-SECURE-EMBEDDED"
+      ]
+    },
+    {
+      "id": "FL-IF-009",
+      "title": "业务心跳和工程信号出口",
+      "consumer": "参与方代理及 Spring 服务",
+      "provider": "平台运行监控与 OTLP 接收端",
+      "obligation": "应区分运行代理心跳、节点资源、告警处理及应用日志和链路追踪。统一保留关联运行环境身份以支持在线、恢复和压力事件的分析。",
+      "contract": "业务遥测写入平台监控投影。按部署配置将工程指标、日志和链路导出至 OTLP HTTP/protobuf 接收端。",
+      "correlation": "业务使用 runtimeId 和节点标识；工程证据按服务名、时间与链路标识关联。",
+      "failure": "分别记录业务上报异常、遥测过期及工程接收端不可达。",
+      "designs": [
+        "FL-DES-016"
+      ],
+      "verificationTests": [
+        "FL-TC-017"
+      ],
+      "requirements": [
+        "FL-REQ-016"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-OBSERVABILITY",
+        "SRC-OPS"
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": "FL-COMP-001",
+      "title": "平台控制台",
+      "role": "面向管理员和训练操作人员，管理联邦、运行设施、模型及训练。",
+      "boundary": "通过生成的查询和命令资源调用平台及支持后端。",
+      "designs": [
+        "FL-DES-001",
+        "FL-DES-005",
+        "FL-DES-010",
+        "FL-DES-011",
+        "FL-DES-012",
+        "FL-DES-016"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-GENERATION"
+      ],
+      "modelUnit": "FederationLearningConsole"
+    },
+    {
+      "id": "FL-COMP-002",
+      "title": "平台后端",
+      "role": "持有联邦治理、训练编排、安全聚合、模型仓库和中央监控。",
+      "boundary": "主要负责调度与业务决策，通过适配器访问参与方代理和聚合执行器。",
+      "designs": [
+        "FL-DES-003",
+        "FL-DES-004",
+        "FL-DES-005",
+        "FL-DES-006",
+        "FL-DES-008",
+        "FL-DES-009",
+        "FL-DES-014",
+        "FL-DES-015",
+        "FL-DES-016"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-DISPATCH",
+        "SRC-PERSISTENCE"
+      ],
+      "modelUnit": "FederationLearningPlatform"
+    },
+    {
+      "id": "FL-COMP-003",
+      "title": "支持后端",
+      "role": "提供平台采用的身份访问、文件上传、字典、通知和数据交换等能力。",
+      "boundary": "独立部署，制品文件与业务模型目录的职责不同。",
+      "designs": [
+        "FL-DES-004",
+        "FL-DES-008",
+        "FL-DES-012",
+        "FL-DES-017"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-UPLOAD",
+        "SRC-DELIVERY"
+      ],
+      "modelUnit": "FederationLearningSupport"
+    },
+    {
+      "id": "FL-COMP-004",
+      "title": "参与方控制台",
+      "role": "管理参与方身份、数据集准备和运行操作。",
+      "boundary": "面向本站点运行代理后端，实际训练由节点引擎执行。",
+      "designs": [
+        "FL-DES-006",
+        "FL-DES-011",
+        "FL-DES-012",
+        "FL-DES-016"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-DELIVERY"
+      ],
+      "modelUnit": "FederationLearningParticipantConsole"
+    },
+    {
+      "id": "FL-COMP-005",
+      "title": "运行代理后端",
+      "role": "保管参与方执行与数据治理状态。负责本地绑定、接收训练计划、观察运行和回传。",
+      "boundary": "同步有限的契约与字典。站点使用独立数据卷及运行环境。",
+      "designs": [
+        "FL-DES-002",
+        "FL-DES-006",
+        "FL-DES-007",
+        "FL-DES-008",
+        "FL-DES-011",
+        "FL-DES-012",
+        "FL-DES-016"
+      ],
+      "sources": [
+        "SRC-MODEL",
+        "SRC-ENROLL",
+        "SRC-DISPATCH"
+      ],
+      "modelUnit": "FederationLearningRuntimeAgent"
+    },
+    {
+      "id": "FL-COMP-006",
+      "title": "Python Runtime Engine",
+      "role": "训练、聚合、评估的节点执行端，按插件镜像装配。",
+      "boundary": "节点本地执行和制品访问，不持有全局训练任务状态。",
+      "designs": [
+        "FL-DES-002",
+        "FL-DES-006",
+        "FL-DES-007",
+        "FL-DES-013",
+        "FL-DES-014",
+        "FL-DES-015"
+      ],
+      "sources": [
+        "SRC-RUNTIME",
+        "SRC-NODE",
+        "SRC-ENGINE-STEPS"
+      ]
+    },
+    {
+      "id": "FL-COMP-007",
+      "title": "部署与观测配置",
+      "role": "组装中央与参与方站点的服务、环境、网关和工程遥测。",
+      "boundary": "部署方式、采样和凭据按站点独立配置。",
+      "designs": [
+        "FL-DES-011",
+        "FL-DES-016",
+        "FL-DES-017"
+      ],
+      "sources": [
+        "SRC-OPS",
+        "SRC-DELIVERY",
+        "SRC-OBSERVABILITY"
+      ]
+    },
+    {
+      "id": "FL-COMP-008",
+      "title": "生成、交付与仿真工具",
+      "role": "从模型生成应用结构，构建镜像，运行可复核的测试工况。",
+      "boundary": "生成、发布清单及执行证据各有版本。",
+      "designs": [
+        "FL-DES-001",
+        "FL-DES-017",
+        "FL-DES-018"
+      ],
+      "sources": [
+        "SRC-GENERATION",
+        "SRC-VERSION",
+        "SRC-SIM-PLAN"
+      ]
+    }
+  ]
+}

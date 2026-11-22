@@ -1,0 +1,868 @@
+{
+  "documentKind": "srs",
+  "schemaVersion": 1,
+  "project": "联邦学习平台",
+  "revision": "0.5",
+  "purpose": "本文为联邦学习平台的业务、开发和测试评审提供同一需求基线。第 3 章规定软件行为和边界，第 4 章指定合格性方法，第 5 章记录需求来源，第 6 章列出待确认事项。",
+  "scope": "联邦学习平台用于组织跨站点模型训练。业务范围从组织与联邦资格、站点和数据就绪、初始模型与训练配置，经任务提交、轮次选点、参与方执行、更新验收、聚合和评估，到训练完成和模型可查。范围包括平台、参与端和运行引擎共同完成的训练流程，以及运行监控和已建模的安全聚合分流。当前运行现场为项目开发及集成验证环境，正式运行现场、项目责任方和支持机构待确认。",
+  "actors": [
+    {
+      "name": "平台管理员",
+      "responsibility": "管理组织、联邦及运行基础设施相关状态。"
+    },
+    {
+      "name": "联邦所有者、治理评审人员",
+      "responsibility": "发出参与邀请，处理成员加入与资格变化。"
+    },
+    {
+      "name": "数据管理人员、参与方合规人员",
+      "responsibility": "维护特征架构版本，在参与方核对数据契约和审批数据集。"
+    },
+    {
+      "name": "MLOps 工程师、研究负责人",
+      "responsibility": "配置训练运行参数，创建和提交训练任务，核对运行结果。"
+    },
+    {
+      "name": "参与端管理员、运维人员",
+      "responsibility": "登记站点运行环境，核对执行、连接、保护措施和训练告警。"
+    }
+  ],
+  "sources": [
+    {
+      "id": "MODEL",
+      "title": "现行 MEDOL 业务模型及 FederationLearningEndToEnd 用户旅程",
+      "path": "../../../.medol/source.medol",
+      "kind": "model",
+      "revision": "0428b33c",
+      "date": "2026-11-21"
+    },
+    {
+      "id": "CASE-ENROLL",
+      "title": "参与方准入用例",
+      "path": "../../../simulation/cases/approved/participant-enrollment.json",
+      "kind": "approved-cases"
+    },
+    {
+      "id": "CASE-DATA",
+      "title": "参与方数据批准与平台元信息回报用例",
+      "path": "../../../simulation/cases/approved/dataset-approval-metadata.json",
+      "kind": "approved-cases"
+    },
+    {
+      "id": "CASE-SCHEMA",
+      "title": "特征架构与初始模型准备",
+      "path": "../../../simulation/cases/approved/schema-model-preparation.json",
+      "kind": "approved-cases"
+    },
+    {
+      "id": "CASE-CONFIG",
+      "title": "训练配置准备",
+      "path": "../../../simulation/cases/approved/training-configuration-preparation.json",
+      "kind": "approved-cases"
+    },
+    {
+      "id": "CASE-JOB",
+      "title": "训练任务提交",
+      "path": "../../../simulation/cases/approved/training-job-submission.json",
+      "kind": "approved-cases"
+    },
+    {
+      "id": "CASE-BASE",
+      "title": "两参与方一轮训练",
+      "path": "../../../simulation/cases/approved/training-workflow-v2.json",
+      "kind": "approved-cases"
+    },
+    {
+      "id": "CASE-SCALE",
+      "title": "二十参与方两轮训练",
+      "path": "../../../simulation/cases/approved/twenty-participant-training-workflow-v2.json",
+      "kind": "approved-cases"
+    },
+    {
+      "id": "ENGINE",
+      "title": "运行引擎接入与执行协议说明",
+      "path": "../../../federation-learning-runtime-engine/README.md",
+      "kind": "reference",
+      "revision": "0428b33c"
+    },
+    {
+      "id": "FEDAVG",
+      "title": "PyTorch 浮点参数的 FedAvg 插件",
+      "path": "../../../federation-learning-runtime-engine/python/gemifl/runtime/plugins/fed_avg_pytorch_state_dict.py",
+      "kind": "reference",
+      "revision": "0428b33c"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "FL-SRS-001",
+      "title": "组织入联经过邀请和批准",
+      "section": "3.4",
+      "capability": "组织与联邦",
+      "condition": "组织和目标联邦已登记。",
+      "statement": "软件应维护各联邦独立的成员资格。邀请和批准均针对指定组织及指定联邦。",
+      "acceptance": "已邀请和已加入可分别查询；批准后同一组联邦和组织标识对应已加入记录。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "OrganizationManagement.ActivateOrganization"
+        },
+        {
+          "slice": "FederationManagement.InviteParticipant"
+        },
+        {
+          "slice": "FederationManagement.ApproveParticipant"
+        }
+      ],
+      "approvedCases": [
+        {
+          "source": "CASE-ENROLL",
+          "caseId": "participant-enrollment",
+          "coverage": "覆盖组织、联邦准备及邀请、批准后的成员查询。"
+        }
+      ],
+      "inputs": "联邦标识、组织标识、邀请及批准操作。",
+      "outputs": "按联邦与组织查询的资格和状态。"
+    },
+    {
+      "id": "FL-SRS-002",
+      "title": "区分联邦是否可用于新训练",
+      "section": "3.1",
+      "capability": "联邦与训练配置",
+      "condition": "为新增训练配置选择联邦。",
+      "statement": "只有 Active 状态的联邦才满足配置时的联邦可用条件。",
+      "acceptance": "使用同一套其余有效输入，Active 联邦满足选择条件，Draft 或 Suspended 联邦不满足。以不合格联邦直接提交也不得建立配置。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "FederationManagement.FederationOverview"
+        },
+        {
+          "slice": "FederationManagement.SuspendFederation"
+        },
+        {
+          "slice": "TrainingOrchestration.DefineTrainingRunConfiguration"
+        }
+      ]
+    },
+    {
+      "id": "FL-SRS-003",
+      "title": "登记站点并记录可用于派发的连接",
+      "section": "3.4",
+      "capability": "运行站点接入",
+      "condition": "参与站点按照平台安装计划登记并运行代理。",
+      "statement": "软件应区分基础设施登记、代理连接和运行身份。平台应能查到已报告的代理端点及对应站点身份。",
+      "acceptance": "仅登记基础设施时可以识别尚未连接；连接报告形成对应端点记录，身份能够独立查询。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "RuntimeProvisioning.CreateRuntimeInstallationPlan"
+        },
+        {
+          "slice": "RuntimeProvisioning.RegisterRuntimeInfrastructure"
+        },
+        {
+          "slice": "RuntimeProvisioning.RecordRuntimeConnectionEstablished"
+        },
+        {
+          "slice": "RuntimeProvisioning.RuntimeAgentEndpointCatalog"
+        },
+        {
+          "slice": "RuntimeGovernance.ActivateRuntimeIdentity"
+        }
+      ],
+      "inputs": "站点和运行身份标识、基础设施登记及连接报告。",
+      "outputs": "登记状态、代理端点和运行身份查询结果。"
+    },
+    {
+      "id": "FL-SRS-004",
+      "title": "按已发布契约登记初始模型和特征架构",
+      "section": "3.4",
+      "capability": "训练准备",
+      "condition": "需要为训练配置准备输入对象。",
+      "statement": "软件应提供特征架构发布和初始模型制品登记，训练配置应能够引用具体的特征架构和初始模型。",
+      "acceptance": "目录能区分特征架构版本及发布状态，并查询已登记初始模型及制品引用。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "DatasetGovernance.PublishFeatureSchema"
+        },
+        {
+          "slice": "DatasetGovernance.FeatureSchemaCatalog"
+        },
+        {
+          "slice": "ModelRepository.RegisterModelArtifact"
+        },
+        {
+          "slice": "ModelRepository.ModelArtifactCatalog"
+        }
+      ],
+      "approvedCases": [
+        {
+          "source": "CASE-SCHEMA",
+          "caseId": "schema-model-preparation",
+          "coverage": "覆盖特征架构发布和初始模型登记的正向路径。"
+        }
+      ],
+      "inputs": "特征架构版本及发布操作、初始模型制品与格式等登记信息。",
+      "outputs": "特征架构目录项与初始模型制品引用。"
+    },
+    {
+      "id": "FL-SRS-005",
+      "title": "数据集通过契约验证后才能批准",
+      "section": "3.4",
+      "capability": "参与方数据准备",
+      "condition": "参与方拟将本地数据集供训练使用。",
+      "statement": "数据集须符合所选特征架构和标签契约。通过相应验证并批准后，方能记录可用于训练的批准状态。",
+      "acceptance": "验证失败样本不能取得批准；满足契约的样本经批准后可以查询批准记录和平台侧元信息。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "RuntimeAgentOperations.ValidateDatasetContract"
+        },
+        {
+          "slice": "RuntimeAgentOperations.ApproveDatasetForTraining",
+          "scenario": "Reject Approval Before Contract Validation"
+        },
+        {
+          "slice": "DatasetGovernance.RecordRuntimeDatasetMetadata"
+        }
+      ],
+      "approvedCases": [
+        {
+          "source": "CASE-DATA",
+          "caseId": "dataset-approval-metadata",
+          "coverage": "覆盖合格数据批准和元信息回报，审批前置拒绝需补验证。"
+        }
+      ],
+      "inputs": "参与端数据集标识、特征架构、标签契约及验证结果。",
+      "outputs": "参与端批准状态及平台侧可查元信息。"
+    },
+    {
+      "id": "FL-SRS-006",
+      "title": "区分参与方数据绑定与平台元信息",
+      "section": "3.10",
+      "capability": "参与方数据准备",
+      "condition": "参与方登记和准备数据，平台收集选点信息。",
+      "statement": "参与方应在自身运行环境维护训练数据路径绑定，平台可按运行环境、数据集及特征架构标识查询用于训练选点的元信息。",
+      "acceptance": "从参与端确认路径绑定和本地访问结果，从平台回读对应兼容证据及标识。对原始数据跨站的限制另按待确认的数据交换约束补充验收。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "RuntimeAgentOperations.ConfigureRuntimeDatasetBinding"
+        },
+        {
+          "slice": "RuntimeAgentOperations.ValidateAgentDatasetAccess"
+        },
+        {
+          "slice": "DatasetGovernance.RecordRuntimeDatasetMetadata"
+        },
+        {
+          "slice": "DatasetGovernance.RuntimeDatasetMetadataCatalog"
+        }
+      ],
+      "approvedCases": [
+        {
+          "source": "CASE-DATA",
+          "caseId": "dataset-approval-metadata",
+          "coverage": "覆盖批准及元信息上报。"
+        }
+      ]
+    },
+    {
+      "id": "FL-SRS-007",
+      "title": "建立可运行的训练配置",
+      "section": "3.4",
+      "capability": "训练配置",
+      "condition": "操作者为指定联邦准备运行参数。",
+      "statement": "训练配置应明确特征架构、初始模型、运行引擎配置、轮次预算、最小参与数、超时与本地训练参数。引用对象须满足面向该命令的资格条件，关键参数须有效。",
+      "acceptance": "有效对象和参数建立可查配置；零轮次预算应被拒绝。分别验证未发布架构、未登记模型或不可用引擎配置的组合。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "TrainingOrchestration.DefineTrainingRunConfiguration",
+          "scenario": "Define Runnable Configuration"
+        },
+        {
+          "slice": "TrainingOrchestration.DefineTrainingRunConfiguration",
+          "scenario": "Reject Empty Round Budget"
+        },
+        {
+          "slice": "TrainingOrchestration.RuntimeEngineProfileCatalog"
+        },
+        {
+          "slice": "DatasetGovernance.FeatureSchemaCatalog"
+        },
+        {
+          "slice": "ModelRepository.ModelArtifactCatalog"
+        }
+      ],
+      "approvedCases": [
+        {
+          "source": "CASE-CONFIG",
+          "caseId": "prepare-training-configuration",
+          "coverage": "覆盖登记引擎配置及定义可查训练配置的正向路径。"
+        }
+      ],
+      "inputs": "联邦、特征架构、初始模型、运行引擎配置以及训练参数。",
+      "outputs": "训练配置或失败原因。"
+    },
+    {
+      "id": "FL-SRS-008",
+      "title": "创建与提交训练任务分别处理",
+      "section": "3.1",
+      "capability": "训练任务管理",
+      "condition": "已有可运行的训练配置，研究负责人建立任务。",
+      "statement": "支持基于训练配置创建训练任务。仅已创建的任务可提交，创建动作本身产生 Draft，提交后进入 Submitted 并触发后续轮次流程。",
+      "acceptance": "核对 Draft 和 Submitted 的变化及任务、配置标识；未知任务不得成功提交。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "TrainingOrchestration.CreateTrainingJob"
+        },
+        {
+          "slice": "TrainingOrchestration.SubmitTrainingJob",
+          "scenario": "Submit Created Training Job"
+        },
+        {
+          "slice": "TrainingOrchestration.SubmitTrainingJob",
+          "scenario": "Reject Unknown Training Job"
+        }
+      ],
+      "approvedCases": [
+        {
+          "source": "CASE-JOB",
+          "caseId": "training-job-submission",
+          "coverage": "覆盖创建和提交后读回状态。"
+        }
+      ]
+    },
+    {
+      "id": "FL-SRS-009",
+      "title": "按轮次选择并固定参与方",
+      "section": "3.4",
+      "capability": "轮次选点",
+      "condition": "任务已提交，或前序轮次完成后需要继续。",
+      "statement": "从已加入联邦的组织中匹配本次特征架构及标签兼容证据和活跃运行身份；每运行环境确定一份数据集。达最小节点数后建立本轮名单，运行中保持名单不变。",
+      "acceptance": "足量合格者产生名单；缺少兼容证据或参与数不足时记录选点失败；本轮开始后新增就绪者不进入该轮名单。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "TrainingOrchestration.SelectTrainingRoundParticipants",
+          "scenario": "Select Participants When Runtime Pool Reaches Quorum"
+        },
+        {
+          "slice": "TrainingOrchestration.SelectTrainingRoundParticipants",
+          "scenario": "Reject Participant Snapshot Below Quorum"
+        },
+        {
+          "slice": "TrainingOrchestration.SelectTrainingRoundParticipants",
+          "scenario": "Reject Selection Without Compatible Dataset Evidence"
+        }
+      ],
+      "approvedCases": [
+        {
+          "source": "CASE-BASE",
+          "caseId": "participants-complete-training",
+          "coverage": "覆盖具备合格参与方的正向整轮流程，不覆盖拒绝分支。"
+        }
+      ],
+      "inputs": "任务及轮次、成员资格、数据兼容证据、运行身份和最低参与数。",
+      "outputs": "固定的参与者及数据集名单，或选点失败。"
+    },
+    {
+      "id": "FL-SRS-010",
+      "title": "向所选参与方交付轮次执行计划",
+      "section": "3.6",
+      "capability": "任务派发与参与端执行",
+      "condition": "本轮已有参与方快照及执行所需输入。",
+      "statement": "计划应能关联任务、轮次和接收方，提供本轮需要的数据集引用及基础模型引用。参与方应能记录与该计划对应的执行及结果。",
+      "acceptance": "同一轮多个参与方的执行可分别关联。能够从各参与方执行记录回查本轮、参与身份和模型更新引用。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "TrainingOrchestration.GenerateParticipantExecutionPlan"
+        },
+        {
+          "slice": "TrainingOrchestration.DispatchParticipantExecutionPlan"
+        },
+        {
+          "slice": "RuntimeAgentOperations.ReceiveParticipantExecutionPlan"
+        },
+        {
+          "slice": "RuntimeAgentOperations.RoundExecutionCatalog"
+        }
+      ],
+      "approvedCases": [
+        {
+          "source": "CASE-SCALE",
+          "caseId": "twenty-participants-complete-training",
+          "coverage": "覆盖各轮参与方执行和制品的核对，接口失败分支待验证。"
+        }
+      ]
+    },
+    {
+      "id": "FL-SRS-011",
+      "title": "分别查询执行结果与更新验收",
+      "section": "3.4",
+      "capability": "本地执行与更新验收",
+      "condition": "所选参与方完成执行并提交更新。",
+      "statement": "参与方执行结果与平台更新审核分别记录；只有被接受的更新可作为该轮有效贡献。",
+      "acceptance": "成功执行和接受更新可按参与方及轮次对应；异常更新不得计入有效贡献。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "RuntimeAgentOperations.CompleteRoundExecution"
+        },
+        {
+          "slice": "TrainingOrchestration.SubmitModelUpdateSubmission"
+        },
+        {
+          "slice": "TrainingOrchestration.EvaluateModelUpdateSubmission",
+          "scenario": "Reject Anomalous Update"
+        }
+      ],
+      "approvedCases": [
+        {
+          "source": "CASE-BASE",
+          "caseId": "participants-complete-training",
+          "coverage": "覆盖正向参与方执行及制品核验，异常更新拒绝需独立用例。"
+        }
+      ],
+      "inputs": "轮次、运行环境、执行结果、模型更新及验收结果。",
+      "outputs": "执行记录、验收结论及供聚合使用的有效更新。"
+    },
+    {
+      "id": "FL-SRS-012",
+      "title": "选点和执行失败可查询并按条件处置",
+      "section": "3.17",
+      "capability": "轮次异常",
+      "condition": "选点失败、代理执行启动失败或运行失败。",
+      "statement": "软件应记录失败阶段及轮次关系。符合相应重试条件时支持重试。剩余可用贡献无法达到本轮最小节点数时，应记录轮次失败。",
+      "acceptance": "能区分选点失败与参与方执行失败；重试关联原业务对象；触发失去法定人数条件后查到轮次失败及原因，失败执行未被当作成功。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "TrainingOrchestration.RetryTrainingRoundParticipantSelection"
+        },
+        {
+          "slice": "RuntimeAgentOperations.RecordRoundExecutionStartFailure"
+        },
+        {
+          "slice": "RuntimeAgentOperations.FailRoundExecution"
+        },
+        {
+          "slice": "RuntimeAgentOperations.RetryRoundExecutionAfterRuntimeFailure"
+        },
+        {
+          "slice": "TrainingOrchestration.FailTrainingRound"
+        }
+      ]
+    },
+    {
+      "id": "FL-SRS-013",
+      "title": "按轮次策略选择聚合路径",
+      "section": "3.1",
+      "capability": "聚合及安全分支",
+      "condition": "已有平台接受的更新，且所选轮次策略声明是否需要安全聚合。",
+      "statement": "明文轮次须在所有已选运行环境都贡献已接受更新后聚合，使用该轮累计制品引用，已接受运行环境的重复提交不应再次触发。需要安全聚合时，进入独立会话，关联参与方、上下文与加密更新。",
+      "acceptance": "明文路径在仍缺一名已选参与方更新时不触发；收齐后产生可核查聚合产物。安全路径核对会话关联和上下文，正式算法效果另设验证。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "TrainingOrchestration.AggregatePlainModelUpdates",
+          "scenario": "Aggregate Accepted Plain Updates"
+        },
+        {
+          "slice": "TrainingOrchestration.RequestSecureAggregation"
+        },
+        {
+          "slice": "SecureAggregation.CreateSecureAggregationSession"
+        },
+        {
+          "slice": "SecureAggregation.RecordEncryptedModelUpdate"
+        }
+      ]
+    },
+    {
+      "id": "FL-SRS-014",
+      "title": "全局评估完成后才可完成轮次",
+      "section": "3.4",
+      "capability": "评估与结束判定",
+      "condition": "本轮聚合得到全局模型。",
+      "statement": "评价结果须对应本轮聚合模型。全局模型已更新但未提交评估结果时，禁止完成轮次。完成后依已声明的轮次数条件继续或结束。",
+      "acceptance": "越序完成被拒绝；有效评估后产生轮次完成。当前编排按 roundNumber 小于 maxRounds 进入后续选点，达到配置轮次数进入任务完成分支。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "TrainingOrchestration.CompleteTrainingRound",
+          "scenario": "Reject Round Completion Without Global Evaluation"
+        },
+        {
+          "slice": "TrainingOrchestration.CompleteTrainingRound",
+          "scenario": "Complete Round After Global Evaluation"
+        },
+        {
+          "slice": "TrainingOrchestration.ScheduleNextTrainingRound"
+        },
+        {
+          "slice": "TrainingOrchestration.CompleteTrainingJob"
+        }
+      ],
+      "approvedCases": [
+        {
+          "source": "CASE-SCALE",
+          "caseId": "twenty-participants-complete-training",
+          "coverage": "覆盖两轮完成、作业完成及产物验证，越序拒绝需独立验证。"
+        }
+      ],
+      "inputs": "本轮的全局模型、模型评价结果及轮次预算。",
+      "outputs": "轮次结果，以及下一轮选点或任务完成状态。"
+    },
+    {
+      "id": "FL-SRS-015",
+      "title": "可查验聚合模型制品",
+      "section": "3.4",
+      "capability": "结果与制品",
+      "condition": "全局更新已生成模型制品。",
+      "statement": "登记聚合模型时应记录其训练任务、轮次、版本、格式、文件引用与摘要；提供可查的制品信息。",
+      "acceptance": "按同一任务和轮次核对目录与制品，下载字节非空且 SHA-256 与登记摘要一致。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "ModelRepository.RegisterFederatedModelArtifact"
+        },
+        {
+          "slice": "ModelRepository.ModelArtifactCatalog"
+        },
+        {
+          "slice": "ModelRepository.DownloadModelArtifact"
+        }
+      ],
+      "approvedCases": [
+        {
+          "source": "CASE-BASE",
+          "caseId": "participants-complete-training",
+          "coverage": "覆盖任务、轮次结果和制品摘要。"
+        },
+        {
+          "source": "CASE-SCALE",
+          "caseId": "twenty-participants-complete-training",
+          "coverage": "覆盖多轮聚合制品归属及内容校验。"
+        }
+      ],
+      "inputs": "任务、轮次、模型版本、格式、制品引用及摘要。",
+      "outputs": "可按任务和轮次查验的制品信息。"
+    },
+    {
+      "id": "FL-SRS-016",
+      "title": "查询运行状态和处理训练告警",
+      "section": "3.16",
+      "capability": "监控与运行治理",
+      "condition": "运行代理上报信息或平台检测到状态变化。",
+      "statement": "平台应提供运行环境的健康状态和资源概况，记录离线、恢复、资源压力及对应的告警处理状态。",
+      "acceptance": "在受控环境下分别核对在线、离线、恢复和压力场景；告警确认与解决结果可查询。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "RuntimeMonitoring.RecordRuntimeTelemetry"
+        },
+        {
+          "slice": "RuntimeMonitoring.DetectRuntimeAgentOffline"
+        },
+        {
+          "slice": "RuntimeMonitoring.MarkRuntimeAgentRecovered"
+        },
+        {
+          "slice": "RuntimeMonitoring.DetectRuntimeNodeResourcePressure"
+        },
+        {
+          "slice": "RuntimeMonitoring.AcknowledgeTrainingAlert"
+        },
+        {
+          "slice": "RuntimeMonitoring.ResolveTrainingAlert"
+        }
+      ]
+    },
+    {
+      "id": "FL-SRS-017",
+      "title": "取消运行中的训练任务",
+      "section": "3.1",
+      "capability": "训练任务状态",
+      "condition": "任务已开始轮次，具备取消条件。",
+      "statement": "软件应允许有操作权限的人员对指定训练任务发起取消，可携带取消理由。",
+      "acceptance": "取消结果关联所指定的任务，业务状态可查为已取消。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "TrainingOrchestration.CancelTrainingJob"
+        }
+      ]
+    },
+    {
+      "id": "FL-SRS-018",
+      "title": "向运行引擎提交和观察单步计算",
+      "section": "3.6",
+      "capability": "单步执行",
+      "condition": "平台已准备运行引擎及执行所需资源。",
+      "statement": "运行引擎应通过 HTTP 接收一个节点的单步配置。平台应能按运行作业标识查询状态并在需要时发起取消，按作业和文件名读取可交付制品。",
+      "acceptance": "使用 POST /jobs 提交单步配置，按同一作业标识核对状态和制品。在独立工况下发出取消并核对该作业的返回结果。",
+      "method": "测试",
+      "references": [
+        {
+          "source": "ENGINE",
+          "location": "Entrypoints 与 Platform Dispatch"
+        }
+      ]
+    },
+    {
+      "id": "FL-SRS-019",
+      "title": "访问控制台的训练操作与查询",
+      "section": "3.5",
+      "capability": "操作界面",
+      "condition": "操作人员进入对应控制台并具备业务权限。",
+      "statement": "应用应向平台侧操作者提供训练配置、任务提交与运行查询入口，向参与方操作者提供本地数据绑定与执行查询入口。",
+      "acceptance": "分别在两类控制台使用可操作记录验证相应入口，核对提交或查询结果中的任务或数据标识。",
+      "method": "演示",
+      "model": [
+        {
+          "slice": "TrainingOrchestration.DefineTrainingRunConfiguration"
+        },
+        {
+          "slice": "TrainingOrchestration.SubmitTrainingJob"
+        },
+        {
+          "slice": "RuntimeAgentOperations.ConfigureRuntimeDatasetBinding"
+        }
+      ]
+    },
+    {
+      "id": "FL-SRS-020",
+      "title": "按训练样本数计算明文聚合参数",
+      "section": "3.18",
+      "capability": "明文 FedAvg",
+      "condition": "选择对应 PyTorch 插件，提交的浮点参数可对应且各更新训练样本数已知。",
+      "statement": "对浮点参数计算全局值 θ = Σ(nᵢ × θᵢ) ÷ Σnᵢ，其中 nᵢ 为更新训练样本数，θᵢ 为第 i 个已接受的本地参数。训练样本总数为 0 时应报告失败。",
+      "acceptance": "对某浮点参数取更新值 1 和 3，训练样本数分别为 1 和 3，聚合值应为 2.5。零总样本数用例应报告失败。",
+      "method": "测试",
+      "references": [
+        {
+          "source": "FEDAVG",
+          "location": "aggregate、_accumulate 和 _finalize"
+        }
+      ]
+    },
+    {
+      "id": "FL-SRS-021",
+      "title": "提交跨站选点所需的数据元信息",
+      "section": "3.5",
+      "capability": "参与组织数据接入",
+      "condition": "参与组织在站点完成数据登记和批准。",
+      "statement": "软件应由参与方接收本地数据集绑定，向平台提供用于能力匹配的数据集标识、架构标识和兼容证据。数据边界按 FL-SRS-006。",
+      "acceptance": "核对角色输入、本地绑定和平台登记结果，按运行环境及数据集标识关联两侧记录。",
+      "method": "测试",
+      "model": [
+        {
+          "slice": "RuntimeAgentOperations.ConfigureRuntimeDatasetBinding"
+        },
+        {
+          "slice": "DatasetGovernance.RecordRuntimeDatasetMetadata"
+        }
+      ]
+    }
+  ],
+  "openItems": [
+    {
+      "topic": "性能与容量",
+      "needed": "确认部署拓扑、物理节点数量、实际数据规模、并发训练数、轮次耗时和进度可见时限及其统计方法。20 代理两轮是已批准测试工况，不能直接转为生产容量要求。"
+    },
+    {
+      "topic": "训练质量与停止策略",
+      "needed": "模型具备最小准确率等参数，确认各业务数据集的评价方式、阈值与业务合格定义。对提前停止或低于指标时的处置，需确认额外业务规则后纳入基线。"
+    },
+    {
+      "topic": "安全聚合与个性化验收",
+      "needed": "确认正式密码学实现、密钥责任与威胁边界，确认支持个性化的插件、数据集与收益评价。现有明文工况的批准用例不能覆盖这些结论。"
+    },
+    {
+      "topic": "跨站数据及接口约束",
+      "needed": "确认正式部署各方传输白名单、端点和鉴权约定、重试与审计要求、元数据及制品的留存期限。"
+    },
+    {
+      "topic": "可靠性与恢复",
+      "needed": "确认故障模型、可用率、恢复时间、可接受的数据丢失窗口，以及备份和恢复的验收工况。"
+    },
+    {
+      "topic": "需求基线、责任与发行",
+      "needed": "确认项目责任方及正式运行现场、上位需求编号及分配关系、软件版本和发行标识、资料审批与文档分发范围。"
+    },
+    {
+      "topic": "软件质量、资源及交付",
+      "needed": "确定环境与依赖矩阵、资源观测方法、包装和供货要求、现场培训维护安排及正式需求优先级。"
+    }
+  ],
+  "softwareId": "FL-CSCI",
+  "softwareVersion": "评审基线 0428b33c",
+  "release": "正式发行标识待确认（见第 6 章）",
+  "baseline": "本次评审以联邦学习仓库 0428b33c 的业务模型、运行引擎约定和已批准模拟用例为输入。随生成的追溯文件记录本次实际读取的输入文件哈希。需求正式批准、定版及软件发行见第 6 章。",
+  "documentHandling": "本评审稿面向项目相关人员。正文仅使用业务标识和字段语义。文档发行范围、密级与审批责任待项目确认。",
+  "upstreamTrace": "当前评审资料由 MODEL、ENGINE、FEDAVG 与批准用例组成。尚未取得可关联的上位系统需求基线，因此本表提供现有需求到模型切片和实现参考的追溯。正式上位需求分配及反向覆盖核对列入第 6 章。",
+  "sectionNotes": {
+    "3.1": [
+      "业务控制状态见 FL-SRS-002、008、017，轮次选点、执行与完成见 FL-SRS-009、011、014。轮次按配置采用明文或安全聚合方式，见 FL-SRS-013。"
+    ],
+    "3.2": [
+      "本节说明训练应用目标、使用者及环境。具体合格判据见各编号需求。"
+    ],
+    "3.2.1": [
+      "管理人员准备联邦和站点，研究人员提交训练任务。平台把执行计划下发给已选参与端，参与端使用本地数据完成计算并回传结果。平台验收更新后聚合，再依据本轮评估与预算决定是否开始下一轮。外部数据流见 3.5.1。"
+    ],
+    "3.2.2": [
+      "平台控制台及参与方控制台提供浏览器操作入口。平台与参与端运行服务、训练执行容器和可访问的数据及制品资源构成当前验证环境。生产现场资源约束见 3.11 和 3.12。"
+    ],
+    "3.2.3": [
+      "治理人员关注组织、成员和数据准入依据。研究人员选择训练配置并查看进度和结果。参与端与运维人员负责现场数据绑定、执行观察和异常处置。"
+    ],
+    "3.2.4": [
+      "重点验证四个边界。提交任务前选择有效配置，选点时固定参与方，聚合只纳入已验收更新，轮次完成前提交全局评估。数据绑定和元信息边界见 FL-SRS-006。"
+    ],
+    "3.2.5": [
+      "跨站数据与接口审批约束见 3.10 和第 6 章。正式生产环境、合同指标及合规基线待项目确认。"
+    ],
+    "3.3": [
+      "本节按本软件配置项内的功能分工描述对象及流程。"
+    ],
+    "3.3.1": [
+      "组织与联邦 → 站点和参与方数据就绪 → 训练配置与任务 → 轮次和执行计划 → 参与方结果与更新 → 聚合模型及评估。运行监控贯穿站点接入和训练执行。"
+    ],
+    "3.3.2": [
+      "平台侧负责联邦及成员、训练配置、任务与轮次控制、模型制品和监控。参与侧管理本地数据绑定、执行接收与结果回报。运行引擎按派发的单步配置执行本地训练或聚合。"
+    ],
+    "3.3.3": [
+      "项目需求标识采用 FL-SRS-三位序号，跨章节引用保留同一标识。轮次号、训练轮数和参与方数量使用整数。涉及性能时，应同时约定计量单位、开始与结束条件及统计口径。"
+    ],
+    "3.4": [
+      "每项能力列出适用条件、输入、处理要求、输出和合格判据。"
+    ],
+    "3.5": [
+      "外部实体包括操作人员及参与组织。本 CSCI 内的平台、参与端和运行引擎之间的交互列于 3.6。专用硬件外设协议和第三方系统接口目前未形成独立交付要求。"
+    ],
+    "3.5.1": [
+      "操作人员与软件交换业务命令和查询结果。参与组织负责提供本地数据及绑定信息，软件按参与端边界处理并输出用于选点的元信息。以下按端点和数据方向列出接口。"
+    ],
+    "3.7": [
+      "主要业务记录包括组织、联邦及成员关系、参与端数据绑定、平台数据元信息、训练配置、任务、轮次、执行计划、更新验收、评估与模型制品。轮次及制品关系见 FL-SRS-011、014、015。物理存储及保留期限由后续设计和数据政策确定。"
+    ],
+    "3.8": [
+      "按站点配置数据路径与运行参数，按训练配置选择模型、特征架构和运行引擎配置。见 FL-SRS-006、007。跨环境迁移和兼容矩阵待确认。"
+    ],
+    "3.9": [
+      "本条标题沿用国标。本条讨论原文所述人员、财产和环境危险，当前评审未提出需要软件控制的危险源与专用安全联锁。"
+    ],
+    "3.10": [
+      "参加组织的本地数据边界见 FL-SRS-006。安全聚合路径的业务交互见 FL-SRS-013。正式账号权限矩阵、传输要求、密钥责任、审计范围及隐私验收由第 6 章待确认事项约束。"
+    ],
+    "3.11": [
+      "现有执行方式为以 k3s 启动或选择训练容器，向该容器提供单步计算所需的输入、输出位置与资源。正式运行环境和交付责任待确认。来源为 ENGINE 的 Platform Dispatch。"
+    ],
+    "3.12": [
+      "资源说明区分开发验证条件和正式交付要求。"
+    ],
+    "3.12.1": [
+      "实际处理器、内存、存储及加速设备取决于所选训练插件与任务规模。当前资料未规定生产最低配置。"
+    ],
+    "3.12.2": [
+      "CPU、内存、显存、磁盘占用与峰值采样条件待约定。20 参与方两轮获批准用例用于验证业务路径，生产负载另行确定。"
+    ],
+    "3.12.3": [
+      "软件依赖以部署环境和被选中的运行引擎插件为准。现有开发接入说明见 ENGINE，正式软件依赖、版本和支持矩阵待确认。"
+    ],
+    "3.12.4": [
+      "平台需能联系参与端及任务运行容器，传输计划与状态信息，并按权限交换模型制品。超时参数见 FL-SRS-007，时延、带宽和峰值工况待确认。"
+    ],
+    "3.13": [
+      "可靠性关注重复更新是否被计为额外贡献，以及失败后能否辨识处置阶段，见 FL-SRS-012、013。制品完整性按 FL-SRS-015 核对。可用率、恢复目标、吞吐量及响应时间的量值与测法见第 6 章。"
+    ],
+    "3.14": [
+      "保持平台业务编排、参与端执行管理与运行引擎单步计算的边界，见 FL-SRS-010、018。MEDOL 模型和生成器用于实现与追溯，上线版本依赖与产品验收约束待确认。"
+    ],
+    "3.15": [
+      "输入包括训练配置、参与组织状态、数据契约与元信息、初始模型及站点本地数据。输出包括轮次执行结果、模型更新、评估、聚合模型和告警。数据来源及关联见 FL-SRS-004、006、011、015、016。正式数据量、保留期及历史查询窗口待确认。"
+    ],
+    "3.16": [
+      "常规操作顺序为准入、绑定与确认、配置、创建、提交、运行观察和结果查验。现场监控和告警操作见 FL-SRS-016，运行任务的取消见 FL-SRS-017。恢复及初始化交付步骤待确认。"
+    ],
+    "3.17": [
+      "对选点不足、参与端启动或执行失败与轮次失去最低有效参与数的处置见 FL-SRS-012。设施恢复时限及业务重放验收条件待确认。"
+    ],
+    "3.18": [
+      "对应训练、评估及聚合算法由所选插件和轮次策略确定。当前可核对的 PyTorch 明文聚合要求见 FL-SRS-020，安全聚合与个性化的算法验收见第 6 章。"
+    ],
+    "3.19": [
+      "参与方数据管理人员核对本地数据契约，研究人员负责配置和运行核对，治理与运维人员处理成员资格及站点故障。人数、技能等级、职责授权表和在岗要求待项目确认。"
+    ],
+    "3.20": [
+      "本次评审未形成对产品内置培训软件的要求。现场操作及故障处置培训范围待交付确认。"
+    ],
+    "3.21": [
+      "本次评审未形成独立后勤要求。站点部署、软件维护职责和支持窗口待交付确认。"
+    ],
+    "3.22": [
+      "本次评审未识别在其他条目之外可单独验收的软件要求。"
+    ],
+    "3.23": [
+      "正式交付介质、标签、镜像清单和完整性核验流程待确认。当前开发运行见 ENGINE 的 Container 章节。"
+    ],
+    "3.24": [
+      "首轮评审先核对准入、任务提交、轮次闭环、数据边界和故障处置。合同优先级和安全关键程度尚未批准。"
+    ]
+  },
+  "interfaceMap": [
+    {
+      "requirement": "FL-SRS-019",
+      "sender": "平台或参与端操作者",
+      "receiver": "联邦学习控制台",
+      "exchange": "操作者提交配置、任务、绑定或查询。控制台返回受理或查询结果。"
+    },
+    {
+      "requirement": "FL-SRS-021",
+      "sender": "参与组织",
+      "receiver": "参与端与平台的数据登记功能",
+      "exchange": "参与组织提供站点数据绑定信息。软件产生本地登记结果及平台可用的数据元信息。"
+    }
+  ],
+  "terms": [
+    {
+      "name": "CSCI",
+      "definition": "计算机软件配置项，本文指联邦学习平台。"
+    },
+    {
+      "name": "FedAvg",
+      "definition": "按参与更新的训练样本数加权的联邦平均算法。"
+    },
+    {
+      "name": "MEDOL",
+      "definition": "本项目使用的业务建模语言及工具。"
+    },
+    {
+      "name": "SRS",
+      "definition": "软件需求规格说明。"
+    },
+    {
+      "name": "参与方更新",
+      "definition": "参与端训练得到并提交的平台候选贡献。"
+    },
+    {
+      "name": "特征架构",
+      "definition": "定义训练所用特征与标签约束的版本化契约。"
+    },
+    {
+      "name": "轮次",
+      "definition": "对已选参与方派发、验收更新、聚合并评估的业务周期。"
+    },
+    {
+      "name": "制品",
+      "definition": "用于登记、下发或查验的模型及相关计算输出文件。"
+    }
+  ]
+}

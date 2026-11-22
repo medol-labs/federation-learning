@@ -1,0 +1,856 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" compressed="false">
+  <diagram id="fl-training-main-flow" name="联邦学习主要业务流程图">
+    <mxGraphModel
+      dx="1460"
+      dy="1060"
+      grid="1"
+      gridSize="10"
+      guides="1"
+      connect="1"
+      arrows="1"
+      fold="1"
+      page="1"
+      pageScale="1"
+      pageWidth="1460"
+      pageHeight="1060"
+      background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell
+          id="title"
+          value="联邦学习主要业务流程图"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=36;fontColor=#243440;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="45"
+            y="28"
+            width="900"
+            height="53"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="rule"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=none;fillColor=#CBD8D8;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="44"
+            y="90"
+            width="1368"
+            height="2"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="stage-frame"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=#CBD8D8;fillColor=#F3F7F7;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="44"
+            y="105"
+            width="133"
+            height="901"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-lane"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=#CBD8D8;fillColor=#F6FAF9;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="177"
+            y="105"
+            width="644"
+            height="901"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-lane"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=#CBD8D8;fillColor=#F5F8FC;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="821"
+            y="105"
+            width="591"
+            height="901"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-heading"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=none;fillColor=#DDEEE9;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="178"
+            y="105"
+            width="642"
+            height="53"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-heading"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=none;fillColor=#E2EBF5;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="822"
+            y="105"
+            width="589"
+            height="53"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="platform-lane-title"
+          value="联邦学习平台侧"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=23;fontColor=#126356;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="189"
+            y="115"
+            width="622"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-lane-title"
+          value="运行时代理侧"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=23;fontColor=#31577A;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="835"
+            y="115"
+            width="565"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="stage-label"
+          value="业务阶段"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=18;fontColor=#536773;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="49"
+            y="117"
+            width="123"
+            height="31"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="prepare-stage-divider"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=none;fillColor=#D6E2E2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="45"
+            y="158"
+            width="1365"
+            height="1"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="prepare-stage"
+          value="训练准备"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=17;fontColor=#536773;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="48"
+            y="233.5"
+            width="125"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="local-stage-divider"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=none;fillColor=#D6E2E2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="45"
+            y="341"
+            width="1365"
+            height="1"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="local-stage"
+          value="轮次执行"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=17;fontColor=#536773;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="48"
+            y="437.5"
+            width="125"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="aggregate-stage-divider"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=none;fillColor=#D6E2E2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="45"
+            y="566"
+            width="1365"
+            height="1"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="aggregate-stage"
+          value="聚合与评估"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=17;fontColor=#536773;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="48"
+            y="647.0"
+            width="125"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="deliver-stage-divider"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=none;fillColor=#D6E2E2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="45"
+            y="760"
+            width="1365"
+            height="1"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="deliver-stage"
+          value="模型交付"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=17;fontColor=#536773;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="48"
+            y="867.0"
+            width="125"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="register"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=#ABC6BE;fillColor=#FFFFFF;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="275"
+            y="215"
+            width="435"
+            height="62"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="register-title"
+          value="核对协作与训练条件"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=19;fontColor=#126356;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="register">
+          <mxGeometry
+            x="12"
+            y="7"
+            width="411"
+            height="25"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="register-description"
+          value="联邦组织、特征架构、初始模型及数据集就绪"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="register">
+          <mxGeometry
+            x="9"
+            y="33"
+            width="417"
+            height="22"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-ready"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=#ACBFD1;fillColor=#FFFFFF;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="934"
+            y="215"
+            width="409"
+            height="62"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-ready-title"
+          value="准备本地训练数据"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=19;fontColor=#31577A;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="data-ready">
+          <mxGeometry
+            x="12"
+            y="7"
+            width="385"
+            height="25"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-ready-description"
+          value="绑定数据集、校验数据契约并审核训练资格"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="data-ready">
+          <mxGeometry
+            x="9"
+            y="33"
+            width="391"
+            height="22"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="submit"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=#ABC6BE;fillColor=#FFFFFF;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="275"
+            y="365"
+            width="435"
+            height="62"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="submit-title"
+          value="配置并提交训练任务"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=19;fontColor=#126356;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="submit">
+          <mxGeometry
+            x="12"
+            y="7"
+            width="411"
+            height="25"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="submit-description"
+          value="关联联邦、特征架构、初始模型和训练参数"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="submit">
+          <mxGeometry
+            x="9"
+            y="33"
+            width="417"
+            height="22"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="dispatch"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=#ABC6BE;fillColor=#FFFFFF;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="275"
+            y="474"
+            width="435"
+            height="62"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="dispatch-title"
+          value="确定本轮名单并下发计划"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=19;fontColor=#126356;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="dispatch">
+          <mxGeometry
+            x="12"
+            y="7"
+            width="411"
+            height="25"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="dispatch-description"
+          value="首轮使用初始模型，后续轮次使用前轮聚合模型"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="dispatch">
+          <mxGeometry
+            x="9"
+            y="33"
+            width="417"
+            height="22"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="train"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=#ACBFD1;fillColor=#FFFFFF;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="934"
+            y="474"
+            width="409"
+            height="49"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="train-title"
+          value="运行时代理接收计划并提交作业"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=19;fontColor=#31577A;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="train">
+          <mxGeometry
+            x="12"
+            y="3"
+            width="385"
+            height="23"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="train-description"
+          value="复核条件，向训练引擎提交作业"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="train">
+          <mxGeometry
+            x="9"
+            y="26"
+            width="391"
+            height="20"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="report"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=#ACBFD1;fillColor=#FFFFFF;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="934"
+            y="590"
+            width="409"
+            height="62"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="report-title"
+          value="运行时代理回报本轮结果"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=19;fontColor=#31577A;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="report">
+          <mxGeometry
+            x="12"
+            y="7"
+            width="385"
+            height="25"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="report-description"
+          value="读取引擎结果，提交模型更新及训练指标"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="report">
+          <mxGeometry
+            x="9"
+            y="33"
+            width="391"
+            height="22"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="accept"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=#ABC6BE;fillColor=#FFFFFF;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="275"
+            y="590"
+            width="435"
+            height="62"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="accept-title"
+          value="验收当轮模型更新"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=19;fontColor=#126356;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="accept">
+          <mxGeometry
+            x="12"
+            y="7"
+            width="411"
+            height="25"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="accept-description"
+          value="按任务、轮次及运行时代理核对结果"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="accept">
+          <mxGeometry
+            x="9"
+            y="33"
+            width="417"
+            height="22"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="aggregate"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=#ABC6BE;fillColor=#FFFFFF;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="275"
+            y="676"
+            width="435"
+            height="62"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="aggregate-title"
+          value="聚合并评估全局模型"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=19;fontColor=#126356;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="aggregate">
+          <mxGeometry
+            x="12"
+            y="7"
+            width="411"
+            height="25"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="aggregate-description"
+          value="按任务配置执行聚合，记录全局模型评估结果"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="aggregate">
+          <mxGeometry
+            x="9"
+            y="33"
+            width="417"
+            height="22"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="decision"
+          value="达到任务&#10;完成条件？"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rhombus;fillColor=#E1F0EC;strokeColor=#85ADA2;fontColor=#126356;fontSize=17;fontStyle=1;spacing=4;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="384"
+            y="776"
+            width="217"
+            height="85"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="deliver"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=6;strokeColor=#ABC6BE;fillColor=#FFFFFF;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="275"
+            y="914"
+            width="435"
+            height="62"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="deliver-title"
+          value="登记并交付最终模型"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=19;fontColor=#126356;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="deliver">
+          <mxGeometry
+            x="12"
+            y="7"
+            width="411"
+            height="25"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="deliver-description"
+          value="保留模型版本及末轮评估关联，提供下载"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="deliver">
+          <mxGeometry
+            x="9"
+            y="33"
+            width="417"
+            height="22"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="register-to-submit"
+          source="register"
+          target="submit"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;strokeColor=#126356;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="submit-to-dispatch"
+          source="submit"
+          target="dispatch"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;strokeColor=#126356;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="engine-exec-to-report"
+          source="engine-exec"
+          target="report"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;strokeColor=#126356;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="accept-to-aggregate"
+          source="accept"
+          target="aggregate"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;strokeColor=#126356;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="aggregate-to-decision"
+          source="aggregate"
+          target="decision"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;strokeColor=#126356;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="decision-to-deliver"
+          source="decision"
+          target="deliver"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;strokeColor=#126356;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          edge="1"
+          parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-to-platform"
+          source="data-ready"
+          target="register"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;strokeColor=#126356;strokeWidth=2;endArrow=block;endFill=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;"
+          edge="1"
+          parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="dispatch-to-agent"
+          source="dispatch"
+          target="train"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;strokeColor=#126356;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.63;"
+          edge="1"
+          parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="update-to-platform"
+          source="report"
+          target="accept"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;strokeColor=#126356;strokeWidth=2;endArrow=block;endFill=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;"
+          edge="1"
+          parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="loop-new-round"
+          source="decision"
+          target="dispatch"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;strokeColor=#126356;strokeWidth=2;endArrow=block;endFill=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;"
+          edge="1"
+          parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="223" y="818" />
+              <mxPoint x="223" y="505" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="metadata-label"
+          value="数据集元数据"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#126356;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="717"
+            y="208"
+            width="205"
+            height="27"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="plan-label"
+          value="执行计划与基础模型引用"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#126356;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="718"
+            y="466"
+            width="206"
+            height="27"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="result-label"
+          value="模型更新与训练指标"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#126356;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="719"
+            y="582"
+            width="207"
+            height="27"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="aggregation-gate-label"
+          value="满足聚合条件"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#126356;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="518"
+            y="651"
+            width="121"
+            height="27"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="continue-label"
+          value="否，进入下一轮"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#126356;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="231"
+            y="779"
+            width="145"
+            height="27"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="finish-label"
+          value="是"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#126356;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="494"
+            y="867"
+            width="34"
+            height="27"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-boundary"
+          value="原始训练数据保留在医疗机构本地。"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=16;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="937"
+            y="673"
+            width="405"
+            height="37"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="engine-exec"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=8;strokeColor=#ACBFD1;fillColor=#E8F0FA;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="934"
+            y="533"
+            width="409"
+            height="47"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="engine-exec-title"
+          value="运行时训练引擎执行本地训练"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=19;fontColor=#31577A;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="engine-exec">
+          <mxGeometry
+            x="12"
+            y="3"
+            width="385"
+            height="23"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="engine-exec-detail"
+          value="读取本地数据，执行训练并产出结果"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="engine-exec">
+          <mxGeometry
+            x="9"
+            y="26"
+            width="391"
+            height="18"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-to-engine-exec"
+          source="train"
+          target="engine-exec"
+          edge="1"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#31577A;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
+          parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -420,7 +420,7 @@
         </mxCell>
         <mxCell
           id="federated-learning-text-02"
-          value="多机构协同训练与模型优化"
+          value="跨机构协同训练与模型迭代"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="federated-learning">
@@ -446,40 +446,40 @@
         </mxCell>
         <mxCell
           id="fl-participant-governance-text-01"
-          value="协作与参与方治理"
+          value="联邦组织与联邦管理"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#11786C;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-participant-governance">
           <mxGeometry
             x="12.00"
             y="12.34"
-            width="184.00"
+            width="255.00"
             height="29.70"
             as="geometry" />
         </mxCell>
         <mxCell
           id="fl-participant-governance-text-02"
-          value="组织、联邦与机构接入"
+          value="联邦组织登记与接入"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-participant-governance">
           <mxGeometry
             x="12.00"
             y="49.43"
-            width="198.00"
+            width="255.00"
             height="25.65"
             as="geometry" />
         </mxCell>
         <mxCell
           id="fl-participant-governance-text-03"
-          value="运行时预配、治理与监控"
+          value="联邦创建与成员管理"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-participant-governance">
           <mxGeometry
             x="12.00"
             y="77.43"
-            width="217.00"
+            width="255.00"
             height="25.65"
             as="geometry" />
         </mxCell>
@@ -498,40 +498,40 @@
         </mxCell>
         <mxCell
           id="fl-dataset-metadata-text-01"
-          value="数据集元数据治理"
+          value="特征架构与数据集治理"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#11786C;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-dataset-metadata">
           <mxGeometry
             x="12.00"
             y="12.34"
-            width="184.00"
+            width="255.00"
             height="29.70"
             as="geometry" />
         </mxCell>
         <mxCell
           id="fl-dataset-metadata-text-02"
-          value="特征定义与数据契约"
+          value="特征架构发布与版本管理"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-dataset-metadata">
           <mxGeometry
             x="12.00"
             y="49.43"
-            width="179.00"
+            width="255.00"
             height="25.65"
             as="geometry" />
         </mxCell>
         <mxCell
           id="fl-dataset-metadata-text-03"
-          value="数据集能力与元数据目录"
+          value="数据集契约校验与审批"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-dataset-metadata">
           <mxGeometry
             x="12.00"
             y="77.43"
-            width="217.00"
+            width="255.00"
             height="25.65"
             as="geometry" />
         </mxCell>
@@ -550,40 +550,40 @@
         </mxCell>
         <mxCell
           id="fl-training-orchestration-text-01"
-          value="协同训练编排"
+          value="训练编排与运行时执行"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#11786C;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-training-orchestration">
           <mxGeometry
             x="12.00"
             y="12.34"
-            width="140.00"
+            width="255.00"
             height="29.70"
             as="geometry" />
         </mxCell>
         <mxCell
           id="fl-training-orchestration-text-02"
-          value="参与方选择与任务分发"
+          value="运行时代理接入与选点"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-training-orchestration">
           <mxGeometry
             x="12.00"
             y="49.43"
-            width="198.00"
+            width="255.00"
             height="25.65"
             as="geometry" />
         </mxCell>
         <mxCell
           id="fl-training-orchestration-text-03"
-          value="轮次推进与结果收集"
+          value="代理提交作业，引擎执行训练"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-training-orchestration">
           <mxGeometry
             x="12.00"
             y="77.43"
-            width="179.00"
+            width="255.00"
             height="25.65"
             as="geometry" />
         </mxCell>
@@ -602,40 +602,40 @@
         </mxCell>
         <mxCell
           id="fl-model-aggregation-text-01"
-          value="模型更新聚合与验证"
+          value="模型聚合与评估"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#11786C;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-model-aggregation">
           <mxGeometry
             x="12.00"
             y="12.34"
-            width="206.00"
+            width="255.00"
             height="29.70"
             as="geometry" />
         </mxCell>
         <mxCell
           id="fl-model-aggregation-text-02"
-          value="聚合策略与安全聚合"
+          value="模型更新验收与聚合"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-model-aggregation">
           <mxGeometry
             x="12.00"
             y="49.43"
-            width="179.00"
+            width="255.00"
             height="25.65"
             as="geometry" />
         </mxCell>
         <mxCell
           id="fl-model-aggregation-text-03"
-          value="模型验证与质量评估"
+          value="安全聚合与全局模型评估"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-model-aggregation">
           <mxGeometry
             x="12.00"
             y="77.43"
-            width="179.00"
+            width="255.00"
             height="25.65"
             as="geometry" />
         </mxCell>
@@ -654,40 +654,40 @@
         </mxCell>
         <mxCell
           id="fl-model-artifacts-text-01"
-          value="模型工件与版本管理"
+          value="模型仓库与交付"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#11786C;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-model-artifacts">
           <mxGeometry
             x="12.00"
             y="12.34"
-            width="206.00"
+            width="255.00"
             height="29.70"
             as="geometry" />
         </mxCell>
         <mxCell
           id="fl-model-artifacts-text-02"
-          value="初始模型与训练产物"
+          value="初始模型登记与版本管理"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-model-artifacts">
           <mxGeometry
             x="12.00"
             y="49.43"
-            width="179.00"
+            width="255.00"
             height="25.65"
             as="geometry" />
         </mxCell>
         <mxCell
           id="fl-model-artifacts-text-03"
-          value="模型登记、版本与下载"
+          value="训练模型登记与下载"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-model-artifacts">
           <mxGeometry
             x="12.00"
             y="77.43"
-            width="198.00"
+            width="255.00"
             height="25.65"
             as="geometry" />
         </mxCell>
@@ -1012,41 +1012,15 @@
         </mxCell>
         <mxCell
           id="institution-runtime-text-01"
-          value="机构运行代理与本地训练 / 验证引擎"
+          value="机构侧训练执行"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#11786C;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="institution-runtime">
           <mxGeometry
             x="21.00"
-            y="54.28"
-            width="395.97"
-            height="32.40"
-            as="geometry" />
-        </mxCell>
-        <mxCell
-          id="institution-runtime-text-02"
-          value="数据集绑定与本地校验 · 执行训练和验证推理"
-          style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
-          vertex="1"
-          parent="institution-runtime">
-          <mxGeometry
-            x="21.00"
-            y="94.37"
-            width="431.50"
-            height="28.35"
-            as="geometry" />
-        </mxCell>
-        <mxCell
-          id="institution-runtime-text-03"
-          value="提交模型更新、训练指标及数据集元数据"
-          style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=20;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
-          vertex="1"
-          parent="institution-runtime">
-          <mxGeometry
-            x="21.00"
-            y="126.4"
-            width="368.00"
-            height="27.00"
+            y="19"
+            width="550"
+            height="34"
             as="geometry" />
         </mxCell>
         <mxCell
@@ -1549,6 +1523,106 @@
             y="212"
             width="340"
             height="79"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="institution-runtime-agent"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=8;strokeColor=#A8C4BD;fillColor=#FFFFFF;"
+          vertex="1"
+          parent="institution-runtime">
+          <mxGeometry
+            x="21"
+            y="69"
+            width="258"
+            height="110"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="institution-runtime-engine"
+          value=""
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=8;strokeColor=#A8C4BD;fillColor=#FFFFFF;"
+          vertex="1"
+          parent="institution-runtime">
+          <mxGeometry
+            x="431"
+            y="69"
+            width="295"
+            height="110"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="institution-runtime-agent-title"
+          value="运行时代理"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=21;fontColor=#126356;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="institution-runtime-agent">
+          <mxGeometry
+            x="13"
+            y="10"
+            width="230"
+            height="27"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="institution-runtime-agent-scope"
+          value="接收计划、提交作业&#10;汇报模型更新与指标"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="institution-runtime-agent">
+          <mxGeometry
+            x="13"
+            y="42"
+            width="230"
+            height="55"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="institution-runtime-engine-title"
+          value="运行时训练引擎"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=21;fontColor=#126356;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="institution-runtime-engine">
+          <mxGeometry
+            x="13"
+            y="10"
+            width="266"
+            height="27"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="institution-runtime-engine-scope"
+          value="读取本地数据&#10;执行训练与验证"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="institution-runtime-engine">
+          <mxGeometry
+            x="13"
+            y="42"
+            width="266"
+            height="55"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="institution-runtime-agent-engine-call"
+          source="institution-runtime-agent"
+          target="institution-runtime-engine"
+          edge="1"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#126356;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.53;entryX=0;entryY=0.53;"
+          parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="institution-runtime-binding-label"
+          value="提交作业"
+          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=17;fontColor=#126356;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
+          vertex="1"
+          parent="institution-runtime">
+          <mxGeometry
+            x="285"
+            y="91"
+            width="138"
+            height="30"
             as="geometry" />
         </mxCell>
       </root>
