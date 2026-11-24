@@ -553,7 +553,7 @@
         </mxCell>
         <mxCell
           id="aggregate-description"
-          value="按任务配置执行聚合，记录全局模型评估结果"
+          value="调用平台侧聚合服务，记录全局模型评估结果"
           style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="aggregate">
@@ -830,7 +830,7 @@
         </mxCell>
         <mxCell
           id="engine-exec-detail"
-          value="读取本地数据，执行训练并产出结果"
+          value="本地训练与验证，按配置生成个性化模型"
           style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=center;verticalAlign=middle;fontSize=15;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="engine-exec">

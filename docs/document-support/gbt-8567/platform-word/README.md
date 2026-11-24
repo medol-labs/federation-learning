@@ -2,7 +2,7 @@
 
 文档问题记录在 [TODO.md](TODO.md)。
 
-联邦学习小节的插图源文件为 [模块功能结构图](../../../438c/merge/figures/federation-learning-functional-structure.drawio) 和 [主要业务流程图](../../../438c/merge/figures/federation-learning-main-flow.drawio)。PNG 和 SVG 导出到 `docs/generated/diagrams/`。
+需规中的相关图源为 [业务架构图](../../../438c/merge/figures/federated-twin-business-architecture.drawio)、[模块功能结构图](../../../438c/merge/figures/federation-learning-functional-structure.drawio) 和 [主要业务流程图](../../../438c/merge/figures/federation-learning-main-flow.drawio)。PNG 和 SVG 导出到 `docs/generated/diagrams/`。生成 Word 时使用版式包已嵌入的插图；更新图源后，还需同步替换 Word 中的插图并按下文重新提取正文包。
 
 | 文档 | 提取基线 | 全文 JSON |
 | --- | --- | --- |

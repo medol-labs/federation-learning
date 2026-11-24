@@ -563,7 +563,7 @@
         </mxCell>
         <mxCell
           id="fl-training-orchestration-text-02"
-          value="运行时代理接入与选点"
+          value="代理调度可扩展训练引擎"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-training-orchestration">
@@ -576,7 +576,7 @@
         </mxCell>
         <mxCell
           id="fl-training-orchestration-text-03"
-          value="代理提交作业，引擎执行训练"
+          value="本地训练与个性化适配"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-training-orchestration">
@@ -615,7 +615,7 @@
         </mxCell>
         <mxCell
           id="fl-model-aggregation-text-02"
-          value="模型更新验收与聚合"
+          value="调用平台侧聚合服务"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-model-aggregation">
@@ -628,7 +628,7 @@
         </mxCell>
         <mxCell
           id="fl-model-aggregation-text-03"
-          value="安全聚合与全局模型评估"
+          value="聚合算法可扩展／全局评估"
           style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="fl-model-aggregation">

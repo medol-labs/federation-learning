@@ -503,7 +503,7 @@
         </mxCell>
         <mxCell
           id="training-detail-2"
-          value="训练引擎执行与结果回报"
+          value="本地训练与个性化适配"
           style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=16;fontColor=#243440;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="training">
@@ -621,7 +621,7 @@
         </mxCell>
         <mxCell
           id="aggregation-detail-1"
-          value="按任务配置执行模型聚合"
+          value="调度聚合服务执行算法"
           style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=16;fontColor=#243440;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="aggregation">
@@ -660,7 +660,7 @@
         </mxCell>
         <mxCell
           id="aggregation-detail-2"
-          value="开展全局模型评估"
+          value="聚合插件扩展与全局评估"
           style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=16;fontColor=#243440;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="aggregation">
@@ -875,7 +875,7 @@
           vertex="1"
           parent="responsibilities">
           <mxGeometry
-            x="570"
+            x="696"
             y="56"
             width="1"
             height="62"
@@ -896,25 +896,25 @@
         </mxCell>
         <mxCell
           id="platform-scope"
-          value="协作管理、训练调度、聚合评估与模型交付"
+          value="编排训练、验收模型更新，调用聚合服务生成全局模型并组织评估与交付"
           style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=17;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="responsibilities">
           <mxGeometry
             x="24"
             y="87"
-            width="535"
+            width="650"
             height="26"
             as="geometry" />
         </mxCell>
         <mxCell
           id="agent-title"
-          value="运行时代理"
+          value="医疗机构侧"
           style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=18;fontColor=#243440;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="responsibilities">
           <mxGeometry
-            x="594"
+            x="720"
             y="53"
             width="275"
             height="27"
@@ -922,53 +922,14 @@
         </mxCell>
         <mxCell
           id="agent-scope"
-          value="准备本地数据、提交作业和回报结果"
+          value="运行时代理调度训练引擎执行本地训练、验证与个性化适配，并上报结果"
           style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=17;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
           vertex="1"
           parent="responsibilities">
           <mxGeometry
-            x="594"
+            x="720"
             y="87"
-            width="327"
-            height="26"
-            as="geometry" />
-        </mxCell>
-        <mxCell
-          id="agent-binding"
-          value=""
-          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=1;arcSize=8;strokeColor=none;fillColor=#D4DFE0;"
-          vertex="1"
-          parent="responsibilities">
-          <mxGeometry
-            x="930"
-            y="55"
-            width="1"
-            height="61"
-            as="geometry" />
-        </mxCell>
-        <mxCell
-          id="engine-title"
-          value="运行时训练引擎"
-          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=18;fontColor=#243440;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
-          vertex="1"
-          parent="responsibilities">
-          <mxGeometry
-            x="963"
-            y="53"
-            width="382"
-            height="27"
-            as="geometry" />
-        </mxCell>
-        <mxCell
-          id="engine-scope"
-          value="读取机构本地数据，执行训练与验证"
-          style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;text;overflow=visible;align=left;verticalAlign=middle;fontSize=17;fontColor=#536773;fontStyle=0;strokeColor=none;fillColor=none;spacing=0;"
-          vertex="1"
-          parent="responsibilities">
-          <mxGeometry
-            x="963"
-            y="87"
-            width="391"
+            width="650"
             height="26"
             as="geometry" />
         </mxCell>
