@@ -1,0 +1,156 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="fl-training-execution" name="联邦学习训练执行泳道图">
+    <mxGraphModel page="1" pageScale="1" pageWidth="1300" pageHeight="950" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="联邦学习训练执行泳道图" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=none;strokeColor=none;strokeWidth=1.4;fontColor=#263B48;fontSize=31;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1290" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-lane" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#F5F9FC;strokeColor=#3F6785;strokeWidth=1.4;fontColor=#263B48;fontSize=21;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="13" y="54" width="296" height="841" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-header" value="联邦学习平台服务" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#E0EDF6;strokeColor=#3F6785;strokeWidth=1.4;fontColor=#263B48;fontSize=23;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="13" y="54" width="296" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="agent-lane" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#F5F9F6;strokeColor=#456E58;strokeWidth=1.4;fontColor=#263B48;fontSize=21;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="310" y="54" width="237" height="841" as="geometry" />
+        </mxCell>
+        <mxCell id="agent-header" value="运行时代理" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#E0F0E7;strokeColor=#456E58;strokeWidth=1.4;fontColor=#263B48;fontSize=23;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="54" width="237" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="training-lane" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#F5F9F6;strokeColor=#456E58;strokeWidth=1.4;fontColor=#263B48;fontSize=21;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="548" y="54" width="237" height="841" as="geometry" />
+        </mxCell>
+        <mxCell id="training-header" value="机构侧训练引擎" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#E0F0E7;strokeColor=#456E58;strokeWidth=1.4;fontColor=#263B48;fontSize=23;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="548" y="54" width="237" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="support-lane" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#F5F9FC;strokeColor=#3F6785;strokeWidth=1.4;fontColor=#263B48;fontSize=21;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="786" y="54" width="237" height="841" as="geometry" />
+        </mxCell>
+        <mxCell id="support-header" value="联邦学习支撑服务" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#E0EDF6;strokeColor=#3F6785;strokeWidth=1.4;fontColor=#263B48;fontSize=23;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="786" y="54" width="237" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="aggregation-lane" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#FAF7FB;strokeColor=#68577D;strokeWidth=1.4;fontColor=#263B48;fontSize=21;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="1024" y="54" width="252" height="841" as="geometry" />
+        </mxCell>
+        <mxCell id="aggregation-header" value="平台侧聚合引擎" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#EEE9F3;strokeColor=#68577D;strokeWidth=1.4;fontColor=#263B48;fontSize=23;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1024" y="54" width="252" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="accepted" value="训练作业受理" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#E0EDF6;strokeColor=#3F6785;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="120" width="190" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="prepare" value="选择参与运行时&#10;生成并下发执行计划" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#FFFFFF;strokeColor=#3F6785;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="204" width="190" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="validate" value="校验计划与本地数据&#10;接受后调度训练作业" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#FFFFFF;strokeColor=#456E58;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="332" y="204" width="193" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="train" value="读取本地数据&#10;训练并产出更新" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#FFFFFF;strokeColor=#456E58;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="575" y="305" width="183" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="observe" value="读取作业结果&#10;收集模型更新工件" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#FFFFFF;strokeColor=#456E58;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="332" y="395" width="193" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="upload" value="保存更新工件&#10;返回引用与摘要" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#FFFFFF;strokeColor=#3F6785;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="809" y="395" width="191" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="report" value="提交更新引用&#10;及训练指标" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#FFFFFF;strokeColor=#456E58;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="332" y="490" width="193" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="approve" value="校验并验收模型更新" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#FFFFFF;strokeColor=#3F6785;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="490" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ready" value="达到轮次推进条件后&#10;按配置选择聚合方式" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#FFFFFF;strokeColor=#3F6785;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="597" width="190" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="aggregate" value="执行聚合作业&#10;生成全局模型工件" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#FFFFFF;strokeColor=#68577D;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="1045" y="597" width="210" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="evaluate" value="评估全局模型&#10;判断是否继续训练" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#FFFFFF;strokeColor=#3F6785;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="714" width="190" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="next" value="继续训练&#10;进入下一轮" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#E0EDF6;strokeColor=#3F6785;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="25" y="823" width="129" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="done" value="满足结束条件&#10;登记最终模型" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=#E0EDF6;strokeColor=#3F6785;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="169" y="823" width="129" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="start" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="accepted" target="prepare">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dispatch" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="prepare" target="validate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="local" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#456E58;strokeWidth=2.4;endArrow=block;endFill=1;exitX=1;exitY=0.76;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=19;fontColor=#456E58;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="validate" target="train">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="666.5" y="252.64" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="local-result" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#456E58;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=1;entryY=0.32;fontFamily=PingFang SC;fontSize=19;fontColor=#456E58;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="train" target="observe">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="666.5" y="414.52" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="upload-request" value="上传模型更新工件" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=1;exitY=0.76;entryX=0;entryY=0.76;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="observe" target="upload">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="upload-response" value="工件引用与摘要" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=1;entryY=0.65;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="upload" target="report">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="904.5" y="529" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="submit" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="report" target="approve">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="verify" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="approve" target="ready">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wait-label" value="未达到条件时继续收集有效更新" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=none;strokeColor=none;strokeWidth=1.4;fontColor=#263B48;fontSize=18;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="319" y="558" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="aggregation-request" value="普通聚合 / 安全聚合" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#68577D;strokeWidth=2.4;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=PingFang SC;fontSize=19;fontColor=#68577D;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="ready" target="aggregate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aggregation-result" value="全局模型工件" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#68577D;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=1;entryY=0.5;fontFamily=PingFang SC;fontSize=19;fontColor=#68577D;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="aggregate" target="evaluate">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1150" y="747" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="advance" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.27;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="evaluate" target="next">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="89.5" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="register" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.73;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="evaluate" target="done">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="233.5" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="loop" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0;exitY=0.45;entryX=0;entryY=0.46;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=7 5;" edge="1" parent="1" source="next" target="prepare">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="18" y="847.75" />
+              <mxPoint x="18" y="233.44" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note" value="同一轮次的参与机构可并行执行。图中展示一条成功路径；分支失败及资源释放见正文。" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=4;fillColor=none;strokeColor=none;strokeWidth=1.4;fontColor=#263B48;fontSize=20;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="0" y="906" width="1290" height="34" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

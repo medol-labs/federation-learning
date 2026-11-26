@@ -1,0 +1,102 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="fl-training-preparation" name="联邦协作与训练作业准备泳道图">
+    <mxGraphModel page="1" pageScale="1" pageWidth="1440" pageHeight="704" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="联邦协作与训练作业准备泳道图" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=none;strokeColor=none;fontColor=#263B48;fontSize=31;fontStyle=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1431" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="governance" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#F5F9FC;strokeColor=#3F6785;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="10" y="52" width="344" height="602" as="geometry" />
+        </mxCell>
+        <mxCell id="governance-head" value="联邦与数据治理人员" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#E2EDF6;strokeColor=#3F6785;fontColor=#263B48;fontSize=24;fontStyle=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="10" y="52" width="344" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="research" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#F8F6FA;strokeColor=#68577D;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="367" y="52" width="344" height="602" as="geometry" />
+        </mxCell>
+        <mxCell id="research-head" value="工程师与科研负责人" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#ECE7F2;strokeColor=#68577D;fontColor=#263B48;fontSize=24;fontStyle=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="367" y="52" width="344" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="institution" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#F5F9F6;strokeColor=#456E58;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="724" y="52" width="344" height="602" as="geometry" />
+        </mxCell>
+        <mxCell id="institution-head" value="参与机构人员及运行时代理" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#E1EFE7;strokeColor=#456E58;fontColor=#263B48;fontSize=24;fontStyle=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="724" y="52" width="344" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="platform" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#F5F9FC;strokeColor=#3F6785;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1081" y="52" width="344" height="602" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-head" value="联邦学习平台服务" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#E2EDF6;strokeColor=#3F6785;fontColor=#263B48;fontSize=24;fontStyle=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1081" y="52" width="344" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="federation" value="创建联邦" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#3F6785;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="119" width="284" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="membership" value="邀请参与机构&#10;治理审核通过后加入" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#3F6785;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="207" width="284" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="schema" value="声明并发布特征架构&#10;明确特征与标签定义" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#3F6785;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="304" width="284" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="binding" value="声明和维护本地数据集&#10;绑定本机构运行时" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#456E58;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="754" y="304" width="284" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="profile" value="校验本地访问并分析数据&#10;向平台上报数据集元数据" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#456E58;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="754" y="455" width="284" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="contract" value="核对特征与标签兼容性&#10;维护数据集元数据" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#3F6785;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1111" y="455" width="284" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="config" value="定义训练运行配置&#10;指定联邦、特征架构等" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#68577D;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="397" y="400" width="284" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="draft" value="创建训练作业草稿&#10;引用配置并填写目标" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#68577D;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="397" y="492" width="284" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="submit" value="提交训练作业" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#68577D;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="397" y="583" width="284" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="first" value="触发配置锁定与首轮选点&#10;按成员、运行时和数据筛选" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#3F6785;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1111" y="583" width="284" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="invite" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="federation" target="membership">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="schema-to-binding" value="特征架构" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="schema" target="binding">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="schema-to-config" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="schema" target="config">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="182" y="379" />
+              <mxPoint x="539" y="379" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="verify" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="binding" target="profile">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="record" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="profile" target="contract">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="drafting" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="config" target="draft">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="submitting" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="draft" target="submit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="choose" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="submit" target="first">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eligible" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.4;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=19;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="contract" target="first">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="note" value="联邦和特征架构各自维护；数据集变更可复核并上报。作业创建不绑定固定数据集。" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=none;strokeColor=none;fontColor=#263B48;fontSize=20;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="10" y="666" width="1415" height="31" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

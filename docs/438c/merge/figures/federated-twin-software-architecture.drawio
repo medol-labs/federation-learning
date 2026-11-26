@@ -1,289 +1,171 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="app.diagrams.net" compressed="false">
-  <diagram id="software-architecture" name="软件体系结构">
-    <mxGraphModel
-      grid="1"
-      page="1"
-      pageWidth="1620"
-      pageHeight="1340">
+  <diagram id="software-architecture" name="联邦孪生平台软件体系结构">
+    <mxGraphModel grid="1" page="1" pageWidth="1360" pageHeight="705">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell
-          id="title"
-          value="联邦孪生平台软件体系结构"
-          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#657C90;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#243440;spacing=14;strokeColor=none;fontSize=28;fontStyle=1;align=center;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="400"
-            y="15"
-            width="760"
-            height="55"
-            as="geometry" />
+        <mxCell id="fl-boundary" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#F3F7FB;strokeColor=#527FA2;strokeWidth=1.7;fontSize=20;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="143" y="115" width="540" height="501" as="geometry" />
         </mxCell>
-        <mxCell
-          id="flui"
-          value="联邦学习控制台&#10;管理、训练配置、进度及模型目录"
-          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#243440;spacing=14;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="100"
-            y="105"
-            width="600"
-            height="85"
-            as="geometry" />
+        <mxCell id="twin-boundary" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#F1F7F2;strokeColor=#52826D;strokeWidth=1.7;fontSize=20;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="699" y="115" width="369" height="501" as="geometry" />
         </mxCell>
-        <mxCell
-          id="twinui"
-          value="孪生应用界面&#10;临床及科研业务操作、可视化展示"
-          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#EEF5EE;strokeColor=#657C90;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#243440;spacing=14;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="900"
-            y="105"
-            width="600"
-            height="85"
-            as="geometry" />
+        <mxCell id="title" value="联邦孪生平台软件体系结构" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;strokeWidth=1.7;fontSize=29;fontColor=#233642;fontStyle=1;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="22" y="9" width="1315" height="43" as="geometry" />
         </mxCell>
-        <mxCell
-          id="platform"
-          value="联邦学习平台（云端）&#10;&#10;组织与联邦管理 · 数据集元数据治理&#10;训练编排 · 参与者选择 · 执行计划分发&#10;更新接收与聚合协调 · 模型工件管理&#10;&#10;命令处理 / 事件推进 / 查询视图"
-          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#243440;spacing=14;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="100"
-            y="270"
-            width="600"
-            height="225"
-            as="geometry" />
+        <mxCell id="fl-heading" value="联邦学习" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#DFEBF5;strokeColor=#527FA2;strokeWidth=1.7;fontSize=24;fontColor=#295A7A;fontStyle=1;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="143" y="68" width="540" height="47" as="geometry" />
         </mxCell>
-        <mxCell
-          id="twins"
-          value="孪生业务应用（医院侧）&#10;&#10;医疗数字人：患者档案、数字孪生、疾病推演&#10;风险评估与管理：风险画像、评估及预警&#10;院内诊疗、检测及项目可穿戴数据接入&#10;&#10;业务协作与结果展示"
-          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#EEF5EE;strokeColor=#657C90;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#243440;spacing=14;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="900"
-            y="270"
-            width="600"
-            height="225"
-            as="geometry" />
+        <mxCell id="twin-heading" value="机构侧孪生应用" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#DDEDE4;strokeColor=#52826D;strokeWidth=1.7;fontSize=24;fontColor=#316455;fontStyle=1;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="699" y="68" width="369" height="47" as="geometry" />
         </mxCell>
-        <mxCell
-          id="flsupport"
-          value="联邦学习自身支撑与存储&#10;IAM、字典、文件、通知等支撑服务&#10;UmaDB 事件 / PostgreSQL 查询视图 / 文件工件"
-          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#243440;spacing=14;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="100"
-            y="555"
-            width="600"
-            height="110"
-            as="geometry" />
+        <mxCell id="external-heading" value="外部接口与协作软件" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;strokeWidth=1.7;fontSize=21;fontColor=#745B2E;fontStyle=1;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="75" width="227" height="40" as="geometry" />
         </mxCell>
-        <mxCell
-          id="twinsupport"
-          value="孪生应用自身管理与存储&#10;用户权限、配置及业务数据&#10;独立维护，不与联邦学习共用实例"
-          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#EEF5EE;strokeColor=#657C90;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#243440;spacing=14;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="900"
-            y="555"
-            width="600"
-            height="110"
-            as="geometry" />
+        <mxCell id="layer-presentation" value="表现层" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#EFF3F6;strokeColor=#8A9AAB;strokeWidth=1.7;fontSize=20;fontColor=#304658;fontStyle=1;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="22" y="135" width="103" height="63" as="geometry" />
         </mxCell>
-        <mxCell
-          id="agent"
-          value="参与方运行时代理（训练参与医院）&#10;本地数据集管理 · 计划校验 · 执行协调&#10;状态观察 · 模型更新及指标上报&#10;本地事件、查询视图与数据文件"
-          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#243440;spacing=14;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="100"
-            y="790"
-            width="600"
-            height="145"
-            as="geometry" />
+        <mxCell id="layer-access" value="接入层" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#EFF3F6;strokeColor=#8A9AAB;strokeWidth=1.7;fontSize=20;fontColor=#304658;fontStyle=1;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="22" y="223" width="103" height="57" as="geometry" />
         </mxCell>
-        <mxCell
-          id="inference"
-          value="应用模型推理软件&#10;云端：大模型、通用医疗业务模型&#10;本院：参与训练医院的个性化模型（按需部署）&#10;提供业务推理，不属于联邦平台在线接口"
-          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#EEF5EE;strokeColor=#657C90;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#243440;spacing=14;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="900"
-            y="790"
-            width="600"
-            height="145"
-            as="geometry" />
+        <mxCell id="layer-app" value="应用层" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#EFF3F6;strokeColor=#8A9AAB;strokeWidth=1.7;fontSize=20;fontColor=#304658;fontStyle=1;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="22" y="318" width="103" height="80" as="geometry" />
         </mxCell>
-        <mxCell
-          id="engine"
-          value="训练与聚合引擎&#10;医院侧：本地训练与验证推理&#10;云端：模型更新聚合&#10;通过作业接口调用，按需运行"
-          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#657C90;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#243440;spacing=14;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="100"
-            y="1030"
-            width="600"
-            height="140"
-            as="geometry" />
+        <mxCell id="layer-support" value="支撑层" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#EFF3F6;strokeColor=#8A9AAB;strokeWidth=1.7;fontSize=20;fontColor=#304658;fontStyle=1;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="22" y="449" width="103" height="56" as="geometry" />
         </mxCell>
-        <mxCell
-          id="models"
-          value="模型与应用数据&#10;推理侧部署的模型工件及适用配置&#10;医院侧授权业务数据"
-          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#FFF7E9;strokeColor=#657C90;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#243440;spacing=14;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="900"
-            y="1030"
-            width="600"
-            height="140"
-            as="geometry" />
+        <mxCell id="layer-data" value="数据层" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#EFF3F6;strokeColor=#8A9AAB;strokeWidth=1.7;fontSize=20;fontColor=#304658;fontStyle=1;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="22" y="543" width="103" height="61" as="geometry" />
         </mxCell>
-        <mxCell
-          id="ui-p"
-          value="命令 / 查询"
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
-          edge="1"
-          parent="1"
-          source="flui"
-          target="platform">
+        <mxCell id="platform-ui" value="联邦学习平台侧&#10;控制台" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFFFFF;strokeColor=#527FA2;strokeWidth=1.7;fontSize=20;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="167" y="135" width="204" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="agent-ui" value="运行时代理控制台" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFFFFF;strokeColor=#527FA2;strokeWidth=1.7;fontSize=20;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="461" y="135" width="198" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="platform" value="联邦学习平台&#10;训练编排与聚合&#10;全局模型登记" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFFFFF;strokeColor=#527FA2;strokeWidth=1.7;fontSize=18;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="167" y="318" width="204" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="agent" value="参与机构侧&#10;运行时代理与本地训练" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFFFFF;strokeColor=#527FA2;strokeWidth=1.7;fontSize=18;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="461" y="318" width="198" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-support" value="平台侧支撑&#10;身份、字典与工件服务" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#E7EFF7;strokeColor=#527FA2;strokeWidth=1.7;fontSize=18;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="167" y="449" width="204" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="agent-support" value="机构侧身份访问管理" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#E7EFF7;strokeColor=#527FA2;strokeWidth=1.7;fontSize=18;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="461" y="449" width="198" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-data" value="平台侧数据&#10;事件、查询及模型工件" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#E7EFF7;strokeColor=#527FA2;strokeWidth=1.7;fontSize=18;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="167" y="543" width="204" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="agent-data" value="机构侧数据&#10;事件、查询与训练数据" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#E7EFF7;strokeColor=#527FA2;strokeWidth=1.7;fontSize=18;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="461" y="543" width="198" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="twin-ui" value="医疗数字人与风险评估界面&#10;系统管理界面" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFFFFF;strokeColor=#52826D;strokeWidth=1.7;fontSize=19;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="729" y="135" width="309" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="twin-access" value="应用与数据接入&#10;业务接口、诊疗与监测适配" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFFFFF;strokeColor=#52826D;strokeWidth=1.7;fontSize=20;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="729" y="223" width="309" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="twin-app" value="医疗数字人 / 风险动态评估与管理&#10;患者状态展示、风险研判与预警" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFFFFF;strokeColor=#52826D;strokeWidth=1.7;fontSize=18;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="729" y="318" width="309" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="twin-support" value="系统管理：用户权限与配置" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#E4F0E8;strokeColor=#52826D;strokeWidth=1.7;fontSize=19;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="729" y="449" width="309" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="twin-data" value="孪生侧数据&#10;独立维护诊疗与监测业务数据" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#E4F0E8;strokeColor=#52826D;strokeWidth=1.7;fontSize=19;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="729" y="543" width="309" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="hospital-input" value="院内诊疗系统&#10;项目监测与可穿戴设备" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFF7EA;strokeColor=#A58A57;strokeWidth=1.7;fontSize=18;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="223" width="227" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="inference" value="应用模型推理&#10;按场景调用云端或本地模型" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFF7EA;strokeColor=#A58A57;strokeWidth=1.7;fontSize=18;fontColor=#253744;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="318" width="227" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="console-platform" value="" style="noEdgeStyle=1;rounded=0;html=0;strokeColor=#476B85;strokeWidth=2.15;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="platform-ui" target="platform">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell
-          id="ui-t"
-          value="业务操作 / 查询"
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
-          edge="1"
-          parent="1"
-          source="twinui"
-          target="twins">
+        <mxCell id="console-agent" value="" style="noEdgeStyle=1;rounded=0;html=0;strokeColor=#476B85;strokeWidth=2.15;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="agent-ui" target="agent">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell
-          id="p-s"
-          value="内部接口及持久化"
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
-          edge="1"
-          parent="1"
-          source="platform"
-          target="flsupport">
+        <mxCell id="console-twin" value="" style="noEdgeStyle=1;rounded=0;html=0;strokeColor=#476B85;strokeWidth=2.15;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="twin-ui" target="twin-access">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell
-          id="t-s"
-          value="自身管理及持久化"
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
-          edge="1"
-          parent="1"
-          source="twins"
-          target="twinsupport">
+        <mxCell id="ui-access-app" value="" style="noEdgeStyle=1;rounded=0;html=0;strokeColor=#476B85;strokeWidth=2.15;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="twin-access" target="twin-app">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell
-          id="p-a"
-          value="任务下发 / 更新与状态上报"
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;entryX=0;entryY=0.5;startArrow=block;"
-          edge="1"
-          parent="1"
-          source="platform"
-          target="agent">
+        <mxCell id="plan" value="" style="noEdgeStyle=1;rounded=0;html=0;strokeColor=#476B85;strokeWidth=2.15;endArrow=block;endFill=1;exitX=1;exitY=0.27;entryX=0;entryY=0.27;" edge="1" parent="1" source="platform" target="agent">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="update" value="" style="noEdgeStyle=1;rounded=0;html=0;strokeColor=#476B85;strokeWidth=2.15;endArrow=block;endFill=1;exitX=0;exitY=0.73;entryX=1;entryY=0.73;" edge="1" parent="1" source="agent" target="platform">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-support-call" value="" style="noEdgeStyle=1;rounded=0;html=0;strokeColor=#476B85;strokeWidth=1.55;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="platform" target="platform-support">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agent-support-call" value="" style="noEdgeStyle=1;rounded=0;html=0;strokeColor=#476B85;strokeWidth=1.55;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="agent" target="agent-support">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="twin-support-call" value="" style="noEdgeStyle=1;rounded=0;html=0;strokeColor=#476B85;strokeWidth=1.55;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="twin-app" target="twin-support">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="platform-storage" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#476B85;strokeWidth=1.55;endArrow=block;endFill=1;exitX=0;exitY=0.7;entryX=0;entryY=0.5;" edge="1" parent="1" source="platform" target="platform-data">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="35" y="382" />
-              <mxPoint x="35" y="862" />
+              <mxPoint x="155" y="374" />
+              <mxPoint x="155" y="573.5" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell
-          id="a-e"
-          value="作业提交 / 状态与工件"
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
-          edge="1"
-          parent="1"
-          source="agent"
-          target="engine">
+        <mxCell id="agent-storage" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#476B85;strokeWidth=1.55;endArrow=block;endFill=1;exitX=1;exitY=0.7;entryX=1;entryY=0.5;" edge="1" parent="1" source="agent" target="agent-data">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="671" y="374" />
+              <mxPoint x="671" y="573.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="twin-storage" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#476B85;strokeWidth=1.55;endArrow=block;endFill=1;exitX=0;exitY=0.7;entryX=0;entryY=0.5;" edge="1" parent="1" source="twin-app" target="twin-data">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="713" y="374" />
+              <mxPoint x="713" y="573.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="external-data" value="" style="noEdgeStyle=1;rounded=0;html=0;strokeColor=#476B85;strokeWidth=2.15;endArrow=block;endFill=1;exitX=0;exitY=0.56;entryX=1;entryY=0.56;" edge="1" parent="1" source="hospital-input" target="twin-access">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell
-          id="t-i"
-          value="推理请求 / 结果"
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=1;entryY=0.5;startArrow=block;"
-          edge="1"
-          parent="1"
-          source="twins"
-          target="inference">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1565" y="382" />
-              <mxPoint x="1565" y="862" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell
-          id="p-i"
-          value="模型工件下载后由推理侧部署"
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0;entryY=0.25;strokeColor=#47815C;dashed=1;"
-          edge="1"
-          parent="1"
-          source="platform"
-          target="inference">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="790" y="382" />
-              <mxPoint x="790" y="826" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell
-          id="i-m"
-          value="加载模型及业务输入"
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
-          edge="1"
-          parent="1"
-          source="inference"
-          target="models">
+        <mxCell id="online-inference" value="" style="noEdgeStyle=1;rounded=0;html=0;strokeColor=#476B85;strokeWidth=2.15;endArrow=block;endFill=1;exitX=1;exitY=0.62;entryX=0;entryY=0.62;startArrow=block;startFill=1;" edge="1" parent="1" source="twin-app" target="inference">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell
-          id="legend"
-          value="蓝色实线：调用、读写及信息交互；绿色虚线：模型工件交付，不表示自动部署。&#10;两侧支撑和存储分别管理。训练样本留在医院，联邦训练链路只交换配置、元数据、模型更新及指标。"
-          style="rounded=0;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#657C90;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#243440;spacing=14;strokeColor=none;fontSize=17;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="100"
-            y="1220"
-            width="1400"
-            height="80"
-            as="geometry" />
-        </mxCell>
-        <mxCell
-          id="platform-engine"
-          value="聚合作业"
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=2;endArrow=block;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.8;entryX=1;entryY=0.5;"
-          edge="1"
-          parent="1"
-          source="platform"
-          target="engine">
+        <mxCell id="artifact-delivery" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#357761;strokeWidth=2.15;endArrow=block;endFill=1;exitX=0;exitY=0.18;entryX=0.5;entryY=1;dashed=1;dashPattern=7 5;" edge="1" parent="1" source="platform" target="inference">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="745" y="450" />
-              <mxPoint x="745" y="1100" />
+              <mxPoint x="133" y="332.4" />
+              <mxPoint x="133" y="661" />
+              <mxPoint x="1223.5" y="661" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="direct-label" value="控制台分别访问对应后端" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;strokeWidth=1.7;fontSize=16;fontColor=#486279;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="285" y="235" width="260" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="plan-label" value="计划下发" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#F3F7FB;strokeColor=none;strokeWidth=1.7;fontSize=16;fontColor=#274A66;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="374" y="315" width="84" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="update-label" value="更新上报" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#F3F7FB;strokeColor=none;strokeWidth=1.7;fontSize=16;fontColor=#274A66;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="374" y="379" width="84" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="external-data-label" value="信息接入" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;strokeWidth=1.7;fontSize=15;fontColor=#274A66;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="1038" y="234" width="72" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="online-label" value="在线推理" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;strokeWidth=1.7;fontSize=15;fontColor=#274A66;fontStyle=0;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="1038" y="339" width="72" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="artifact-label" value="模型工件交付：下载后由应用推理侧部署" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFFFFF;strokeColor=none;strokeWidth=1.7;fontSize=20;fontColor=#357761;fontStyle=1;spacing=3;" vertex="1" parent="1">
+          <mxGeometry x="397" y="632" width="540" height="51" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

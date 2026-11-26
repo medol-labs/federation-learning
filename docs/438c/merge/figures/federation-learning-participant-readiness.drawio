@@ -1,0 +1,83 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="federation-learning-participant-readiness" name="参与机构自行部署与接入泳道图">
+    <mxGraphModel page="1" pageScale="1" pageWidth="1260" pageHeight="460" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="参与机构自行部署与接入泳道图" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=none;strokeColor=none;fontColor=#263B48;fontSize=31;fontStyle=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="10" y="1" width="1232" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-0" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#F5F9FC;strokeColor=#3F6785;fontColor=#263B48;fontSize=24;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="10" y="52" width="404" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-header-0" value="联邦学习平台服务" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#E2EDF6;strokeColor=#3F6785;fontColor=#263B48;fontSize=25;fontStyle=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="10" y="52" width="404" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-1" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#F5F9F6;strokeColor=#456E58;fontColor=#263B48;fontSize=24;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="424" y="52" width="404" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-header-1" value="参与机构部署人员" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#E1EFE7;strokeColor=#456E58;fontColor=#263B48;fontSize=25;fontStyle=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="424" y="52" width="404" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-2" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#F9F7FB;strokeColor=#68577D;fontColor=#263B48;fontSize=24;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="838" y="52" width="404" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-header-2" value="机构侧运行时代理" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#EDE8F3;strokeColor=#68577D;fontColor=#263B48;fontSize=25;fontStyle=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="838" y="52" width="404" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="install" value="准备运行依赖&#10;部署并启动代理" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#456E58;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="484" y="107" width="284" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="wait" value="等待接入配置" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#68577D;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="898" y="107" width="284" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="request" value="按安装计划发起登记" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#456E58;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="484" y="181" width="284" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="register" value="登记运行基础设施&#10;分配接入标识" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#3F6785;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="70" y="181" width="284" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="configure" value="配置标识及凭据&#10;重启并触发接入检查" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#456E58;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="484" y="255" width="284" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="selfcheck" value="加载配置并自检" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#68577D;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="898" y="255" width="284" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="report" value="上报连接状态和访问端点" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#68577D;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="898" y="329" width="284" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="record" value="记录连接状态&#10;激活运行时身份" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=#FFFFFF;strokeColor=#3F6785;fontColor=#263B48;fontSize=22;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="70" y="329" width="284" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.3;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=PingFang SC;fontSize=20;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="install" target="wait">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.3;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=20;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="install" target="request">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.3;endArrow=block;endFill=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;fontFamily=PingFang SC;fontSize=20;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="request" target="register">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.3;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;fontFamily=PingFang SC;fontSize=20;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="register" target="configure">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="212" y="282" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.3;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=PingFang SC;fontSize=20;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="configure" target="selfcheck">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="自检通过" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.3;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=20;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="selfcheck" target="report">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#3F6785;strokeWidth=2.3;endArrow=block;endFill=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;fontFamily=PingFang SC;fontSize=20;fontColor=#3F6785;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="report" target="record">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="note" value="代理可先启动；登记仍须关联安装计划。完成接入不等于具备本轮训练资格。" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=5;fillColor=none;strokeColor=none;fontColor=#263B48;fontSize=21;fontStyle=0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="10" y="406" width="1232" height="31" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
