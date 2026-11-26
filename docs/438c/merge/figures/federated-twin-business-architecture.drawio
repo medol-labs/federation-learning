@@ -1358,7 +1358,7 @@
         </mxCell>
         <mxCell
           id="twin-home"
-          value="首页&#10;（患者列表）"
+          value="患者卡片"
           style="rounded=1;arcSize=3;whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#D5DFE4;strokeWidth=2;fontFamily=PingFang SC;fontSize=23;fontColor=#35698B;fontStyle=1;"
           vertex="1"
           parent="digital-twin">

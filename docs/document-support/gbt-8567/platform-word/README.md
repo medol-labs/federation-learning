@@ -13,6 +13,8 @@
 
 ## 修改正文并生成 Word
 
+需规图7和图8的可编辑图源分别为[临床数字孪生辅助诊疗流程图](../../../438c/merge/figures/clinical-digital-twin-care-flow.drawio)和[疾病风险动态评估预警流程图](../../../438c/merge/figures/dynamic-disease-risk-alert-flow.drawio)。两张图沿用联邦学习端到端业务流程图的阶段分区、节点与连线样式，导出文件位于 `docs/generated/diagrams/`。
+
 编辑对应的 `text.json`。在 `parts` 下，`word/document.xml` 依文档顺序包含正文和表格文字，`word/header*.xml`、`word/footer*.xml` 对应页眉页脚。单个字符串可直接修改。遇到字符串数组，按原位置修改对应片段，它们共用一个段落，但各自保留字符样式、链接等 Word 格式。保留段落和片段的原有顺序及数量。
 
 在 `federation-learning` 根目录执行，测试使用 Python 3.12。

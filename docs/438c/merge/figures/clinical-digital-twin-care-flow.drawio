@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" compressed="false">
+  <diagram id="clinical-digital-twin-care" name="临床数字孪生辅助诊疗流程图">
+    <mxGraphModel
+      grid="1"
+      gridSize="10"
+      page="1"
+      pageScale="1"
+      pageWidth="1540"
+      pageHeight="920"
+      background="#ffffff">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell
+          id="title"
+          value="临床数字孪生辅助诊疗流程图"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=37;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="28"
+            y="17"
+            width="1475"
+            height="47"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="subtitle"
+          value="打开患者档案 → 汇集并处理数据 → 数字人展示与评估 → 医生研判和归档"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="28"
+            y="65"
+            width="1475"
+            height="28"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="prepare"
+          value=""
+          style="rounded=1;arcSize=3;fillColor=#F8FAFB;strokeColor=#BBC9D0;strokeWidth=2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="28"
+            y="110"
+            width="1480"
+            height="207"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="prepare-title"
+          value="01  患者与数据准备"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=25;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="49"
+            y="121"
+            width="650"
+            height="36"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="prepare-detail"
+          value="临床医生进入患者档案后，平台汇集并处理诊疗和监测数据"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=right;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="700"
+            y="121"
+            width="785"
+            height="36"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="assess"
+          value=""
+          style="rounded=1;arcSize=3;fillColor=#F8FAFB;strokeColor=#BBC9D0;strokeWidth=2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="28"
+            y="337"
+            width="1480"
+            height="346"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="assess-title"
+          value="02  数字人展示与辅助评估"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=25;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="49"
+            y="348"
+            width="650"
+            height="36"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="assess-detail"
+          value="正常展示与器官告警均进入后续评估"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=right;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="700"
+            y="348"
+            width="530"
+            height="36"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="review"
+          value=""
+          style="rounded=1;arcSize=3;fillColor=#F8FAFB;strokeColor=#BBC9D0;strokeWidth=2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="28"
+            y="703"
+            width="1480"
+            height="189"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="review-title"
+          value="03  临床研判与记录归档"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=25;fontColor=#243440;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="49"
+            y="714"
+            width="650"
+            height="36"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="review-detail"
+          value="医生结合多种结果作出研判，系统保存本次诊疗记录"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=right;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="700"
+            y="714"
+            width="785"
+            height="36"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="login"
+          value=""
+          style="rounded=1;arcSize=4;strokeWidth=2;strokeColor=#82A6C1;fillColor=#EFF5FA;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="60"
+            y="178"
+            width="247"
+            height="108"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="login-title"
+          value="医生登录平台"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#35698B;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="68"
+            y="189"
+            width="231"
+            height="44"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="login-detail"
+          value="校验账号和权限"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=18;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="68"
+            y="239"
+            width="231"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="patient"
+          value=""
+          style="rounded=1;arcSize=4;strokeWidth=2;strokeColor=#82A6C1;fillColor=#EFF5FA;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="355"
+            y="178"
+            width="247"
+            height="108"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="patient-title"
+          value="调取患者档案"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#35698B;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="363"
+            y="189"
+            width="231"
+            height="44"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="patient-detail"
+          value="基础信息与历史诊疗索引"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=18;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="363"
+            y="239"
+            width="231"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="ingest"
+          value=""
+          style="rounded=1;arcSize=4;strokeWidth=2;strokeColor=#80B2A8;fillColor=#EDF5F2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="650"
+            y="178"
+            width="247"
+            height="108"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="ingest-title"
+          value="接入患者数据"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#14766A;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="658"
+            y="189"
+            width="231"
+            height="44"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="ingest-detail"
+          value="院内诊疗 · 可穿戴监测"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=18;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="658"
+            y="239"
+            width="231"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="normalize"
+          value=""
+          style="rounded=1;arcSize=4;strokeWidth=2;strokeColor=#80B2A8;fillColor=#EDF5F2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="945"
+            y="178"
+            width="247"
+            height="108"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="normalize-title"
+          value="校验与归一化"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#14766A;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="953"
+            y="189"
+            width="231"
+            height="44"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="normalize-detail"
+          value="解析、清洗、统一指标量纲"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=18;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="953"
+            y="239"
+            width="231"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="map-vitals"
+          value=""
+          style="rounded=1;arcSize=4;strokeWidth=2;strokeColor=#80B2A8;fillColor=#EDF5F2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1240"
+            y="178"
+            width="247"
+            height="108"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="map-vitals-title"
+          value="映射至三维数字人"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#14766A;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1248"
+            y="189"
+            width="231"
+            height="44"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="map-vitals-detail"
+          value="生理、病理指标关联器官"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=18;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1248"
+            y="239"
+            width="231"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="threshold"
+          value="是否超出&#10;健康阈值？"
+          style="rhombus;perimeter=rhombusPerimeter;html=0;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontStyle=1;strokeWidth=2;strokeColor=#CAA77A;fillColor=#FBF5ED;fontColor=#AB6826;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1240"
+            y="466"
+            width="247"
+            height="110"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="alert"
+          value=""
+          style="rounded=1;arcSize=4;strokeWidth=2;strokeColor=#CAA77A;fillColor=#FBF5ED;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="910"
+            y="410"
+            width="247"
+            height="108"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="alert-title"
+          value="异常器官高亮"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#AB6826;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="918"
+            y="421"
+            width="231"
+            height="44"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="alert-detail"
+          value="在数字人上标记告警部位"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=18;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="918"
+            y="471"
+            width="231"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="normal"
+          value=""
+          style="rounded=1;arcSize=4;strokeWidth=2;strokeColor=#80B2A8;fillColor=#EDF5F2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="910"
+            y="554"
+            width="247"
+            height="108"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="normal-title"
+          value="正常状态展示"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#14766A;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="918"
+            y="565"
+            width="231"
+            height="44"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="normal-detail"
+          value="正常渲染，无告警标记"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=18;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="918"
+            y="615"
+            width="231"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="simulate"
+          value=""
+          style="rounded=1;arcSize=4;strokeWidth=2;strokeColor=#80B2A8;fillColor=#EDF5F2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="590"
+            y="482"
+            width="247"
+            height="108"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="simulate-title"
+          value="生成病情推演动画"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#14766A;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="598"
+            y="493"
+            width="231"
+            height="44"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="simulate-detail"
+          value="调用病情推演库"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=18;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="598"
+            y="543"
+            width="231"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="report"
+          value=""
+          style="rounded=1;arcSize=4;strokeWidth=2;strokeColor=#80B2A8;fillColor=#EDF5F2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="270"
+            y="482"
+            width="247"
+            height="108"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="report-title"
+          value="生成风险评估报告"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#14766A;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="278"
+            y="493"
+            width="231"
+            height="44"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="report-detail"
+          value="调用已部署评估模型"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=18;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="278"
+            y="543"
+            width="231"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="review-results"
+          value=""
+          style="rounded=1;arcSize=4;strokeWidth=2;strokeColor=#82A6C1;fillColor=#EFF5FA;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="270"
+            y="770"
+            width="247"
+            height="108"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="review-results-title"
+          value="医生查看综合结果"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#35698B;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="278"
+            y="781"
+            width="231"
+            height="44"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="review-results-detail"
+          value="数字人 · 推演 · 风险报告"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=18;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="278"
+            y="831"
+            width="231"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="collaborate"
+          value=""
+          style="rounded=1;arcSize=4;strokeWidth=2;strokeColor=#82A6C1;fillColor=#EFF5FA;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="625"
+            y="770"
+            width="295"
+            height="108"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="collaborate-title"
+          value="综合研判与诊疗协同"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#35698B;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="633"
+            y="781"
+            width="279"
+            height="44"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="collaborate-detail"
+          value="医生结合结果开展协同会诊"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=18;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="633"
+            y="831"
+            width="279"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="archive"
+          value=""
+          style="rounded=1;arcSize=4;strokeWidth=2;strokeColor=#80B2A8;fillColor=#EDF5F2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1030"
+            y="770"
+            width="300"
+            height="108"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="archive-title"
+          value="更新患者档案"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#14766A;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1038"
+            y="781"
+            width="284"
+            height="44"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="archive-detail"
+          value="保存评估与诊疗记录"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=18;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1038"
+            y="831"
+            width="284"
+            height="35"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="login--patient"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="login"
+          target="patient">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="patient--ingest"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="patient"
+          target="ingest">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="ingest--normalize"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="ingest"
+          target="normalize">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="normalize--map-vitals"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="normalize"
+          target="map-vitals">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="map-vitals--threshold"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="map-vitals"
+          target="threshold">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="threshold--alert"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#AB6826;strokeWidth=3;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="threshold"
+          target="alert">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1196" y="521" />
+              <mxPoint x="1196" y="464" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="threshold--normal"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="threshold"
+          target="normal">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1363.5" y="608" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="above"
+          value="是"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#AB6826;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1201"
+            y="467"
+            width="31"
+            height="28"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="below"
+          value="否"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#35698B;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1317"
+            y="575"
+            width="31"
+            height="28"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="alert--simulate"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#AB6826;strokeWidth=3;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.25;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="alert"
+          target="simulate">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="875" y="464" />
+              <mxPoint x="875" y="509" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="normal--simulate"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.75;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="normal"
+          target="simulate">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="875" y="608" />
+              <mxPoint x="875" y="563" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="simulate--report"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="simulate"
+          target="report">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="report--review-results"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="report"
+          target="review-results">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="review-results--collaborate"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="review-results"
+          target="collaborate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell
+          id="collaborate--archive"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;"
+          edge="1"
+          parent="1"
+          source="collaborate"
+          target="archive">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

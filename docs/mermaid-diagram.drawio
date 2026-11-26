@@ -226,7 +226,7 @@
         </mxCell>
         <mxCell
           id="federated-learning-title"
-          value="联邦学习平台"
+          value="联邦学习"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=25;fontColor=#11786C;fontStyle=1;strokeColor=none;fillColor=none;spacing=0;"
           parent="federated-learning"
           vertex="1">

@@ -29,7 +29,7 @@
         </mxCell>
         <mxCell
           id="subtitle"
-          value="协作条件准备 → 本地训练与模型聚合 → 模型评估与多轮优化 → 模型发布"
+          value="准备协作条件 → 逐轮训练与聚合 → 评估全局模型 → 完成后发布"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#536773;fontStyle=0;spacing=0;"
           vertex="1"
           parent="1">
@@ -68,7 +68,7 @@
         </mxCell>
         <mxCell
           id="preparation-detail"
-          value="组织、运行时、数据集和初始模型共同支撑训练配置"
+          value="联邦组织、运行时、数据集和初始模型共同支撑训练配置"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=right;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
           vertex="1"
           parent="preparation">
@@ -107,7 +107,7 @@
         </mxCell>
         <mxCell
           id="training-detail"
-          value="安全聚合按需启用；评估后决定继续训练或发布模型"
+          value="从右侧开始：选点 → 本地训练 → 按配置聚合 → 评估"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=right;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
           vertex="1"
           parent="training">
@@ -133,7 +133,7 @@
         </mxCell>
         <mxCell
           id="OnboardOrganization-title"
-          value="注册组织"
+          value="注册联邦组织"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=25;fontColor=#11786C;fontStyle=1;spacing=0;"
           vertex="1"
           parent="OnboardOrganization">
@@ -146,7 +146,7 @@
         </mxCell>
         <mxCell
           id="OnboardOrganization-context"
-          value="组织管理"
+          value="联邦组织管理"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;fontStyle=0;spacing=0;"
           vertex="1"
           parent="OnboardOrganization">
@@ -523,7 +523,7 @@
         </mxCell>
         <mxCell
           id="SecurelyAggregateUpdates-title"
-          value="安全聚合模型更新"
+          value="安全聚合"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=25;fontColor=#11786C;fontStyle=1;spacing=0;"
           vertex="1"
           parent="SecurelyAggregateUpdates">
@@ -562,7 +562,7 @@
         </mxCell>
         <mxCell
           id="AggregateUpdates-title"
-          value="聚合模型更新"
+          value="普通聚合"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=25;fontColor=#11786C;fontStyle=1;spacing=0;"
           vertex="1"
           parent="AggregateUpdates">
@@ -640,7 +640,7 @@
         </mxCell>
         <mxCell
           id="ContinueOrCompleteTraining-title"
-          value="判断继续或完成训练"
+          value="是否继续训练？"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=25;fontColor=#AB6826;fontStyle=1;spacing=0;"
           vertex="1"
           parent="ContinueOrCompleteTraining">
@@ -870,7 +870,7 @@
         <mxCell
           id="TrainOnParticipants--SecurelyAggregateUpdates"
           value=""
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=0.0;exitY=0.25;exitPerimeter=0;entryX=1.0;entryY=0.5;entryPerimeter=0;"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#14766A;strokeWidth=3;endArrow=block;endFill=1;exitX=0.0;exitY=0.25;exitPerimeter=0;entryX=1.0;entryY=0.5;entryPerimeter=0;"
           edge="1"
           parent="1"
           source="TrainOnParticipants"
@@ -885,7 +885,7 @@
         <mxCell
           id="TrainOnParticipants--SecurelyAggregateUpdates-condition"
           value="需要安全聚合"
-          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#35698B;fontStyle=1;spacing=0;"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#14766A;fontStyle=1;spacing=0;"
           vertex="1"
           parent="TrainOnParticipants--SecurelyAggregateUpdates"
           connectable="0">
@@ -940,7 +940,7 @@
         <mxCell
           id="SecurelyAggregateUpdates--EvaluateGlobalModel"
           value=""
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;exitX=0.0;exitY=0.5;exitPerimeter=0;entryX=1.0;entryY=0.2857142857142857;entryPerimeter=0;"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#14766A;strokeWidth=3;endArrow=block;endFill=1;exitX=0.0;exitY=0.5;exitPerimeter=0;entryX=1.0;entryY=0.2857142857142857;entryPerimeter=0;"
           edge="1"
           parent="1"
           source="SecurelyAggregateUpdates"
@@ -980,7 +980,7 @@
         <mxCell
           id="ContinueOrCompleteTraining--SelectParticipants"
           value=""
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#AB6826;strokeWidth=3;endArrow=block;endFill=1;exitX=0.5;exitY=1.0;exitPerimeter=0;entryX=1.0;entryY=0.5;entryPerimeter=0;"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#AB6826;strokeWidth=3;dashed=1;dashPattern=8 5;endArrow=block;endFill=1;exitX=0.5;exitY=1.0;exitPerimeter=0;entryX=1.0;entryY=0.5;entryPerimeter=0;"
           edge="1"
           parent="1"
           source="ContinueOrCompleteTraining"
@@ -995,7 +995,7 @@
         </mxCell>
         <mxCell
           id="ContinueOrCompleteTraining--SelectParticipants-condition"
-          value="需要更多轮次：重新选择参与方"
+          value="继续训练：进入下一轮选点"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#AB6826;fontStyle=1;spacing=0;"
           vertex="1"
           parent="ContinueOrCompleteTraining--SelectParticipants"
@@ -1025,7 +1025,7 @@
         </mxCell>
         <mxCell
           id="ContinueOrCompleteTraining--PublishTrainedModel-condition"
-          value="训练完成"
+          value="结束训练：发布模型"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#35698B;fontStyle=1;spacing=0;"
           vertex="1"
           parent="ContinueOrCompleteTraining--PublishTrainedModel"
@@ -1046,7 +1046,7 @@
         <mxCell
           id="ConfirmRuntimeReady--MonitorRuntimeHealth"
           value=""
-          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#536773;strokeWidth=3;endArrow=block;endFill=1;exitX=1.0;exitY=0.25;exitPerimeter=0;entryX=0.5;entryY=1.0;entryPerimeter=0;"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#536773;strokeWidth=3;dashed=1;dashPattern=5 5;endArrow=block;endFill=1;exitX=1.0;exitY=0.25;exitPerimeter=0;entryX=0.5;entryY=1.0;entryPerimeter=0;"
           edge="1"
           parent="1"
           source="ConfirmRuntimeReady"
@@ -1061,7 +1061,7 @@
         </mxCell>
         <mxCell
           id="monitoring-note"
-          value="就绪后独立开展监控，&#10;不作为训练任务的串行前置步骤。"
+          value="并行监控，不阻塞训练流程。"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=20;fontColor=#536773;fontStyle=0;spacing=0;"
           vertex="1"
           parent="1">
@@ -1087,7 +1087,7 @@
         </mxCell>
         <mxCell
           id="footnote"
-          value="前置条件可并行准备；安全聚合与普通聚合为二选一分支。模型发布后可下载，不表示自动部署到应用侧。"
+          value="前置条件可并行准备；每轮仅走一个聚合分支。发布后的模型可供下载，由应用侧按需部署。"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#536773;fontStyle=0;spacing=0;"
           vertex="1"
           parent="1">
