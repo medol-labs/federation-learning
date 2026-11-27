@@ -126,6 +126,7 @@ def discover_routes(root, translation):
         ('GET', '/jobs/{jobId}', '平台或参与方代理', '查询作业状态', 'parsed.path.startswith("/jobs/")'),
         ('POST', '/jobs/{jobId}/cancel', '参与方代理', '取消作业', 'parsed.path.endswith("/cancel")'),
         ('GET', '/jobs/{jobId}/artifacts/{artifactName}', '联邦学习平台', '读取作业工件', '"/artifacts/" in parsed.path'),
+        ('POST', '/evaluations', '联邦学习平台', '评估聚合模型', 'parsed.path == "/evaluations"'),
     ):
         if marker not in source:
             raise ValueError(f'Training engine route is missing: {method} {path}')

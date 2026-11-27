@@ -1,95 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="app.diagrams.net" compressed="false">
-  <diagram id="fl-sync-interfaces" name="联邦学习查询视图同步接口图">
-    <mxGraphModel
-      grid="1"
-      page="1"
-      pageWidth="1000"
-      pageHeight="520">
+  <diagram id="fl-sync-interfaces" name="运行时代理目录同步关系图">
+    <mxGraphModel grid="1" page="1" pageWidth="970" pageHeight="360">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell
-          id="client"
-          value="授权同步客户端&#10;（调用角色）"
-          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="350"
-            y="30"
-            width="300"
-            height="90"
-            as="geometry" />
+        <mxCell id="agent-boundary"
+          value="参与机构侧 · 运行时代理（LBLS-GN-LBXX-DEP-A）"
+          style="rounded=1;arcSize=5;whiteSpace=wrap;html=0;fillColor=#F5F8FA;strokeColor=#4B7286;strokeWidth=2;fontFamily=PingFang SC;fontSize=17;fontStyle=1;fontColor=#243440;verticalAlign=top;spacingTop=13;"
+          vertex="1" parent="1">
+          <mxGeometry x="445" y="24" width="495" height="266" as="geometry" />
         </mxCell>
-        <mxCell
-          id="platform"
-          value="平台服务&#10;FL-SU-P"
-          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="80"
-            y="300"
-            width="300"
-            height="90"
-            as="geometry" />
+        <mxCell id="platform"
+          value="平台服务&#10;LBLS-GN-LBXX-DEP-P&#10;组织目录 · 特征架构目录&#10;运行时登记与状态&#10;（仅同步本代理关联记录）"
+          style="rounded=1;arcSize=8;whiteSpace=wrap;html=0;fillColor=#EDF5FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=9;"
+          vertex="1" parent="1">
+          <mxGeometry x="22" y="23" width="263" height="121" as="geometry" />
         </mxCell>
-        <mxCell
-          id="support"
-          value="共享支撑服务&#10;FL-SU-S"
-          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="620"
-            y="300"
-            width="300"
-            height="90"
-            as="geometry" />
+        <mxCell id="support"
+          value="支撑服务&#10;LBLS-GN-LBXX-DEP-S&#10;字典值目录&#10;字典值翻译目录"
+          style="rounded=1;arcSize=8;whiteSpace=wrap;html=0;fillColor=#EDF5FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;spacing=9;"
+          vertex="1" parent="1">
+          <mxGeometry x="22" y="178" width="263" height="105" as="geometry" />
         </mxCell>
-        <mxCell
-          id="client-platform"
-          value="查询视图同步&#10;快照 / 增量"
-          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.2;exitY=1;entryX=0.5;entryY=0;"
-          edge="1"
-          parent="1"
-          source="client"
-          target="platform">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="410" y="200" />
-              <mxPoint x="230" y="200" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="sync"
+          value="目录同步&#10;代理主动拉取"
+          style="rounded=1;arcSize=8;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#4B7286;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          vertex="1" parent="1">
+          <mxGeometry x="477" y="75" width="163" height="174" as="geometry" />
         </mxCell>
-        <mxCell
-          id="client-support"
-          value="查询视图同步&#10;快照 / 增量"
-          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.8;exitY=1;entryX=0.5;entryY=0;"
-          edge="1"
-          parent="1"
-          source="client"
-          target="support">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="590" y="200" />
-              <mxPoint x="770" y="200" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="local"
+          value="代理本地目录&#10;保存同步后的目录数据"
+          style="rounded=1;arcSize=8;whiteSpace=wrap;html=0;fillColor=#E8F4EF;strokeColor=#39745D;strokeWidth=2;fontFamily=PingFang SC;fontSize=18;fontColor=#203B31;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="743" y="111" width="175" height="102" as="geometry" />
         </mxCell>
-        <mxCell
-          id="legend"
-          value="箭头表示请求方向，快照或增量数据沿对应调用返回。"
-          style="text;whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;align=center;"
-          vertex="1"
-          parent="1">
-          <mxGeometry
-            x="110"
-            y="440"
-            width="780"
-            height="40"
-            as="geometry" />
+        <mxCell id="platform-sync"
+          value="G10　快照 / 增量"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;endFill=1;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0;entryY=0.049;"
+          edge="1" parent="1" source="platform" target="sync">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="0" y="-13" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="support-sync"
+          value="G11　快照 / 增量"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;endFill=1;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=17;fontColor=#243440;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0;entryY=0.894;"
+          edge="1" parent="1" source="support" target="sync">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="0" y="-13" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="local-write"
+          value="写入"
+          style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;strokeColor=#39745D;strokeWidth=2;fontFamily=PingFang SC;fontSize=17;fontColor=#203B31;labelBackgroundColor=#F5F8FA;exitX=1;exitY=0.5;entryX=0;entryY=0.5;"
+          edge="1" parent="1" source="sync" target="local">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="0" y="-13" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="legend"
+          value="箭头表示目录数据流向。由运行时代理从两处主动拉取，不是源服务推送。"
+          style="text;whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontSize=17;fontColor=#40515A;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="22" y="305" width="918" height="36" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

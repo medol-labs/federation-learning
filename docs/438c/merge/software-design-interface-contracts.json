@@ -67,6 +67,12 @@
       "response": "status：String，ok；nodeName：String。",
       "result": "200表示HTTP服务可响应，不表示某个训练作业已完成。"
     },
+    "POST /evaluations": {
+      "name": "全局模型评估", "format": "application/json",
+      "request": "modelContent：Base64编码的模型工件；modelArtifactDigest：模型工件摘要；modelPlugin：模型插件标识；featureSchemaId：特征架构标识，在引擎配置指定架构时须匹配。",
+      "response": "modelArtifactDigest、validationDatasetVersion、validationDatasetDigest：字符串；evaluatedSampleCount、truePositiveCount、trueNegativeCount、falsePositiveCount、falseNegativeCount：整数；globalAccuracy：数值。",
+      "result": "评估引擎使用配置的验证数据并校验其摘要。成功返回200及评估结果；不支持的插件、校验失败或评估异常返回422。本接口的实现范围为二分类逻辑回归，不代表任意插件均可评估。"
+    },
     "POST /jobs": {
       "name": "训练或聚合作业提交", "format": "application/json",
       "request": "jobId：String，必填；roundId：数值；nodeName、role、operation：String；input、output、modelParameter、jobParameter：JSON对象；runtimeRoot：String。模型及算法专用键由选定引擎插件解释，不限定为固定通用字段。",

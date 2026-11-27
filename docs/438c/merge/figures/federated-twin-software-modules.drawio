@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="app.diagrams.net" compressed="false">
   <diagram id="logical-software-modules" name="联邦孪生平台软件模块划分">
-    <mxGraphModel grid="1" page="1" pageWidth="1060" pageHeight="440">
+    <mxGraphModel grid="1" page="1" pageWidth="1060" pageHeight="506">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -12,7 +12,7 @@
           <mxGeometry x="24" y="135" width="246" height="55" as="geometry" />
         </mxCell>
         <mxCell id="federation-children" value="" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFFFFF;strokeColor=#4D7898;strokeWidth=1.6;" vertex="1" parent="1">
-          <mxGeometry x="24" y="190" width="246" height="226" as="geometry" />
+          <mxGeometry x="24" y="190" width="246" height="292" as="geometry" />
         </mxCell>
         <mxCell id="federation-1" value="联邦组织管理" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#EDF5FB;strokeColor=none;fontSize=20;" vertex="1" parent="1">
           <mxGeometry x="41" y="202" width="212" height="31" as="geometry" />
@@ -36,31 +36,37 @@
           <mxGeometry x="278" y="135" width="246" height="55" as="geometry" />
         </mxCell>
         <mxCell id="digital-human-children" value="" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFFFFF;strokeColor=#458374;strokeWidth=1.6;" vertex="1" parent="1">
-          <mxGeometry x="278" y="190" width="246" height="226" as="geometry" />
+          <mxGeometry x="278" y="190" width="246" height="292" as="geometry" />
+        </mxCell>
+        <mxCell id="digital-human-patient-card" value="患者卡片" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#EDF5F1;strokeColor=none;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="295" y="202" width="212" height="31" as="geometry" />
         </mxCell>
         <mxCell id="digital-human-1" value="患者档案" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#EDF5F1;strokeColor=none;fontSize=20;" vertex="1" parent="1">
-          <mxGeometry x="295" y="202" width="212" height="31" as="geometry" />
+          <mxGeometry x="295" y="268" width="212" height="31" as="geometry" />
         </mxCell>
         <mxCell id="digital-human-2" value="3D 模型库" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#EDF5F1;strokeColor=none;fontSize=20;" vertex="1" parent="1">
           <mxGeometry x="295" y="235" width="212" height="31" as="geometry" />
         </mxCell>
         <mxCell id="digital-human-3" value="数字孪生" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#EDF5F1;strokeColor=none;fontSize=20;" vertex="1" parent="1">
-          <mxGeometry x="295" y="268" width="212" height="31" as="geometry" />
-        </mxCell>
-        <mxCell id="digital-human-4" value="疾病推演库" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#EDF5F1;strokeColor=none;fontSize=20;" vertex="1" parent="1">
           <mxGeometry x="295" y="301" width="212" height="31" as="geometry" />
         </mxCell>
-        <mxCell id="digital-human-5" value="诊疗协同" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#EDF5F1;strokeColor=none;fontSize=20;" vertex="1" parent="1">
+        <mxCell id="digital-human-4" value="疾病推演库" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#EDF5F1;strokeColor=none;fontSize=20;" vertex="1" parent="1">
           <mxGeometry x="295" y="334" width="212" height="31" as="geometry" />
         </mxCell>
-        <mxCell id="digital-human-6" value="监测数据" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#EDF5F1;strokeColor=none;fontSize=20;" vertex="1" parent="1">
+        <mxCell id="digital-human-5" value="诊疗协同" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#EDF5F1;strokeColor=none;fontSize=20;" vertex="1" parent="1">
           <mxGeometry x="295" y="367" width="212" height="31" as="geometry" />
+        </mxCell>
+        <mxCell id="digital-human-6" value="监测数据" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#EDF5F1;strokeColor=none;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="295" y="400" width="212" height="31" as="geometry" />
+        </mxCell>
+        <mxCell id="digital-human-device" value="设备管理" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#EDF5F1;strokeColor=none;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="295" y="433" width="212" height="31" as="geometry" />
         </mxCell>
         <mxCell id="risk" value="风险动态评估与管理" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#FCF5E8;strokeColor=#987842;strokeWidth=1.6;fontSize=21;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="532" y="135" width="246" height="55" as="geometry" />
         </mxCell>
         <mxCell id="risk-children" value="" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFFFFF;strokeColor=#987842;strokeWidth=1.6;" vertex="1" parent="1">
-          <mxGeometry x="532" y="190" width="246" height="226" as="geometry" />
+          <mxGeometry x="532" y="190" width="246" height="292" as="geometry" />
         </mxCell>
         <mxCell id="risk-1" value="多病种风险评估" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#FCF5E8;strokeColor=none;fontSize=20;" vertex="1" parent="1">
           <mxGeometry x="549" y="202" width="212" height="31" as="geometry" />
@@ -81,7 +87,7 @@
           <mxGeometry x="786" y="135" width="246" height="55" as="geometry" />
         </mxCell>
         <mxCell id="system-children" value="" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#FFFFFF;strokeColor=#68758B;strokeWidth=1.6;" vertex="1" parent="1">
-          <mxGeometry x="786" y="190" width="246" height="226" as="geometry" />
+          <mxGeometry x="786" y="190" width="246" height="292" as="geometry" />
         </mxCell>
         <mxCell id="system-1" value="机构管理" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;fillColor=#F0F2F6;strokeColor=none;fontSize=20;" vertex="1" parent="1">
           <mxGeometry x="803" y="202" width="212" height="31" as="geometry" />

@@ -1,0 +1,22 @@
+{
+  "Agent Runtime Node Resource Telemetry Reported": "代理运行时节点资源遥测已上报",
+  "Agent Runtime Telemetry Reported": "代理运行时遥测已上报",
+  "All System Notifications Read": "所有系统通知已标记为已读",
+  "Contract Validation Failed": "合约验证失败",
+  "Data Export File Download Authorized": "数据导出文件下载已授权",
+  "Data Export Job Catalog": "数据导出任务目录",
+  "Data Export Requested": "数据导出已申请",
+  "Data Import Job Catalog": "数据导入作业目录",
+  "Data Import Requested": "数据导入已申请",
+  "Dictionary Value Translation Set": "字典值翻译已设置",
+  "Dictionary Value Translation Updated": "字典值翻译已更新",
+  "Historical Round Update Disposition Recorded": "历史轮次更新处置结果已记录",
+  "Personalized Model Artifact Registered": "个性化模型工件已登记",
+  "Personalized Model Result Recorded": "个性化模型结果已记录",
+  "Read": "已读",
+  "Runtime Node Resource Telemetry Recorded": "运行时节点资源遥测已记录",
+  "Runtime Telemetry Recorded": "运行时遥测已记录",
+  "System Notification Published": "系统通知已发布",
+  "System Notification Read": "系统通知已标记为已读",
+  "Unread": "未读"
+}

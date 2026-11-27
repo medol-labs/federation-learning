@@ -107,16 +107,18 @@ def model_contract(record, model):
             'format': 'application/json' if record['operation'] != 'export' else '按导出接口返回文件媒体类型'}
 
 
-def resource_interfaces(records, model, root=ROOT):
+def resource_interfaces(records, model, root=ROOT, *, provider_order=None, interface_id=None):
     overrides = json.loads(OVERRIDES.read_text(encoding='utf-8'))['contracts']
     grouped = OrderedDict()
     for record in records:
         key = (record['provider'], record['source'])
         grouped.setdefault(key, []).append(record)
     interfaces = []
+    order = provider_order or ('联邦学习平台', '参与方运行时代理', '共享支撑服务', '训练引擎')
     for (provider, source), routes in sorted(grouped.items(), key=lambda pair: (
-            ('联邦学习平台', '参与方运行时代理', '共享支撑服务', '训练引擎').index(pair[0][0]), pair[0][1])):
-        identifier = 'IF-' + hashlib.sha256(f'{provider}:{source}'.encode()).hexdigest()[:10].upper()
+            order.index(pair[0][0]), pair[0][1])):
+        identifier = (interface_id(provider, source) if interface_id else
+                      'IF-' + hashlib.sha256(f'{provider}:{source}'.encode()).hexdigest()[:10].upper())
         contracts = []
         for record in routes:
             key = record['method'] + ' ' + record['path']
@@ -154,6 +156,7 @@ def resource_interfaces(records, model, root=ROOT):
         methods = '；'.join(f'{r["method"]} {r["path"]}（{r["id"]}）' for r in routes)
         content.extend(['通信方法：' + methods + '。', '协议：HTTP；消息格式见大小与格式。'])
         interfaces.append({'id': identifier, 'name': title, 'content': '\n\n'.join(content),
+                           'contracts': contracts,
                            'routes': [r['id'] for r in routes], 'provider': provider, 'source': source})
     return interfaces
 

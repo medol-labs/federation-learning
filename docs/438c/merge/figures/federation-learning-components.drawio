@@ -14,25 +14,25 @@
         <mxCell id="site" value="参与机构侧" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;fontSize=18;fontStyle=1;fillColor=none;strokeColor=none;" vertex="1" parent="1">
           <mxGeometry x="480" y="58" width="330" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="flui" value="联邦学习平台侧控制台&#10;FL-SU-UI-P" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#F0F6FB;strokeColor=#4D7898;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
+        <mxCell id="flui" value="联邦学习平台侧控制台&#10;LBLS-GN-LBXX-DEP-UI-P" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#F0F6FB;strokeColor=#4D7898;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
           <mxGeometry x="60" y="104" width="330" height="64" as="geometry" />
         </mxCell>
-        <mxCell id="agentui" value="运行时代理控制台&#10;FL-SU-UI-A" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#F0F6FB;strokeColor=#4D7898;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
+        <mxCell id="agentui" value="运行时代理控制台&#10;LBLS-GN-LBXX-DEP-UI-A" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#F0F6FB;strokeColor=#4D7898;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
           <mxGeometry x="480" y="104" width="330" height="64" as="geometry" />
         </mxCell>
-        <mxCell id="platform" value="联邦学习平台服务&#10;FL-SU-P&#10;训练编排、更新验收、模型登记" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#F0F6FB;strokeColor=#4D7898;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
+        <mxCell id="platform" value="联邦学习平台服务&#10;LBLS-GN-LBXX-DEP-P&#10;训练编排、更新验收、模型登记" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#F0F6FB;strokeColor=#4D7898;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
           <mxGeometry x="60" y="234" width="330" height="98" as="geometry" />
         </mxCell>
-        <mxCell id="agent" value="运行时代理&#10;FL-SU-A&#10;数据集校验、执行计划、结果上报" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#F0F6FB;strokeColor=#4D7898;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
+        <mxCell id="agent" value="运行时代理&#10;LBLS-GN-LBXX-DEP-A&#10;数据集校验、执行计划、结果上报" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#F0F6FB;strokeColor=#4D7898;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
           <mxGeometry x="480" y="234" width="330" height="98" as="geometry" />
         </mxCell>
-        <mxCell id="aggregation" value="联邦学习平台侧聚合引擎&#10;FL-SU-AGG&#10;计算全局模型" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#ECF6F1;strokeColor=#458374;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
+        <mxCell id="aggregation" value="联邦学习平台侧聚合引擎&#10;LBLS-GN-LBXX-DEP-AGG&#10;计算全局模型" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#ECF6F1;strokeColor=#458374;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
           <mxGeometry x="60" y="414" width="330" height="83" as="geometry" />
         </mxCell>
-        <mxCell id="training" value="参与机构侧训练引擎&#10;FL-SU-E&#10;本地训练、验证与个性化适配" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#ECF6F1;strokeColor=#458374;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
+        <mxCell id="training" value="参与机构侧训练引擎&#10;LBLS-GN-LBXX-DEP-E&#10;本地训练、验证与个性化适配" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#ECF6F1;strokeColor=#458374;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
           <mxGeometry x="480" y="414" width="330" height="83" as="geometry" />
         </mxCell>
-        <mxCell id="flsupport" value="联邦学习支撑服务&#10;FL-SU-S&#10;身份、文件、字典、数据交换与通知" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#F0F6FB;strokeColor=#4D7898;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
+        <mxCell id="flsupport" value="联邦学习支撑服务&#10;LBLS-GN-LBXX-DEP-S&#10;身份、文件、字典、数据交换与通知" style="whiteSpace=wrap;html=0;fontFamily=PingFang SC;fontColor=#243440;rounded=1;arcSize=11;fillColor=#F0F6FB;strokeColor=#4D7898;strokeWidth=1.7;fontSize=17;spacing=7;" vertex="1" parent="1">
           <mxGeometry x="60" y="578" width="330" height="83" as="geometry" />
         </mxCell>
         <mxCell id="ui-p" value="平台管理与查询" style="html=0;fontFamily=PingFang SC;fontColor=#243440;edgeStyle=segmentEdgeStyle;rounded=0;endArrow=block;endFill=1;strokeColor=#526775;strokeWidth=1.7;fontSize=15;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="flui" target="platform">

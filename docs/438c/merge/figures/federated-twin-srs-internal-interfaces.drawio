@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" compressed="false">
+  <diagram id="srs-internal-interfaces" name="本系统内部接口示意图">
+    <mxGraphModel grid="1" page="1" pageWidth="1100" pageHeight="470">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="boundary" value="联邦孪生平台系统边界" style="align=left;verticalAlign=top;spacingLeft=14;spacingTop=10;fillColor=#FFFFFF;strokeColor=#627789;dashed=1;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="1060" height="412" as="geometry"/>
+        </mxCell>
+        <mxCell id="fl" value="联邦学习平台" style="rounded=0;fillColor=#EDF5FB;strokeColor=#4D7898;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;" vertex="1" parent="1">
+          <mxGeometry x="60" y="112" width="220" height="58" as="geometry"/>
+        </mxCell>
+        <mxCell id="agent" value="机构侧运行时代理" style="rounded=0;fillColor=#EDF5FB;strokeColor=#4D7898;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;" vertex="1" parent="1">
+          <mxGeometry x="60" y="325" width="220" height="58" as="geometry"/>
+        </mxCell>
+        <mxCell id="system" value="孪生侧系统管理" style="rounded=0;fillColor=#F0F2F6;strokeColor=#68758B;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;" vertex="1" parent="1">
+          <mxGeometry x="670" y="85" width="220" height="58" as="geometry"/>
+        </mxCell>
+        <mxCell id="twin" value="医疗数字人" style="rounded=0;fillColor=#EDF5F1;strokeColor=#458374;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;" vertex="1" parent="1">
+          <mxGeometry x="525" y="325" width="195" height="58" as="geometry"/>
+        </mxCell>
+        <mxCell id="risk" value="风险动态评估与管理" style="rounded=0;fillColor=#FCF5E8;strokeColor=#987842;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;" vertex="1" parent="1">
+          <mxGeometry x="850" y="325" width="195" height="58" as="geometry"/>
+        </mxCell>
+        <mxCell id="plan" value="计划下发&#xa;状态与结果上报" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=block;endArrow=block;labelBackgroundColor=#FFFFFF;strokeColor=#4D7898;fontFamily=PingFang SC;fontSize=17;" edge="1" parent="1" source="fl" target="agent">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="delivery" value="授权用户下载工件&#xa;应用侧部署" style="rounded=0;dashed=1;strokeColor=#627789;fillColor=#FFFFFF;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;" vertex="1" parent="1">
+          <mxGeometry x="320" y="112" width="205" height="62" as="geometry"/>
+        </mxCell>
+        <mxCell id="download" value="" style="rounded=0;endArrow=block;strokeColor=#4D7898;" edge="1" parent="1" source="fl" target="delivery">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="human-transfer" value="工件交付" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;endArrow=block;exitX=0.5;exitY=1;entryX=0;entryY=0.5;labelBackgroundColor=#FFFFFF;strokeColor=#627789;fontFamily=PingFang SC;fontSize=16;" edge="1" parent="1" source="delivery" target="twin">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="risk-transfer" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;endArrow=block;exitX=0.8;exitY=1;entryX=0.5;entryY=1;strokeColor=#627789;" edge="1" parent="1" source="delivery" target="risk">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="484" y="408"/><mxPoint x="948" y="408"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="system-twin" value="权限、配置&#xa;状态、日志" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=block;endArrow=block;exitX=0.15;exitY=1;entryX=0.5;entryY=0;labelBackgroundColor=#FFFFFF;strokeColor=#68758B;fontFamily=PingFang SC;fontSize=16;" edge="1" parent="1" source="system" target="twin">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="system-risk" value="权限、配置&#xa;状态、日志" style="edgeStyle=orthogonalEdgeStyle;rounded=0;startArrow=block;endArrow=block;exitX=0.85;exitY=1;entryX=0.65;entryY=0;labelBackgroundColor=#FFFFFF;strokeColor=#68758B;fontFamily=PingFang SC;fontSize=16;" edge="1" parent="1" source="system" target="risk">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="risk-twin" value="风险预警&#xa;监测状态" style="rounded=0;startArrow=block;endArrow=block;labelBackgroundColor=#FFFFFF;strokeColor=#458374;fontFamily=PingFang SC;fontSize=16;" edge="1" parent="1" source="risk" target="twin">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend" value="实线：系统接口；虚线：下载后的工件交付，不表示服务间 API。" style="text;align=left;fontFamily=PingFang SC;fontSize=16;fontColor=#243440;" vertex="1" parent="1">
+          <mxGeometry x="58" y="445" width="980" height="24" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

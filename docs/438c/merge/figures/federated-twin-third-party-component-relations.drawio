@@ -25,37 +25,37 @@
         <mxCell id="twin-label" value="机构侧孪生应用" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#E0EFE6;strokeColor=#386452;fontColor=#203443;fontSize=23;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="856" y="55" width="496" height="43" as="geometry" />
         </mxCell>
-        <mxCell id="p-console" value="联邦学习平台侧控制台  FL-SU-UI-P" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#FFFFFF;strokeColor=#365E7B;fontColor=#203443;fontSize=19;fontStyle=0;" vertex="1" parent="1">
+        <mxCell id="p-console" value="联邦学习平台侧控制台&#10;LBLS-GN-LBXX-DEP-UI-P" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#FFFFFF;strokeColor=#365E7B;fontColor=#203443;fontSize=17;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="27" y="119" width="347" height="47" as="geometry" />
         </mxCell>
         <mxCell id="p-service" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#FFFFFF;strokeColor=#365E7B;fontColor=#203443;fontSize=19;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="53" y="210" width="321" height="183" as="geometry" />
         </mxCell>
-        <mxCell id="p-service-heading" value="联邦学习平台服务  FL-SU-P" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#E1EDF6;strokeColor=#365E7B;fontColor=#203443;fontSize=19;fontStyle=1;" vertex="1" parent="1">
+        <mxCell id="p-service-heading" value="联邦学习平台服务&#10;LBLS-GN-LBXX-DEP-P" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#E1EDF6;strokeColor=#365E7B;fontColor=#203443;fontSize=14;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="53" y="210" width="321" height="42" as="geometry" />
         </mxCell>
-        <mxCell id="p-service-m0" value="训练编排  FL-U-C-TRAIN" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=18;fontStyle=0;" vertex="1" parent="1">
+        <mxCell id="p-service-m0" value="训练编排  LBLS-GN-LBXX-TRAIN" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=16;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="62" y="261" width="303" height="35" as="geometry" />
         </mxCell>
-        <mxCell id="p-service-m1" value="安全聚合  FL-U-C-SEC" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=18;fontStyle=0;" vertex="1" parent="1">
+        <mxCell id="p-service-m1" value="安全聚合  LBLS-GN-LBXX-AGG" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=16;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="62" y="304" width="303" height="35" as="geometry" />
         </mxCell>
-        <mxCell id="p-service-m2" value="模型仓库  FL-U-C-MODEL" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=18;fontStyle=0;" vertex="1" parent="1">
+        <mxCell id="p-service-m2" value="模型仓库  LBLS-GN-LBXX-REPO" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=16;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="62" y="347" width="303" height="35" as="geometry" />
         </mxCell>
         <mxCell id="p-support" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#FFFFFF;strokeColor=#365E7B;fontColor=#203443;fontSize=19;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="53" y="432" width="321" height="132" as="geometry" />
         </mxCell>
-        <mxCell id="p-support-heading" value="联邦学习支撑服务  FL-SU-S" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#E1EDF6;strokeColor=#365E7B;fontColor=#203443;fontSize=19;fontStyle=1;" vertex="1" parent="1">
+        <mxCell id="p-support-heading" value="联邦学习支撑服务&#10;LBLS-GN-LBXX-DEP-S" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#E1EDF6;strokeColor=#365E7B;fontColor=#203443;fontSize=14;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="53" y="432" width="321" height="42" as="geometry" />
         </mxCell>
-        <mxCell id="p-support-m0" value="身份访问管理  FL-U-C-IAM" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=18;fontStyle=0;" vertex="1" parent="1">
+        <mxCell id="p-support-m0" value="身份访问管理  LBLS-GN-LBXX-IAM" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=16;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="62" y="483" width="303" height="35" as="geometry" />
         </mxCell>
         <mxCell id="p-support-m1" value="字典、文件、数据交换、通知" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=18;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="62" y="526" width="303" height="35" as="geometry" />
         </mxCell>
-        <mxCell id="p-engine" value="联邦学习平台侧聚合引擎  FL-SU-AGG" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#FFFFFF;strokeColor=#365E7B;fontColor=#203443;fontSize=18;fontStyle=0;" vertex="1" parent="1">
+        <mxCell id="p-engine" value="联邦学习平台侧聚合引擎&#10;LBLS-GN-LBXX-DEP-AGG" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#FFFFFF;strokeColor=#365E7B;fontColor=#203443;fontSize=17;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="25" y="608" width="349" height="48" as="geometry" />
         </mxCell>
         <mxCell id="p-console-service" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#365E7B;strokeWidth=2.4;endArrow=block;endFill=1;startArrow=none;startFill=1;exitX=0.54;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=17;fontColor=#365E7B;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="p-console" target="p-service">
@@ -77,22 +77,22 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="a-console" value="运行时代理控制台  FL-SU-UI-A" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#FFFFFF;strokeColor=#365E7B;fontColor=#203443;fontSize=18;fontStyle=0;" vertex="1" parent="1">
+        <mxCell id="a-console" value="运行时代理控制台&#10;LBLS-GN-LBXX-DEP-UI-A" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#FFFFFF;strokeColor=#365E7B;fontColor=#203443;fontSize=17;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="509" y="119" width="299" height="47" as="geometry" />
         </mxCell>
         <mxCell id="a-service" value="" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#FFFFFF;strokeColor=#365E7B;fontColor=#203443;fontSize=19;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="509" y="210" width="299" height="183" as="geometry" />
         </mxCell>
-        <mxCell id="a-service-heading" value="运行时代理  FL-SU-A" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#E1EDF6;strokeColor=#365E7B;fontColor=#203443;fontSize=19;fontStyle=1;" vertex="1" parent="1">
+        <mxCell id="a-service-heading" value="运行时代理  LBLS-GN-LBXX-DEP-A" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#E1EDF6;strokeColor=#365E7B;fontColor=#203443;fontSize=16;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="509" y="210" width="299" height="42" as="geometry" />
         </mxCell>
-        <mxCell id="a-service-m0" value="运行时代理操作  FL-U-C-AGENT" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=18;fontStyle=0;" vertex="1" parent="1">
+        <mxCell id="a-service-m0" value="运行时代理操作&#10;LBLS-GN-LBXX-AGENT" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=14;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="518" y="261" width="281" height="35" as="geometry" />
         </mxCell>
-        <mxCell id="a-service-m1" value="身份访问管理  FL-U-C-IAM" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=18;fontStyle=0;" vertex="1" parent="1">
+        <mxCell id="a-service-m1" value="身份访问管理  LBLS-GN-LBXX-IAM" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#F1F6F9;strokeColor=none;fontColor=#203443;fontSize=16;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="518" y="304" width="281" height="35" as="geometry" />
         </mxCell>
-        <mxCell id="a-engine" value="参与机构侧训练引擎  FL-SU-E" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#FFFFFF;strokeColor=#365E7B;fontColor=#203443;fontSize=18;fontStyle=0;" vertex="1" parent="1">
+        <mxCell id="a-engine" value="参与机构侧训练引擎&#10;LBLS-GN-LBXX-DEP-E" style="fontFamily=PingFang SC;html=0;whiteSpace=wrap;spacing=3;fillColor=#FFFFFF;strokeColor=#365E7B;fontColor=#203443;fontSize=17;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry x="509" y="608" width="299" height="48" as="geometry" />
         </mxCell>
         <mxCell id="a-console-service" value="" style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;strokeColor=#365E7B;strokeWidth=2.4;endArrow=block;endFill=1;startArrow=none;startFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=PingFang SC;fontSize=17;fontColor=#365E7B;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="a-console" target="a-service">

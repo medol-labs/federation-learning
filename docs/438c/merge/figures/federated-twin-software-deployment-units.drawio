@@ -11,16 +11,16 @@
         <mxCell id="fl-platform" value="联邦学习平台侧" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontSize=24;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="34" y="31" width="342" height="53" as="geometry" />
         </mxCell>
-        <mxCell id="FL-SU-UI-P" value="联邦学习平台侧控制台&#10;（FL-SU-UI-P）&#10;平台管理与查询" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#4D7898;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
+        <mxCell id="FL-SU-UI-P" value="联邦学习平台侧控制台&#10;（LBLS-GN-LBXX-DEP-UI-P）&#10;平台管理与查询" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#4D7898;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
           <mxGeometry x="40" y="96" width="330" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="FL-SU-P" value="联邦学习平台服务&#10;（FL-SU-P）&#10;训练编排、更新验收、模型仓库" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#4D7898;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
+        <mxCell id="FL-SU-P" value="联邦学习平台服务&#10;（LBLS-GN-LBXX-DEP-P）&#10;训练编排、更新验收、模型仓库" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#4D7898;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
           <mxGeometry x="40" y="190" width="330" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="FL-SU-S" value="联邦学习支撑服务&#10;（FL-SU-S）&#10;身份、字典、文件、数据交换与通知" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#4D7898;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
+        <mxCell id="FL-SU-S" value="联邦学习支撑服务&#10;（LBLS-GN-LBXX-DEP-S）&#10;身份、字典、文件、数据交换与通知" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#4D7898;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
           <mxGeometry x="40" y="284" width="330" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="FL-SU-AGG" value="联邦学习平台侧聚合引擎&#10;（FL-SU-AGG）&#10;生成全局模型工件" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#4D7898;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
+        <mxCell id="FL-SU-AGG" value="联邦学习平台侧聚合引擎&#10;（LBLS-GN-LBXX-DEP-AGG）&#10;生成全局模型工件" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#4D7898;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
           <mxGeometry x="40" y="378" width="330" height="82" as="geometry" />
         </mxCell>
         <mxCell id="fl-site-area" value="" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#458374;strokeWidth=1.7;fillColor=#EDF5F1;" vertex="1" parent="1">
@@ -29,13 +29,13 @@
         <mxCell id="fl-site" value="联邦学习参与机构侧" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontSize=24;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="424" y="31" width="342" height="53" as="geometry" />
         </mxCell>
-        <mxCell id="FL-SU-UI-A" value="运行时代理控制台&#10;（FL-SU-UI-A）&#10;机构侧管理与查询" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#458374;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
+        <mxCell id="FL-SU-UI-A" value="运行时代理控制台&#10;（LBLS-GN-LBXX-DEP-UI-A）&#10;机构侧管理与查询" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#458374;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
           <mxGeometry x="430" y="96" width="330" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="FL-SU-A" value="运行时代理&#10;（FL-SU-A）&#10;本地数据管理、作业调度与上报" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#458374;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
+        <mxCell id="FL-SU-A" value="运行时代理&#10;（LBLS-GN-LBXX-DEP-A）&#10;本地数据管理、作业调度与上报" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#458374;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
           <mxGeometry x="430" y="190" width="330" height="82" as="geometry" />
         </mxCell>
-        <mxCell id="FL-SU-E" value="参与机构侧训练引擎&#10;（FL-SU-E）&#10;本地训练、验证与个性化适配" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#458374;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
+        <mxCell id="FL-SU-E" value="参与机构侧训练引擎&#10;（LBLS-GN-LBXX-DEP-E）&#10;本地训练、验证与个性化适配" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#458374;strokeWidth=1.35;fillColor=#FFFFFF;fontSize=19;spacing=4;" vertex="1" parent="1">
           <mxGeometry x="430" y="284" width="330" height="82" as="geometry" />
         </mxCell>
         <mxCell id="twin-area" value="" style="fontFamily=PingFang SC;fontColor=#243440;html=0;whiteSpace=wrap;rounded=0;strokeColor=#9B804E;strokeWidth=1.7;fillColor=#F9F4EA;" vertex="1" parent="1">

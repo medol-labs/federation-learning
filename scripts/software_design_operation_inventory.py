@@ -63,7 +63,7 @@ def query_summary(details):
     return prefix + '包含' + '、'.join(names[:8]) + '等字段；完整字段见需求规格和查询接口'
 
 
-def operation_rows(model, register, srs_markdown):
+def operation_rows(model, register, srs_markdown, *, include_field_shapes=True):
     srs = requirement_sections(srs_markdown)
     functions = register['functions']
     if set(srs) != {item['id'] for item in functions}:
@@ -114,7 +114,16 @@ def operation_rows(model, register, srs_markdown):
                         event_title = translated(dependency['title'], translations)
                         if event_title not in trigger:
                             trigger.append(event_title)
-            input_design = ('接收' + '、'.join(inputs) + '。') if inputs else '接收关联业务标识及操作参数。'
+            if include_field_shapes:
+                input_design = ('接收' + '、'.join(inputs) + '。') if inputs else '接收关联业务标识及操作参数。'
+            else:
+                names = [entry.split('（', 1)[0] for entry in inputs if not entry.startswith('不要求用户填写')]
+                if names:
+                    input_design = '主要输入：' + '、'.join(names[:5]) + ('等。' if len(names) > 5 else '。')
+                else:
+                    input_design = '使用请求或触发事件关联的业务记录。'
+                outbound = {translated(event['title'], translations) for event in events}
+                trigger = [name for name in trigger if name not in outbound]
             if trigger:
                 input_design = f'由“{"、".join(trigger)}”事件触发；' + input_design
             if commands and not any(command.get('startsLifecycle') for command in commands):

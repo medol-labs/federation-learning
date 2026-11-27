@@ -355,7 +355,7 @@
       {
         "id": "FL-SD-INT-RELATIONS-01",
         "type": "paragraph",
-        "text": "接口图表示请求方与提供方的关系，响应沿调用链路返回。图中的提供方与接口索引的接口实体对应，具体接口以索引中的唯一标识定位；图上的交互说明不限定接口数量。查询视图同步客户端表示具有同步权限的调用角色，不代表新增部署服务。"
+        "text": "业务交互图表示请求方与提供方的关系；目录同步图表示目录数据流向，由运行时代理从平台服务和支撑服务拉取快照或增量并更新代理本地目录。图中各项交互对应接口索引中的接口实体，具体接口按唯一标识定位。"
       },
       {
         "id": "FL-SD-INT-RELATIONS-FIG",
@@ -370,7 +370,7 @@
         "type": "figure",
         "image": "docs/generated/diagrams/federation-learning-sync-interface-relations.png",
         "source": "docs/438c/merge/figures/federation-learning-sync-interface-relations.drawio",
-        "caption": "联邦学习查询视图同步接口图",
+        "caption": "运行时代理目录同步关系图",
         "widthCm": 15.0
       },
       {

@@ -11,21 +11,29 @@
         <mxCell id="1" parent="0" />
         <mxCell
           id="ui"
-          value="控制台及授权客户端&#10;FL-SU-UI"
-          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          value="联邦学习平台侧控制台&#10;LBLS-GN-LBXX-DEP-UI-P"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;spacingLeft=34;"
           vertex="1"
           parent="1">
           <mxGeometry
-            x="455"
+            x="100"
             y="35"
             width="250"
             height="75"
             as="geometry" />
         </mxCell>
         <mxCell
+          id="agent-ui"
+          value="运行时代理控制台&#10;LBLS-GN-LBXX-DEP-UI-A"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;spacingLeft=34;"
+          vertex="1"
+          parent="1">
+          <mxGeometry x="810" y="35" width="250" height="75" as="geometry" />
+        </mxCell>
+        <mxCell
           id="platform"
-          value="平台服务&#10;FL-SU-P"
-          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          value="平台服务&#10;LBLS-GN-LBXX-DEP-P"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;spacingLeft=34;"
           vertex="1"
           parent="1">
           <mxGeometry
@@ -37,8 +45,8 @@
         </mxCell>
         <mxCell
           id="agent"
-          value="参与方运行时代理&#10;FL-SU-A"
-          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          value="参与方运行时代理&#10;LBLS-GN-LBXX-DEP-A"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;spacingLeft=34;"
           vertex="1"
           parent="1">
           <mxGeometry
@@ -50,8 +58,8 @@
         </mxCell>
         <mxCell
           id="support"
-          value="共享支撑服务&#10;FL-SU-S"
-          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          value="共享支撑服务&#10;LBLS-GN-LBXX-DEP-S"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;spacingLeft=34;"
           vertex="1"
           parent="1">
           <mxGeometry
@@ -63,8 +71,8 @@
         </mxCell>
         <mxCell
           id="aggregation"
-          value="聚合引擎实例&#10;FL-SU-E（按需）"
-          style="shape=component;whiteSpace=wrap;html=0;fillColor=#EDF6F3;strokeColor=#11786C;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          value="平台侧聚合引擎&#10;LBLS-GN-LBXX-DEP-AGG"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#EDF6F3;strokeColor=#11786C;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;spacingLeft=34;"
           vertex="1"
           parent="1">
           <mxGeometry
@@ -76,8 +84,8 @@
         </mxCell>
         <mxCell
           id="training"
-          value="本地训练引擎实例&#10;FL-SU-E（按需）"
-          style="shape=component;whiteSpace=wrap;html=0;fillColor=#EDF6F3;strokeColor=#11786C;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#243440;"
+          value="机构侧训练引擎&#10;LBLS-GN-LBXX-DEP-E"
+          style="shape=component;whiteSpace=wrap;html=0;fillColor=#EDF6F3;strokeColor=#11786C;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;spacingLeft=34;"
           vertex="1"
           parent="1">
           <mxGeometry
@@ -89,38 +97,28 @@
         </mxCell>
         <mxCell
           id="ui-platform"
-          value="平台操作与查询"
-          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.25;exitY=1;entryX=0.5;entryY=0;"
+          value="G01　平台操作与查询"
+          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
           edge="1"
           parent="1"
           source="ui"
           target="platform">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="517.5" y="172" />
-              <mxPoint x="225" y="172" />
-            </Array>
-          </mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell
           id="ui-agent"
-          value="参与方本地操作与查询"
-          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.75;exitY=1;entryX=0.5;entryY=0;"
+          value="G02　本地操作与查询"
+          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;"
           edge="1"
           parent="1"
-          source="ui"
+          source="agent-ui"
           target="agent">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="642.5" y="172" />
-              <mxPoint x="935" y="172" />
-            </Array>
-          </mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell
           id="ui-support"
-          value="字典、文件与身份"
-          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=0.5;entryY=1;"
+          value="G03　字典、文件与身份等"
+          style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=18;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=0.5;entryY=1;"
           edge="1"
           parent="1"
           source="ui"
@@ -131,11 +129,12 @@
               <mxPoint x="30" y="690" />
               <mxPoint x="580" y="690" />
             </Array>
+            <mxPoint x="170" y="0" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell
           id="plan"
-          value="参与方执行计划"
+          value="G04　执行计划下发"
           style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=1;exitY=0.27;entryX=0;entryY=0.27;"
           edge="1"
           parent="1"
@@ -145,7 +144,7 @@
         </mxCell>
         <mxCell
           id="report"
-          value="参与方报告与平台查询"
+          value="G05　连接、数据集及模型更新上报；查询配置"
           style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0;exitY=0.74;entryX=1;entryY=0.74;"
           edge="1"
           parent="1"
@@ -155,7 +154,7 @@
         </mxCell>
         <mxCell
           id="platform-support"
-          value="文件工件访问"
+          value="G06　读取模型更新工件&#10;上传聚合工件"
           style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.8;exitY=1;entryX=0;entryY=0.5;"
           edge="1"
           parent="1"
@@ -169,7 +168,7 @@
         </mxCell>
         <mxCell
           id="agent-support"
-          value="文件工件访问"
+          value="G07　上传模型更新工件"
           style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.2;exitY=1;entryX=1;entryY=0.5;"
           edge="1"
           parent="1"
@@ -183,7 +182,7 @@
         </mxCell>
         <mxCell
           id="aggregate"
-          value="聚合作业与工件"
+          value="G08　聚合作业与工件读取"
           style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.22;exitY=1;entryX=0.22;entryY=0;"
           edge="1"
           parent="1"
@@ -193,7 +192,7 @@
         </mxCell>
         <mxCell
           id="train"
-          value="本地训练作业"
+          value="G09　本地训练作业"
           style="edgeStyle=segmentEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#536773;strokeWidth=2;fontFamily=PingFang SC;fontSize=15;fontColor=#243440;labelBackgroundColor=#ffffff;exitX=0.78;exitY=1;entryX=0.78;entryY=0;"
           edge="1"
           parent="1"
