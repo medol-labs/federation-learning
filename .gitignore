@@ -72,6 +72,8 @@ tmp/
 **/tmp/
 # Reproducible documents and diagram PNG/SVG exports; keep editable sources tracked.
 docs/generated/
+/docs/document-support/gbt-8567/platform-word/srs/layout.docx
+/docs/document-support/gbt-8567/platform-word/sdd/layout.docx
 volumes/
 **/volumes/
 .medol/*.local.yml

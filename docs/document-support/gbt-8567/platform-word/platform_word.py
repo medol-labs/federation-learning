@@ -5,6 +5,8 @@ from hashlib import sha256
 from io import BytesIO
 import json
 from pathlib import Path
+import re
+import subprocess
 from zipfile import BadZipFile, ZipFile
 
 from lxml import etree
@@ -131,6 +133,24 @@ def performance_entries(entries):
     return items, end
 
 
+def read_layout(bundle, content):
+    path = bundle / "layout.docx"
+    if path.is_file():
+        return path.read_bytes()
+
+    # Existing layouts can be recovered from the Git history that already contains them.
+    blob = content.get("layout_git_blob")
+    if isinstance(blob, str) and re.fullmatch(r"[0-9a-f]{40}", blob):
+        try:
+            return subprocess.run(
+                ["git", "cat-file", "blob", blob], cwd=bundle,
+                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True,
+            ).stdout
+        except (OSError, subprocess.CalledProcessError):
+            pass
+    raise ValueError(f"缺少版式文件：{path}。请从共享文档存储获取与正文 JSON 配套的版本。")
+
+
 def build(bundle, output, *, interfaces=False):
     if output.exists():
         raise ValueError(f"输出文件已存在：{output}")
@@ -143,7 +163,7 @@ def build(bundle, output, *, interfaces=False):
     parts = content.get("parts")
     if not isinstance(parts, dict) or "word/document.xml" not in parts:
         raise ValueError("正文包缺少 Word 正文")
-    layout = (bundle / "layout.docx").read_bytes()
+    layout = read_layout(bundle, content)
     if sha256(layout).hexdigest() != content.get("layout_sha256"):
         raise ValueError("JSON 与版式文件不配套")
 

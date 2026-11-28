@@ -11,6 +11,10 @@
 
 两套目录各有一份 `text.json` 和配套的 `layout.docx`。JSON 保存正文、标题文字、表格单元格、页眉页脚等 Word 文字。版式文件保存表格结构、段落和字符样式、编号、域、链接和插图。插图中的文字随图保留。生成时将 JSON 中的文字填入版式，源 Word 无需留在机器上。
 
+两份 `layout.docx` 在本地使用，并由 Git 忽略。现有版本可由构建脚本根据 `text.json` 的 `layout_git_blob` 从已有 Git 历史读取，完整克隆无需额外下载。浅克隆需要获取旧历史，或将配套版式放到对应目录。无论版式从哪里读取，构建都校验 `layout_sha256`。
+
+新版式应通过团队共享文档存储分发，以 `layout_sha256` 标识版本。仅提交新的 `text.json` 与可编辑图源。在其他机器构建新版时，将配套版式下载为对应目录下的 `layout.docx`。
+
 ## 修改正文并生成 Word
 
 需规图7和图8的可编辑图源分别为[临床数字孪生辅助诊疗流程图](../../../438c/merge/figures/clinical-digital-twin-care-flow.drawio)和[疾病风险动态评估预警流程图](../../../438c/merge/figures/dynamic-disease-risk-alert-flow.drawio)。两张图沿用联邦学习端到端业务流程图的阶段分区、节点与连线样式，导出文件位于 `docs/generated/diagrams/`。
@@ -94,4 +98,4 @@ docs/generated/platform-word-venv/bin/python -B \
   --bundle docs/generated/platform-word/srs-import
 ```
 
-核对新旧 `text.json` 的差异，确认 Word 已包含要保留的变更后，将新提取的 `text.json` 和 `layout.docx` 一起更新到 `srs/`，软设同理。脚本会校验 JSON 与版式的配套关系。手工修改和重新生成均以新文件保存，便于比对。
+核对新旧 `text.json` 的差异，确认 Word 已包含要保留的变更后，将新提取的 `text.json` 和 `layout.docx` 一起更新到本地 `srs/`，软设同理。将版式上传到团队共享文档存储后，再提交正文 JSON。脚本会校验 JSON 与版式的配套关系。手工修改和重新生成均以新文件保存，便于比对。
